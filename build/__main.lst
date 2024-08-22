@@ -1,0 +1,152 @@
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccjdbTBG.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"__main.cpp"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/__main.cpp"
+  20              		.section	.rodata.__main.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 68656C6C 		.ascii	"hello,world\000"
+  23      6F2C776F 
+  23      726C6400 
+  24              		.section	.text.__main,"ax",%progbits
+  25              		.align	1
+  26              		.global	__main
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	__main:
+  32              		.fnstart
+  33              	.LFB1070:
+   1:User/__main.cpp **** #include "lib.h"
+   2:User/__main.cpp **** #include "gpio.h"
+   3:User/__main.cpp **** 
+   4:User/__main.cpp **** 
+   5:User/__main.cpp **** 
+   6:User/__main.cpp **** 
+   7:User/__main.cpp **** int __main()
+   8:User/__main.cpp **** {
+  34              		.loc 1 8 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38 0000 00B5     		push	{lr}
+  39              		.save {lr}
+  40              	.LCFI0:
+  41              		.cfi_def_cfa_offset 4
+  42              		.cfi_offset 14, -4
+  43              		.pad #12
+  44 0002 83B0     		sub	sp, sp, #12
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 16
+   9:User/__main.cpp ****     LCD_Clear(BLACK);
+  47              		.loc 1 9 5 view .LVU1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccjdbTBG.s 			page 2
+
+
+  48              		.loc 1 9 14 is_stmt 0 view .LVU2
+  49 0004 0020     		movs	r0, #0
+  50 0006 FFF7FEFF 		bl	LCD_Clear
+  51              	.LVL0:
+  10:User/__main.cpp ****     POINT_COLOR=WHITE;
+  52              		.loc 1 10 5 is_stmt 1 view .LVU3
+  53              		.loc 1 10 16 is_stmt 0 view .LVU4
+  54 000a 0A4B     		ldr	r3, .L4
+  55 000c 4FF6FF72 		movw	r2, #65535
+  56 0010 1A60     		str	r2, [r3]
+  57              	.L2:
+  11:User/__main.cpp ****     
+  12:User/__main.cpp ****     
+  13:User/__main.cpp ****     while (1)
+  58              		.loc 1 13 5 is_stmt 1 view .LVU5
+  14:User/__main.cpp ****     {
+  15:User/__main.cpp ****         
+  16:User/__main.cpp ****         //LCD_ShowxNum(10,10,12,2,32,1);
+  17:User/__main.cpp ****         //LCD_ShowString(10,40,240,32,32,p);
+  18:User/__main.cpp ****         Printf(10,40,240,32,32,"hello,world");
+  59              		.loc 1 18 9 view .LVU6
+  60              		.loc 1 18 15 is_stmt 0 view .LVU7
+  61 0012 094B     		ldr	r3, .L4+4
+  62 0014 0193     		str	r3, [sp, #4]
+  63 0016 2023     		movs	r3, #32
+  64 0018 0093     		str	r3, [sp]
+  65 001a F022     		movs	r2, #240
+  66 001c 2821     		movs	r1, #40
+  67 001e 0A20     		movs	r0, #10
+  68 0020 FFF7FEFF 		bl	Printf
+  69              	.LVL1:
+  19:User/__main.cpp ****         LCD_DrawRectangle(500,500,100,50);
+  70              		.loc 1 19 9 is_stmt 1 discriminator 1 view .LVU8
+  71              		.loc 1 19 26 is_stmt 0 discriminator 1 view .LVU9
+  72 0024 3223     		movs	r3, #50
+  73 0026 6422     		movs	r2, #100
+  74 0028 4FF4FA71 		mov	r1, #500
+  75 002c 0846     		mov	r0, r1
+  76 002e FFF7FEFF 		bl	LCD_DrawRectangle
+  77              	.LVL2:
+  13:User/__main.cpp ****     {
+  78              		.loc 1 13 5 is_stmt 1 view .LVU10
+  79 0032 EEE7     		b	.L2
+  80              	.L5:
+  81              		.align	2
+  82              	.L4:
+  83 0034 00000000 		.word	POINT_COLOR
+  84 0038 00000000 		.word	.LC0
+  85              		.cfi_endproc
+  86              	.LFE1070:
+  87              		.fnend
+  89              		.text
+  90              	.Letext0:
+  91              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+  92              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+  93              		.file 4 "User/stm32f4xx.h"
+  94              		.file 5 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/c+
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccjdbTBG.s 			page 3
+
+
+  95              		.file 6 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/c+
+  96              		.file 7 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/c+
+  97              		.file 8 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/c+
+  98              		.file 9 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/c+
+  99              		.file 10 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/c
+ 100              		.file 11 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/c
+ 101              		.file 12 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/lib/gcc/arm-none-eabi/1
+ 102              		.file 13 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/s
+ 103              		.file 14 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/c
+ 104              		.file 15 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/m
+ 105              		.file 16 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/c
+ 106              		.file 17 "LCD/lcd.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccjdbTBG.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 __main.cpp
+C:\Users\ktkuru\AppData\Local\Temp\ccjdbTBG.s:21     .rodata.__main.str1.4:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccjdbTBG.s:25     .text.__main:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccjdbTBG.s:31     .text.__main:00000000 __main
+C:\Users\ktkuru\AppData\Local\Temp\ccjdbTBG.s:83     .text.__main:00000034 $d
+           .ARM.exidx.text.__main:00000000 $d
+
+UNDEFINED SYMBOLS
+LCD_Clear
+Printf
+LCD_DrawRectangle
+POINT_COLOR
+__aeabi_unwind_cpp_pr0

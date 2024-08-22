@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "stm32f10x.h": "c",
+        "lib.h": "c",
+        "sys.h": "c",
+        "stdio.h": "c",
+        "cstdio": "c",
+        "_newlib_version.h": "c",
+        "gpio.h": "c",
+        "usart.h": "c",
+        "stdarg.h": "c",
+        "stm32f4xx.h": "c",
+        "*.d": "c",
+        "math.h": "c",
+        "sdram.h": "c",
+        "ltdc.h": "c",
+        "font.h": "c",
+        "lcd.h": "c"
+    }
+}

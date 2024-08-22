@@ -1,0 +1,181 @@
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"sys.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "SYSTEM/sys/sys.c"
+  20              		.section	.text.WFI_SET,"ax",%progbits
+  21              		.align	1
+  22              		.global	WFI_SET
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	WFI_SET:
+  28              	.LFB126:
+   1:SYSTEM/sys/sys.c **** #include "sys.h"
+   2:SYSTEM/sys/sys.c **** 
+   3:SYSTEM/sys/sys.c **** void WFI_SET(void)
+   4:SYSTEM/sys/sys.c **** {
+  29              		.loc 1 4 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+   5:SYSTEM/sys/sys.c ****     __ASM volatile("WFI");
+  34              		.loc 1 5 5 view .LVU1
+  35              		.syntax unified
+  36              	@ 5 "SYSTEM/sys/sys.c" 1
+  37 0000 30BF     		WFI
+  38              	@ 0 "" 2
+   6:SYSTEM/sys/sys.c **** }
+  39              		.loc 1 6 1 is_stmt 0 view .LVU2
+  40              		.thumb
+  41              		.syntax unified
+  42 0002 7047     		bx	lr
+  43              		.cfi_endproc
+  44              	.LFE126:
+  46              		.section	.text.INTX_DISABLE,"ax",%progbits
+  47              		.align	1
+  48              		.global	INTX_DISABLE
+  49              		.syntax unified
+  50              		.thumb
+  51              		.thumb_func
+  53              	INTX_DISABLE:
+  54              	.LFB127:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s 			page 2
+
+
+   7:SYSTEM/sys/sys.c **** 
+   8:SYSTEM/sys/sys.c **** void INTX_DISABLE(void)
+   9:SYSTEM/sys/sys.c **** {
+  55              		.loc 1 9 1 is_stmt 1 view -0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  10:SYSTEM/sys/sys.c **** 	__ASM volatile("CPSID   I");
+  60              		.loc 1 10 2 view .LVU4
+  61              		.syntax unified
+  62              	@ 10 "SYSTEM/sys/sys.c" 1
+  63 0000 72B6     		CPSID   I
+  64              	@ 0 "" 2
+  11:SYSTEM/sys/sys.c **** 	__ASM volatile("BX      LR");  
+  65              		.loc 1 11 2 view .LVU5
+  66              	@ 11 "SYSTEM/sys/sys.c" 1
+  67 0002 7047     		BX      LR
+  68              	@ 0 "" 2
+  12:SYSTEM/sys/sys.c **** }
+  69              		.loc 1 12 1 is_stmt 0 view .LVU6
+  70              		.thumb
+  71              		.syntax unified
+  72 0004 7047     		bx	lr
+  73              		.cfi_endproc
+  74              	.LFE127:
+  76              		.section	.text.INTX_ENABLE,"ax",%progbits
+  77              		.align	1
+  78              		.global	INTX_ENABLE
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  83              	INTX_ENABLE:
+  84              	.LFB128:
+  13:SYSTEM/sys/sys.c **** 
+  14:SYSTEM/sys/sys.c **** void INTX_ENABLE(void)
+  15:SYSTEM/sys/sys.c **** {
+  85              		.loc 1 15 1 is_stmt 1 view -0
+  86              		.cfi_startproc
+  87              		@ args = 0, pretend = 0, frame = 0
+  88              		@ frame_needed = 0, uses_anonymous_args = 0
+  89              		@ link register save eliminated.
+  16:SYSTEM/sys/sys.c **** 	__ASM volatile("CPSIE   I");
+  90              		.loc 1 16 2 view .LVU8
+  91              		.syntax unified
+  92              	@ 16 "SYSTEM/sys/sys.c" 1
+  93 0000 62B6     		CPSIE   I
+  94              	@ 0 "" 2
+  17:SYSTEM/sys/sys.c **** 	__ASM volatile("BX      LR");
+  95              		.loc 1 17 2 view .LVU9
+  96              	@ 17 "SYSTEM/sys/sys.c" 1
+  97 0002 7047     		BX      LR
+  98              	@ 0 "" 2
+  18:SYSTEM/sys/sys.c **** }
+  99              		.loc 1 18 1 is_stmt 0 view .LVU10
+ 100              		.thumb
+ 101              		.syntax unified
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s 			page 3
+
+
+ 102 0004 7047     		bx	lr
+ 103              		.cfi_endproc
+ 104              	.LFE128:
+ 106              		.section	.text.MSR_MSP,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	MSR_MSP
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	MSR_MSP:
+ 114              	.LVL0:
+ 115              	.LFB129:
+  19:SYSTEM/sys/sys.c **** 
+  20:SYSTEM/sys/sys.c **** void MSR_MSP(u32 addr) 
+  21:SYSTEM/sys/sys.c **** {
+ 116              		.loc 1 21 1 is_stmt 1 view -0
+ 117              		.cfi_startproc
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              		@ link register save eliminated.
+  22:SYSTEM/sys/sys.c **** 	__ASM volatile("MSR MSP, r0"); 			//set Main Stack value
+ 121              		.loc 1 22 2 view .LVU12
+ 122              		.syntax unified
+ 123              	@ 22 "SYSTEM/sys/sys.c" 1
+ 124 0000 80F30888 		MSR MSP, r0
+ 125              	@ 0 "" 2
+  23:SYSTEM/sys/sys.c **** 	__ASM volatile("BX r14");
+ 126              		.loc 1 23 2 view .LVU13
+ 127              	@ 23 "SYSTEM/sys/sys.c" 1
+ 128 0004 7047     		BX r14
+ 129              	@ 0 "" 2
+  24:SYSTEM/sys/sys.c **** }
+ 130              		.loc 1 24 1 is_stmt 0 view .LVU14
+ 131              		.thumb
+ 132              		.syntax unified
+ 133 0006 7047     		bx	lr
+ 134              		.cfi_endproc
+ 135              	.LFE129:
+ 137              		.text
+ 138              	.Letext0:
+ 139              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 140              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 141              		.file 4 "User/stm32f4xx.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sys.c
+C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s:21     .text.WFI_SET:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s:27     .text.WFI_SET:00000000 WFI_SET
+C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s:47     .text.INTX_DISABLE:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s:53     .text.INTX_DISABLE:00000000 INTX_DISABLE
+C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s:77     .text.INTX_ENABLE:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s:83     .text.INTX_ENABLE:00000000 INTX_ENABLE
+C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s:107    .text.MSR_MSP:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccpyp09C.s:113    .text.MSR_MSP:00000000 MSR_MSP
+
+NO UNDEFINED SYMBOLS

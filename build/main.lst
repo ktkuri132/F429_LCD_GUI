@@ -1,0 +1,165 @@
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/main.c"
+  20              		.section	.text.system_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	system_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	system_init:
+  28              	.LFB126:
+   1:User/main.c   **** #include "stm32f4xx.h"
+   2:User/main.c   **** #include "sys.h"
+   3:User/main.c   **** #include "delay.h"
+   4:User/main.c   **** #include "lib.h"
+   5:User/main.c   **** #include "usart.h"
+   6:User/main.c   **** 
+   7:User/main.c   **** int system_init(void)
+   8:User/main.c   **** {
+  29              		.loc 1 8 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+   9:User/main.c   ****     delay_init(180);
+  38              		.loc 1 9 5 view .LVU1
+  39 0002 B420     		movs	r0, #180
+  40 0004 FFF7FEFF 		bl	delay_init
+  41              	.LVL0:
+  10:User/main.c   ****     uart_init(90,115200);
+  42              		.loc 1 10 5 view .LVU2
+  43 0008 4FF4E131 		mov	r1, #115200
+  44 000c 5A20     		movs	r0, #90
+  45 000e FFF7FEFF 		bl	uart_init
+  46              	.LVL1:
+  11:User/main.c   ****     SDRAM_Init();
+  47              		.loc 1 11 5 view .LVU3
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s 			page 2
+
+
+  48 0012 FFF7FEFF 		bl	SDRAM_Init
+  49              	.LVL2:
+  12:User/main.c   ****     LCD_Init();
+  50              		.loc 1 12 5 view .LVU4
+  51 0016 FFF7FEFF 		bl	LCD_Init
+  52              	.LVL3:
+  13:User/main.c   ****     function_goto(&__main);     //goto world of c++
+  53              		.loc 1 13 5 view .LVU5
+  54              	.LBB4:
+  55              	.LBI4:
+  14:User/main.c   **** }
+  15:User/main.c   **** 
+  16:User/main.c   **** __INLINE void function_goto(int (*pfunction)())
+  56              		.loc 1 16 15 view .LVU6
+  57              	.LBB5:
+  17:User/main.c   **** {
+  18:User/main.c   ****     __ASM __IO 
+  58              		.loc 1 18 5 view .LVU7
+  59 001a 024B     		ldr	r3, .L3
+  60              		.syntax unified
+  61              	@ 18 "User/main.c" 1
+  62 001c 1846     		mov r0,r3 
+  63 001e 0047     		bx r0     
+  64              		
+  65              	@ 0 "" 2
+  66              		.thumb
+  67              		.syntax unified
+  68              	.LBE5:
+  69              	.LBE4:
+  14:User/main.c   **** }
+  70              		.loc 1 14 1 is_stmt 0 view .LVU8
+  71 0020 08BD     		pop	{r3, pc}
+  72              	.L4:
+  73 0022 00BF     		.align	2
+  74              	.L3:
+  75 0024 00000000 		.word	__main
+  76              		.cfi_endproc
+  77              	.LFE126:
+  79              		.section	.text.function_goto,"ax",%progbits
+  80              		.align	1
+  81              		.global	function_goto
+  82              		.syntax unified
+  83              		.thumb
+  84              		.thumb_func
+  86              	function_goto:
+  87              	.LVL4:
+  88              	.LFB127:
+  17:User/main.c   **** {
+  89              		.loc 1 17 1 is_stmt 1 view -0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              		@ link register save eliminated.
+  94              		.loc 1 18 5 view .LVU10
+  95              		.syntax unified
+  96              	@ 18 "User/main.c" 1
+  97 0000 0046     		mov r0,r0 
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s 			page 3
+
+
+  98 0002 0047     		bx r0     
+  99              		
+ 100              	@ 0 "" 2
+  19:User/main.c   ****     (
+  20:User/main.c   ****         "mov r0,%0 \n\t"
+  21:User/main.c   ****         "bx r0     \n\t"
+  22:User/main.c   ****         ::"r"(pfunction)
+  23:User/main.c   ****     );
+  24:User/main.c   **** }
+ 101              		.loc 1 24 1 is_stmt 0 view .LVU11
+ 102              		.thumb
+ 103              		.syntax unified
+ 104 0004 7047     		bx	lr
+ 105              		.cfi_endproc
+ 106              	.LFE127:
+ 108              		.text
+ 109              	.Letext0:
+ 110              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 111              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 112              		.file 4 "User/stm32f4xx.h"
+ 113              		.file 5 "LCD/lcd.h"
+ 114              		.file 6 "SDRAM/sdram.h"
+ 115              		.file 7 "USER_LIB/inc/lib.h"
+ 116              		.file 8 "system/usart/usart.h"
+ 117              		.file 9 "system/delay/delay.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:21     .text.system_init:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:27     .text.system_init:00000000 system_init
+C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:75     .text.system_init:00000024 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:80     .text.function_goto:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:86     .text.function_goto:00000000 function_goto
+
+UNDEFINED SYMBOLS
+delay_init
+uart_init
+SDRAM_Init
+LCD_Init
+__main

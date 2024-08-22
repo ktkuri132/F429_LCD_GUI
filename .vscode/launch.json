@@ -1,0 +1,24 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "cwd": "${workspaceFolder}",
+            "executable": "./build/make_obj.elf",
+            "name": "Debug-F4",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "armToolchainPath": "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin",
+            "showDevDebugOutput": "none",
+            "servertype": "openocd",
+            "configFiles": [
+                "C:/Program Files (x86)/openocd-20240813/OpenOCD-20240813-0.12.0/share/openocd/scripts/interface/cmsis-dap.cfg",
+                "C:/Program Files (x86)/openocd-20240813/OpenOCD-20240813-0.12.0/share/openocd/scripts/target/stm32f4x.cfg"
+            ]
+        }
+
+    ]
+}
