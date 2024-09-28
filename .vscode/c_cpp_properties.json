@@ -4,7 +4,8 @@
             "name": "build",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/core"
+                "${workspaceFolder}/core",
+                "${workspaceFolder}/TOUCH"
             ],
             "defines": [
                 "STM32F429_439xx",

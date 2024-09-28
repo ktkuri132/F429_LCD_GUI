@@ -4,7 +4,7 @@
 #include "usart.h"	 
 #include "ltdc.h"
 #include "delay.h"	 
-
+#include "stm32f4xx.h"
 #include <stdarg.h>
 //////////////////////////////////////////////////////////////////////////////////	 
 	 
@@ -263,13 +263,12 @@ void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2)
 	}  
 }    
 //画矩形	  
-//(x1,y1),(x2,y2):矩形的对角坐标
-void LCD_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2)
+void LCD_DrawRectangle(u16 x, u16 y, u16 w, u16 h)
 {
-	LCD_DrawLine(x1,y1,x2,y1);
-	LCD_DrawLine(x1,y1,x1,y2);
-	LCD_DrawLine(x1,y2,x2,y2);
-	LCD_DrawLine(x2,y1,x2,y2);
+	LCD_DrawLine(x,y,x+w,y);
+	LCD_DrawLine(x,y,x,y+h);
+	LCD_DrawLine(x+w,y,x+w,y+h);
+	LCD_DrawLine(x,y+h,x+w,y+h);
 }
 //在指定位置画一个指定大小的圆
 //(x,y):中心点
@@ -411,10 +410,15 @@ void LCD_ShowString(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p)
     {       
         if(x>=width){x=x0;y+=size;}
         if(y>=height)break;//退出
-        LCD_ShowChar(x,y,*p,size,1);
+        LCD_ShowChar(x,y,*p,size,0);
         x+=size/2;
         p++;
     }  
+}
+
+void LCD_ShowChinese(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p)
+{
+
 }
 
 /// @brief 参考江科大--oled
@@ -423,16 +427,29 @@ void LCD_ShowString(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p)
 /// @param width 区域大小
 /// @param height 区域大小
 /// @param size 字体大小
+/// @param mode 输出是否叠加
 /// @param format 字符串
 /// @param  
-void Printf(u16 x,u16 y,u16 width,u16 height,u8 size,char *format, ...)
+void Printf(u16 x,u16 y,u16 width,u16 height,u8 size,u8 mode,char *format, ...)
 {
 	char String[256];						//定义字符数组
 	va_list arg;							//定义可变参数列表数据类型的变量arg
 	va_start(arg, format);					//从format开始，接收参数列表到arg变量
 	vsprintf(String, format, arg);			//使用vsprintf打印格式化字符串和参数列表到字符数组中
 	va_end(arg);							//结束变量arg
-	LCD_ShowString(x,y,width,height,size,String);
+
+	u8 x0=x;
+	u8 *p=String;
+	width+=x;
+	height+=y;
+    while((*p<='~')&&(*p>=' '))//判断是不是非法字符!
+    {       
+        if(x>=width){x=x0;y+=size;}
+        if(y>=height)break;//退出
+        LCD_ShowChar(x,y,*p,size,mode);
+        x+=size/2;
+        p++;
+    }  
 }
 
 

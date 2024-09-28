@@ -12,11 +12,11 @@
             "type": "cortex-debug",
             "runToEntryPoint": "main",
             "armToolchainPath": "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin",
-            "showDevDebugOutput": "none",
+            "showDevDebugOutput": "vscode",
             "servertype": "openocd",
             "configFiles": [
-                "C:/Program Files (x86)/openocd-20240813/OpenOCD-20240813-0.12.0/share/openocd/scripts/interface/cmsis-dap.cfg",
-                "C:/Program Files (x86)/openocd-20240813/OpenOCD-20240813-0.12.0/share/openocd/scripts/target/stm32f4x.cfg"
+                "${workspaceFolder}/config/cmsis-dap.cfg",
+                "${workspaceFolder}/config/stm32f4x.cfg"
             ]
         }
 

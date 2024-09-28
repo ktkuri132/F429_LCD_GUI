@@ -23,8 +23,7 @@ int16_t RX_sign;
 /*arm-gcc编译环境下实现printf函数的重定向  失败*/
 /*printf函数的替代品*/
 #ifdef __GNUC__
-
-void __printf(char *format, ...)
+void printf(char *format, ...)
 {
 	char String[256];						//定义字符数组
 	va_list arg;							//定义可变参数列表数据类型的变量arg
@@ -36,7 +35,9 @@ void __printf(char *format, ...)
 	{
 		USART1_SEND_DATA_U8(String[size]);
 	}
+	
 }
+
 
 #endif
 
@@ -122,6 +123,36 @@ void USART1_SEND_BUF_U8(u8*buf,u8 len)
 		len--;
 	}
 }
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif
 

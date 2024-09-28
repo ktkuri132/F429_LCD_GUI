@@ -15,6 +15,10 @@
         "sdram.h": "c",
         "ltdc.h": "c",
         "font.h": "c",
-        "lcd.h": "c"
+        "lcd.h": "c",
+        "ctiic.h": "c",
+        "gt9xxx.h": "c",
+        "touch.h": "c",
+        "guilib.h": "c"
     }
 }

@@ -30,8 +30,18 @@
         },
         {
             "type": "shell",
-            "label": "run",
-            "command": "make run",
+            "label": "Rebuild_run",
+            "command": "make rebuild_run",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            
+        },
+        {
+            "type": "shell",
+            "label": "Build_run",
+            "command": "make build_run",
             "problemMatcher": [
                 "$gcc"
             ],

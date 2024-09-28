@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,43 +58,44 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
   22:SYSTEM/usart/usart.c **** 
   23:SYSTEM/usart/usart.c **** /*arm-gcc编译环境下实现printf函数的重定向  失败*/
   24:SYSTEM/usart/usart.c **** /*printf函数的替代品*/
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 2
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 2
 
 
   25:SYSTEM/usart/usart.c **** #ifdef __GNUC__
-  26:SYSTEM/usart/usart.c **** 
-  27:SYSTEM/usart/usart.c **** void __printf(char *format, ...)
-  28:SYSTEM/usart/usart.c **** {
-  29:SYSTEM/usart/usart.c **** 	char String[256];						//定义字符数组
-  30:SYSTEM/usart/usart.c **** 	va_list arg;							//定义可变参数列表数据类型的变量arg
-  31:SYSTEM/usart/usart.c **** 	va_start(arg, format);					//从format开始，接收参数列表到arg变量
-  32:SYSTEM/usart/usart.c **** 	vsprintf(String, format, arg);			//使用vsprintf打印格式化字符串和参数列表到字符�
-  33:SYSTEM/usart/usart.c **** 	va_end(arg);							//结束变量arg
-  34:SYSTEM/usart/usart.c **** 	u8 size;
-  35:SYSTEM/usart/usart.c **** 	for(size=0;String[size]!='\0';size++)
-  36:SYSTEM/usart/usart.c **** 	{
-  37:SYSTEM/usart/usart.c **** 		USART1_SEND_DATA_U8(String[size]);
-  38:SYSTEM/usart/usart.c **** 	}
+  26:SYSTEM/usart/usart.c **** void printf(char *format, ...)
+  27:SYSTEM/usart/usart.c **** {
+  28:SYSTEM/usart/usart.c **** 	char String[256];						//定义字符数组
+  29:SYSTEM/usart/usart.c **** 	va_list arg;							//定义可变参数列表数据类型的变量arg
+  30:SYSTEM/usart/usart.c **** 	va_start(arg, format);					//从format开始，接收参数列表到arg变量
+  31:SYSTEM/usart/usart.c **** 	vsprintf(String, format, arg);			//使用vsprintf打印格式化字符串和参数列表到字符�
+  32:SYSTEM/usart/usart.c **** 	va_end(arg);							//结束变量arg
+  33:SYSTEM/usart/usart.c **** 	u8 size;
+  34:SYSTEM/usart/usart.c **** 	for(size=0;String[size]!='\0';size++)
+  35:SYSTEM/usart/usart.c **** 	{
+  36:SYSTEM/usart/usart.c **** 		USART1_SEND_DATA_U8(String[size]);
+  37:SYSTEM/usart/usart.c **** 	}
+  38:SYSTEM/usart/usart.c **** 	
   39:SYSTEM/usart/usart.c **** }
   40:SYSTEM/usart/usart.c **** 
-  41:SYSTEM/usart/usart.c **** #endif
-  42:SYSTEM/usart/usart.c **** 
-  43:SYSTEM/usart/usart.c ****  
-  44:SYSTEM/usart/usart.c **** #if EN_USART1_RX   
-  45:SYSTEM/usart/usart.c ****   	
-  46:SYSTEM/usart/usart.c **** u8 USART_RX_BUF[USART_REC_LEN];     
-  47:SYSTEM/usart/usart.c **** 
-  48:SYSTEM/usart/usart.c **** u16 USART_RX_STA=0;         
-  49:SYSTEM/usart/usart.c **** 
-  50:SYSTEM/usart/usart.c **** int i=0;
-  51:SYSTEM/usart/usart.c **** 
-  52:SYSTEM/usart/usart.c **** void uart_init(u32 pclk2,u32 bound)
-  53:SYSTEM/usart/usart.c **** {  	 
-  35              		.loc 1 53 1 view -0
+  41:SYSTEM/usart/usart.c **** 
+  42:SYSTEM/usart/usart.c **** #endif
+  43:SYSTEM/usart/usart.c **** 
+  44:SYSTEM/usart/usart.c ****  
+  45:SYSTEM/usart/usart.c **** #if EN_USART1_RX   
+  46:SYSTEM/usart/usart.c ****   	
+  47:SYSTEM/usart/usart.c **** u8 USART_RX_BUF[USART_REC_LEN];     
+  48:SYSTEM/usart/usart.c **** 
+  49:SYSTEM/usart/usart.c **** u16 USART_RX_STA=0;         
+  50:SYSTEM/usart/usart.c **** 
+  51:SYSTEM/usart/usart.c **** int i=0;
+  52:SYSTEM/usart/usart.c **** 
+  53:SYSTEM/usart/usart.c **** void uart_init(u32 pclk2,u32 bound)
+  54:SYSTEM/usart/usart.c **** {  	 
+  35              		.loc 1 54 1 view -0
   36              		.cfi_startproc
   37              		@ args = 0, pretend = 0, frame = 0
   38              		@ frame_needed = 0, uses_anonymous_args = 0
-  39              		.loc 1 53 1 is_stmt 0 view .LVU1
+  39              		.loc 1 54 1 is_stmt 0 view .LVU1
   40 0000 70B5     		push	{r4, r5, r6, lr}
   41              	.LCFI0:
   42              		.cfi_def_cfa_offset 16
@@ -105,90 +106,90 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
   47 0002 82B0     		sub	sp, sp, #8
   48              	.LCFI1:
   49              		.cfi_def_cfa_offset 24
-  54:SYSTEM/usart/usart.c **** 	float temp;
-  50              		.loc 1 54 2 is_stmt 1 view .LVU2
-  55:SYSTEM/usart/usart.c **** 	u16 mantissa;
-  51              		.loc 1 55 2 view .LVU3
-  56:SYSTEM/usart/usart.c **** 	u16 fraction;	   
-  52              		.loc 1 56 2 view .LVU4
-  57:SYSTEM/usart/usart.c **** 	temp=(float)(pclk2*1000000)/(bound*16);
-  53              		.loc 1 57 2 view .LVU5
-  54              		.loc 1 57 20 is_stmt 0 view .LVU6
+  55:SYSTEM/usart/usart.c **** 	float temp;
+  50              		.loc 1 55 2 is_stmt 1 view .LVU2
+  56:SYSTEM/usart/usart.c **** 	u16 mantissa;
+  51              		.loc 1 56 2 view .LVU3
+  57:SYSTEM/usart/usart.c **** 	u16 fraction;	   
+  52              		.loc 1 57 2 view .LVU4
+  58:SYSTEM/usart/usart.c **** 	temp=(float)(pclk2*1000000)/(bound*16);
+  53              		.loc 1 58 2 view .LVU5
+  54              		.loc 1 58 20 is_stmt 0 view .LVU6
   55 0004 334B     		ldr	r3, .L3
   56 0006 03FB00F0 		mul	r0, r3, r0
   57              	.LVL1:
-  58              		.loc 1 57 7 view .LVU7
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 3
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 3
 
 
+  58              		.loc 1 58 7 view .LVU7
   59 000a 07EE900A 		vmov	s15, r0	@ int
   60 000e F8EE676A 		vcvt.f32.u32	s13, s15
-  61              		.loc 1 57 36 view .LVU8
+  61              		.loc 1 58 36 view .LVU8
   62 0012 0901     		lsls	r1, r1, #4
   63              	.LVL2:
-  64              		.loc 1 57 29 view .LVU9
+  64              		.loc 1 58 29 view .LVU9
   65 0014 07EE901A 		vmov	s15, r1	@ int
   66 0018 B8EE677A 		vcvt.f32.u32	s14, s15
-  67              		.loc 1 57 6 view .LVU10
+  67              		.loc 1 58 6 view .LVU10
   68 001c C6EE877A 		vdiv.f32	s15, s13, s14
   69              	.LVL3:
-  58:SYSTEM/usart/usart.c **** 	mantissa=temp;				 
-  70              		.loc 1 58 2 is_stmt 1 view .LVU11
-  71              		.loc 1 58 10 is_stmt 0 view .LVU12
+  59:SYSTEM/usart/usart.c **** 	mantissa=temp;				 
+  70              		.loc 1 59 2 is_stmt 1 view .LVU11
+  71              		.loc 1 59 10 is_stmt 0 view .LVU12
   72 0020 BCEEE77A 		vcvt.u32.f32	s14, s15
   73 0024 17EE103A 		vmov	r3, s14	@ int
   74 0028 9BB2     		uxth	r3, r3
   75              	.LVL4:
-  59:SYSTEM/usart/usart.c **** 	fraction=(temp-mantissa)*16; 
-  76              		.loc 1 59 2 is_stmt 1 view .LVU13
-  77              		.loc 1 59 16 is_stmt 0 view .LVU14
+  60:SYSTEM/usart/usart.c **** 	fraction=(temp-mantissa)*16; 
+  76              		.loc 1 60 2 is_stmt 1 view .LVU13
+  77              		.loc 1 60 16 is_stmt 0 view .LVU14
   78 002a 07EE103A 		vmov	s14, r3	@ int
   79 002e B8EEC77A 		vcvt.f32.s32	s14, s14
   80 0032 77EEC77A 		vsub.f32	s15, s15, s14
   81              	.LVL5:
-  82              		.loc 1 59 26 view .LVU15
+  82              		.loc 1 60 26 view .LVU15
   83 0036 B3EE007A 		vmov.f32	s14, #1.6e+1
   84 003a 67EE877A 		vmul.f32	s15, s15, s14
-  85              		.loc 1 59 10 view .LVU16
+  85              		.loc 1 60 10 view .LVU16
   86 003e FCEEE77A 		vcvt.u32.f32	s15, s15
   87 0042 17EE904A 		vmov	r4, s15	@ int
   88              	.LVL6:
-  60:SYSTEM/usart/usart.c ****     mantissa<<=4;
-  89              		.loc 1 60 5 is_stmt 1 view .LVU17
-  90              		.loc 1 60 13 is_stmt 0 view .LVU18
+  61:SYSTEM/usart/usart.c ****     mantissa<<=4;
+  89              		.loc 1 61 5 is_stmt 1 view .LVU17
+  90              		.loc 1 61 13 is_stmt 0 view .LVU18
   91 0046 1B01     		lsls	r3, r3, #4
   92              	.LVL7:
-  93              		.loc 1 60 13 view .LVU19
+  93              		.loc 1 61 13 view .LVU19
   94 0048 9BB2     		uxth	r3, r3
   95              	.LVL8:
-  61:SYSTEM/usart/usart.c **** 	mantissa+=fraction; 
-  96              		.loc 1 61 2 is_stmt 1 view .LVU20
-  97              		.loc 1 61 10 is_stmt 0 view .LVU21
+  62:SYSTEM/usart/usart.c **** 	mantissa+=fraction; 
+  96              		.loc 1 62 2 is_stmt 1 view .LVU20
+  97              		.loc 1 62 10 is_stmt 0 view .LVU21
   98 004a 13FA84F4 		uxtah	r4, r3, r4
   99              	.LVL9:
- 100              		.loc 1 61 10 view .LVU22
+ 100              		.loc 1 62 10 view .LVU22
  101 004e A4B2     		uxth	r4, r4
  102              	.LVL10:
-  62:SYSTEM/usart/usart.c **** 	RCC->AHB1ENR|=1<<0;   	
- 103              		.loc 1 62 2 is_stmt 1 view .LVU23
- 104              		.loc 1 62 5 is_stmt 0 view .LVU24
+  63:SYSTEM/usart/usart.c **** 	RCC->AHB1ENR|=1<<0;   	
+ 103              		.loc 1 63 2 is_stmt 1 view .LVU23
+ 104              		.loc 1 63 5 is_stmt 0 view .LVU24
  105 0050 214B     		ldr	r3, .L3+4
  106 0052 1A6B     		ldr	r2, [r3, #48]
- 107              		.loc 1 62 14 view .LVU25
+ 107              		.loc 1 63 14 view .LVU25
  108 0054 42F00102 		orr	r2, r2, #1
  109 0058 1A63     		str	r2, [r3, #48]
-  63:SYSTEM/usart/usart.c **** 	RCC->APB2ENR|=1<<4;  	 
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 4
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 4
 
 
- 110              		.loc 1 63 2 is_stmt 1 view .LVU26
- 111              		.loc 1 63 5 is_stmt 0 view .LVU27
+  64:SYSTEM/usart/usart.c **** 	RCC->APB2ENR|=1<<4;  	 
+ 110              		.loc 1 64 2 is_stmt 1 view .LVU26
+ 111              		.loc 1 64 5 is_stmt 0 view .LVU27
  112 005a 5A6C     		ldr	r2, [r3, #68]
- 113              		.loc 1 63 14 view .LVU28
+ 113              		.loc 1 64 14 view .LVU28
  114 005c 42F01002 		orr	r2, r2, #16
  115 0060 5A64     		str	r2, [r3, #68]
-  64:SYSTEM/usart/usart.c **** 	GPIO_Set(GPIOA,1<<9|1<<10,2,0,2,1);
- 116              		.loc 1 64 2 is_stmt 1 view .LVU29
+  65:SYSTEM/usart/usart.c **** 	GPIO_Set(GPIOA,1<<9|1<<10,2,0,2,1);
+ 116              		.loc 1 65 2 is_stmt 1 view .LVU29
  117 0062 1E4D     		ldr	r5, .L3+8
  118 0064 0123     		movs	r3, #1
  119 0066 0193     		str	r3, [sp, #4]
@@ -198,85 +199,85 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  123 006e 3246     		mov	r2, r6
  124 0070 4FF4C061 		mov	r1, #1536
  125              	.LVL11:
- 126              		.loc 1 64 2 is_stmt 0 view .LVU30
+ 126              		.loc 1 65 2 is_stmt 0 view .LVU30
  127 0074 2846     		mov	r0, r5
  128 0076 FFF7FEFF 		bl	GPIO_Set
  129              	.LVL12:
-  65:SYSTEM/usart/usart.c ****  	GPIO_AF_Set(GPIOA,9,7);	
- 130              		.loc 1 65 3 is_stmt 1 view .LVU31
+  66:SYSTEM/usart/usart.c ****  	GPIO_AF_Set(GPIOA,9,7);	
+ 130              		.loc 1 66 3 is_stmt 1 view .LVU31
  131 007a 0722     		movs	r2, #7
  132 007c 0921     		movs	r1, #9
  133 007e 2846     		mov	r0, r5
  134 0080 FFF7FEFF 		bl	GPIO_AF_Set
  135              	.LVL13:
-  66:SYSTEM/usart/usart.c **** 	GPIO_AF_Set(GPIOA,10,7); 	   
- 136              		.loc 1 66 2 view .LVU32
+  67:SYSTEM/usart/usart.c **** 	GPIO_AF_Set(GPIOA,10,7); 	   
+ 136              		.loc 1 67 2 view .LVU32
  137 0084 0722     		movs	r2, #7
  138 0086 0A21     		movs	r1, #10
  139 0088 2846     		mov	r0, r5
  140 008a FFF7FEFF 		bl	GPIO_AF_Set
  141              	.LVL14:
-  67:SYSTEM/usart/usart.c **** 
-  68:SYSTEM/usart/usart.c ****  	USART1->BRR=mantissa; 		 
- 142              		.loc 1 68 3 view .LVU33
- 143              		.loc 1 68 14 is_stmt 0 view .LVU34
+  68:SYSTEM/usart/usart.c **** 
+  69:SYSTEM/usart/usart.c ****  	USART1->BRR=mantissa; 		 
+ 142              		.loc 1 69 3 view .LVU33
+ 143              		.loc 1 69 14 is_stmt 0 view .LVU34
  144 008e A5F57045 		sub	r5, r5, #61440
  145 0092 2C81     		strh	r4, [r5, #8]	@ movhi
-  69:SYSTEM/usart/usart.c **** 	USART1->CR1&=~(1<<15); 	
- 146              		.loc 1 69 2 is_stmt 1 view .LVU35
- 147              		.loc 1 69 8 is_stmt 0 view .LVU36
+  70:SYSTEM/usart/usart.c **** 	USART1->CR1&=~(1<<15); 	
+ 146              		.loc 1 70 2 is_stmt 1 view .LVU35
+ 147              		.loc 1 70 8 is_stmt 0 view .LVU36
  148 0094 AB89     		ldrh	r3, [r5, #12]
- 149              		.loc 1 69 13 view .LVU37
+ 149              		.loc 1 70 13 view .LVU37
  150 0096 C3F30E03 		ubfx	r3, r3, #0, #15
  151 009a AB81     		strh	r3, [r5, #12]	@ movhi
-  70:SYSTEM/usart/usart.c **** 	USART1->CR1|=1<<3;  	
- 152              		.loc 1 70 2 is_stmt 1 view .LVU38
- 153              		.loc 1 70 8 is_stmt 0 view .LVU39
+  71:SYSTEM/usart/usart.c **** 	USART1->CR1|=1<<3;  	
+ 152              		.loc 1 71 2 is_stmt 1 view .LVU38
+ 153              		.loc 1 71 8 is_stmt 0 view .LVU39
  154 009c AB89     		ldrh	r3, [r5, #12]
  155 009e 9BB2     		uxth	r3, r3
- 156              		.loc 1 70 13 view .LVU40
+ 156              		.loc 1 71 13 view .LVU40
  157 00a0 43F00803 		orr	r3, r3, #8
  158 00a4 AB81     		strh	r3, [r5, #12]	@ movhi
-  71:SYSTEM/usart/usart.c **** #if EN_USART1_RX		  	
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 5
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 5
 
 
-  72:SYSTEM/usart/usart.c **** 
-  73:SYSTEM/usart/usart.c **** 	USART1->CR1|=1<<2;  	
- 159              		.loc 1 73 2 is_stmt 1 view .LVU41
- 160              		.loc 1 73 8 is_stmt 0 view .LVU42
+  72:SYSTEM/usart/usart.c **** #if EN_USART1_RX		  	
+  73:SYSTEM/usart/usart.c **** 
+  74:SYSTEM/usart/usart.c **** 	USART1->CR1|=1<<2;  	
+ 159              		.loc 1 74 2 is_stmt 1 view .LVU41
+ 160              		.loc 1 74 8 is_stmt 0 view .LVU42
  161 00a6 AB89     		ldrh	r3, [r5, #12]
  162 00a8 9BB2     		uxth	r3, r3
- 163              		.loc 1 73 13 view .LVU43
+ 163              		.loc 1 74 13 view .LVU43
  164 00aa 43F00403 		orr	r3, r3, #4
  165 00ae AB81     		strh	r3, [r5, #12]	@ movhi
-  74:SYSTEM/usart/usart.c **** 	USART1->CR1|=1<<5;    		    	
- 166              		.loc 1 74 2 is_stmt 1 view .LVU44
- 167              		.loc 1 74 8 is_stmt 0 view .LVU45
+  75:SYSTEM/usart/usart.c **** 	USART1->CR1|=1<<5;    		    	
+ 166              		.loc 1 75 2 is_stmt 1 view .LVU44
+ 167              		.loc 1 75 8 is_stmt 0 view .LVU45
  168 00b0 AB89     		ldrh	r3, [r5, #12]
  169 00b2 9BB2     		uxth	r3, r3
- 170              		.loc 1 74 13 view .LVU46
+ 170              		.loc 1 75 13 view .LVU46
  171 00b4 43F02003 		orr	r3, r3, #32
  172 00b8 AB81     		strh	r3, [r5, #12]	@ movhi
-  75:SYSTEM/usart/usart.c **** 	MY_NVIC_Init(3,3,USART1_IRQn,2);
- 173              		.loc 1 75 2 is_stmt 1 view .LVU47
+  76:SYSTEM/usart/usart.c **** 	MY_NVIC_Init(3,3,USART1_IRQn,2);
+ 173              		.loc 1 76 2 is_stmt 1 view .LVU47
  174 00ba 3346     		mov	r3, r6
  175 00bc 2522     		movs	r2, #37
  176 00be 0321     		movs	r1, #3
  177 00c0 0846     		mov	r0, r1
  178 00c2 FFF7FEFF 		bl	MY_NVIC_Init
  179              	.LVL15:
-  76:SYSTEM/usart/usart.c **** #endif
-  77:SYSTEM/usart/usart.c **** 	USART1->CR1|=1<<13;  	
- 180              		.loc 1 77 2 view .LVU48
- 181              		.loc 1 77 8 is_stmt 0 view .LVU49
+  77:SYSTEM/usart/usart.c **** #endif
+  78:SYSTEM/usart/usart.c **** 	USART1->CR1|=1<<13;  	
+ 180              		.loc 1 78 2 view .LVU48
+ 181              		.loc 1 78 8 is_stmt 0 view .LVU49
  182 00c6 AB89     		ldrh	r3, [r5, #12]
  183 00c8 9BB2     		uxth	r3, r3
- 184              		.loc 1 77 13 view .LVU50
+ 184              		.loc 1 78 13 view .LVU50
  185 00ca 43F40053 		orr	r3, r3, #8192
  186 00ce AB81     		strh	r3, [r5, #12]	@ movhi
-  78:SYSTEM/usart/usart.c **** }
- 187              		.loc 1 78 1 view .LVU51
+  79:SYSTEM/usart/usart.c **** }
+ 187              		.loc 1 79 1 view .LVU51
  188 00d0 02B0     		add	sp, sp, #8
  189              	.LCFI2:
  190              		.cfi_def_cfa_offset 16
@@ -284,7 +285,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  192 00d2 70BD     		pop	{r4, r5, r6, pc}
  193              	.LVL16:
  194              	.L4:
- 195              		.loc 1 78 1 view .LVU52
+ 195              		.loc 1 79 1 view .LVU52
  196              		.align	2
  197              	.L3:
  198 00d4 40420F00 		.word	1000000
@@ -297,145 +298,145 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  206              		.global	USART1_IRQHandler
  207              		.syntax unified
  208              		.thumb
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 6
+
+
  209              		.thumb_func
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 6
-
-
  211              	USART1_IRQHandler:
  212              	.LFB128:
-  79:SYSTEM/usart/usart.c **** 
-  80:SYSTEM/usart/usart.c **** //串口中断
-  81:SYSTEM/usart/usart.c **** void USART1_IRQHandler(void)
-  82:SYSTEM/usart/usart.c **** {
- 213              		.loc 1 82 1 is_stmt 1 view -0
+  80:SYSTEM/usart/usart.c **** 
+  81:SYSTEM/usart/usart.c **** //串口中断
+  82:SYSTEM/usart/usart.c **** void USART1_IRQHandler(void)
+  83:SYSTEM/usart/usart.c **** {
+ 213              		.loc 1 83 1 is_stmt 1 view -0
  214              		.cfi_startproc
  215              		@ args = 0, pretend = 0, frame = 0
  216              		@ frame_needed = 0, uses_anonymous_args = 0
  217              		@ link register save eliminated.
-  83:SYSTEM/usart/usart.c **** 	u8 res;	
- 218              		.loc 1 83 2 view .LVU54
-  84:SYSTEM/usart/usart.c **** 	if(USART1->SR&(1<<5))
- 219              		.loc 1 84 2 view .LVU55
- 220              		.loc 1 84 11 is_stmt 0 view .LVU56
+  84:SYSTEM/usart/usart.c **** 	u8 res;	
+ 218              		.loc 1 84 2 view .LVU54
+  85:SYSTEM/usart/usart.c **** 	if(USART1->SR&(1<<5))
+ 219              		.loc 1 85 2 view .LVU55
+ 220              		.loc 1 85 11 is_stmt 0 view .LVU56
  221 0000 184B     		ldr	r3, .L11
  222 0002 1B88     		ldrh	r3, [r3]
- 223              		.loc 1 84 4 view .LVU57
+ 223              		.loc 1 85 4 view .LVU57
  224 0004 13F0200F 		tst	r3, #32
  225 0008 26D0     		beq	.L5
-  85:SYSTEM/usart/usart.c **** 	{	 
-  86:SYSTEM/usart/usart.c **** 		res=USART1->DR; 
- 226              		.loc 1 86 3 is_stmt 1 view .LVU58
- 227              		.loc 1 86 13 is_stmt 0 view .LVU59
+  86:SYSTEM/usart/usart.c **** 	{	 
+  87:SYSTEM/usart/usart.c **** 		res=USART1->DR; 
+ 226              		.loc 1 87 3 is_stmt 1 view .LVU58
+ 227              		.loc 1 87 13 is_stmt 0 view .LVU59
  228 000a 164B     		ldr	r3, .L11
  229 000c 9B88     		ldrh	r3, [r3, #4]
- 230              		.loc 1 86 6 view .LVU60
+ 230              		.loc 1 87 6 view .LVU60
  231 000e DBB2     		uxtb	r3, r3
  232              	.LVL17:
-  87:SYSTEM/usart/usart.c **** 		if((USART_RX_STA&0x8000)==0)
- 233              		.loc 1 87 3 is_stmt 1 view .LVU61
- 234              		.loc 1 87 27 is_stmt 0 view .LVU62
+  88:SYSTEM/usart/usart.c **** 		if((USART_RX_STA&0x8000)==0)
+ 233              		.loc 1 88 3 is_stmt 1 view .LVU61
+ 234              		.loc 1 88 27 is_stmt 0 view .LVU62
  235 0010 1549     		ldr	r1, .L11+4
  236 0012 0A88     		ldrh	r2, [r1]
  237 0014 B1F90010 		ldrsh	r1, [r1]
- 238              		.loc 1 87 5 view .LVU63
+ 238              		.loc 1 88 5 view .LVU63
  239 0018 0029     		cmp	r1, #0
  240 001a 1DDB     		blt	.L5
-  88:SYSTEM/usart/usart.c **** 		{
-  89:SYSTEM/usart/usart.c **** 			if(USART_RX_STA&0x4000)
- 241              		.loc 1 89 4 is_stmt 1 view .LVU64
- 242              		.loc 1 89 6 is_stmt 0 view .LVU65
+  89:SYSTEM/usart/usart.c **** 		{
+  90:SYSTEM/usart/usart.c **** 			if(USART_RX_STA&0x4000)
+ 241              		.loc 1 90 4 is_stmt 1 view .LVU64
+ 242              		.loc 1 90 6 is_stmt 0 view .LVU65
  243 001c 12F4804F 		tst	r2, #16384
  244 0020 0CD0     		beq	.L7
-  90:SYSTEM/usart/usart.c **** 			{
-  91:SYSTEM/usart/usart.c **** 				if(res!=0x0a)USART_RX_STA=0;
- 245              		.loc 1 91 5 is_stmt 1 view .LVU66
- 246              		.loc 1 91 7 is_stmt 0 view .LVU67
+  91:SYSTEM/usart/usart.c **** 			{
+  92:SYSTEM/usart/usart.c **** 				if(res!=0x0a)USART_RX_STA=0;
+ 245              		.loc 1 92 5 is_stmt 1 view .LVU66
+ 246              		.loc 1 92 7 is_stmt 0 view .LVU67
  247 0022 0A2B     		cmp	r3, #10
  248 0024 03D0     		beq	.L8
- 249              		.loc 1 91 18 is_stmt 1 discriminator 1 view .LVU68
- 250              		.loc 1 91 30 is_stmt 0 discriminator 1 view .LVU69
+ 249              		.loc 1 92 18 is_stmt 1 discriminator 1 view .LVU68
+ 250              		.loc 1 92 30 is_stmt 0 discriminator 1 view .LVU69
  251 0026 104B     		ldr	r3, .L11+4
  252              	.LVL18:
- 253              		.loc 1 91 30 discriminator 1 view .LVU70
+ 253              		.loc 1 92 30 discriminator 1 view .LVU70
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 7
+
+
  254 0028 0022     		movs	r2, #0
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 7
-
-
  255 002a 1A80     		strh	r2, [r3]	@ movhi
  256 002c 7047     		bx	lr
  257              	.LVL19:
  258              	.L8:
-  92:SYSTEM/usart/usart.c **** 				else USART_RX_STA|=0x8000;	
- 259              		.loc 1 92 10 is_stmt 1 view .LVU71
- 260              		.loc 1 92 22 is_stmt 0 view .LVU72
+  93:SYSTEM/usart/usart.c **** 				else USART_RX_STA|=0x8000;	
+ 259              		.loc 1 93 10 is_stmt 1 view .LVU71
+ 260              		.loc 1 93 22 is_stmt 0 view .LVU72
  261 002e 6FEA4242 		mvn	r2, r2, lsl #17
  262 0032 6FEA5242 		mvn	r2, r2, lsr #17
  263 0036 0C4B     		ldr	r3, .L11+4
  264              	.LVL20:
- 265              		.loc 1 92 22 view .LVU73
+ 265              		.loc 1 93 22 view .LVU73
  266 0038 1A80     		strh	r2, [r3]	@ movhi
  267 003a 7047     		bx	lr
  268              	.LVL21:
  269              	.L7:
-  93:SYSTEM/usart/usart.c **** 			}
-  94:SYSTEM/usart/usart.c **** 			else 
-  95:SYSTEM/usart/usart.c **** 			{	
-  96:SYSTEM/usart/usart.c **** 				if(res==0x0d)USART_RX_STA|=0x4000;
- 270              		.loc 1 96 5 is_stmt 1 view .LVU74
- 271              		.loc 1 96 7 is_stmt 0 view .LVU75
+  94:SYSTEM/usart/usart.c **** 			}
+  95:SYSTEM/usart/usart.c **** 			else 
+  96:SYSTEM/usart/usart.c **** 			{	
+  97:SYSTEM/usart/usart.c **** 				if(res==0x0d)USART_RX_STA|=0x4000;
+ 270              		.loc 1 97 5 is_stmt 1 view .LVU74
+ 271              		.loc 1 97 7 is_stmt 0 view .LVU75
  272 003c 0D2B     		cmp	r3, #13
  273 003e 0CD0     		beq	.L10
-  97:SYSTEM/usart/usart.c **** 				else
-  98:SYSTEM/usart/usart.c **** 				{
-  99:SYSTEM/usart/usart.c **** 					USART_RX_BUF[USART_RX_STA&0X3FFF]=res;
- 274              		.loc 1 99 6 is_stmt 1 view .LVU76
- 275              		.loc 1 99 31 is_stmt 0 view .LVU77
+  98:SYSTEM/usart/usart.c **** 				else
+  99:SYSTEM/usart/usart.c **** 				{
+ 100:SYSTEM/usart/usart.c **** 					USART_RX_BUF[USART_RX_STA&0X3FFF]=res;
+ 274              		.loc 1 100 6 is_stmt 1 view .LVU76
+ 275              		.loc 1 100 31 is_stmt 0 view .LVU77
  276 0040 C2F30D01 		ubfx	r1, r2, #0, #14
- 277              		.loc 1 99 39 view .LVU78
+ 277              		.loc 1 100 39 view .LVU78
  278 0044 0948     		ldr	r0, .L11+8
  279 0046 4354     		strb	r3, [r0, r1]
- 100:SYSTEM/usart/usart.c **** 					USART_RX_STA++;
- 280              		.loc 1 100 6 is_stmt 1 view .LVU79
- 281              		.loc 1 100 18 is_stmt 0 view .LVU80
+ 101:SYSTEM/usart/usart.c **** 					USART_RX_STA++;
+ 280              		.loc 1 101 6 is_stmt 1 view .LVU79
+ 281              		.loc 1 101 18 is_stmt 0 view .LVU80
  282 0048 0132     		adds	r2, r2, #1
  283 004a 92B2     		uxth	r2, r2
  284 004c 064B     		ldr	r3, .L11+4
  285              	.LVL22:
- 286              		.loc 1 100 18 view .LVU81
+ 286              		.loc 1 101 18 view .LVU81
  287 004e 1A80     		strh	r2, [r3]	@ movhi
- 101:SYSTEM/usart/usart.c **** 					if(USART_RX_STA>(USART_REC_LEN-1))USART_RX_STA=0;	  
- 288              		.loc 1 101 6 is_stmt 1 view .LVU82
- 289              		.loc 1 101 8 is_stmt 0 view .LVU83
+ 102:SYSTEM/usart/usart.c **** 					if(USART_RX_STA>(USART_REC_LEN-1))USART_RX_STA=0;	  
+ 288              		.loc 1 102 6 is_stmt 1 view .LVU82
+ 289              		.loc 1 102 8 is_stmt 0 view .LVU83
  290 0050 C72A     		cmp	r2, #199
  291 0052 01D9     		bls	.L5
- 292              		.loc 1 101 40 is_stmt 1 discriminator 1 view .LVU84
- 293              		.loc 1 101 52 is_stmt 0 discriminator 1 view .LVU85
+ 292              		.loc 1 102 40 is_stmt 1 discriminator 1 view .LVU84
+ 293              		.loc 1 102 52 is_stmt 0 discriminator 1 view .LVU85
  294 0054 0022     		movs	r2, #0
  295 0056 1A80     		strh	r2, [r3]	@ movhi
  296              	.LVL23:
  297              	.L5:
- 102:SYSTEM/usart/usart.c **** 				}		 
- 103:SYSTEM/usart/usart.c **** 			}
- 104:SYSTEM/usart/usart.c **** 		}  		 									     
- 105:SYSTEM/usart/usart.c **** 	} 
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 8
+ 103:SYSTEM/usart/usart.c **** 				}		 
+ 104:SYSTEM/usart/usart.c **** 			}
+ 105:SYSTEM/usart/usart.c **** 		}  		 									     
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 8
 
 
- 106:SYSTEM/usart/usart.c **** 
- 107:SYSTEM/usart/usart.c **** }
- 298              		.loc 1 107 1 view .LVU86
+ 106:SYSTEM/usart/usart.c **** 	} 
+ 107:SYSTEM/usart/usart.c **** 
+ 108:SYSTEM/usart/usart.c **** }
+ 298              		.loc 1 108 1 view .LVU86
  299 0058 7047     		bx	lr
  300              	.LVL24:
  301              	.L10:
-  96:SYSTEM/usart/usart.c **** 				else
- 302              		.loc 1 96 18 is_stmt 1 discriminator 1 view .LVU87
-  96:SYSTEM/usart/usart.c **** 				else
- 303              		.loc 1 96 30 is_stmt 0 discriminator 1 view .LVU88
+  97:SYSTEM/usart/usart.c **** 				else
+ 302              		.loc 1 97 18 is_stmt 1 discriminator 1 view .LVU87
+  97:SYSTEM/usart/usart.c **** 				else
+ 303              		.loc 1 97 30 is_stmt 0 discriminator 1 view .LVU88
  304 005a 42F48042 		orr	r2, r2, #16384
  305 005e 024B     		ldr	r3, .L11+4
  306              	.LVL25:
-  96:SYSTEM/usart/usart.c **** 				else
- 307              		.loc 1 96 30 discriminator 1 view .LVU89
+  97:SYSTEM/usart/usart.c **** 				else
+ 307              		.loc 1 97 30 discriminator 1 view .LVU89
  308 0060 1A80     		strh	r2, [r3]	@ movhi
  309 0062 7047     		bx	lr
  310              	.L12:
@@ -455,35 +456,35 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  326              	USART1_SEND_DATA_U8:
  327              	.LVL26:
  328              	.LFB129:
- 108:SYSTEM/usart/usart.c **** 
- 109:SYSTEM/usart/usart.c **** //发送函数
- 110:SYSTEM/usart/usart.c **** void USART1_SEND_DATA_U8(u8 data)
- 111:SYSTEM/usart/usart.c **** {
- 329              		.loc 1 111 1 is_stmt 1 view -0
+ 109:SYSTEM/usart/usart.c **** 
+ 110:SYSTEM/usart/usart.c **** //发送函数
+ 111:SYSTEM/usart/usart.c **** void USART1_SEND_DATA_U8(u8 data)
+ 112:SYSTEM/usart/usart.c **** {
+ 329              		.loc 1 112 1 is_stmt 1 view -0
  330              		.cfi_startproc
  331              		@ args = 0, pretend = 0, frame = 0
  332              		@ frame_needed = 0, uses_anonymous_args = 0
  333              		@ link register save eliminated.
- 112:SYSTEM/usart/usart.c **** 	USART1->DR = (data & (uint16_t)0x01FF);
- 334              		.loc 1 112 2 view .LVU91
- 335              		.loc 1 112 13 is_stmt 0 view .LVU92
+ 113:SYSTEM/usart/usart.c **** 	USART1->DR = (data & (uint16_t)0x01FF);
+ 334              		.loc 1 113 2 view .LVU91
+ 335              		.loc 1 113 13 is_stmt 0 view .LVU92
  336 0000 034B     		ldr	r3, .L15
  337 0002 9880     		strh	r0, [r3, #4]	@ movhi
- 113:SYSTEM/usart/usart.c **** 	while((USART1->SR&0X40)==0);
- 338              		.loc 1 113 2 is_stmt 1 view .LVU93
+ 114:SYSTEM/usart/usart.c **** 	while((USART1->SR&0X40)==0);
+ 338              		.loc 1 114 2 is_stmt 1 view .LVU93
  339              	.L14:
- 340              		.loc 1 113 25 discriminator 1 view .LVU94
- 341              		.loc 1 113 15 is_stmt 0 discriminator 1 view .LVU95
+ 340              		.loc 1 114 25 discriminator 1 view .LVU94
+ 341              		.loc 1 114 15 is_stmt 0 discriminator 1 view .LVU95
  342 0004 024B     		ldr	r3, .L15
  343 0006 1B88     		ldrh	r3, [r3]
- 344              		.loc 1 113 25 discriminator 1 view .LVU96
+ 344              		.loc 1 114 25 discriminator 1 view .LVU96
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 9
+
+
  345 0008 13F0400F 		tst	r3, #64
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 9
-
-
  346 000c FAD0     		beq	.L14
- 114:SYSTEM/usart/usart.c **** }
- 347              		.loc 1 114 1 view .LVU97
+ 115:SYSTEM/usart/usart.c **** }
+ 347              		.loc 1 115 1 view .LVU97
  348 000e 7047     		bx	lr
  349              	.L16:
  350              		.align	2
@@ -491,22 +492,22 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  352 0010 00100140 		.word	1073811456
  353              		.cfi_endproc
  354              	.LFE129:
- 356              		.section	.text.__printf,"ax",%progbits
+ 356              		.section	.text.printf,"ax",%progbits
  357              		.align	1
- 358              		.global	__printf
+ 358              		.global	printf
  359              		.syntax unified
  360              		.thumb
  361              		.thumb_func
- 363              	__printf:
+ 363              	printf:
  364              	.LVL27:
  365              	.LFB126:
-  28:SYSTEM/usart/usart.c **** 	char String[256];						//定义字符数组
- 366              		.loc 1 28 1 is_stmt 1 view -0
+  27:SYSTEM/usart/usart.c **** 	char String[256];						//定义字符数组
+ 366              		.loc 1 27 1 is_stmt 1 view -0
  367              		.cfi_startproc
  368              		@ args = 4, pretend = 16, frame = 264
  369              		@ frame_needed = 0, uses_anonymous_args = 1
-  28:SYSTEM/usart/usart.c **** 	char String[256];						//定义字符数组
- 370              		.loc 1 28 1 is_stmt 0 view .LVU99
+  27:SYSTEM/usart/usart.c **** 	char String[256];						//定义字符数组
+ 370              		.loc 1 27 1 is_stmt 0 view .LVU99
  371 0000 0FB4     		push	{r0, r1, r2, r3}
  372              	.LCFI3:
  373              		.cfi_def_cfa_offset 16
@@ -524,56 +525,56 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  385              		.cfi_def_cfa_offset 288
  386 0006 44AA     		add	r2, sp, #272
  387 0008 52F8041B 		ldr	r1, [r2], #4
-  29:SYSTEM/usart/usart.c **** 	va_list arg;							//定义可变参数列表数据类型的变量arg
- 388              		.loc 1 29 2 is_stmt 1 view .LVU100
-  30:SYSTEM/usart/usart.c **** 	va_start(arg, format);					//从format开始，接收参数列表到arg变量
- 389              		.loc 1 30 2 view .LVU101
-  31:SYSTEM/usart/usart.c **** 	vsprintf(String, format, arg);			//使用vsprintf打印格式化字符串和参数列表到字符�
- 390              		.loc 1 31 2 view .LVU102
+  28:SYSTEM/usart/usart.c **** 	va_list arg;							//定义可变参数列表数据类型的变量arg
+ 388              		.loc 1 28 2 is_stmt 1 view .LVU100
+  29:SYSTEM/usart/usart.c **** 	va_start(arg, format);					//从format开始，接收参数列表到arg变量
+ 389              		.loc 1 29 2 view .LVU101
+  30:SYSTEM/usart/usart.c **** 	vsprintf(String, format, arg);			//使用vsprintf打印格式化字符串和参数列表到字符�
+ 390              		.loc 1 30 2 view .LVU102
  391 000c 0192     		str	r2, [sp, #4]
-  32:SYSTEM/usart/usart.c **** 	va_end(arg);							//结束变量arg
- 392              		.loc 1 32 2 view .LVU103
+  31:SYSTEM/usart/usart.c **** 	va_end(arg);							//结束变量arg
+ 392              		.loc 1 31 2 view .LVU103
  393 000e 02A8     		add	r0, sp, #8
  394 0010 FFF7FEFF 		bl	vsprintf
  395              	.LVL28:
-  33:SYSTEM/usart/usart.c **** 	u8 size;
- 396              		.loc 1 33 2 view .LVU104
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 10
+  32:SYSTEM/usart/usart.c **** 	u8 size;
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 10
 
 
-  34:SYSTEM/usart/usart.c **** 	for(size=0;String[size]!='\0';size++)
- 397              		.loc 1 34 2 view .LVU105
-  35:SYSTEM/usart/usart.c **** 	{
- 398              		.loc 1 35 2 view .LVU106
-  35:SYSTEM/usart/usart.c **** 	{
- 399              		.loc 1 35 10 is_stmt 0 view .LVU107
+ 396              		.loc 1 32 2 view .LVU104
+  33:SYSTEM/usart/usart.c **** 	for(size=0;String[size]!='\0';size++)
+ 397              		.loc 1 33 2 view .LVU105
+  34:SYSTEM/usart/usart.c **** 	{
+ 398              		.loc 1 34 2 view .LVU106
+  34:SYSTEM/usart/usart.c **** 	{
+ 399              		.loc 1 34 10 is_stmt 0 view .LVU107
  400 0014 0024     		movs	r4, #0
-  35:SYSTEM/usart/usart.c **** 	{
- 401              		.loc 1 35 2 view .LVU108
+  34:SYSTEM/usart/usart.c **** 	{
+ 401              		.loc 1 34 2 view .LVU108
  402 0016 03E0     		b	.L18
  403              	.LVL29:
  404              	.L19:
-  37:SYSTEM/usart/usart.c **** 	}
- 405              		.loc 1 37 3 is_stmt 1 view .LVU109
+  36:SYSTEM/usart/usart.c **** 	}
+ 405              		.loc 1 36 3 is_stmt 1 view .LVU109
  406 0018 FFF7FEFF 		bl	USART1_SEND_DATA_U8
  407              	.LVL30:
-  35:SYSTEM/usart/usart.c **** 	{
- 408              		.loc 1 35 36 discriminator 3 view .LVU110
+  34:SYSTEM/usart/usart.c **** 	{
+ 408              		.loc 1 34 36 discriminator 3 view .LVU110
  409 001c 0134     		adds	r4, r4, #1
  410              	.LVL31:
-  35:SYSTEM/usart/usart.c **** 	{
- 411              		.loc 1 35 36 is_stmt 0 discriminator 3 view .LVU111
+  34:SYSTEM/usart/usart.c **** 	{
+ 411              		.loc 1 34 36 is_stmt 0 discriminator 3 view .LVU111
  412 001e E4B2     		uxtb	r4, r4
  413              	.LVL32:
  414              	.L18:
-  35:SYSTEM/usart/usart.c **** 	{
- 415              		.loc 1 35 25 is_stmt 1 discriminator 1 view .LVU112
-  35:SYSTEM/usart/usart.c **** 	{
- 416              		.loc 1 35 19 is_stmt 0 discriminator 1 view .LVU113
+  34:SYSTEM/usart/usart.c **** 	{
+ 415              		.loc 1 34 25 is_stmt 1 discriminator 1 view .LVU112
+  34:SYSTEM/usart/usart.c **** 	{
+ 416              		.loc 1 34 19 is_stmt 0 discriminator 1 view .LVU113
  417 0020 02AB     		add	r3, sp, #8
  418 0022 185D     		ldrb	r0, [r3, r4]	@ zero_extendqisi2
-  35:SYSTEM/usart/usart.c **** 	{
- 419              		.loc 1 35 25 discriminator 1 view .LVU114
+  34:SYSTEM/usart/usart.c **** 	{
+ 419              		.loc 1 34 25 discriminator 1 view .LVU114
  420 0024 0028     		cmp	r0, #0
  421 0026 F7D1     		bne	.L19
   39:SYSTEM/usart/usart.c **** 
@@ -597,10 +598,10 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  438              		.cfi_restore 1
  439              		.cfi_restore 0
  440              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 11
+
+
  441 0030 7047     		bx	lr
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 11
-
-
  442              		.cfi_endproc
  443              	.LFE126:
  445              		.section	.text.USART1_SEND_BUF_U8,"ax",%progbits
@@ -612,14 +613,14 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  452              	USART1_SEND_BUF_U8:
  453              	.LVL34:
  454              	.LFB130:
- 115:SYSTEM/usart/usart.c **** 
- 116:SYSTEM/usart/usart.c **** void USART1_SEND_BUF_U8(u8*buf,u8 len)
- 117:SYSTEM/usart/usart.c **** {
- 455              		.loc 1 117 1 is_stmt 1 view -0
+ 116:SYSTEM/usart/usart.c **** 
+ 117:SYSTEM/usart/usart.c **** void USART1_SEND_BUF_U8(u8*buf,u8 len)
+ 118:SYSTEM/usart/usart.c **** {
+ 455              		.loc 1 118 1 is_stmt 1 view -0
  456              		.cfi_startproc
  457              		@ args = 0, pretend = 0, frame = 0
  458              		@ frame_needed = 0, uses_anonymous_args = 0
- 459              		.loc 1 117 1 is_stmt 0 view .LVU118
+ 459              		.loc 1 118 1 is_stmt 0 view .LVU118
  460 0000 38B5     		push	{r3, r4, r5, lr}
  461              	.LCFI9:
  462              		.cfi_def_cfa_offset 16
@@ -629,43 +630,43 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  466              		.cfi_offset 14, -4
  467 0002 0546     		mov	r5, r0
  468 0004 0C46     		mov	r4, r1
- 118:SYSTEM/usart/usart.c **** 	while(len)
- 469              		.loc 1 118 2 is_stmt 1 view .LVU119
- 470              		.loc 1 118 7 is_stmt 0 view .LVU120
+ 119:SYSTEM/usart/usart.c **** 	while(len)
+ 469              		.loc 1 119 2 is_stmt 1 view .LVU119
+ 470              		.loc 1 119 7 is_stmt 0 view .LVU120
  471 0006 05E0     		b	.L22
  472              	.LVL35:
  473              	.L23:
- 119:SYSTEM/usart/usart.c **** 	{
- 120:SYSTEM/usart/usart.c **** 		USART1_SEND_DATA_U8(*buf);
- 474              		.loc 1 120 3 is_stmt 1 view .LVU121
+ 120:SYSTEM/usart/usart.c **** 	{
+ 121:SYSTEM/usart/usart.c **** 		USART1_SEND_DATA_U8(*buf);
+ 474              		.loc 1 121 3 is_stmt 1 view .LVU121
  475 0008 15F8010B 		ldrb	r0, [r5], #1	@ zero_extendqisi2
  476              	.LVL36:
- 477              		.loc 1 120 3 is_stmt 0 view .LVU122
+ 477              		.loc 1 121 3 is_stmt 0 view .LVU122
  478 000c FFF7FEFF 		bl	USART1_SEND_DATA_U8
  479              	.LVL37:
- 121:SYSTEM/usart/usart.c **** 		buf++;
- 480              		.loc 1 121 3 is_stmt 1 view .LVU123
- 122:SYSTEM/usart/usart.c **** 		len--;
- 481              		.loc 1 122 3 view .LVU124
- 482              		.loc 1 122 6 is_stmt 0 view .LVU125
+ 122:SYSTEM/usart/usart.c **** 		buf++;
+ 480              		.loc 1 122 3 is_stmt 1 view .LVU123
+ 123:SYSTEM/usart/usart.c **** 		len--;
+ 481              		.loc 1 123 3 view .LVU124
+ 482              		.loc 1 123 6 is_stmt 0 view .LVU125
  483 0010 013C     		subs	r4, r4, #1
  484              	.LVL38:
- 485              		.loc 1 122 6 view .LVU126
+ 485              		.loc 1 123 6 view .LVU126
  486 0012 E4B2     		uxtb	r4, r4
  487              	.LVL39:
  488              	.L22:
- 118:SYSTEM/usart/usart.c **** 	{
- 489              		.loc 1 118 8 is_stmt 1 view .LVU127
+ 119:SYSTEM/usart/usart.c **** 	{
+ 489              		.loc 1 119 8 is_stmt 1 view .LVU127
  490 0014 002C     		cmp	r4, #0
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 12
+
+
  491 0016 F7D1     		bne	.L23
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 12
-
-
- 123:SYSTEM/usart/usart.c **** 	}
- 124:SYSTEM/usart/usart.c **** }
- 492              		.loc 1 124 1 is_stmt 0 view .LVU128
+ 124:SYSTEM/usart/usart.c **** 	}
+ 125:SYSTEM/usart/usart.c **** }
+ 492              		.loc 1 125 1 is_stmt 0 view .LVU128
  493 0018 38BD     		pop	{r3, r4, r5, pc}
- 494              		.loc 1 124 1 view .LVU129
+ 494              		.loc 1 125 1 view .LVU129
  495              		.cfi_endproc
  496              	.LFE130:
  498              		.global	i
@@ -702,32 +703,32 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 1
  533              		.file 7 "system/usart/usart.h"
  534              		.file 8 "USER_LIB/inc/lib.h"
  535              		.file 9 "<built-in>"
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s 			page 13
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s 			page 13
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 usart.c
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:26     .text.uart_init:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:32     .text.uart_init:00000000 uart_init
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:198    .text.uart_init:000000d4 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:205    .text.USART1_IRQHandler:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:211    .text.USART1_IRQHandler:00000000 USART1_IRQHandler
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:313    .text.USART1_IRQHandler:00000064 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:510    .bss.USART_RX_STA:00000000 USART_RX_STA
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:517    .bss.USART_RX_BUF:00000000 USART_RX_BUF
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:320    .text.USART1_SEND_DATA_U8:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:326    .text.USART1_SEND_DATA_U8:00000000 USART1_SEND_DATA_U8
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:352    .text.USART1_SEND_DATA_U8:00000010 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:357    .text.__printf:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:363    .text.__printf:00000000 __printf
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:446    .text.USART1_SEND_BUF_U8:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:452    .text.USART1_SEND_BUF_U8:00000000 USART1_SEND_BUF_U8
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:503    .bss.i:00000000 i
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:500    .bss.i:00000000 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:507    .bss.USART_RX_STA:00000000 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:514    .bss.USART_RX_BUF:00000000 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:524    .bss.RX_sign:00000000 RX_sign
-C:\Users\ktkuru\AppData\Local\Temp\ccrjm09C.s:521    .bss.RX_sign:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:26     .text.uart_init:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:32     .text.uart_init:00000000 uart_init
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:198    .text.uart_init:000000d4 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:205    .text.USART1_IRQHandler:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:211    .text.USART1_IRQHandler:00000000 USART1_IRQHandler
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:313    .text.USART1_IRQHandler:00000064 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:510    .bss.USART_RX_STA:00000000 USART_RX_STA
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:517    .bss.USART_RX_BUF:00000000 USART_RX_BUF
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:320    .text.USART1_SEND_DATA_U8:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:326    .text.USART1_SEND_DATA_U8:00000000 USART1_SEND_DATA_U8
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:352    .text.USART1_SEND_DATA_U8:00000010 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:357    .text.printf:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:363    .text.printf:00000000 printf
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:446    .text.USART1_SEND_BUF_U8:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:452    .text.USART1_SEND_BUF_U8:00000000 USART1_SEND_BUF_U8
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:503    .bss.i:00000000 i
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:500    .bss.i:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:507    .bss.USART_RX_STA:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:514    .bss.USART_RX_BUF:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:524    .bss.RX_sign:00000000 RX_sign
+C:\Users\ktkuru\AppData\Local\Temp\ccbLye5q.s:521    .bss.RX_sign:00000000 $d
 
 UNDEFINED SYMBOLS
 __use_no_semihosting

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -27,20 +27,45 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 1
   24              		.thumb_func
   26              	ct_iic_delay:
   27              	.LFB126:
-   1:TOUCH/ctiic.c **** 
-   2:TOUCH/ctiic.c ****  
-   3:TOUCH/ctiic.c **** #include "ctiic.h"
-   4:TOUCH/ctiic.c **** #include "delay.h"
-   5:TOUCH/ctiic.c **** 
-   6:TOUCH/ctiic.c **** 
-   7:TOUCH/ctiic.c **** /**
-   8:TOUCH/ctiic.c ****  * @brief       ÊéßÂà∂I2CÈÄüÂ∫¶ÁöÑÂª∂Êó∂
-   9:TOUCH/ctiic.c ****  * @param       Êó†
-  10:TOUCH/ctiic.c ****  * @retval      Êó†
-  11:TOUCH/ctiic.c ****  */
-  12:TOUCH/ctiic.c **** static void ct_iic_delay(void)
-  13:TOUCH/ctiic.c **** {
-  28              		.loc 1 13 1 view -0
+   1:TOUCH/ctiic.c **** /**
+   2:TOUCH/ctiic.c ****  **************************************************************************************************
+   3:TOUCH/ctiic.c ****  * @file        ctiic.c
+   4:TOUCH/ctiic.c ****  * @author      ’˝µ„‘≠◊”Õ≈∂”(ALIENTEK)
+   5:TOUCH/ctiic.c ****  * @version     V1.0
+   6:TOUCH/ctiic.c ****  * @date        2022-12-27
+   7:TOUCH/ctiic.c ****  * @brief       µÁ»›¥•√˛∆¡ «˝∂Ø¥˙¬Î
+   8:TOUCH/ctiic.c ****  * @license     Copyright (c) 2022-2032, π„÷› ––«“ÌµÁ◊”ø∆ºº”–œﬁπ´Àæ
+   9:TOUCH/ctiic.c ****  **************************************************************************************************
+  10:TOUCH/ctiic.c ****  * @attention
+  11:TOUCH/ctiic.c ****  *
+  12:TOUCH/ctiic.c ****  *  µ—È∆ΩÃ®:’˝µ„‘≠◊” ∞¢≤®¬ﬁ F429ø™∑¢∞Â
+  13:TOUCH/ctiic.c ****  * ‘⁄œﬂ ”∆µ:www.yuanzige.com
+  14:TOUCH/ctiic.c ****  * ºº ı¬€Ã≥:www.openedv.com
+  15:TOUCH/ctiic.c ****  * π´ÀæÕ¯÷∑:www.alientek.com
+  16:TOUCH/ctiic.c ****  * π∫¬Úµÿ÷∑:openedv.taobao.com
+  17:TOUCH/ctiic.c ****  *
+  18:TOUCH/ctiic.c ****  * –ﬁ∏ƒÀµ√˜
+  19:TOUCH/ctiic.c ****  * V1.0 20221227
+  20:TOUCH/ctiic.c ****  * µ⁄“ª¥Œ∑¢≤º
+  21:TOUCH/ctiic.c ****  *
+  22:TOUCH/ctiic.c ****  **************************************************************************************************
+  23:TOUCH/ctiic.c ****  */
+  24:TOUCH/ctiic.c ****  
+  25:TOUCH/ctiic.c **** #include "ctiic.h"
+  26:TOUCH/ctiic.c **** #include "delay.h"
+  27:TOUCH/ctiic.c **** 
+  28:TOUCH/ctiic.c **** 
+  29:TOUCH/ctiic.c **** /**
+  30:TOUCH/ctiic.c ****  * @brief       øÿ÷∆I2CÀŸ∂»µƒ—” ±
+  31:TOUCH/ctiic.c ****  * @param       Œﬁ
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 2
+
+
+  32:TOUCH/ctiic.c ****  * @retval      Œﬁ
+  33:TOUCH/ctiic.c ****  */
+  34:TOUCH/ctiic.c **** static void ct_iic_delay(void)
+  35:TOUCH/ctiic.c **** {
+  28              		.loc 1 35 1 view -0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -49,18 +74,15 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 1
   34              		.cfi_def_cfa_offset 8
   35              		.cfi_offset 3, -8
   36              		.cfi_offset 14, -4
-  14:TOUCH/ctiic.c ****     delay_us(2);
-  37              		.loc 1 14 5 view .LVU1
+  36:TOUCH/ctiic.c ****     delay_us(2);
+  37              		.loc 1 36 5 view .LVU1
   38 0002 0220     		movs	r0, #2
   39 0004 FFF7FEFF 		bl	delay_us
   40              	.LVL0:
-  15:TOUCH/ctiic.c **** }
-  41              		.loc 1 15 1 is_stmt 0 view .LVU2
+  37:TOUCH/ctiic.c **** }
+  41              		.loc 1 37 1 is_stmt 0 view .LVU2
   42 0008 08BD     		pop	{r3, pc}
   43              		.cfi_endproc
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 2
-
-
   44              	.LFE126:
   46              		.section	.text.ct_iic_start,"ax",%progbits
   47              		.align	1
@@ -70,36 +92,39 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 1
   51              		.thumb_func
   53              	ct_iic_start:
   54              	.LFB128:
-  16:TOUCH/ctiic.c **** 
-  17:TOUCH/ctiic.c **** /**
-  18:TOUCH/ctiic.c ****  * @brief       ÁîµÂÆπËß¶Êë∏ËäØÁâáIICÊé•Âè£ÂàùÂßãÂåñ
-  19:TOUCH/ctiic.c ****  * @param       Êó†
-  20:TOUCH/ctiic.c ****  * @retval      Êó†
-  21:TOUCH/ctiic.c ****  */
-  22:TOUCH/ctiic.c **** void ct_iic_init(void)
-  23:TOUCH/ctiic.c **** {
-  24:TOUCH/ctiic.c ****     CT_IIC_SCL_GPIO_CLK_ENABLE();   /* SCLÂºïËÑöÊó∂Èíü‰ΩøËÉΩ */
-  25:TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();   /* SDAÂºïËÑöÊó∂Èíü‰ΩøËÉΩ */
-  26:TOUCH/ctiic.c **** 
-  27:TOUCH/ctiic.c ****     /* SCLÂºïËÑöÊ®°ÂºèËÆæÁΩÆ,ÂºÄÊºèËæìÂá∫,‰∏äÊãâ */
-  28:TOUCH/ctiic.c ****     GPIO_Set(CT_IIC_SCL_GPIO_PORT, CT_IIC_SCL_GPIO_PIN,
-  29:TOUCH/ctiic.c ****                  GPIO_MODE_OUT, GPIO_OTYPE_OD, GPIO_SPEED_50M, GPIO_PUPD_PU);
-  30:TOUCH/ctiic.c **** 
-  31:TOUCH/ctiic.c ****     /* SDAÂºïËÑöÊ®°ÂºèËÆæÁΩÆ,ÂºÄÊºèËæìÂá∫,‰∏äÊãâ, ËøôÊ†∑Â∞±‰∏çÁî®ÂÜçËÆæÁΩÆIOÊñπÂêë‰∫Ü, ÂºÄÊºèËæìÂá∫
-  32:TOUCH/ctiic.c ****     GPIO_Set(CT_IIC_SDA_GPIO_PORT, CT_IIC_SDA_GPIO_PIN,
-  33:TOUCH/ctiic.c ****                  GPIO_MODE_OUT, GPIO_OTYPE_OD, GPIO_SPEED_50M, GPIO_PUPD_PU);
-  34:TOUCH/ctiic.c **** 
-  35:TOUCH/ctiic.c ****     ct_iic_stop();  /* ÂÅúÊ≠¢ÊÄªÁ∫ø‰∏äÊâÄÊúâËÆæÂ§á */
-  36:TOUCH/ctiic.c **** }
-  37:TOUCH/ctiic.c **** 
-  38:TOUCH/ctiic.c **** /**
-  39:TOUCH/ctiic.c ****  * @brief       ‰∫ßÁîüIICËµ∑Âßã‰ø°Âè∑
-  40:TOUCH/ctiic.c ****  * @param       Êó†
-  41:TOUCH/ctiic.c ****  * @retval      Êó†
-  42:TOUCH/ctiic.c ****  */
-  43:TOUCH/ctiic.c **** void ct_iic_start(void)
-  44:TOUCH/ctiic.c **** {
-  55              		.loc 1 44 1 is_stmt 1 view -0
+  38:TOUCH/ctiic.c **** 
+  39:TOUCH/ctiic.c **** /**
+  40:TOUCH/ctiic.c ****  * @brief       µÁ»›¥•√˛–æ∆¨IICΩ”ø⁄≥ı ºªØ
+  41:TOUCH/ctiic.c ****  * @param       Œﬁ
+  42:TOUCH/ctiic.c ****  * @retval      Œﬁ
+  43:TOUCH/ctiic.c ****  */
+  44:TOUCH/ctiic.c **** void ct_iic_init(void)
+  45:TOUCH/ctiic.c **** {
+  46:TOUCH/ctiic.c ****     CT_IIC_SCL_GPIO_CLK_ENABLE();   /* SCL“˝Ω≈ ±÷” πƒ‹ */
+  47:TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();   /* SDA“˝Ω≈ ±÷” πƒ‹ */
+  48:TOUCH/ctiic.c **** 
+  49:TOUCH/ctiic.c ****     /* SCL“˝Ω≈ƒ£ Ω…Ë÷√,ø™¬© ‰≥ˆ,…œ¿≠ */
+  50:TOUCH/ctiic.c ****     sys_gpio_set(CT_IIC_SCL_GPIO_PORT, CT_IIC_SCL_GPIO_PIN,
+  51:TOUCH/ctiic.c ****                  SYS_GPIO_MODE_OUT, SYS_GPIO_OTYPE_OD, SYS_GPIO_SPEED_MID, SYS_GPIO_PUPD_PU);
+  52:TOUCH/ctiic.c **** 
+  53:TOUCH/ctiic.c ****     /* SDA“˝Ω≈ƒ£ Ω…Ë÷√,ø™¬© ‰≥ˆ,…œ¿≠, ’‚—˘æÕ≤ª”√‘Ÿ…Ë÷√IO∑ΩœÚ¡À, ø™¬© ‰≥ˆµƒ ±∫Ú(=1), “≤ø…“‘∂¡»°Õ‚≤ø–
+  54:TOUCH/ctiic.c ****     sys_gpio_set(CT_IIC_SDA_GPIO_PORT, CT_IIC_SDA_GPIO_PIN,
+  55:TOUCH/ctiic.c ****                  SYS_GPIO_MODE_OUT, SYS_GPIO_OTYPE_OD, SYS_GPIO_SPEED_MID, SYS_GPIO_PUPD_PU);
+  56:TOUCH/ctiic.c **** 
+  57:TOUCH/ctiic.c ****     ct_iic_stop();  /* Õ£÷π◊‹œﬂ…œÀ˘”–…Ë±∏ */
+  58:TOUCH/ctiic.c **** }
+  59:TOUCH/ctiic.c **** 
+  60:TOUCH/ctiic.c **** /**
+  61:TOUCH/ctiic.c ****  * @brief       ≤˙…˙IIC∆ º–≈∫≈
+  62:TOUCH/ctiic.c ****  * @param       Œﬁ
+  63:TOUCH/ctiic.c ****  * @retval      Œﬁ
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 3
+
+
+  64:TOUCH/ctiic.c ****  */
+  65:TOUCH/ctiic.c **** void ct_iic_start(void)
+  66:TOUCH/ctiic.c **** {
+  55              		.loc 1 66 1 is_stmt 1 view -0
   56              		.cfi_startproc
   57              		@ args = 0, pretend = 0, frame = 0
   58              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -110,788 +135,860 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 1
   63              		.cfi_offset 4, -12
   64              		.cfi_offset 5, -8
   65              		.cfi_offset 14, -4
-  45:TOUCH/ctiic.c ****     CT_IIC_SDA(1);
-  66              		.loc 1 45 5 view .LVU4
-  67 0002 094C     		ldr	r4, .L5
-  68 0004 0123     		movs	r3, #1
-  69 0006 C4F88C32 		str	r3, [r4, #652]
-  46:TOUCH/ctiic.c ****     CT_IIC_SCL(1);
-  70              		.loc 1 46 5 view .LVU5
-  71 000a C4F89832 		str	r3, [r4, #664]
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 3
+  67:TOUCH/ctiic.c ****     CT_IIC_SDA(1);
+  66              		.loc 1 67 5 view .LVU4
+  67 0002 0E4D     		ldr	r5, .L5
+  68 0004 0122     		movs	r2, #1
+  69 0006 0821     		movs	r1, #8
+  70 0008 2846     		mov	r0, r5
+  71 000a FFF7FEFF 		bl	sys_gpio_pin_set
+  72              	.LVL1:
+  68:TOUCH/ctiic.c ****     CT_IIC_SCL(1);
+  73              		.loc 1 68 5 view .LVU5
+  74 000e 0C4C     		ldr	r4, .L5+4
+  75 0010 0122     		movs	r2, #1
+  76 0012 4021     		movs	r1, #64
+  77 0014 2046     		mov	r0, r4
+  78 0016 FFF7FEFF 		bl	sys_gpio_pin_set
+  79              	.LVL2:
+  69:TOUCH/ctiic.c ****     ct_iic_delay();
+  80              		.loc 1 69 5 view .LVU6
+  81 001a FFF7FEFF 		bl	ct_iic_delay
+  82              	.LVL3:
+  70:TOUCH/ctiic.c ****     CT_IIC_SDA(0);      /* START–≈∫≈: µ±SCLŒ™∏ﬂ ±, SDA¥”∏ﬂ±‰≥…µÕ, ±Ì æ∆ º–≈∫≈ */
+  83              		.loc 1 70 5 view .LVU7
+  84 001e 0022     		movs	r2, #0
+  85 0020 0821     		movs	r1, #8
+  86 0022 2846     		mov	r0, r5
+  87 0024 FFF7FEFF 		bl	sys_gpio_pin_set
+  88              	.LVL4:
+  71:TOUCH/ctiic.c ****     ct_iic_delay();
+  89              		.loc 1 71 5 view .LVU8
+  90 0028 FFF7FEFF 		bl	ct_iic_delay
+  91              	.LVL5:
+  72:TOUCH/ctiic.c ****     CT_IIC_SCL(0);      /* «Ø◊°I2C◊‹œﬂ£¨◊º±∏∑¢ÀÕªÚΩ” ’ ˝æ› */
+  92              		.loc 1 72 5 view .LVU9
+  93 002c 0022     		movs	r2, #0
+  94 002e 4021     		movs	r1, #64
+  95 0030 2046     		mov	r0, r4
+  96 0032 FFF7FEFF 		bl	sys_gpio_pin_set
+  97              	.LVL6:
+  73:TOUCH/ctiic.c ****     ct_iic_delay();
+  98              		.loc 1 73 5 view .LVU10
+  99 0036 FFF7FEFF 		bl	ct_iic_delay
+ 100              	.LVL7:
+  74:TOUCH/ctiic.c **** }
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 4
 
 
-  47:TOUCH/ctiic.c ****     ct_iic_delay();
-  72              		.loc 1 47 5 view .LVU6
-  73 000e FFF7FEFF 		bl	ct_iic_delay
-  74              	.LVL1:
-  48:TOUCH/ctiic.c ****     CT_IIC_SDA(0);      /* START‰ø°Âè∑: ÂΩìSCL‰∏∫È´òÊó∂, SDA‰ªéÈ´òÂèòÊàê‰Ωé, Ë°®Á§∫Ëµ∑Âßã‰ø°Âè∑ */
-  75              		.loc 1 48 5 view .LVU7
-  76 0012 0025     		movs	r5, #0
-  77 0014 C4F88C52 		str	r5, [r4, #652]
-  49:TOUCH/ctiic.c ****     ct_iic_delay();
-  78              		.loc 1 49 5 view .LVU8
-  79 0018 FFF7FEFF 		bl	ct_iic_delay
-  80              	.LVL2:
-  50:TOUCH/ctiic.c ****     CT_IIC_SCL(0);      /* Èí≥‰ΩèI2CÊÄªÁ∫øÔºåÂáÜÂ§áÂèëÈÄÅÊàñÊé•Êî∂Êï∞ÊçÆ */
-  81              		.loc 1 50 5 view .LVU9
-  82 001c C4F89852 		str	r5, [r4, #664]
-  51:TOUCH/ctiic.c ****     ct_iic_delay();
-  83              		.loc 1 51 5 view .LVU10
-  84 0020 FFF7FEFF 		bl	ct_iic_delay
-  85              	.LVL3:
-  52:TOUCH/ctiic.c **** }
-  86              		.loc 1 52 1 is_stmt 0 view .LVU11
-  87 0024 38BD     		pop	{r3, r4, r5, pc}
-  88              	.L6:
-  89 0026 00BF     		.align	2
-  90              	.L5:
-  91 0028 00804342 		.word	1111719936
-  92              		.cfi_endproc
-  93              	.LFE128:
-  95              		.section	.text.ct_iic_stop,"ax",%progbits
-  96              		.align	1
-  97              		.global	ct_iic_stop
-  98              		.syntax unified
-  99              		.thumb
- 100              		.thumb_func
- 102              	ct_iic_stop:
- 103              	.LFB129:
-  53:TOUCH/ctiic.c **** 
-  54:TOUCH/ctiic.c **** /**
-  55:TOUCH/ctiic.c ****  * @brief       ‰∫ßÁîüIICÂÅúÊ≠¢‰ø°Âè∑
-  56:TOUCH/ctiic.c ****  * @param       Êó†
-  57:TOUCH/ctiic.c ****  * @retval      Êó†
-  58:TOUCH/ctiic.c ****  */
-  59:TOUCH/ctiic.c **** void ct_iic_stop(void)
-  60:TOUCH/ctiic.c **** {
- 104              		.loc 1 60 1 is_stmt 1 view -0
- 105              		.cfi_startproc
- 106              		@ args = 0, pretend = 0, frame = 0
- 107              		@ frame_needed = 0, uses_anonymous_args = 0
- 108 0000 38B5     		push	{r3, r4, r5, lr}
- 109              	.LCFI2:
- 110              		.cfi_def_cfa_offset 16
- 111              		.cfi_offset 3, -16
- 112              		.cfi_offset 4, -12
- 113              		.cfi_offset 5, -8
- 114              		.cfi_offset 14, -4
-  61:TOUCH/ctiic.c ****     CT_IIC_SDA(0);      /* STOP‰ø°Âè∑: ÂΩìSCL‰∏∫È´òÊó∂, SDA‰ªé‰ΩéÂèòÊàêÈ´ò, Ë°®Á§∫ÂÅúÊ≠¢‰ø°Âè∑ */
- 115              		.loc 1 61 5 view .LVU13
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 4
+ 101              		.loc 1 74 1 is_stmt 0 view .LVU11
+ 102 003a 38BD     		pop	{r3, r4, r5, pc}
+ 103              	.L6:
+ 104              		.align	2
+ 105              	.L5:
+ 106 003c 00200240 		.word	1073881088
+ 107 0040 001C0240 		.word	1073880064
+ 108              		.cfi_endproc
+ 109              	.LFE128:
+ 111              		.section	.text.ct_iic_stop,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	ct_iic_stop
+ 114              		.syntax unified
+ 115              		.thumb
+ 116              		.thumb_func
+ 118              	ct_iic_stop:
+ 119              	.LFB129:
+  75:TOUCH/ctiic.c **** 
+  76:TOUCH/ctiic.c **** /**
+  77:TOUCH/ctiic.c ****  * @brief       ≤˙…˙IICÕ£÷π–≈∫≈
+  78:TOUCH/ctiic.c ****  * @param       Œﬁ
+  79:TOUCH/ctiic.c ****  * @retval      Œﬁ
+  80:TOUCH/ctiic.c ****  */
+  81:TOUCH/ctiic.c **** void ct_iic_stop(void)
+  82:TOUCH/ctiic.c **** {
+ 120              		.loc 1 82 1 is_stmt 1 view -0
+ 121              		.cfi_startproc
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124 0000 10B5     		push	{r4, lr}
+ 125              	.LCFI2:
+ 126              		.cfi_def_cfa_offset 8
+ 127              		.cfi_offset 4, -8
+ 128              		.cfi_offset 14, -4
+  83:TOUCH/ctiic.c ****     CT_IIC_SDA(0);      /* STOP–≈∫≈: µ±SCLŒ™∏ﬂ ±, SDA¥”µÕ±‰≥…∏ﬂ, ±Ì æÕ£÷π–≈∫≈ */
+ 129              		.loc 1 83 5 view .LVU13
+ 130 0002 0B4C     		ldr	r4, .L9
+ 131 0004 0022     		movs	r2, #0
+ 132 0006 0821     		movs	r1, #8
+ 133 0008 2046     		mov	r0, r4
+ 134 000a FFF7FEFF 		bl	sys_gpio_pin_set
+ 135              	.LVL8:
+  84:TOUCH/ctiic.c ****     ct_iic_delay();
+ 136              		.loc 1 84 5 view .LVU14
+ 137 000e FFF7FEFF 		bl	ct_iic_delay
+ 138              	.LVL9:
+  85:TOUCH/ctiic.c ****     CT_IIC_SCL(1);
+ 139              		.loc 1 85 5 view .LVU15
+ 140 0012 0122     		movs	r2, #1
+ 141 0014 4021     		movs	r1, #64
+ 142 0016 0748     		ldr	r0, .L9+4
+ 143 0018 FFF7FEFF 		bl	sys_gpio_pin_set
+ 144              	.LVL10:
+  86:TOUCH/ctiic.c ****     ct_iic_delay();
+ 145              		.loc 1 86 5 view .LVU16
+ 146 001c FFF7FEFF 		bl	ct_iic_delay
+ 147              	.LVL11:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 5
 
 
- 116 0002 084C     		ldr	r4, .L9
- 117 0004 0023     		movs	r3, #0
- 118 0006 C4F88C32 		str	r3, [r4, #652]
-  62:TOUCH/ctiic.c ****     ct_iic_delay();
- 119              		.loc 1 62 5 view .LVU14
- 120 000a FFF7FEFF 		bl	ct_iic_delay
- 121              	.LVL4:
-  63:TOUCH/ctiic.c ****     CT_IIC_SCL(1);
- 122              		.loc 1 63 5 view .LVU15
- 123 000e 0125     		movs	r5, #1
- 124 0010 C4F89852 		str	r5, [r4, #664]
-  64:TOUCH/ctiic.c ****     ct_iic_delay();
- 125              		.loc 1 64 5 view .LVU16
- 126 0014 FFF7FEFF 		bl	ct_iic_delay
- 127              	.LVL5:
-  65:TOUCH/ctiic.c ****     CT_IIC_SDA(1);      /* ÂèëÈÄÅI2CÊÄªÁ∫øÁªìÊùü‰ø°Âè∑ */
- 128              		.loc 1 65 5 view .LVU17
- 129 0018 C4F88C52 		str	r5, [r4, #652]
-  66:TOUCH/ctiic.c ****     ct_iic_delay();
- 130              		.loc 1 66 5 view .LVU18
- 131 001c FFF7FEFF 		bl	ct_iic_delay
- 132              	.LVL6:
-  67:TOUCH/ctiic.c **** }
- 133              		.loc 1 67 1 is_stmt 0 view .LVU19
- 134 0020 38BD     		pop	{r3, r4, r5, pc}
- 135              	.L10:
- 136 0022 00BF     		.align	2
- 137              	.L9:
- 138 0024 00804342 		.word	1111719936
- 139              		.cfi_endproc
- 140              	.LFE129:
- 142              		.section	.text.ct_iic_init,"ax",%progbits
- 143              		.align	1
- 144              		.global	ct_iic_init
- 145              		.syntax unified
- 146              		.thumb
- 147              		.thumb_func
- 149              	ct_iic_init:
- 150              	.LFB127:
-  23:TOUCH/ctiic.c ****     CT_IIC_SCL_GPIO_CLK_ENABLE();   /* SCLÂºïËÑöÊó∂Èíü‰ΩøËÉΩ */
- 151              		.loc 1 23 1 is_stmt 1 view -0
- 152              		.cfi_startproc
- 153              		@ args = 0, pretend = 0, frame = 0
- 154              		@ frame_needed = 0, uses_anonymous_args = 0
- 155 0000 30B5     		push	{r4, r5, lr}
- 156              	.LCFI3:
- 157              		.cfi_def_cfa_offset 12
- 158              		.cfi_offset 4, -12
- 159              		.cfi_offset 5, -8
- 160              		.cfi_offset 14, -4
- 161 0002 83B0     		sub	sp, sp, #12
- 162              	.LCFI4:
- 163              		.cfi_def_cfa_offset 24
-  24:TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();   /* SDAÂºïËÑöÊó∂Èíü‰ΩøËÉΩ */
- 164              		.loc 1 24 5 view .LVU21
-  24:TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();   /* SDAÂºïËÑöÊó∂Èíü‰ΩøËÉΩ */
- 165              		.loc 1 24 5 view .LVU22
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 5
+  87:TOUCH/ctiic.c ****     CT_IIC_SDA(1);      /* ∑¢ÀÕI2C◊‹œﬂΩ· ¯–≈∫≈ */
+ 148              		.loc 1 87 5 view .LVU17
+ 149 0020 0122     		movs	r2, #1
+ 150 0022 0821     		movs	r1, #8
+ 151 0024 2046     		mov	r0, r4
+ 152 0026 FFF7FEFF 		bl	sys_gpio_pin_set
+ 153              	.LVL12:
+  88:TOUCH/ctiic.c ****     ct_iic_delay();
+ 154              		.loc 1 88 5 view .LVU18
+ 155 002a FFF7FEFF 		bl	ct_iic_delay
+ 156              	.LVL13:
+  89:TOUCH/ctiic.c **** }
+ 157              		.loc 1 89 1 is_stmt 0 view .LVU19
+ 158 002e 10BD     		pop	{r4, pc}
+ 159              	.L10:
+ 160              		.align	2
+ 161              	.L9:
+ 162 0030 00200240 		.word	1073881088
+ 163 0034 001C0240 		.word	1073880064
+ 164              		.cfi_endproc
+ 165              	.LFE129:
+ 167              		.section	.text.ct_iic_init,"ax",%progbits
+ 168              		.align	1
+ 169              		.global	ct_iic_init
+ 170              		.syntax unified
+ 171              		.thumb
+ 172              		.thumb_func
+ 174              	ct_iic_init:
+ 175              	.LFB127:
+  45:TOUCH/ctiic.c ****     CT_IIC_SCL_GPIO_CLK_ENABLE();   /* SCL“˝Ω≈ ±÷” πƒ‹ */
+ 176              		.loc 1 45 1 is_stmt 1 view -0
+ 177              		.cfi_startproc
+ 178              		@ args = 0, pretend = 0, frame = 0
+ 179              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180 0000 10B5     		push	{r4, lr}
+ 181              	.LCFI3:
+ 182              		.cfi_def_cfa_offset 8
+ 183              		.cfi_offset 4, -8
+ 184              		.cfi_offset 14, -4
+ 185 0002 82B0     		sub	sp, sp, #8
+ 186              	.LCFI4:
+ 187              		.cfi_def_cfa_offset 16
+  46:TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();   /* SDA“˝Ω≈ ±÷” πƒ‹ */
+ 188              		.loc 1 46 5 view .LVU21
+  46:TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();   /* SDA“˝Ω≈ ±÷” πƒ‹ */
+ 189              		.loc 1 46 5 view .LVU22
+ 190 0004 0E4B     		ldr	r3, .L13
+ 191 0006 1A6B     		ldr	r2, [r3, #48]
+ 192 0008 42F08002 		orr	r2, r2, #128
+ 193 000c 1A63     		str	r2, [r3, #48]
+  46:TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();   /* SDA“˝Ω≈ ±÷” πƒ‹ */
+ 194              		.loc 1 46 5 view .LVU23
+  47:TOUCH/ctiic.c **** 
+ 195              		.loc 1 47 5 view .LVU24
+  47:TOUCH/ctiic.c **** 
+ 196              		.loc 1 47 5 view .LVU25
+ 197 000e 1A6B     		ldr	r2, [r3, #48]
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 6
 
 
- 166 0004 0F4B     		ldr	r3, .L13
- 167 0006 1A6B     		ldr	r2, [r3, #48]
- 168 0008 42F08002 		orr	r2, r2, #128
- 169 000c 1A63     		str	r2, [r3, #48]
-  24:TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();   /* SDAÂºïËÑöÊó∂Èíü‰ΩøËÉΩ */
- 170              		.loc 1 24 5 view .LVU23
-  25:TOUCH/ctiic.c **** 
- 171              		.loc 1 25 5 view .LVU24
-  25:TOUCH/ctiic.c **** 
- 172              		.loc 1 25 5 view .LVU25
- 173 000e 1A6B     		ldr	r2, [r3, #48]
- 174 0010 42F48072 		orr	r2, r2, #256
- 175 0014 1A63     		str	r2, [r3, #48]
-  25:TOUCH/ctiic.c **** 
- 176              		.loc 1 25 5 view .LVU26
-  28:TOUCH/ctiic.c ****                  GPIO_MODE_OUT, GPIO_OTYPE_OD, GPIO_SPEED_50M, GPIO_PUPD_PU);
- 177              		.loc 1 28 5 view .LVU27
- 178 0016 0124     		movs	r4, #1
- 179 0018 0194     		str	r4, [sp, #4]
- 180 001a 0225     		movs	r5, #2
- 181 001c 0095     		str	r5, [sp]
- 182 001e 2346     		mov	r3, r4
- 183 0020 2246     		mov	r2, r4
- 184 0022 4021     		movs	r1, #64
- 185 0024 0848     		ldr	r0, .L13+4
- 186 0026 FFF7FEFF 		bl	GPIO_Set
- 187              	.LVL7:
-  32:TOUCH/ctiic.c ****                  GPIO_MODE_OUT, GPIO_OTYPE_OD, GPIO_SPEED_50M, GPIO_PUPD_PU);
- 188              		.loc 1 32 5 view .LVU28
- 189 002a 0194     		str	r4, [sp, #4]
- 190 002c 0095     		str	r5, [sp]
- 191 002e 2346     		mov	r3, r4
- 192 0030 2246     		mov	r2, r4
- 193 0032 0821     		movs	r1, #8
- 194 0034 0548     		ldr	r0, .L13+8
- 195 0036 FFF7FEFF 		bl	GPIO_Set
- 196              	.LVL8:
-  35:TOUCH/ctiic.c **** }
- 197              		.loc 1 35 5 view .LVU29
- 198 003a FFF7FEFF 		bl	ct_iic_stop
- 199              	.LVL9:
-  36:TOUCH/ctiic.c **** 
- 200              		.loc 1 36 1 is_stmt 0 view .LVU30
- 201 003e 03B0     		add	sp, sp, #12
- 202              	.LCFI5:
- 203              		.cfi_def_cfa_offset 12
- 204              		@ sp needed
- 205 0040 30BD     		pop	{r4, r5, pc}
- 206              	.L14:
- 207 0042 00BF     		.align	2
- 208              	.L13:
- 209 0044 00380240 		.word	1073887232
- 210 0048 001C0240 		.word	1073880064
- 211 004c 00200240 		.word	1073881088
- 212              		.cfi_endproc
- 213              	.LFE127:
- 215              		.section	.text.ct_iic_wait_ack,"ax",%progbits
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 6
+ 198 0010 42F48072 		orr	r2, r2, #256
+ 199 0014 1A63     		str	r2, [r3, #48]
+  47:TOUCH/ctiic.c **** 
+ 200              		.loc 1 47 5 view .LVU26
+  50:TOUCH/ctiic.c ****                  SYS_GPIO_MODE_OUT, SYS_GPIO_OTYPE_OD, SYS_GPIO_SPEED_MID, SYS_GPIO_PUPD_PU);
+ 201              		.loc 1 50 5 view .LVU27
+ 202 0016 0124     		movs	r4, #1
+ 203 0018 0194     		str	r4, [sp, #4]
+ 204 001a 0094     		str	r4, [sp]
+ 205 001c 2346     		mov	r3, r4
+ 206 001e 2246     		mov	r2, r4
+ 207 0020 4021     		movs	r1, #64
+ 208 0022 0848     		ldr	r0, .L13+4
+ 209 0024 FFF7FEFF 		bl	sys_gpio_set
+ 210              	.LVL14:
+  54:TOUCH/ctiic.c ****                  SYS_GPIO_MODE_OUT, SYS_GPIO_OTYPE_OD, SYS_GPIO_SPEED_MID, SYS_GPIO_PUPD_PU);
+ 211              		.loc 1 54 5 view .LVU28
+ 212 0028 0194     		str	r4, [sp, #4]
+ 213 002a 0094     		str	r4, [sp]
+ 214 002c 2346     		mov	r3, r4
+ 215 002e 2246     		mov	r2, r4
+ 216 0030 0821     		movs	r1, #8
+ 217 0032 0548     		ldr	r0, .L13+8
+ 218 0034 FFF7FEFF 		bl	sys_gpio_set
+ 219              	.LVL15:
+  57:TOUCH/ctiic.c **** }
+ 220              		.loc 1 57 5 view .LVU29
+ 221 0038 FFF7FEFF 		bl	ct_iic_stop
+ 222              	.LVL16:
+  58:TOUCH/ctiic.c **** 
+ 223              		.loc 1 58 1 is_stmt 0 view .LVU30
+ 224 003c 02B0     		add	sp, sp, #8
+ 225              	.LCFI5:
+ 226              		.cfi_def_cfa_offset 8
+ 227              		@ sp needed
+ 228 003e 10BD     		pop	{r4, pc}
+ 229              	.L14:
+ 230              		.align	2
+ 231              	.L13:
+ 232 0040 00380240 		.word	1073887232
+ 233 0044 001C0240 		.word	1073880064
+ 234 0048 00200240 		.word	1073881088
+ 235              		.cfi_endproc
+ 236              	.LFE127:
+ 238              		.section	.text.ct_iic_wait_ack,"ax",%progbits
+ 239              		.align	1
+ 240              		.global	ct_iic_wait_ack
+ 241              		.syntax unified
+ 242              		.thumb
+ 243              		.thumb_func
+ 245              	ct_iic_wait_ack:
+ 246              	.LFB130:
+  90:TOUCH/ctiic.c **** 
+  91:TOUCH/ctiic.c **** /**
+  92:TOUCH/ctiic.c ****  * @brief       µ»¥˝”¶¥–≈∫≈µΩ¿¥
+  93:TOUCH/ctiic.c ****  * @param       Œﬁ
+  94:TOUCH/ctiic.c ****  * @retval      1£¨Ω” ’”¶¥ ß∞‹
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 7
 
 
- 216              		.align	1
- 217              		.global	ct_iic_wait_ack
- 218              		.syntax unified
- 219              		.thumb
- 220              		.thumb_func
- 222              	ct_iic_wait_ack:
- 223              	.LFB130:
-  68:TOUCH/ctiic.c **** 
-  69:TOUCH/ctiic.c **** /**
-  70:TOUCH/ctiic.c ****  * @brief       Á≠âÂæÖÂ∫îÁ≠î‰ø°Âè∑Âà∞Êù•
-  71:TOUCH/ctiic.c ****  * @param       Êó†
-  72:TOUCH/ctiic.c ****  * @retval      1ÔºåÊé•Êî∂Â∫îÁ≠îÂ§±Ë¥•
-  73:TOUCH/ctiic.c ****  *              0ÔºåÊé•Êî∂Â∫îÁ≠îÊàêÂäü
-  74:TOUCH/ctiic.c ****  */
-  75:TOUCH/ctiic.c **** uint8_t ct_iic_wait_ack(void)
-  76:TOUCH/ctiic.c **** {
- 224              		.loc 1 76 1 is_stmt 1 view -0
- 225              		.cfi_startproc
- 226              		@ args = 0, pretend = 0, frame = 0
- 227              		@ frame_needed = 0, uses_anonymous_args = 0
- 228 0000 38B5     		push	{r3, r4, r5, lr}
- 229              	.LCFI6:
- 230              		.cfi_def_cfa_offset 16
- 231              		.cfi_offset 3, -16
- 232              		.cfi_offset 4, -12
- 233              		.cfi_offset 5, -8
- 234              		.cfi_offset 14, -4
-  77:TOUCH/ctiic.c ****     uint8_t waittime = 0;
- 235              		.loc 1 77 5 view .LVU32
- 236              	.LVL10:
-  78:TOUCH/ctiic.c ****     uint8_t rack = 0;
- 237              		.loc 1 78 5 view .LVU33
-  79:TOUCH/ctiic.c ****     
-  80:TOUCH/ctiic.c ****     CT_IIC_SDA(1);      /* ‰∏ªÊú∫ÈáäÊîæSDAÁ∫ø(Ê≠§Êó∂Â§ñÈÉ®Âô®‰ª∂ÂèØ‰ª•Êãâ‰ΩéSDAÁ∫ø) */
- 238              		.loc 1 80 5 view .LVU34
- 239 0002 114C     		ldr	r4, .L23
- 240 0004 0125     		movs	r5, #1
- 241 0006 C4F88C52 		str	r5, [r4, #652]
-  81:TOUCH/ctiic.c ****     ct_iic_delay();
- 242              		.loc 1 81 5 view .LVU35
- 243 000a FFF7FEFF 		bl	ct_iic_delay
- 244              	.LVL11:
-  82:TOUCH/ctiic.c ****     CT_IIC_SCL(1);      /* SCL=1, Ê≠§Êó∂‰ªéÊú∫ÂèØ‰ª•ËøîÂõûACK */
- 245              		.loc 1 82 5 view .LVU36
- 246 000e C4F89852 		str	r5, [r4, #664]
-  83:TOUCH/ctiic.c ****     ct_iic_delay();
- 247              		.loc 1 83 5 view .LVU37
- 248 0012 FFF7FEFF 		bl	ct_iic_delay
- 249              	.LVL12:
-  84:TOUCH/ctiic.c **** 
-  85:TOUCH/ctiic.c ****     while (CT_READ_SDA) /* Á≠âÂæÖÂ∫îÁ≠î */
- 250              		.loc 1 85 5 view .LVU38
-  77:TOUCH/ctiic.c ****     uint8_t rack = 0;
- 251              		.loc 1 77 13 is_stmt 0 view .LVU39
- 252 0016 0024     		movs	r4, #0
- 253              	.LVL13:
- 254              	.L16:
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 7
+  95:TOUCH/ctiic.c ****  *              0£¨Ω” ’”¶¥≥…π¶
+  96:TOUCH/ctiic.c ****  */
+  97:TOUCH/ctiic.c **** uint8_t ct_iic_wait_ack(void)
+  98:TOUCH/ctiic.c **** {
+ 247              		.loc 1 98 1 is_stmt 1 view -0
+ 248              		.cfi_startproc
+ 249              		@ args = 0, pretend = 0, frame = 0
+ 250              		@ frame_needed = 0, uses_anonymous_args = 0
+ 251 0000 38B5     		push	{r3, r4, r5, lr}
+ 252              	.LCFI6:
+ 253              		.cfi_def_cfa_offset 16
+ 254              		.cfi_offset 3, -16
+ 255              		.cfi_offset 4, -12
+ 256              		.cfi_offset 5, -8
+ 257              		.cfi_offset 14, -4
+  99:TOUCH/ctiic.c ****     uint8_t waittime = 0;
+ 258              		.loc 1 99 5 view .LVU32
+ 259              	.LVL17:
+ 100:TOUCH/ctiic.c ****     uint8_t rack = 0;
+ 260              		.loc 1 100 5 view .LVU33
+ 101:TOUCH/ctiic.c ****     
+ 102:TOUCH/ctiic.c ****     CT_IIC_SDA(1);      /* ÷˜ª˙ Õ∑≈SDAœﬂ(¥À ±Õ‚≤ø∆˜º˛ø…“‘¿≠µÕSDAœﬂ) */
+ 261              		.loc 1 102 5 view .LVU34
+ 262 0002 0122     		movs	r2, #1
+ 263 0004 0821     		movs	r1, #8
+ 264 0006 1348     		ldr	r0, .L22
+ 265 0008 FFF7FEFF 		bl	sys_gpio_pin_set
+ 266              	.LVL18:
+ 103:TOUCH/ctiic.c ****     ct_iic_delay();
+ 267              		.loc 1 103 5 view .LVU35
+ 268 000c FFF7FEFF 		bl	ct_iic_delay
+ 269              	.LVL19:
+ 104:TOUCH/ctiic.c ****     CT_IIC_SCL(1);      /* SCL=1, ¥À ±¥”ª˙ø…“‘∑µªÿACK */
+ 270              		.loc 1 104 5 view .LVU36
+ 271 0010 0122     		movs	r2, #1
+ 272 0012 4021     		movs	r1, #64
+ 273 0014 1048     		ldr	r0, .L22+4
+ 274 0016 FFF7FEFF 		bl	sys_gpio_pin_set
+ 275              	.LVL20:
+ 105:TOUCH/ctiic.c ****     ct_iic_delay();
+ 276              		.loc 1 105 5 view .LVU37
+ 277 001a FFF7FEFF 		bl	ct_iic_delay
+ 278              	.LVL21:
+ 106:TOUCH/ctiic.c **** 
+ 107:TOUCH/ctiic.c ****     while (CT_READ_SDA) /* µ»¥˝”¶¥ */
+ 279              		.loc 1 107 5 view .LVU38
+  99:TOUCH/ctiic.c ****     uint8_t rack = 0;
+ 280              		.loc 1 99 13 is_stmt 0 view .LVU39
+ 281 001e 0024     		movs	r4, #0
+ 282              	.LVL22:
+ 283              	.L16:
+ 284              		.loc 1 107 12 is_stmt 1 view .LVU40
+ 285 0020 0821     		movs	r1, #8
+ 286 0022 0C48     		ldr	r0, .L22
+ 287 0024 FFF7FEFF 		bl	sys_gpio_pin_get
+ 288              	.LVL23:
+ 289              		.loc 1 107 12 is_stmt 0 discriminator 1 view .LVU41
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 8
 
 
- 255              		.loc 1 85 12 is_stmt 1 view .LVU40
- 256 0018 0B4B     		ldr	r3, .L23
- 257 001a D3F80C32 		ldr	r3, [r3, #524]
- 258 001e 53B1     		cbz	r3, .L21
-  86:TOUCH/ctiic.c ****     {
-  87:TOUCH/ctiic.c ****         waittime++;
- 259              		.loc 1 87 9 view .LVU41
- 260              		.loc 1 87 17 is_stmt 0 view .LVU42
- 261 0020 0134     		adds	r4, r4, #1
- 262              	.LVL14:
- 263              		.loc 1 87 17 view .LVU43
- 264 0022 E4B2     		uxtb	r4, r4
- 265              	.LVL15:
-  88:TOUCH/ctiic.c **** 
-  89:TOUCH/ctiic.c ****         if (waittime > 250)
- 266              		.loc 1 89 9 is_stmt 1 view .LVU44
- 267              		.loc 1 89 12 is_stmt 0 view .LVU45
- 268 0024 FA2C     		cmp	r4, #250
- 269 0026 02D8     		bhi	.L22
-  90:TOUCH/ctiic.c ****         {
-  91:TOUCH/ctiic.c ****             ct_iic_stop();
-  92:TOUCH/ctiic.c ****             rack = 1;
-  93:TOUCH/ctiic.c ****             break;
-  94:TOUCH/ctiic.c ****         }
-  95:TOUCH/ctiic.c **** 
-  96:TOUCH/ctiic.c ****         ct_iic_delay();
- 270              		.loc 1 96 9 is_stmt 1 view .LVU46
- 271 0028 FFF7FEFF 		bl	ct_iic_delay
- 272              	.LVL16:
- 273 002c F4E7     		b	.L16
- 274              	.L22:
-  91:TOUCH/ctiic.c ****             rack = 1;
- 275              		.loc 1 91 13 view .LVU47
- 276 002e FFF7FEFF 		bl	ct_iic_stop
- 277              	.LVL17:
-  92:TOUCH/ctiic.c ****             break;
- 278              		.loc 1 92 13 view .LVU48
-  93:TOUCH/ctiic.c ****         }
- 279              		.loc 1 93 13 view .LVU49
-  92:TOUCH/ctiic.c ****             break;
- 280              		.loc 1 92 18 is_stmt 0 view .LVU50
- 281 0032 0124     		movs	r4, #1
- 282              	.LVL18:
-  93:TOUCH/ctiic.c ****         }
- 283              		.loc 1 93 13 view .LVU51
- 284 0034 00E0     		b	.L18
- 285              	.LVL19:
- 286              	.L21:
-  78:TOUCH/ctiic.c ****     
- 287              		.loc 1 78 13 view .LVU52
- 288 0036 0024     		movs	r4, #0
- 289              	.LVL20:
- 290              	.L18:
-  97:TOUCH/ctiic.c ****     }
-  98:TOUCH/ctiic.c **** 
-  99:TOUCH/ctiic.c ****     CT_IIC_SCL(0);      /* SCL=0, ÁªìÊùüACKÊ£ÄÊü• */
- 291              		.loc 1 99 5 is_stmt 1 view .LVU53
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 8
+ 290 0028 0546     		mov	r5, r0
+ 291 002a 48B1     		cbz	r0, .L18
+ 108:TOUCH/ctiic.c ****     {
+ 109:TOUCH/ctiic.c ****         waittime++;
+ 292              		.loc 1 109 9 is_stmt 1 view .LVU42
+ 293              		.loc 1 109 17 is_stmt 0 view .LVU43
+ 294 002c 0134     		adds	r4, r4, #1
+ 295              	.LVL24:
+ 296              		.loc 1 109 17 view .LVU44
+ 297 002e E4B2     		uxtb	r4, r4
+ 298              	.LVL25:
+ 110:TOUCH/ctiic.c **** 
+ 111:TOUCH/ctiic.c ****         if (waittime > 250)
+ 299              		.loc 1 111 9 is_stmt 1 view .LVU45
+ 300              		.loc 1 111 12 is_stmt 0 view .LVU46
+ 301 0030 FA2C     		cmp	r4, #250
+ 302 0032 02D8     		bhi	.L21
+ 112:TOUCH/ctiic.c ****         {
+ 113:TOUCH/ctiic.c ****             ct_iic_stop();
+ 114:TOUCH/ctiic.c ****             rack = 1;
+ 115:TOUCH/ctiic.c ****             break;
+ 116:TOUCH/ctiic.c ****         }
+ 117:TOUCH/ctiic.c **** 
+ 118:TOUCH/ctiic.c ****         ct_iic_delay();
+ 303              		.loc 1 118 9 is_stmt 1 view .LVU47
+ 304 0034 FFF7FEFF 		bl	ct_iic_delay
+ 305              	.LVL26:
+ 306 0038 F2E7     		b	.L16
+ 307              	.L21:
+ 113:TOUCH/ctiic.c ****             rack = 1;
+ 308              		.loc 1 113 13 view .LVU48
+ 309 003a FFF7FEFF 		bl	ct_iic_stop
+ 310              	.LVL27:
+ 114:TOUCH/ctiic.c ****             break;
+ 311              		.loc 1 114 13 view .LVU49
+ 115:TOUCH/ctiic.c ****         }
+ 312              		.loc 1 115 13 view .LVU50
+ 114:TOUCH/ctiic.c ****             break;
+ 313              		.loc 1 114 18 is_stmt 0 view .LVU51
+ 314 003e 0125     		movs	r5, #1
+ 315              	.LVL28:
+ 316              	.L18:
+ 119:TOUCH/ctiic.c ****     }
+ 120:TOUCH/ctiic.c **** 
+ 121:TOUCH/ctiic.c ****     CT_IIC_SCL(0);      /* SCL=0, Ω· ¯ACKºÏ≤È */
+ 317              		.loc 1 121 5 is_stmt 1 view .LVU52
+ 318 0040 0022     		movs	r2, #0
+ 319 0042 4021     		movs	r1, #64
+ 320 0044 0448     		ldr	r0, .L22+4
+ 321 0046 FFF7FEFF 		bl	sys_gpio_pin_set
+ 322              	.LVL29:
+ 122:TOUCH/ctiic.c ****     ct_iic_delay();
+ 323              		.loc 1 122 5 view .LVU53
+ 324 004a FFF7FEFF 		bl	ct_iic_delay
+ 325              	.LVL30:
+ 123:TOUCH/ctiic.c ****     return rack;
+ 326              		.loc 1 123 5 view .LVU54
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 9
 
 
- 292 0038 034B     		ldr	r3, .L23
- 293 003a 0022     		movs	r2, #0
- 294 003c C3F89822 		str	r2, [r3, #664]
- 100:TOUCH/ctiic.c ****     ct_iic_delay();
- 295              		.loc 1 100 5 view .LVU54
- 296 0040 FFF7FEFF 		bl	ct_iic_delay
- 297              	.LVL21:
- 101:TOUCH/ctiic.c ****     return rack;
- 298              		.loc 1 101 5 view .LVU55
- 102:TOUCH/ctiic.c **** }
- 299              		.loc 1 102 1 is_stmt 0 view .LVU56
- 300 0044 2046     		mov	r0, r4
- 301 0046 38BD     		pop	{r3, r4, r5, pc}
- 302              	.LVL22:
- 303              	.L24:
- 304              		.loc 1 102 1 view .LVU57
- 305              		.align	2
- 306              	.L23:
- 307 0048 00804342 		.word	1111719936
- 308              		.cfi_endproc
- 309              	.LFE130:
- 311              		.section	.text.ct_iic_ack,"ax",%progbits
- 312              		.align	1
- 313              		.global	ct_iic_ack
- 314              		.syntax unified
- 315              		.thumb
- 316              		.thumb_func
- 318              	ct_iic_ack:
- 319              	.LFB131:
- 103:TOUCH/ctiic.c **** 
- 104:TOUCH/ctiic.c **** 
- 105:TOUCH/ctiic.c **** /**
- 106:TOUCH/ctiic.c ****  * @brief       ‰∫ßÁîüACKÂ∫îÁ≠î
- 107:TOUCH/ctiic.c ****  * @param       Êó†
- 108:TOUCH/ctiic.c ****  * @retval      Êó†
- 109:TOUCH/ctiic.c ****  */
- 110:TOUCH/ctiic.c **** void ct_iic_ack(void)
- 111:TOUCH/ctiic.c **** {
- 320              		.loc 1 111 1 is_stmt 1 view -0
- 321              		.cfi_startproc
- 322              		@ args = 0, pretend = 0, frame = 0
- 323              		@ frame_needed = 0, uses_anonymous_args = 0
- 324 0000 70B5     		push	{r4, r5, r6, lr}
- 325              	.LCFI7:
- 326              		.cfi_def_cfa_offset 16
- 327              		.cfi_offset 4, -16
- 328              		.cfi_offset 5, -12
- 329              		.cfi_offset 6, -8
- 330              		.cfi_offset 14, -4
- 112:TOUCH/ctiic.c ****     CT_IIC_SDA(0);  /* SCL 0 -> 1  Êó∂SDA = 0,Ë°®Á§∫Â∫îÁ≠î */
- 331              		.loc 1 112 5 view .LVU59
- 332 0002 0A4C     		ldr	r4, .L27
- 333 0004 0026     		movs	r6, #0
- 334 0006 C4F88C62 		str	r6, [r4, #652]
- 113:TOUCH/ctiic.c ****     ct_iic_delay();
- 335              		.loc 1 113 5 view .LVU60
- 336 000a FFF7FEFF 		bl	ct_iic_delay
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 9
+ 124:TOUCH/ctiic.c **** }
+ 327              		.loc 1 124 1 is_stmt 0 view .LVU55
+ 328 004e 2846     		mov	r0, r5
+ 329 0050 38BD     		pop	{r3, r4, r5, pc}
+ 330              	.LVL31:
+ 331              	.L23:
+ 332              		.loc 1 124 1 view .LVU56
+ 333 0052 00BF     		.align	2
+ 334              	.L22:
+ 335 0054 00200240 		.word	1073881088
+ 336 0058 001C0240 		.word	1073880064
+ 337              		.cfi_endproc
+ 338              	.LFE130:
+ 340              		.section	.text.ct_iic_ack,"ax",%progbits
+ 341              		.align	1
+ 342              		.global	ct_iic_ack
+ 343              		.syntax unified
+ 344              		.thumb
+ 345              		.thumb_func
+ 347              	ct_iic_ack:
+ 348              	.LFB131:
+ 125:TOUCH/ctiic.c **** 
+ 126:TOUCH/ctiic.c **** 
+ 127:TOUCH/ctiic.c **** /**
+ 128:TOUCH/ctiic.c ****  * @brief       ≤˙…˙ACK”¶¥
+ 129:TOUCH/ctiic.c ****  * @param       Œﬁ
+ 130:TOUCH/ctiic.c ****  * @retval      Œﬁ
+ 131:TOUCH/ctiic.c ****  */
+ 132:TOUCH/ctiic.c **** void ct_iic_ack(void)
+ 133:TOUCH/ctiic.c **** {
+ 349              		.loc 1 133 1 is_stmt 1 view -0
+ 350              		.cfi_startproc
+ 351              		@ args = 0, pretend = 0, frame = 0
+ 352              		@ frame_needed = 0, uses_anonymous_args = 0
+ 353 0000 38B5     		push	{r3, r4, r5, lr}
+ 354              	.LCFI7:
+ 355              		.cfi_def_cfa_offset 16
+ 356              		.cfi_offset 3, -16
+ 357              		.cfi_offset 4, -12
+ 358              		.cfi_offset 5, -8
+ 359              		.cfi_offset 14, -4
+ 134:TOUCH/ctiic.c ****     CT_IIC_SDA(0);  /* SCL 0 -> 1   ±SDA = 0,±Ì æ”¶¥ */
+ 360              		.loc 1 134 5 view .LVU58
+ 361 0002 0F4C     		ldr	r4, .L26
+ 362 0004 0022     		movs	r2, #0
+ 363 0006 0821     		movs	r1, #8
+ 364 0008 2046     		mov	r0, r4
+ 365 000a FFF7FEFF 		bl	sys_gpio_pin_set
+ 366              	.LVL32:
+ 135:TOUCH/ctiic.c ****     ct_iic_delay();
+ 367              		.loc 1 135 5 view .LVU59
+ 368 000e FFF7FEFF 		bl	ct_iic_delay
+ 369              	.LVL33:
+ 136:TOUCH/ctiic.c ****     CT_IIC_SCL(1);
+ 370              		.loc 1 136 5 view .LVU60
+ 371 0012 0C4D     		ldr	r5, .L26+4
+ 372 0014 0122     		movs	r2, #1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 10
 
 
- 337              	.LVL23:
- 114:TOUCH/ctiic.c ****     CT_IIC_SCL(1);
- 338              		.loc 1 114 5 view .LVU61
- 339 000e 0125     		movs	r5, #1
- 340 0010 C4F89852 		str	r5, [r4, #664]
- 115:TOUCH/ctiic.c ****     ct_iic_delay();
- 341              		.loc 1 115 5 view .LVU62
- 342 0014 FFF7FEFF 		bl	ct_iic_delay
- 343              	.LVL24:
- 116:TOUCH/ctiic.c ****     CT_IIC_SCL(0);
- 344              		.loc 1 116 5 view .LVU63
- 345 0018 C4F89862 		str	r6, [r4, #664]
- 117:TOUCH/ctiic.c ****     ct_iic_delay(); 
- 346              		.loc 1 117 5 view .LVU64
- 347 001c FFF7FEFF 		bl	ct_iic_delay
- 348              	.LVL25:
- 118:TOUCH/ctiic.c ****     CT_IIC_SDA(1);  /* ‰∏ªÊú∫ÈáäÊîæSDAÁ∫ø */
- 349              		.loc 1 118 5 view .LVU65
- 350 0020 C4F88C52 		str	r5, [r4, #652]
- 119:TOUCH/ctiic.c ****     ct_iic_delay(); 
- 351              		.loc 1 119 5 view .LVU66
- 352 0024 FFF7FEFF 		bl	ct_iic_delay
- 353              	.LVL26:
- 120:TOUCH/ctiic.c **** }
- 354              		.loc 1 120 1 is_stmt 0 view .LVU67
- 355 0028 70BD     		pop	{r4, r5, r6, pc}
- 356              	.L28:
- 357 002a 00BF     		.align	2
- 358              	.L27:
- 359 002c 00804342 		.word	1111719936
- 360              		.cfi_endproc
- 361              	.LFE131:
- 363              		.section	.text.ct_iic_nack,"ax",%progbits
- 364              		.align	1
- 365              		.global	ct_iic_nack
- 366              		.syntax unified
- 367              		.thumb
- 368              		.thumb_func
- 370              	ct_iic_nack:
- 371              	.LFB132:
- 121:TOUCH/ctiic.c **** 
- 122:TOUCH/ctiic.c **** /**
- 123:TOUCH/ctiic.c ****  * @brief       ‰∏ç‰∫ßÁîüACKÂ∫îÁ≠î
- 124:TOUCH/ctiic.c ****  * @param       Êó†
- 125:TOUCH/ctiic.c ****  * @retval      Êó†
- 126:TOUCH/ctiic.c ****  */
- 127:TOUCH/ctiic.c **** void ct_iic_nack(void)
- 128:TOUCH/ctiic.c **** {
- 372              		.loc 1 128 1 is_stmt 1 view -0
- 373              		.cfi_startproc
- 374              		@ args = 0, pretend = 0, frame = 0
- 375              		@ frame_needed = 0, uses_anonymous_args = 0
- 376 0000 38B5     		push	{r3, r4, r5, lr}
- 377              	.LCFI8:
- 378              		.cfi_def_cfa_offset 16
- 379              		.cfi_offset 3, -16
- 380              		.cfi_offset 4, -12
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 10
+ 373 0016 4021     		movs	r1, #64
+ 374 0018 2846     		mov	r0, r5
+ 375 001a FFF7FEFF 		bl	sys_gpio_pin_set
+ 376              	.LVL34:
+ 137:TOUCH/ctiic.c ****     ct_iic_delay();
+ 377              		.loc 1 137 5 view .LVU61
+ 378 001e FFF7FEFF 		bl	ct_iic_delay
+ 379              	.LVL35:
+ 138:TOUCH/ctiic.c ****     CT_IIC_SCL(0);
+ 380              		.loc 1 138 5 view .LVU62
+ 381 0022 0022     		movs	r2, #0
+ 382 0024 4021     		movs	r1, #64
+ 383 0026 2846     		mov	r0, r5
+ 384 0028 FFF7FEFF 		bl	sys_gpio_pin_set
+ 385              	.LVL36:
+ 139:TOUCH/ctiic.c ****     ct_iic_delay(); 
+ 386              		.loc 1 139 5 view .LVU63
+ 387 002c FFF7FEFF 		bl	ct_iic_delay
+ 388              	.LVL37:
+ 140:TOUCH/ctiic.c ****     CT_IIC_SDA(1);  /* ÷˜ª˙ Õ∑≈SDAœﬂ */
+ 389              		.loc 1 140 5 view .LVU64
+ 390 0030 0122     		movs	r2, #1
+ 391 0032 0821     		movs	r1, #8
+ 392 0034 2046     		mov	r0, r4
+ 393 0036 FFF7FEFF 		bl	sys_gpio_pin_set
+ 394              	.LVL38:
+ 141:TOUCH/ctiic.c ****     ct_iic_delay(); 
+ 395              		.loc 1 141 5 view .LVU65
+ 396 003a FFF7FEFF 		bl	ct_iic_delay
+ 397              	.LVL39:
+ 142:TOUCH/ctiic.c **** }
+ 398              		.loc 1 142 1 is_stmt 0 view .LVU66
+ 399 003e 38BD     		pop	{r3, r4, r5, pc}
+ 400              	.L27:
+ 401              		.align	2
+ 402              	.L26:
+ 403 0040 00200240 		.word	1073881088
+ 404 0044 001C0240 		.word	1073880064
+ 405              		.cfi_endproc
+ 406              	.LFE131:
+ 408              		.section	.text.ct_iic_nack,"ax",%progbits
+ 409              		.align	1
+ 410              		.global	ct_iic_nack
+ 411              		.syntax unified
+ 412              		.thumb
+ 413              		.thumb_func
+ 415              	ct_iic_nack:
+ 416              	.LFB132:
+ 143:TOUCH/ctiic.c **** 
+ 144:TOUCH/ctiic.c **** /**
+ 145:TOUCH/ctiic.c ****  * @brief       ≤ª≤˙…˙ACK”¶¥
+ 146:TOUCH/ctiic.c ****  * @param       Œﬁ
+ 147:TOUCH/ctiic.c ****  * @retval      Œﬁ
+ 148:TOUCH/ctiic.c ****  */
+ 149:TOUCH/ctiic.c **** void ct_iic_nack(void)
+ 150:TOUCH/ctiic.c **** {
+ 417              		.loc 1 150 1 is_stmt 1 view -0
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 11
 
 
- 381              		.cfi_offset 5, -8
- 382              		.cfi_offset 14, -4
- 129:TOUCH/ctiic.c ****     CT_IIC_SDA(1);  /* SCL 0 -> 1  Êó∂ SDA = 1,Ë°®Á§∫‰∏çÂ∫îÁ≠î */
- 383              		.loc 1 129 5 view .LVU69
- 384 0002 084C     		ldr	r4, .L31
- 385 0004 0125     		movs	r5, #1
- 386 0006 C4F88C52 		str	r5, [r4, #652]
- 130:TOUCH/ctiic.c ****     ct_iic_delay();
- 387              		.loc 1 130 5 view .LVU70
- 388 000a FFF7FEFF 		bl	ct_iic_delay
- 389              	.LVL27:
- 131:TOUCH/ctiic.c ****     CT_IIC_SCL(1);
- 390              		.loc 1 131 5 view .LVU71
- 391 000e C4F89852 		str	r5, [r4, #664]
- 132:TOUCH/ctiic.c ****     ct_iic_delay();
- 392              		.loc 1 132 5 view .LVU72
- 393 0012 FFF7FEFF 		bl	ct_iic_delay
- 394              	.LVL28:
- 133:TOUCH/ctiic.c ****     CT_IIC_SCL(0);
- 395              		.loc 1 133 5 view .LVU73
- 396 0016 0023     		movs	r3, #0
- 397 0018 C4F89832 		str	r3, [r4, #664]
- 134:TOUCH/ctiic.c ****     ct_iic_delay();
- 398              		.loc 1 134 5 view .LVU74
- 399 001c FFF7FEFF 		bl	ct_iic_delay
- 400              	.LVL29:
- 135:TOUCH/ctiic.c **** }
- 401              		.loc 1 135 1 is_stmt 0 view .LVU75
- 402 0020 38BD     		pop	{r3, r4, r5, pc}
- 403              	.L32:
- 404 0022 00BF     		.align	2
- 405              	.L31:
- 406 0024 00804342 		.word	1111719936
- 407              		.cfi_endproc
- 408              	.LFE132:
- 410              		.section	.text.ct_iic_send_byte,"ax",%progbits
- 411              		.align	1
- 412              		.global	ct_iic_send_byte
- 413              		.syntax unified
- 414              		.thumb
- 415              		.thumb_func
- 417              	ct_iic_send_byte:
- 418              	.LVL30:
- 419              	.LFB133:
- 136:TOUCH/ctiic.c **** 
- 137:TOUCH/ctiic.c **** /**
- 138:TOUCH/ctiic.c ****  * @brief       IICÂèëÈÄÅ‰∏Ä‰∏™Â≠óËäÇ
- 139:TOUCH/ctiic.c ****  * @param       data: Ë¶ÅÂèëÈÄÅÁöÑÊï∞ÊçÆ
- 140:TOUCH/ctiic.c ****  * @retval      Êó†
- 141:TOUCH/ctiic.c ****  */
- 142:TOUCH/ctiic.c **** void ct_iic_send_byte(uint8_t data)
- 143:TOUCH/ctiic.c **** {
- 420              		.loc 1 143 1 is_stmt 1 view -0
- 421              		.cfi_startproc
- 422              		@ args = 0, pretend = 0, frame = 0
- 423              		@ frame_needed = 0, uses_anonymous_args = 0
- 424              		.loc 1 143 1 is_stmt 0 view .LVU77
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 11
-
-
- 425 0000 70B5     		push	{r4, r5, r6, lr}
- 426              	.LCFI9:
- 427              		.cfi_def_cfa_offset 16
- 428              		.cfi_offset 4, -16
- 429              		.cfi_offset 5, -12
- 430              		.cfi_offset 6, -8
- 431              		.cfi_offset 14, -4
- 432 0002 0446     		mov	r4, r0
- 144:TOUCH/ctiic.c ****     uint8_t t;
- 433              		.loc 1 144 5 is_stmt 1 view .LVU78
- 145:TOUCH/ctiic.c ****     
- 146:TOUCH/ctiic.c ****     for (t = 0; t < 8; t++)
- 434              		.loc 1 146 5 view .LVU79
- 435              	.LVL31:
- 436              		.loc 1 146 12 is_stmt 0 view .LVU80
- 437 0004 0025     		movs	r5, #0
- 438              		.loc 1 146 5 view .LVU81
- 439 0006 11E0     		b	.L34
- 440              	.LVL32:
- 441              	.L35:
- 147:TOUCH/ctiic.c ****     {
- 148:TOUCH/ctiic.c ****         CT_IIC_SDA((data & 0x80) >> 7); /* È´ò‰ΩçÂÖàÂèëÈÄÅ */
- 442              		.loc 1 148 9 is_stmt 1 view .LVU82
- 443 0008 E309     		lsrs	r3, r4, #7
- 444 000a 0C4E     		ldr	r6, .L37
- 445 000c C6F88C32 		str	r3, [r6, #652]
- 149:TOUCH/ctiic.c ****         ct_iic_delay();
- 446              		.loc 1 149 9 view .LVU83
- 447 0010 FFF7FEFF 		bl	ct_iic_delay
- 448              	.LVL33:
- 150:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
- 449              		.loc 1 150 9 view .LVU84
- 450 0014 0123     		movs	r3, #1
- 451 0016 C6F89832 		str	r3, [r6, #664]
- 151:TOUCH/ctiic.c ****         ct_iic_delay();
- 452              		.loc 1 151 9 view .LVU85
- 453 001a FFF7FEFF 		bl	ct_iic_delay
- 454              	.LVL34:
- 152:TOUCH/ctiic.c ****         CT_IIC_SCL(0);
- 455              		.loc 1 152 9 view .LVU86
- 456 001e 0023     		movs	r3, #0
- 457 0020 C6F89832 		str	r3, [r6, #664]
- 153:TOUCH/ctiic.c ****         data <<= 1;     /* Â∑¶Áßª1‰Ωç,Áî®‰∫é‰∏ã‰∏ÄÊ¨°ÂèëÈÄÅ */
- 458              		.loc 1 153 9 view .LVU87
- 459              		.loc 1 153 14 is_stmt 0 view .LVU88
- 460 0024 6400     		lsls	r4, r4, #1
- 461              	.LVL35:
- 462              		.loc 1 153 14 view .LVU89
- 463 0026 E4B2     		uxtb	r4, r4
- 464              	.LVL36:
- 146:TOUCH/ctiic.c ****     {
- 465              		.loc 1 146 25 is_stmt 1 discriminator 3 view .LVU90
- 466 0028 0135     		adds	r5, r5, #1
- 467              	.LVL37:
- 146:TOUCH/ctiic.c ****     {
- 468              		.loc 1 146 25 is_stmt 0 discriminator 3 view .LVU91
- 469 002a EDB2     		uxtb	r5, r5
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 12
-
-
- 470              	.LVL38:
- 471              	.L34:
- 146:TOUCH/ctiic.c ****     {
- 472              		.loc 1 146 19 is_stmt 1 discriminator 1 view .LVU92
- 473 002c 072D     		cmp	r5, #7
- 474 002e EBD9     		bls	.L35
- 154:TOUCH/ctiic.c ****     }
- 155:TOUCH/ctiic.c **** 
- 156:TOUCH/ctiic.c ****     CT_IIC_SDA(1);      /* ÂèëÈÄÅÂÆåÊàê, ‰∏ªÊú∫ÈáäÊîæSDAÁ∫ø */
- 475              		.loc 1 156 5 view .LVU93
- 476 0030 024B     		ldr	r3, .L37
- 477 0032 0122     		movs	r2, #1
- 478 0034 C3F88C22 		str	r2, [r3, #652]
+ 418              		.cfi_startproc
+ 419              		@ args = 0, pretend = 0, frame = 0
+ 420              		@ frame_needed = 0, uses_anonymous_args = 0
+ 421 0000 10B5     		push	{r4, lr}
+ 422              	.LCFI8:
+ 423              		.cfi_def_cfa_offset 8
+ 424              		.cfi_offset 4, -8
+ 425              		.cfi_offset 14, -4
+ 151:TOUCH/ctiic.c ****     CT_IIC_SDA(1);  /* SCL 0 -> 1   ± SDA = 1,±Ì æ≤ª”¶¥ */
+ 426              		.loc 1 151 5 view .LVU68
+ 427 0002 0122     		movs	r2, #1
+ 428 0004 0821     		movs	r1, #8
+ 429 0006 0A48     		ldr	r0, .L30
+ 430 0008 FFF7FEFF 		bl	sys_gpio_pin_set
+ 431              	.LVL40:
+ 152:TOUCH/ctiic.c ****     ct_iic_delay();
+ 432              		.loc 1 152 5 view .LVU69
+ 433 000c FFF7FEFF 		bl	ct_iic_delay
+ 434              	.LVL41:
+ 153:TOUCH/ctiic.c ****     CT_IIC_SCL(1);
+ 435              		.loc 1 153 5 view .LVU70
+ 436 0010 084C     		ldr	r4, .L30+4
+ 437 0012 0122     		movs	r2, #1
+ 438 0014 4021     		movs	r1, #64
+ 439 0016 2046     		mov	r0, r4
+ 440 0018 FFF7FEFF 		bl	sys_gpio_pin_set
+ 441              	.LVL42:
+ 154:TOUCH/ctiic.c ****     ct_iic_delay();
+ 442              		.loc 1 154 5 view .LVU71
+ 443 001c FFF7FEFF 		bl	ct_iic_delay
+ 444              	.LVL43:
+ 155:TOUCH/ctiic.c ****     CT_IIC_SCL(0);
+ 445              		.loc 1 155 5 view .LVU72
+ 446 0020 0022     		movs	r2, #0
+ 447 0022 4021     		movs	r1, #64
+ 448 0024 2046     		mov	r0, r4
+ 449 0026 FFF7FEFF 		bl	sys_gpio_pin_set
+ 450              	.LVL44:
+ 156:TOUCH/ctiic.c ****     ct_iic_delay();
+ 451              		.loc 1 156 5 view .LVU73
+ 452 002a FFF7FEFF 		bl	ct_iic_delay
+ 453              	.LVL45:
  157:TOUCH/ctiic.c **** }
- 479              		.loc 1 157 1 is_stmt 0 view .LVU94
- 480 0038 70BD     		pop	{r4, r5, r6, pc}
- 481              	.LVL39:
- 482              	.L38:
- 483              		.loc 1 157 1 view .LVU95
- 484 003a 00BF     		.align	2
- 485              	.L37:
- 486 003c 00804342 		.word	1111719936
- 487              		.cfi_endproc
- 488              	.LFE133:
- 490              		.section	.text.ct_iic_read_byte,"ax",%progbits
- 491              		.align	1
- 492              		.global	ct_iic_read_byte
- 493              		.syntax unified
- 494              		.thumb
- 495              		.thumb_func
- 497              	ct_iic_read_byte:
- 498              	.LVL40:
- 499              	.LFB134:
+ 454              		.loc 1 157 1 is_stmt 0 view .LVU74
+ 455 002e 10BD     		pop	{r4, pc}
+ 456              	.L31:
+ 457              		.align	2
+ 458              	.L30:
+ 459 0030 00200240 		.word	1073881088
+ 460 0034 001C0240 		.word	1073880064
+ 461              		.cfi_endproc
+ 462              	.LFE132:
+ 464              		.section	.text.ct_iic_send_byte,"ax",%progbits
+ 465              		.align	1
+ 466              		.global	ct_iic_send_byte
+ 467              		.syntax unified
+ 468              		.thumb
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 12
+
+
+ 469              		.thumb_func
+ 471              	ct_iic_send_byte:
+ 472              	.LVL46:
+ 473              	.LFB133:
  158:TOUCH/ctiic.c **** 
  159:TOUCH/ctiic.c **** /**
- 160:TOUCH/ctiic.c ****  * @brief       IICÂèëÈÄÅ‰∏Ä‰∏™Â≠óËäÇ
- 161:TOUCH/ctiic.c ****  * @param       ack:  ack=1Êó∂ÔºåÂèëÈÄÅack; ack=0Êó∂ÔºåÂèëÈÄÅnack
- 162:TOUCH/ctiic.c ****  * @retval      Êé•Êî∂Âà∞ÁöÑÊï∞ÊçÆ
+ 160:TOUCH/ctiic.c ****  * @brief       IIC∑¢ÀÕ“ª∏ˆ◊÷Ω⁄
+ 161:TOUCH/ctiic.c ****  * @param       data: “™∑¢ÀÕµƒ ˝æ›
+ 162:TOUCH/ctiic.c ****  * @retval      Œﬁ
  163:TOUCH/ctiic.c ****  */
- 164:TOUCH/ctiic.c **** uint8_t ct_iic_read_byte(unsigned char ack)
+ 164:TOUCH/ctiic.c **** void ct_iic_send_byte(uint8_t data)
  165:TOUCH/ctiic.c **** {
- 500              		.loc 1 165 1 is_stmt 1 view -0
- 501              		.cfi_startproc
- 502              		@ args = 0, pretend = 0, frame = 0
- 503              		@ frame_needed = 0, uses_anonymous_args = 0
- 504              		.loc 1 165 1 is_stmt 0 view .LVU97
- 505 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
- 506              	.LCFI10:
- 507              		.cfi_def_cfa_offset 24
- 508              		.cfi_offset 3, -24
- 509              		.cfi_offset 4, -20
- 510              		.cfi_offset 5, -16
- 511              		.cfi_offset 6, -12
- 512              		.cfi_offset 7, -8
- 513              		.cfi_offset 14, -4
- 514 0002 0746     		mov	r7, r0
- 166:TOUCH/ctiic.c ****     uint8_t i, receive = 0;
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 13
-
-
- 515              		.loc 1 166 5 is_stmt 1 view .LVU98
- 516              	.LVL41:
- 167:TOUCH/ctiic.c **** 
- 168:TOUCH/ctiic.c ****     for (i = 0; i < 8; i++ )    /* Êé•Êî∂1‰∏™Â≠óËäÇÊï∞ÊçÆ */
- 517              		.loc 1 168 5 view .LVU99
- 166:TOUCH/ctiic.c ****     uint8_t i, receive = 0;
- 518              		.loc 1 166 16 is_stmt 0 view .LVU100
- 519 0004 0024     		movs	r4, #0
- 520              		.loc 1 168 12 view .LVU101
- 521 0006 2546     		mov	r5, r4
- 522              		.loc 1 168 5 view .LVU102
- 523 0008 07E0     		b	.L40
- 524              	.LVL42:
- 525              	.L41:
+ 474              		.loc 1 165 1 is_stmt 1 view -0
+ 475              		.cfi_startproc
+ 476              		@ args = 0, pretend = 0, frame = 0
+ 477              		@ frame_needed = 0, uses_anonymous_args = 0
+ 478              		.loc 1 165 1 is_stmt 0 view .LVU76
+ 479 0000 70B5     		push	{r4, r5, r6, lr}
+ 480              	.LCFI9:
+ 481              		.cfi_def_cfa_offset 16
+ 482              		.cfi_offset 4, -16
+ 483              		.cfi_offset 5, -12
+ 484              		.cfi_offset 6, -8
+ 485              		.cfi_offset 14, -4
+ 486 0002 0446     		mov	r4, r0
+ 166:TOUCH/ctiic.c ****     uint8_t t;
+ 487              		.loc 1 166 5 is_stmt 1 view .LVU77
+ 167:TOUCH/ctiic.c ****     
+ 168:TOUCH/ctiic.c ****     for (t = 0; t < 8; t++)
+ 488              		.loc 1 168 5 view .LVU78
+ 489              	.LVL47:
+ 490              		.loc 1 168 12 is_stmt 0 view .LVU79
+ 491 0004 0025     		movs	r5, #0
+ 492              		.loc 1 168 5 view .LVU80
+ 493 0006 17E0     		b	.L33
+ 494              	.LVL48:
+ 495              	.L34:
  169:TOUCH/ctiic.c ****     {
- 170:TOUCH/ctiic.c ****         receive <<= 1;  /* È´ò‰ΩçÂÖàËæìÂá∫,ÊâÄ‰ª•ÂÖàÊî∂Âà∞ÁöÑÊï∞ÊçÆ‰ΩçË¶ÅÂ∑¶Áßª */
- 171:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
- 172:TOUCH/ctiic.c ****         ct_iic_delay();
- 173:TOUCH/ctiic.c **** 
- 174:TOUCH/ctiic.c ****         if (CT_READ_SDA)
- 175:TOUCH/ctiic.c ****         {
- 176:TOUCH/ctiic.c ****             receive++;
- 177:TOUCH/ctiic.c ****         }
- 178:TOUCH/ctiic.c ****         
- 179:TOUCH/ctiic.c ****         CT_IIC_SCL(0);
- 526              		.loc 1 179 9 is_stmt 1 view .LVU103
- 527 000a 104B     		ldr	r3, .L47
- 528 000c 0022     		movs	r2, #0
- 529 000e C3F89822 		str	r2, [r3, #664]
- 180:TOUCH/ctiic.c ****         ct_iic_delay();
- 530              		.loc 1 180 9 view .LVU104
- 531 0012 FFF7FEFF 		bl	ct_iic_delay
- 532              	.LVL43:
- 168:TOUCH/ctiic.c ****     {
- 533              		.loc 1 168 25 discriminator 2 view .LVU105
- 534 0016 0135     		adds	r5, r5, #1
- 535              	.LVL44:
- 168:TOUCH/ctiic.c ****     {
- 536              		.loc 1 168 25 is_stmt 0 discriminator 2 view .LVU106
- 537 0018 EDB2     		uxtb	r5, r5
- 538              	.LVL45:
- 539              	.L40:
- 168:TOUCH/ctiic.c ****     {
- 540              		.loc 1 168 19 is_stmt 1 discriminator 1 view .LVU107
- 541 001a 072D     		cmp	r5, #7
- 542 001c 0ED8     		bhi	.L46
- 170:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
- 543              		.loc 1 170 9 view .LVU108
- 170:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
- 544              		.loc 1 170 17 is_stmt 0 view .LVU109
- 545 001e 6400     		lsls	r4, r4, #1
- 546              	.LVL46:
- 170:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
- 547              		.loc 1 170 17 view .LVU110
- 548 0020 E4B2     		uxtb	r4, r4
- 549              	.LVL47:
+ 170:TOUCH/ctiic.c ****         CT_IIC_SDA((data & 0x80) >> 7); /* ∏ﬂŒªœ»∑¢ÀÕ */
+ 496              		.loc 1 170 9 is_stmt 1 view .LVU81
+ 497 0008 E209     		lsrs	r2, r4, #7
+ 498 000a 0821     		movs	r1, #8
+ 499 000c 0E48     		ldr	r0, .L36
+ 500 000e FFF7FEFF 		bl	sys_gpio_pin_set
+ 501              	.LVL49:
  171:TOUCH/ctiic.c ****         ct_iic_delay();
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 14
+ 502              		.loc 1 171 9 view .LVU82
+ 503 0012 FFF7FEFF 		bl	ct_iic_delay
+ 504              	.LVL50:
+ 172:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
+ 505              		.loc 1 172 9 view .LVU83
+ 506 0016 0D4E     		ldr	r6, .L36+4
+ 507 0018 0122     		movs	r2, #1
+ 508 001a 4021     		movs	r1, #64
+ 509 001c 3046     		mov	r0, r6
+ 510 001e FFF7FEFF 		bl	sys_gpio_pin_set
+ 511              	.LVL51:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 13
 
 
- 550              		.loc 1 171 9 is_stmt 1 view .LVU111
- 551 0022 0A4E     		ldr	r6, .L47
- 552 0024 0123     		movs	r3, #1
- 553 0026 C6F89832 		str	r3, [r6, #664]
- 172:TOUCH/ctiic.c **** 
- 554              		.loc 1 172 9 view .LVU112
- 555 002a FFF7FEFF 		bl	ct_iic_delay
- 556              	.LVL48:
- 174:TOUCH/ctiic.c ****         {
- 557              		.loc 1 174 9 view .LVU113
- 174:TOUCH/ctiic.c ****         {
- 558              		.loc 1 174 13 is_stmt 0 view .LVU114
- 559 002e D6F80C32 		ldr	r3, [r6, #524]
- 174:TOUCH/ctiic.c ****         {
- 560              		.loc 1 174 12 view .LVU115
- 561 0032 002B     		cmp	r3, #0
- 562 0034 E9D0     		beq	.L41
- 176:TOUCH/ctiic.c ****         }
- 563              		.loc 1 176 13 is_stmt 1 view .LVU116
- 176:TOUCH/ctiic.c ****         }
- 564              		.loc 1 176 20 is_stmt 0 view .LVU117
- 565 0036 0134     		adds	r4, r4, #1
- 566              	.LVL49:
- 176:TOUCH/ctiic.c ****         }
- 567              		.loc 1 176 20 view .LVU118
- 568 0038 E4B2     		uxtb	r4, r4
- 569              	.LVL50:
- 176:TOUCH/ctiic.c ****         }
- 570              		.loc 1 176 20 view .LVU119
- 571 003a E6E7     		b	.L41
- 572              	.L46:
- 181:TOUCH/ctiic.c **** 
- 182:TOUCH/ctiic.c ****     }
- 183:TOUCH/ctiic.c **** 
- 184:TOUCH/ctiic.c ****     if (!ack)
- 573              		.loc 1 184 5 is_stmt 1 view .LVU120
- 574              		.loc 1 184 8 is_stmt 0 view .LVU121
- 575 003c 1FB9     		cbnz	r7, .L43
- 185:TOUCH/ctiic.c ****     {
- 186:TOUCH/ctiic.c ****         ct_iic_nack();  /* ÂèëÈÄÅnACK */
- 576              		.loc 1 186 9 is_stmt 1 view .LVU122
- 577 003e FFF7FEFF 		bl	ct_iic_nack
- 578              	.LVL51:
- 579              	.L44:
- 187:TOUCH/ctiic.c ****     }
- 188:TOUCH/ctiic.c ****     else
- 189:TOUCH/ctiic.c ****     {
- 190:TOUCH/ctiic.c ****         ct_iic_ack();   /* ÂèëÈÄÅACK */
- 191:TOUCH/ctiic.c ****     }
- 192:TOUCH/ctiic.c **** 
- 193:TOUCH/ctiic.c ****     return receive;
- 580              		.loc 1 193 5 view .LVU123
- 194:TOUCH/ctiic.c **** }
- 581              		.loc 1 194 1 is_stmt 0 view .LVU124
- 582 0042 2046     		mov	r0, r4
- 583 0044 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
- 584              	.LVL52:
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 15
+ 173:TOUCH/ctiic.c ****         ct_iic_delay();
+ 512              		.loc 1 173 9 view .LVU84
+ 513 0022 FFF7FEFF 		bl	ct_iic_delay
+ 514              	.LVL52:
+ 174:TOUCH/ctiic.c ****         CT_IIC_SCL(0);
+ 515              		.loc 1 174 9 view .LVU85
+ 516 0026 0022     		movs	r2, #0
+ 517 0028 4021     		movs	r1, #64
+ 518 002a 3046     		mov	r0, r6
+ 519 002c FFF7FEFF 		bl	sys_gpio_pin_set
+ 520              	.LVL53:
+ 175:TOUCH/ctiic.c ****         data <<= 1;     /* ◊Û“∆1Œª,”√”⁄œ¬“ª¥Œ∑¢ÀÕ */
+ 521              		.loc 1 175 9 view .LVU86
+ 522              		.loc 1 175 14 is_stmt 0 view .LVU87
+ 523 0030 6400     		lsls	r4, r4, #1
+ 524              	.LVL54:
+ 525              		.loc 1 175 14 view .LVU88
+ 526 0032 E4B2     		uxtb	r4, r4
+ 527              	.LVL55:
+ 168:TOUCH/ctiic.c ****     {
+ 528              		.loc 1 168 25 is_stmt 1 discriminator 3 view .LVU89
+ 529 0034 0135     		adds	r5, r5, #1
+ 530              	.LVL56:
+ 168:TOUCH/ctiic.c ****     {
+ 531              		.loc 1 168 25 is_stmt 0 discriminator 3 view .LVU90
+ 532 0036 EDB2     		uxtb	r5, r5
+ 533              	.LVL57:
+ 534              	.L33:
+ 168:TOUCH/ctiic.c ****     {
+ 535              		.loc 1 168 19 is_stmt 1 discriminator 1 view .LVU91
+ 536 0038 072D     		cmp	r5, #7
+ 537 003a E5D9     		bls	.L34
+ 176:TOUCH/ctiic.c ****     }
+ 177:TOUCH/ctiic.c **** 
+ 178:TOUCH/ctiic.c ****     CT_IIC_SDA(1);      /* ∑¢ÀÕÕÍ≥…, ÷˜ª˙ Õ∑≈SDAœﬂ */
+ 538              		.loc 1 178 5 view .LVU92
+ 539 003c 0122     		movs	r2, #1
+ 540 003e 0821     		movs	r1, #8
+ 541 0040 0148     		ldr	r0, .L36
+ 542 0042 FFF7FEFF 		bl	sys_gpio_pin_set
+ 543              	.LVL58:
+ 179:TOUCH/ctiic.c **** }
+ 544              		.loc 1 179 1 is_stmt 0 view .LVU93
+ 545 0046 70BD     		pop	{r4, r5, r6, pc}
+ 546              	.LVL59:
+ 547              	.L37:
+ 548              		.loc 1 179 1 view .LVU94
+ 549              		.align	2
+ 550              	.L36:
+ 551 0048 00200240 		.word	1073881088
+ 552 004c 001C0240 		.word	1073880064
+ 553              		.cfi_endproc
+ 554              	.LFE133:
+ 556              		.section	.text.ct_iic_read_byte,"ax",%progbits
+ 557              		.align	1
+ 558              		.global	ct_iic_read_byte
+ 559              		.syntax unified
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 14
 
 
- 585              	.L43:
- 190:TOUCH/ctiic.c ****     }
- 586              		.loc 1 190 9 is_stmt 1 view .LVU125
- 587 0046 FFF7FEFF 		bl	ct_iic_ack
- 588              	.LVL53:
- 589 004a FAE7     		b	.L44
- 590              	.L48:
- 591              		.align	2
- 592              	.L47:
- 593 004c 00804342 		.word	1111719936
- 594              		.cfi_endproc
- 595              	.LFE134:
- 597              		.text
- 598              	.Letext0:
- 599              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
- 600              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
- 601              		.file 4 "User/stm32f4xx.h"
- 602              		.file 5 "system/delay/delay.h"
- 603              		.file 6 "USER_LIB/inc/lib.h"
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s 			page 16
+ 560              		.thumb
+ 561              		.thumb_func
+ 563              	ct_iic_read_byte:
+ 564              	.LVL60:
+ 565              	.LFB134:
+ 180:TOUCH/ctiic.c **** 
+ 181:TOUCH/ctiic.c **** /**
+ 182:TOUCH/ctiic.c ****  * @brief       IIC∑¢ÀÕ“ª∏ˆ◊÷Ω⁄
+ 183:TOUCH/ctiic.c ****  * @param       ack:  ack=1 ±£¨∑¢ÀÕack; ack=0 ±£¨∑¢ÀÕnack
+ 184:TOUCH/ctiic.c ****  * @retval      Ω” ’µΩµƒ ˝æ›
+ 185:TOUCH/ctiic.c ****  */
+ 186:TOUCH/ctiic.c **** uint8_t ct_iic_read_byte(unsigned char ack)
+ 187:TOUCH/ctiic.c **** {
+ 566              		.loc 1 187 1 is_stmt 1 view -0
+ 567              		.cfi_startproc
+ 568              		@ args = 0, pretend = 0, frame = 0
+ 569              		@ frame_needed = 0, uses_anonymous_args = 0
+ 570              		.loc 1 187 1 is_stmt 0 view .LVU96
+ 571 0000 70B5     		push	{r4, r5, r6, lr}
+ 572              	.LCFI10:
+ 573              		.cfi_def_cfa_offset 16
+ 574              		.cfi_offset 4, -16
+ 575              		.cfi_offset 5, -12
+ 576              		.cfi_offset 6, -8
+ 577              		.cfi_offset 14, -4
+ 578 0002 0646     		mov	r6, r0
+ 188:TOUCH/ctiic.c ****     uint8_t i, receive = 0;
+ 579              		.loc 1 188 5 is_stmt 1 view .LVU97
+ 580              	.LVL61:
+ 189:TOUCH/ctiic.c **** 
+ 190:TOUCH/ctiic.c ****     for (i = 0; i < 8; i++ )    /* Ω” ’1∏ˆ◊÷Ω⁄ ˝æ› */
+ 581              		.loc 1 190 5 view .LVU98
+ 188:TOUCH/ctiic.c ****     uint8_t i, receive = 0;
+ 582              		.loc 1 188 16 is_stmt 0 view .LVU99
+ 583 0004 0024     		movs	r4, #0
+ 584              		.loc 1 190 12 view .LVU100
+ 585 0006 2546     		mov	r5, r4
+ 586              		.loc 1 190 5 view .LVU101
+ 587 0008 08E0     		b	.L39
+ 588              	.LVL62:
+ 589              	.L40:
+ 191:TOUCH/ctiic.c ****     {
+ 192:TOUCH/ctiic.c ****         receive <<= 1;  /* ∏ﬂŒªœ» ‰≥ˆ,À˘“‘œ» ’µΩµƒ ˝æ›Œª“™◊Û“∆ */
+ 193:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
+ 194:TOUCH/ctiic.c ****         ct_iic_delay();
+ 195:TOUCH/ctiic.c **** 
+ 196:TOUCH/ctiic.c ****         if (CT_READ_SDA)
+ 197:TOUCH/ctiic.c ****         {
+ 198:TOUCH/ctiic.c ****             receive++;
+ 199:TOUCH/ctiic.c ****         }
+ 200:TOUCH/ctiic.c ****         
+ 201:TOUCH/ctiic.c ****         CT_IIC_SCL(0);
+ 590              		.loc 1 201 9 is_stmt 1 view .LVU102
+ 591 000a 0022     		movs	r2, #0
+ 592 000c 4021     		movs	r1, #64
+ 593 000e 1148     		ldr	r0, .L46
+ 594 0010 FFF7FEFF 		bl	sys_gpio_pin_set
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 15
+
+
+ 595              	.LVL63:
+ 202:TOUCH/ctiic.c ****         ct_iic_delay();
+ 596              		.loc 1 202 9 view .LVU103
+ 597 0014 FFF7FEFF 		bl	ct_iic_delay
+ 598              	.LVL64:
+ 190:TOUCH/ctiic.c ****     {
+ 599              		.loc 1 190 25 discriminator 2 view .LVU104
+ 600 0018 0135     		adds	r5, r5, #1
+ 601              	.LVL65:
+ 190:TOUCH/ctiic.c ****     {
+ 602              		.loc 1 190 25 is_stmt 0 discriminator 2 view .LVU105
+ 603 001a EDB2     		uxtb	r5, r5
+ 604              	.LVL66:
+ 605              	.L39:
+ 190:TOUCH/ctiic.c ****     {
+ 606              		.loc 1 190 19 is_stmt 1 discriminator 1 view .LVU106
+ 607 001c 072D     		cmp	r5, #7
+ 608 001e 11D8     		bhi	.L45
+ 192:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
+ 609              		.loc 1 192 9 view .LVU107
+ 192:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
+ 610              		.loc 1 192 17 is_stmt 0 view .LVU108
+ 611 0020 6400     		lsls	r4, r4, #1
+ 612              	.LVL67:
+ 192:TOUCH/ctiic.c ****         CT_IIC_SCL(1);
+ 613              		.loc 1 192 17 view .LVU109
+ 614 0022 E4B2     		uxtb	r4, r4
+ 615              	.LVL68:
+ 193:TOUCH/ctiic.c ****         ct_iic_delay();
+ 616              		.loc 1 193 9 is_stmt 1 view .LVU110
+ 617 0024 0122     		movs	r2, #1
+ 618 0026 4021     		movs	r1, #64
+ 619 0028 0A48     		ldr	r0, .L46
+ 620 002a FFF7FEFF 		bl	sys_gpio_pin_set
+ 621              	.LVL69:
+ 194:TOUCH/ctiic.c **** 
+ 622              		.loc 1 194 9 view .LVU111
+ 623 002e FFF7FEFF 		bl	ct_iic_delay
+ 624              	.LVL70:
+ 196:TOUCH/ctiic.c ****         {
+ 625              		.loc 1 196 9 view .LVU112
+ 196:TOUCH/ctiic.c ****         {
+ 626              		.loc 1 196 13 is_stmt 0 view .LVU113
+ 627 0032 0821     		movs	r1, #8
+ 628 0034 0848     		ldr	r0, .L46+4
+ 629 0036 FFF7FEFF 		bl	sys_gpio_pin_get
+ 630              	.LVL71:
+ 196:TOUCH/ctiic.c ****         {
+ 631              		.loc 1 196 12 discriminator 1 view .LVU114
+ 632 003a 0028     		cmp	r0, #0
+ 633 003c E5D0     		beq	.L40
+ 198:TOUCH/ctiic.c ****         }
+ 634              		.loc 1 198 13 is_stmt 1 view .LVU115
+ 198:TOUCH/ctiic.c ****         }
+ 635              		.loc 1 198 20 is_stmt 0 view .LVU116
+ 636 003e 0134     		adds	r4, r4, #1
+ 637              	.LVL72:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 16
+
+
+ 198:TOUCH/ctiic.c ****         }
+ 638              		.loc 1 198 20 view .LVU117
+ 639 0040 E4B2     		uxtb	r4, r4
+ 640              	.LVL73:
+ 198:TOUCH/ctiic.c ****         }
+ 641              		.loc 1 198 20 view .LVU118
+ 642 0042 E2E7     		b	.L40
+ 643              	.L45:
+ 203:TOUCH/ctiic.c **** 
+ 204:TOUCH/ctiic.c ****     }
+ 205:TOUCH/ctiic.c **** 
+ 206:TOUCH/ctiic.c ****     if (!ack)
+ 644              		.loc 1 206 5 is_stmt 1 view .LVU119
+ 645              		.loc 1 206 8 is_stmt 0 view .LVU120
+ 646 0044 1EB9     		cbnz	r6, .L42
+ 207:TOUCH/ctiic.c ****     {
+ 208:TOUCH/ctiic.c ****         ct_iic_nack();  /* ∑¢ÀÕnACK */
+ 647              		.loc 1 208 9 is_stmt 1 view .LVU121
+ 648 0046 FFF7FEFF 		bl	ct_iic_nack
+ 649              	.LVL74:
+ 650              	.L43:
+ 209:TOUCH/ctiic.c ****     }
+ 210:TOUCH/ctiic.c ****     else
+ 211:TOUCH/ctiic.c ****     {
+ 212:TOUCH/ctiic.c ****         ct_iic_ack();   /* ∑¢ÀÕACK */
+ 213:TOUCH/ctiic.c ****     }
+ 214:TOUCH/ctiic.c **** 
+ 215:TOUCH/ctiic.c ****     return receive;
+ 651              		.loc 1 215 5 view .LVU122
+ 216:TOUCH/ctiic.c **** }
+ 652              		.loc 1 216 1 is_stmt 0 view .LVU123
+ 653 004a 2046     		mov	r0, r4
+ 654 004c 70BD     		pop	{r4, r5, r6, pc}
+ 655              	.LVL75:
+ 656              	.L42:
+ 212:TOUCH/ctiic.c ****     }
+ 657              		.loc 1 212 9 is_stmt 1 view .LVU124
+ 658 004e FFF7FEFF 		bl	ct_iic_ack
+ 659              	.LVL76:
+ 660 0052 FAE7     		b	.L43
+ 661              	.L47:
+ 662              		.align	2
+ 663              	.L46:
+ 664 0054 001C0240 		.word	1073880064
+ 665 0058 00200240 		.word	1073881088
+ 666              		.cfi_endproc
+ 667              	.LFE134:
+ 669              		.text
+ 670              	.Letext0:
+ 671              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 672              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 673              		.file 4 "User/stm32f4xx.h"
+ 674              		.file 5 "system/delay/delay.h"
+ 675              		.file 6 "system/sys/sys.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s 			page 17
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 ctiic.c
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:21     .text.ct_iic_delay:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:26     .text.ct_iic_delay:00000000 ct_iic_delay
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:47     .text.ct_iic_start:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:53     .text.ct_iic_start:00000000 ct_iic_start
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:91     .text.ct_iic_start:00000028 $d
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:96     .text.ct_iic_stop:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:102    .text.ct_iic_stop:00000000 ct_iic_stop
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:138    .text.ct_iic_stop:00000024 $d
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:143    .text.ct_iic_init:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:149    .text.ct_iic_init:00000000 ct_iic_init
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:209    .text.ct_iic_init:00000044 $d
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:216    .text.ct_iic_wait_ack:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:222    .text.ct_iic_wait_ack:00000000 ct_iic_wait_ack
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:307    .text.ct_iic_wait_ack:00000048 $d
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:312    .text.ct_iic_ack:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:318    .text.ct_iic_ack:00000000 ct_iic_ack
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:359    .text.ct_iic_ack:0000002c $d
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:364    .text.ct_iic_nack:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:370    .text.ct_iic_nack:00000000 ct_iic_nack
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:406    .text.ct_iic_nack:00000024 $d
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:411    .text.ct_iic_send_byte:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:417    .text.ct_iic_send_byte:00000000 ct_iic_send_byte
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:486    .text.ct_iic_send_byte:0000003c $d
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:491    .text.ct_iic_read_byte:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:497    .text.ct_iic_read_byte:00000000 ct_iic_read_byte
-C:\Users\ktkuru\AppData\Local\Temp\cc9I79yf.s:593    .text.ct_iic_read_byte:0000004c $d
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:21     .text.ct_iic_delay:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:26     .text.ct_iic_delay:00000000 ct_iic_delay
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:47     .text.ct_iic_start:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:53     .text.ct_iic_start:00000000 ct_iic_start
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:106    .text.ct_iic_start:0000003c $d
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:112    .text.ct_iic_stop:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:118    .text.ct_iic_stop:00000000 ct_iic_stop
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:162    .text.ct_iic_stop:00000030 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:168    .text.ct_iic_init:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:174    .text.ct_iic_init:00000000 ct_iic_init
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:232    .text.ct_iic_init:00000040 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:239    .text.ct_iic_wait_ack:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:245    .text.ct_iic_wait_ack:00000000 ct_iic_wait_ack
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:335    .text.ct_iic_wait_ack:00000054 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:341    .text.ct_iic_ack:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:347    .text.ct_iic_ack:00000000 ct_iic_ack
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:403    .text.ct_iic_ack:00000040 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:409    .text.ct_iic_nack:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:415    .text.ct_iic_nack:00000000 ct_iic_nack
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:459    .text.ct_iic_nack:00000030 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:465    .text.ct_iic_send_byte:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:471    .text.ct_iic_send_byte:00000000 ct_iic_send_byte
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:551    .text.ct_iic_send_byte:00000048 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:557    .text.ct_iic_read_byte:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:563    .text.ct_iic_read_byte:00000000 ct_iic_read_byte
+C:\Users\ktkuru\AppData\Local\Temp\ccn7r4eE.s:664    .text.ct_iic_read_byte:00000054 $d
 
 UNDEFINED SYMBOLS
 delay_us
-GPIO_Set
+sys_gpio_pin_set
+sys_gpio_set
+sys_gpio_pin_get

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
   29:User/system_stm32f4xx.c ****   *    configure the system clock before to branch to main program.
   30:User/system_stm32f4xx.c ****   *
   31:User/system_stm32f4xx.c ****   * 3. If the system clock source selected by user fails to startup, the SystemInit()
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 2
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 2
 
 
   32:User/system_stm32f4xx.c ****   *    function will do nothing and HSI still used as system clock source. User can 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
   86:User/system_stm32f4xx.c ****   *        SDIO and RNG clock                     |
   87:User/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
   88:User/system_stm32f4xx.c ****   *=============================================================================
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 3
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 3
 
 
   89:User/system_stm32f4xx.c ****   *=============================================================================
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  143:User/system_stm32f4xx.c ****   *        HCLK(Hz)                               | 84000000
  144:User/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
  145:User/system_stm32f4xx.c ****   *        AHB Prescaler                          | 1
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 4
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 4
 
 
  146:User/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  200:User/system_stm32f4xx.c ****   *        PLL_M                                  | 16
  201:User/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
  202:User/system_stm32f4xx.c ****   *        PLL_N                                  | 400
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 5
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 5
 
 
  203:User/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  257:User/system_stm32f4xx.c ****   *        PLLI2S_M                               | NA
  258:User/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
  259:User/system_stm32f4xx.c ****   *        PLLI2S_N                               | NA
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 6
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 6
 
 
  260:User/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  314:User/system_stm32f4xx.c ****   */
  315:User/system_stm32f4xx.c **** 
  316:User/system_stm32f4xx.c **** /** @addtogroup STM32F4xx_System_Private_TypesDefinitions
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 7
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 7
 
 
  317:User/system_stm32f4xx.c ****   * @{
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  371:User/system_stm32f4xx.c ****   #define PLL_M      16
  372:User/system_stm32f4xx.c ****  #endif /* USE_HSE_BYPASS */
  373:User/system_stm32f4xx.c **** #else
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 8
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 8
 
 
  374:User/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx || STM32F469_479xx */
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  428:User/system_stm32f4xx.c **** 
  429:User/system_stm32f4xx.c **** #if defined(STM32F40_41xxx)
  430:User/system_stm32f4xx.c ****   uint32_t SystemCoreClock = 168000000;
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 9
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 9
 
 
  431:User/system_stm32f4xx.c **** #endif /* STM32F40_41xxx */
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  485:User/system_stm32f4xx.c **** 
  486:User/system_stm32f4xx.c ****   /* Reset CFGR register */
  487:User/system_stm32f4xx.c ****   RCC->CFGR = 0x00000000;
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 10
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 10
 
 
  488:User/system_stm32f4xx.c **** 
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  542:User/system_stm32f4xx.c ****   *         (**) HSE_VALUE is a constant defined in stm32f4xx.h file (default value
  543:User/system_stm32f4xx.c ****   *              25 MHz), user has to ensure that HSE_VALUE is same as the real
  544:User/system_stm32f4xx.c ****   *              frequency of the crystal used. Otherwise, this function may
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 11
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 11
 
 
  545:User/system_stm32f4xx.c ****   *              have wrong result.
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  599:User/system_stm32f4xx.c ****         pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
  600:User/system_stm32f4xx.c ****       }  
  601:User/system_stm32f4xx.c **** #endif /* USE_HSE_BYPASS */  
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 12
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 12
 
 
  602:User/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx || STM32F412xG || STM
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
   35              		.cfi_def_cfa_offset 8
  649:User/system_stm32f4xx.c **** #if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM3
  650:User/system_stm32f4xx.c **** /******************************************************************************/
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 13
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 13
 
 
  651:User/system_stm32f4xx.c **** /*            PLL (clocked by HSE) used as System clock source                */
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
   75              		.loc 1 665 3 is_stmt 1 view .LVU19
   76              		.loc 1 665 11 is_stmt 0 view .LVU20
   77 002e 2B4B     		ldr	r3, .L13
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 14
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 14
 
 
   78 0030 1B68     		ldr	r3, [r3]
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  704:User/system_stm32f4xx.c **** 
  705:User/system_stm32f4xx.c **** #if  defined(STM32F412xG) || defined(STM32F413_423xx) || defined(STM32F446xx)
  706:User/system_stm32f4xx.c ****     /* Configure the main PLL */
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 15
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 15
 
 
  707:User/system_stm32f4xx.c ****     RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) |
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  761:User/system_stm32f4xx.c **** #elif defined(STM32F410xx) || defined(STM32F411xE)
  762:User/system_stm32f4xx.c **** #if defined(USE_HSE_BYPASS) 
  763:User/system_stm32f4xx.c **** /******************************************************************************/
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 16
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 16
 
 
  764:User/system_stm32f4xx.c **** /*            PLL (clocked by HSE) used as System clock source                */
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  818:User/system_stm32f4xx.c ****     RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
  819:User/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_SW_PLL;
  820:User/system_stm32f4xx.c **** 
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 17
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 17
 
 
  821:User/system_stm32f4xx.c ****     /* Wait till the main PLL is used as SYSTEM clock source */
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  100 0044 7047     		bx	lr
  101              	.L4:
  102              	.LCFI2:
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 18
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 18
 
 
  103              		.cfi_restore_state
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  140 0072 9A60     		str	r2, [r3, #8]
  701:User/system_stm32f4xx.c ****                    (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
  141              		.loc 1 701 5 is_stmt 1 view .LVU45
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 19
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 19
 
 
  701:User/system_stm32f4xx.c ****                    (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  178              		.loc 1 725 5 is_stmt 1 view .LVU63
  725:User/system_stm32f4xx.c ****     while((PWR->CSR & PWR_CSR_ODSWRDY) == 0)
  179              		.loc 1 725 8 is_stmt 0 view .LVU64
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 20
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 20
 
 
  180 009e 104A     		ldr	r2, .L13+4
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  217 00ce 034B     		ldr	r3, .L13
  218 00d0 9B68     		ldr	r3, [r3, #8]
  753:User/system_stm32f4xx.c ****     {
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 21
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 21
 
 
  219              		.loc 1 753 23 discriminator 1 view .LVU82
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  487:User/system_stm32f4xx.c **** 
  267              		.loc 1 487 3 is_stmt 1 view .LVU91
  487:User/system_stm32f4xx.c **** 
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 22
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 22
 
 
  268              		.loc 1 487 13 is_stmt 0 view .LVU92
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  309              		.section	.text.SystemCoreClockUpdate,"ax",%progbits
  310              		.align	1
  311              		.global	SystemCoreClockUpdate
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 23
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 23
 
 
  312              		.syntax unified
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  354 001e C3F30313 		ubfx	r3, r3, #4, #4
  634:User/system_stm32f4xx.c ****   /* HCLK frequency */
  355              		.loc 1 634 22 view .LVU120
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 24
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 24
 
 
  356 0022 1E4A     		ldr	r2, .L26+12
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  395              		.loc 1 578 10 is_stmt 0 view .LVU135
  396 0044 11F4800F 		tst	r1, #4194304
  397 0048 13D0     		beq	.L24
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 25
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 25
 
 
  581:User/system_stm32f4xx.c ****       }
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  436              	.L24:
  586:User/system_stm32f4xx.c ****       }
  437              		.loc 1 586 9 view .LVU152
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 26
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 26
 
 
  586:User/system_stm32f4xx.c ****       }
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  482 000d 070809   		.ascii	"\007\010\011"
  483              		.global	SystemCoreClock
  484              		.section	.data.SystemCoreClock,"aw"
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 27
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 27
 
 
  485              		.align	2
@@ -1571,23 +1571,23 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 1
  494              		.file 4 "core/core_cm4.h"
  495              		.file 5 "User/stm32f4xx.h"
  496              		.file 6 "User/system_stm32f4xx.h"
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s 			page 28
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s 			page 28
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 system_stm32f4xx.c
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:21     .text.SetSysClock:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:26     .text.SetSysClock:00000000 SetSysClock
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:228    .text.SetSysClock:000000dc $d
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:236    .text.SystemInit:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:242    .text.SystemInit:00000000 SystemInit
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:303    .text.SystemInit:00000044 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:310    .text.SystemCoreClockUpdate:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:316    .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:467    .text.SystemCoreClockUpdate:00000090 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:488    .data.SystemCoreClock:00000000 SystemCoreClock
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:480    .rodata.AHBPrescTable:00000000 AHBPrescTable
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:477    .rodata.AHBPrescTable:00000000 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccJ0YOED.s:485    .data.SystemCoreClock:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:21     .text.SetSysClock:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:26     .text.SetSysClock:00000000 SetSysClock
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:228    .text.SetSysClock:000000dc $d
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:236    .text.SystemInit:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:242    .text.SystemInit:00000000 SystemInit
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:303    .text.SystemInit:00000044 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:310    .text.SystemCoreClockUpdate:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:316    .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:467    .text.SystemCoreClockUpdate:00000090 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:488    .data.SystemCoreClock:00000000 SystemCoreClock
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:480    .rodata.AHBPrescTable:00000000 AHBPrescTable
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:477    .rodata.AHBPrescTable:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccrYqSoP.s:485    .data.SystemCoreClock:00000000 $d
 
 NO UNDEFINED SYMBOLS

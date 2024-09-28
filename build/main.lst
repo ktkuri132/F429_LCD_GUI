@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s 			page 1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -20,146 +20,357 @@ ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s 			page 1
   17              	.Ltext0:
   18              		.cfi_sections	.debug_frame
   19              		.file 1 "User/main.c"
-  20              		.section	.text.system_init,"ax",%progbits
-  21              		.align	1
-  22              		.global	system_init
-  23              		.syntax unified
-  24              		.thumb
-  25              		.thumb_func
-  27              	system_init:
-  28              	.LFB126:
+  20              		.section	.rodata.system_init.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 456E7465 		.ascii	"Enter\000"
+  23      7200
+  24 0006 0000     		.align	2
+  25              	.LC1:
+  26 0008 45736300 		.ascii	"Esc\000"
+  27              		.align	2
+  28              	.LC2:
+  29 000c 783A2564 		.ascii	"x:%d,y:%d\000"
+  29      2C793A25 
+  29      6400
+  30              		.section	.text.system_init,"ax",%progbits
+  31              		.align	1
+  32              		.global	system_init
+  33              		.syntax unified
+  34              		.thumb
+  35              		.thumb_func
+  37              	system_init:
+  38              	.LFB126:
    1:User/main.c   **** #include "stm32f4xx.h"
    2:User/main.c   **** #include "sys.h"
    3:User/main.c   **** #include "delay.h"
    4:User/main.c   **** #include "lib.h"
    5:User/main.c   **** #include "usart.h"
-   6:User/main.c   **** 
-   7:User/main.c   **** int system_init(void)
-   8:User/main.c   **** {
-  29              		.loc 1 8 1 view -0
-  30              		.cfi_startproc
-  31              		@ args = 0, pretend = 0, frame = 0
-  32              		@ frame_needed = 0, uses_anonymous_args = 0
-  33 0000 08B5     		push	{r3, lr}
-  34              	.LCFI0:
-  35              		.cfi_def_cfa_offset 8
-  36              		.cfi_offset 3, -8
-  37              		.cfi_offset 14, -4
-   9:User/main.c   ****     delay_init(180);
-  38              		.loc 1 9 5 view .LVU1
-  39 0002 B420     		movs	r0, #180
-  40 0004 FFF7FEFF 		bl	delay_init
-  41              	.LVL0:
-  10:User/main.c   ****     uart_init(90,115200);
-  42              		.loc 1 10 5 view .LVU2
-  43 0008 4FF4E131 		mov	r1, #115200
-  44 000c 5A20     		movs	r0, #90
-  45 000e FFF7FEFF 		bl	uart_init
-  46              	.LVL1:
-  11:User/main.c   ****     SDRAM_Init();
-  47              		.loc 1 11 5 view .LVU3
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s 			page 2
+   6:User/main.c   **** #include "gt9xxx.h"
+   7:User/main.c   **** #include "touch.h"
+   8:User/main.c   **** #include "GUILib.h"
+   9:User/main.c   **** 
+  10:User/main.c   **** int a;
+  11:User/main.c   **** 
+  12:User/main.c   **** int system_init(void)
+  13:User/main.c   **** {
+  39              		.loc 1 13 1 view -0
+  40              		.cfi_startproc
+  41              		@ Volatile: function does not return.
+  42              		@ args = 0, pretend = 0, frame = 8
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s 			page 2
 
 
-  48 0012 FFF7FEFF 		bl	SDRAM_Init
-  49              	.LVL2:
-  12:User/main.c   ****     LCD_Init();
-  50              		.loc 1 12 5 view .LVU4
-  51 0016 FFF7FEFF 		bl	LCD_Init
-  52              	.LVL3:
-  13:User/main.c   ****     function_goto(&__main);     //goto world of c++
-  53              		.loc 1 13 5 view .LVU5
-  54              	.LBB4:
-  55              	.LBI4:
-  14:User/main.c   **** }
-  15:User/main.c   **** 
-  16:User/main.c   **** __INLINE void function_goto(int (*pfunction)())
-  56              		.loc 1 16 15 view .LVU6
-  57              	.LBB5:
-  17:User/main.c   **** {
-  18:User/main.c   ****     __ASM __IO 
-  58              		.loc 1 18 5 view .LVU7
-  59 001a 024B     		ldr	r3, .L3
-  60              		.syntax unified
-  61              	@ 18 "User/main.c" 1
-  62 001c 1846     		mov r0,r3 
-  63 001e 0047     		bx r0     
-  64              		
-  65              	@ 0 "" 2
-  66              		.thumb
-  67              		.syntax unified
-  68              	.LBE5:
-  69              	.LBE4:
-  14:User/main.c   **** }
-  70              		.loc 1 14 1 is_stmt 0 view .LVU8
-  71 0020 08BD     		pop	{r3, pc}
-  72              	.L4:
-  73 0022 00BF     		.align	2
-  74              	.L3:
-  75 0024 00000000 		.word	__main
-  76              		.cfi_endproc
-  77              	.LFE126:
-  79              		.section	.text.function_goto,"ax",%progbits
-  80              		.align	1
-  81              		.global	function_goto
-  82              		.syntax unified
-  83              		.thumb
-  84              		.thumb_func
-  86              	function_goto:
-  87              	.LVL4:
-  88              	.LFB127:
-  17:User/main.c   **** {
-  89              		.loc 1 17 1 is_stmt 1 view -0
-  90              		.cfi_startproc
-  91              		@ args = 0, pretend = 0, frame = 0
-  92              		@ frame_needed = 0, uses_anonymous_args = 0
-  93              		@ link register save eliminated.
-  94              		.loc 1 18 5 view .LVU10
-  95              		.syntax unified
-  96              	@ 18 "User/main.c" 1
-  97 0000 0046     		mov r0,r0 
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s 			page 3
+  43              		@ frame_needed = 0, uses_anonymous_args = 0
+  44 0000 00B5     		push	{lr}
+  45              	.LCFI0:
+  46              		.cfi_def_cfa_offset 4
+  47              		.cfi_offset 14, -4
+  48 0002 89B0     		sub	sp, sp, #36
+  49              	.LCFI1:
+  50              		.cfi_def_cfa_offset 40
+  14:User/main.c   ****     delay_init(180);
+  51              		.loc 1 14 5 view .LVU1
+  52 0004 B420     		movs	r0, #180
+  53 0006 FFF7FEFF 		bl	delay_init
+  54              	.LVL0:
+  15:User/main.c   ****     uart_init(90,115200);
+  55              		.loc 1 15 5 view .LVU2
+  56 000a 4FF4E131 		mov	r1, #115200
+  57 000e 5A20     		movs	r0, #90
+  58 0010 FFF7FEFF 		bl	uart_init
+  59              	.LVL1:
+  16:User/main.c   ****     SDRAM_Init();
+  60              		.loc 1 16 5 view .LVU3
+  61 0014 FFF7FEFF 		bl	SDRAM_Init
+  62              	.LVL2:
+  17:User/main.c   ****     LCD_Init();
+  63              		.loc 1 17 5 view .LVU4
+  64 0018 FFF7FEFF 		bl	LCD_Init
+  65              	.LVL3:
+  18:User/main.c   ****     gt9xxx_init();
+  66              		.loc 1 18 5 view .LVU5
+  67 001c FFF7FEFF 		bl	gt9xxx_init
+  68              	.LVL4:
+  19:User/main.c   ****     
+  20:User/main.c   ****     uint8_t act_sign_1,act_sign_2;
+  69              		.loc 1 20 5 view .LVU6
+  21:User/main.c   **** 
+  22:User/main.c   ****     LCD_DrawRectangle(360,250,100,50);
+  70              		.loc 1 22 5 view .LVU7
+  71 0020 3223     		movs	r3, #50
+  72 0022 6422     		movs	r2, #100
+  73 0024 FA21     		movs	r1, #250
+  74 0026 4FF4B470 		mov	r0, #360
+  75 002a FFF7FEFF 		bl	LCD_DrawRectangle
+  76              	.LVL5:
+  23:User/main.c   ****     LCD_DrawRectangle(520,250,100,50);
+  77              		.loc 1 23 5 view .LVU8
+  78 002e 3223     		movs	r3, #50
+  79 0030 6422     		movs	r2, #100
+  80 0032 FA21     		movs	r1, #250
+  81 0034 4FF40270 		mov	r0, #520
+  82 0038 FFF7FEFF 		bl	LCD_DrawRectangle
+  83              	.LVL6:
+  84              	.L2:
+  24:User/main.c   ****     
+  25:User/main.c   ****     uint16_t x,y;
+  85              		.loc 1 25 5 view .LVU9
+  26:User/main.c   ****     while(1)
+  86              		.loc 1 26 5 view .LVU10
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s 			page 3
 
 
-  98 0002 0047     		bx r0     
-  99              		
- 100              	@ 0 "" 2
-  19:User/main.c   ****     (
-  20:User/main.c   ****         "mov r0,%0 \n\t"
-  21:User/main.c   ****         "bx r0     \n\t"
-  22:User/main.c   ****         ::"r"(pfunction)
-  23:User/main.c   ****     );
-  24:User/main.c   **** }
- 101              		.loc 1 24 1 is_stmt 0 view .LVU11
- 102              		.thumb
- 103              		.syntax unified
- 104 0004 7047     		bx	lr
- 105              		.cfi_endproc
- 106              	.LFE127:
- 108              		.text
- 109              	.Letext0:
- 110              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
- 111              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
- 112              		.file 4 "User/stm32f4xx.h"
- 113              		.file 5 "LCD/lcd.h"
- 114              		.file 6 "SDRAM/sdram.h"
- 115              		.file 7 "USER_LIB/inc/lib.h"
- 116              		.file 8 "system/usart/usart.h"
- 117              		.file 9 "system/delay/delay.h"
-ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s 			page 4
+  27:User/main.c   ****     {
+  28:User/main.c   ****         
+  29:User/main.c   ****         
+  30:User/main.c   ****         tp_dev.scan(0);
+  87              		.loc 1 30 9 view .LVU11
+  88              		.loc 1 30 15 is_stmt 0 view .LVU12
+  89 003c 164C     		ldr	r4, .L4
+  90 003e 6368     		ldr	r3, [r4, #4]
+  91              		.loc 1 30 9 view .LVU13
+  92 0040 0020     		movs	r0, #0
+  93 0042 9847     		blx	r3
+  94              	.LVL7:
+  31:User/main.c   ****         
+  32:User/main.c   ****         Button_check(&act_sign_1,0,360,250,100,50,"Enter");
+  95              		.loc 1 32 9 is_stmt 1 view .LVU14
+  96 0044 154B     		ldr	r3, .L4+4
+  97 0046 0293     		str	r3, [sp, #8]
+  98 0048 3226     		movs	r6, #50
+  99 004a 0196     		str	r6, [sp, #4]
+ 100 004c 6425     		movs	r5, #100
+ 101 004e 0095     		str	r5, [sp]
+ 102 0050 FA23     		movs	r3, #250
+ 103 0052 4FF4B472 		mov	r2, #360
+ 104 0056 0021     		movs	r1, #0
+ 105 0058 0DF11F00 		add	r0, sp, #31
+ 106 005c FFF7FEFF 		bl	Button_check
+ 107              	.LVL8:
+  33:User/main.c   ****         Button_check(&act_sign_2,1,520,250,100,50,"Esc");
+ 108              		.loc 1 33 9 view .LVU15
+ 109 0060 0F4B     		ldr	r3, .L4+8
+ 110 0062 0293     		str	r3, [sp, #8]
+ 111 0064 0196     		str	r6, [sp, #4]
+ 112 0066 0095     		str	r5, [sp]
+ 113 0068 FA23     		movs	r3, #250
+ 114 006a 4FF40272 		mov	r2, #520
+ 115 006e 0121     		movs	r1, #1
+ 116 0070 0DF11E00 		add	r0, sp, #30
+ 117 0074 FFF7FEFF 		bl	Button_check
+ 118              	.LVL9:
+  34:User/main.c   ****         //obj_move();
+  35:User/main.c   ****         Printf(0,0,240,32,32,0,"x:%d,y:%d",tp_dev.x[0],tp_dev.y[0]);
+ 119              		.loc 1 35 9 discriminator 1 view .LVU16
+ 120              		.loc 1 35 52 is_stmt 0 discriminator 1 view .LVU17
+ 121 0078 A389     		ldrh	r3, [r4, #12]
+ 122              		.loc 1 35 64 discriminator 1 view .LVU18
+ 123 007a 228C     		ldrh	r2, [r4, #32]
+ 124              		.loc 1 35 9 discriminator 1 view .LVU19
+ 125 007c 0492     		str	r2, [sp, #16]
+ 126 007e 0393     		str	r3, [sp, #12]
+ 127 0080 084B     		ldr	r3, .L4+12
+ 128 0082 0293     		str	r3, [sp, #8]
+ 129 0084 0020     		movs	r0, #0
+ 130 0086 0190     		str	r0, [sp, #4]
+ 131 0088 2023     		movs	r3, #32
+ 132 008a 0093     		str	r3, [sp]
+ 133 008c F022     		movs	r2, #240
+ 134 008e 0146     		mov	r1, r0
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s 			page 4
+
+
+ 135 0090 FFF7FEFF 		bl	Printf
+ 136              	.LVL10:
+  26:User/main.c   ****     {
+ 137              		.loc 1 26 10 is_stmt 1 view .LVU20
+ 138 0094 D2E7     		b	.L2
+ 139              	.L5:
+ 140 0096 00BF     		.align	2
+ 141              	.L4:
+ 142 0098 00000000 		.word	tp_dev
+ 143 009c 00000000 		.word	.LC0
+ 144 00a0 08000000 		.word	.LC1
+ 145 00a4 0C000000 		.word	.LC2
+ 146              		.cfi_endproc
+ 147              	.LFE126:
+ 149              		.section	.rodata.button_response.str1.4,"aMS",%progbits,1
+ 150              		.align	2
+ 151              	.LC3:
+ 152 0000 613A2564 		.ascii	"a:%d\000"
+ 152      00
+ 153              		.section	.text.button_response,"ax",%progbits
+ 154              		.align	1
+ 155              		.global	button_response
+ 156              		.syntax unified
+ 157              		.thumb
+ 158              		.thumb_func
+ 160              	button_response:
+ 161              	.LVL11:
+ 162              	.LFB127:
+  36:User/main.c   ****         
+  37:User/main.c   ****     }
+  38:User/main.c   ****     
+  39:User/main.c   ****     function_goto(&__main);     //goto world of c++
+  40:User/main.c   **** }
+  41:User/main.c   **** 
+  42:User/main.c   **** void button_response(uint8_t *act_sign)
+  43:User/main.c   **** {
+ 163              		.loc 1 43 1 view -0
+ 164              		.cfi_startproc
+ 165              		@ args = 0, pretend = 0, frame = 0
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 167              		.loc 1 43 1 is_stmt 0 view .LVU22
+ 168 0000 00B5     		push	{lr}
+ 169              	.LCFI2:
+ 170              		.cfi_def_cfa_offset 4
+ 171              		.cfi_offset 14, -4
+ 172 0002 85B0     		sub	sp, sp, #20
+ 173              	.LCFI3:
+ 174              		.cfi_def_cfa_offset 24
+  44:User/main.c   ****     switch (*act_sign)
+ 175              		.loc 1 44 5 is_stmt 1 view .LVU23
+ 176              		.loc 1 44 13 is_stmt 0 view .LVU24
+ 177 0004 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 178              		.loc 1 44 5 view .LVU25
+ 179 0006 8BB1     		cbz	r3, .L7
+ 180 0008 012B     		cmp	r3, #1
+ 181 000a 1ED1     		bne	.L6
+  45:User/main.c   ****     {
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s 			page 5
+
+
+  46:User/main.c   ****         case 0:
+  47:User/main.c   ****         {
+  48:User/main.c   ****             a++;
+  49:User/main.c   ****             Printf(0,32,240,32,32,0,"a:%d",a); 
+  50:User/main.c   ****         }   
+  51:User/main.c   ****         break;
+  52:User/main.c   ****         
+  53:User/main.c   ****         case 1:
+  54:User/main.c   ****         {
+  55:User/main.c   ****             a--;
+ 182              		.loc 1 55 13 is_stmt 1 view .LVU26
+ 183              		.loc 1 55 14 is_stmt 0 view .LVU27
+ 184 000c 104A     		ldr	r2, .L11
+ 185 000e 1368     		ldr	r3, [r2]
+ 186 0010 013B     		subs	r3, r3, #1
+ 187 0012 1360     		str	r3, [r2]
+  56:User/main.c   ****             Printf(0,32,240,32,32,0,"a:%d",a); 
+ 188              		.loc 1 56 13 is_stmt 1 view .LVU28
+ 189 0014 0393     		str	r3, [sp, #12]
+ 190 0016 0F4B     		ldr	r3, .L11+4
+ 191 0018 0293     		str	r3, [sp, #8]
+ 192 001a 0020     		movs	r0, #0
+ 193              	.LVL12:
+ 194              		.loc 1 56 13 is_stmt 0 view .LVU29
+ 195 001c 0190     		str	r0, [sp, #4]
+ 196 001e 2021     		movs	r1, #32
+ 197 0020 0091     		str	r1, [sp]
+ 198 0022 0B46     		mov	r3, r1
+ 199 0024 F022     		movs	r2, #240
+ 200 0026 FFF7FEFF 		bl	Printf
+ 201              	.LVL13:
+  57:User/main.c   ****         }
+  58:User/main.c   ****         break;
+ 202              		.loc 1 58 9 is_stmt 1 view .LVU30
+  59:User/main.c   ****         default:
+  60:User/main.c   ****             break;
+  61:User/main.c   ****     }
+  62:User/main.c   ****     
+  63:User/main.c   ****         
+  64:User/main.c   ****     
+  65:User/main.c   ****     
+  66:User/main.c   **** 
+  67:User/main.c   **** }
+ 203              		.loc 1 67 1 is_stmt 0 view .LVU31
+ 204 002a 0EE0     		b	.L6
+ 205              	.LVL14:
+ 206              	.L7:
+  48:User/main.c   ****             Printf(0,32,240,32,32,0,"a:%d",a); 
+ 207              		.loc 1 48 13 is_stmt 1 view .LVU32
+  48:User/main.c   ****             Printf(0,32,240,32,32,0,"a:%d",a); 
+ 208              		.loc 1 48 14 is_stmt 0 view .LVU33
+ 209 002c 084A     		ldr	r2, .L11
+ 210 002e 1368     		ldr	r3, [r2]
+ 211 0030 0133     		adds	r3, r3, #1
+ 212 0032 1360     		str	r3, [r2]
+  49:User/main.c   ****         }   
+ 213              		.loc 1 49 13 is_stmt 1 view .LVU34
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s 			page 6
+
+
+ 214 0034 0393     		str	r3, [sp, #12]
+ 215 0036 074B     		ldr	r3, .L11+4
+ 216 0038 0293     		str	r3, [sp, #8]
+ 217 003a 0020     		movs	r0, #0
+ 218              	.LVL15:
+  49:User/main.c   ****         }   
+ 219              		.loc 1 49 13 is_stmt 0 view .LVU35
+ 220 003c 0190     		str	r0, [sp, #4]
+ 221 003e 2021     		movs	r1, #32
+ 222 0040 0091     		str	r1, [sp]
+ 223 0042 0B46     		mov	r3, r1
+ 224 0044 F022     		movs	r2, #240
+ 225 0046 FFF7FEFF 		bl	Printf
+ 226              	.LVL16:
+  51:User/main.c   ****         
+ 227              		.loc 1 51 9 is_stmt 1 view .LVU36
+ 228              	.L6:
+ 229              		.loc 1 67 1 is_stmt 0 view .LVU37
+ 230 004a 05B0     		add	sp, sp, #20
+ 231              	.LCFI4:
+ 232              		.cfi_def_cfa_offset 4
+ 233              		@ sp needed
+ 234 004c 5DF804FB 		ldr	pc, [sp], #4
+ 235              	.L12:
+ 236              		.align	2
+ 237              	.L11:
+ 238 0050 00000000 		.word	a
+ 239 0054 00000000 		.word	.LC3
+ 240              		.cfi_endproc
+ 241              	.LFE127:
+ 243              		.global	a
+ 244              		.section	.bss.a,"aw",%nobits
+ 245              		.align	2
+ 248              	a:
+ 249 0000 00000000 		.space	4
+ 250              		.text
+ 251              	.Letext0:
+ 252              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 253              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 254              		.file 4 "User/stm32f4xx.h"
+ 255              		.file 5 "TOUCH/touch.h"
+ 256              		.file 6 "LCD/lcd.h"
+ 257              		.file 7 "USER_LIB/inc/GUILib.h"
+ 258              		.file 8 "SDRAM/sdram.h"
+ 259              		.file 9 "system/usart/usart.h"
+ 260              		.file 10 "system/delay/delay.h"
+ 261              		.file 11 "TOUCH/gt9xxx.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:21     .text.system_init:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:27     .text.system_init:00000000 system_init
-C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:75     .text.system_init:00000024 $d
-C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:80     .text.function_goto:00000000 $t
-C:\Users\ktkuru\AppData\Local\Temp\ccTzkPtD.s:86     .text.function_goto:00000000 function_goto
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:21     .rodata.system_init.str1.4:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:31     .text.system_init:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:37     .text.system_init:00000000 system_init
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:142    .text.system_init:00000098 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:150    .rodata.button_response.str1.4:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:154    .text.button_response:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:160    .text.button_response:00000000 button_response
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:238    .text.button_response:00000050 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:248    .bss.a:00000000 a
+C:\Users\ktkuru\AppData\Local\Temp\cc7kwgyE.s:245    .bss.a:00000000 $d
 
 UNDEFINED SYMBOLS
 delay_init
 uart_init
 SDRAM_Init
 LCD_Init
-__main
+gt9xxx_init
+LCD_DrawRectangle
+Button_check
+Printf
+tp_dev

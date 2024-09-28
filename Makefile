@@ -43,7 +43,7 @@ ASMM_SOURCES =
 
 # C++ sources
 CXX_SOURCES = \
-USER_LIB/src/lib.cpp \
+USER_LIB/src/GUILib.cpp \
 User/__main.cpp
 
 # C sources
@@ -55,6 +55,7 @@ C_SOURCES += $(wildcard SYSTEM/usart/*.c)
 C_SOURCES += $(wildcard USER_LIB/src/bank.c)
 C_SOURCES += $(wildcard LCD/*.c)
 C_SOURCES += $(wildcard SDRAM/*.c)
+C_SOURCES += $(wildcard TOUCH/*.c)
 # C includes
 C_INCLUDES =  \
 -Icore \
@@ -64,7 +65,8 @@ C_INCLUDES =  \
 -Isystem/usart \
 -IUSER_LIB/inc \
 -ILCD \
--ISDRAM
+-ISDRAM \
+-ITOUCH
 
 CXX_INCLUDES =  \
 -IUSER_LIB/inc 
@@ -204,8 +206,12 @@ dol:
 	echo "this is a test function"  
 	openocd -f ./config/cmsis-dap.cfg -f ./config/stm32f4x.cfg -c init -c "reset halt; wait_halt; flash write_image erase ./${BUILD_DIR}/$(TARGET).bin 0x08000000" -c reset -c shutdown
 
-run:
+rebuild_run:
 	make clean
+	make -j20 
+	make dol
+	echo "program is running......"
+build_run:
 	make -j20 
 	make dol
 	echo "program is running......"
