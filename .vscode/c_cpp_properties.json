@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "build",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/Lib/inc",
+                "${workspaceFolder}/HADRWARE/TOUCH",
+                "${workspaceFolder}/SYSTEM/sys",
+                "${workspaceFolder}/Libraries/CMSIS/Device/ST/STM32F4xx/Include",
+                "${workspaceFolder}/Libraries/CMSIS/Include",
+                "${workspaceFolder}/Libraries/STM32F4xx_StdPeriph_Driver/inc",
+                "${workspaceFolder}/SYSTEM/delay",
+                "${workspaceFolder}/SYSTEM/usart",
+                "${workspaceFolder}/HADRWARE/SDRAM",
+                "${workspaceFolder}/HADRWARE/LCD"
+            ],
+            "defines": [
+                "STM32F429_439xx",
+                "USE_STDPERIPH_DRIVER"
+            ],
+            "compilerPath": "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/arm-none-eabi-gcc.exe",
+            "intelliSenseMode": "gcc-arm",
+            "cStandard": "c99",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

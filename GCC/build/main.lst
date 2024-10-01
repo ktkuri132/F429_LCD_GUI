@@ -1,0 +1,274 @@
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/main.c"
+  20              		.section	.text.main,"ax",%progbits
+  21              		.align	1
+  22              		.global	main
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	main:
+  28              	.LFB126:
+   1:User/main.c   **** //#define STM32F40_41xxx
+   2:User/main.c   **** 
+   3:User/main.c   **** #include <stm32f4xx.h>
+   4:User/main.c   **** #include <touch.h>
+   5:User/main.c   **** #include <JY61_usart6.h>
+   6:User/main.c   **** 
+   7:User/main.c   **** extern float Angle_S[3];
+   8:User/main.c   **** 
+   9:User/main.c   **** int main()
+  10:User/main.c   **** {
+  29              		.loc 1 10 1 view -0
+  30              		.cfi_startproc
+  31              		@ Volatile: function does not return.
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  11:User/main.c   ****     BSP_Init();
+  39              		.loc 1 11 5 view .LVU1
+  40 0002 FFF7FEFF 		bl	BSP_Init
+  41              	.LVL0:
+  12:User/main.c   ****     
+  13:User/main.c   **** 
+  14:User/main.c   ****     LCD_DrawRectangle(360,250,100,50);
+  42              		.loc 1 14 5 view .LVU2
+  43 0006 3223     		movs	r3, #50
+  44 0008 6422     		movs	r2, #100
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s 			page 2
+
+
+  45 000a FA21     		movs	r1, #250
+  46 000c 4FF4B470 		mov	r0, #360
+  47 0010 FFF7FEFF 		bl	LCD_DrawRectangle
+  48              	.LVL1:
+  15:User/main.c   ****     LCD_DrawRectangle(520,250,100,50);
+  49              		.loc 1 15 5 view .LVU3
+  50 0014 3223     		movs	r3, #50
+  51 0016 6422     		movs	r2, #100
+  52 0018 FA21     		movs	r1, #250
+  53 001a 4FF40270 		mov	r0, #520
+  54 001e FFF7FEFF 		bl	LCD_DrawRectangle
+  55              	.LVL2:
+  56              	.L2:
+  16:User/main.c   ****     
+  17:User/main.c   **** 
+  18:User/main.c   ****     while(1)
+  57              		.loc 1 18 5 view .LVU4
+  19:User/main.c   ****     {    
+  20:User/main.c   ****         //Printf(0,0,240,32,32,0,"x:%d,y:%d",tp_dev.x[0],tp_dev.y[0]);
+  21:User/main.c   ****         //printf("%d,%d\r\n",tp_dev.x[0],tp_dev.y[0]);
+  22:User/main.c   ****     }
+  58              		.loc 1 22 5 view .LVU5
+  18:User/main.c   ****     {    
+  59              		.loc 1 18 10 view .LVU6
+  60 0022 FEE7     		b	.L2
+  61              		.cfi_endproc
+  62              	.LFE126:
+  64              		.section	.rodata.button_response.str1.4,"aMS",%progbits,1
+  65              		.align	2
+  66              	.LC0:
+  67 0000 613A2564 		.ascii	"a:%d\000"
+  67      00
+  68 0005 000000   		.align	2
+  69              	.LC1:
+  70 0008 25640D0A 		.ascii	"%d\015\012\000"
+  70      00
+  71              		.section	.text.button_response,"ax",%progbits
+  72              		.align	1
+  73              		.global	button_response
+  74              		.syntax unified
+  75              		.thumb
+  76              		.thumb_func
+  78              	button_response:
+  79              	.LVL3:
+  80              	.LFB127:
+  23:User/main.c   **** }
+  24:User/main.c   **** 
+  25:User/main.c   **** int a;
+  26:User/main.c   **** 
+  27:User/main.c   **** void button_response(uint8_t *act_sign)
+  28:User/main.c   **** {
+  81              		.loc 1 28 1 view -0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 0
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              		.loc 1 28 1 is_stmt 0 view .LVU8
+  86 0000 10B5     		push	{r4, lr}
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s 			page 3
+
+
+  87              	.LCFI1:
+  88              		.cfi_def_cfa_offset 8
+  89              		.cfi_offset 4, -8
+  90              		.cfi_offset 14, -4
+  91 0002 84B0     		sub	sp, sp, #16
+  92              	.LCFI2:
+  93              		.cfi_def_cfa_offset 24
+  29:User/main.c   ****     switch (*act_sign)
+  94              		.loc 1 29 5 is_stmt 1 view .LVU9
+  95              		.loc 1 29 13 is_stmt 0 view .LVU10
+  96 0004 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  97              		.loc 1 29 5 view .LVU11
+  98 0006 ABB1     		cbz	r3, .L5
+  99 0008 012B     		cmp	r3, #1
+ 100 000a 26D1     		bne	.L4
+  30:User/main.c   ****     {
+  31:User/main.c   ****         case 0:
+  32:User/main.c   ****         {
+  33:User/main.c   ****             a++;
+  34:User/main.c   ****             Printf(0,64,240,32,32,0,"a:%d",a); 
+  35:User/main.c   ****             printf("%d\r\n",a);
+  36:User/main.c   ****         }   
+  37:User/main.c   ****         break;
+  38:User/main.c   ****         
+  39:User/main.c   ****         case 1:
+  40:User/main.c   ****         {
+  41:User/main.c   ****             a--;
+ 101              		.loc 1 41 13 is_stmt 1 view .LVU12
+ 102              		.loc 1 41 14 is_stmt 0 view .LVU13
+ 103 000c 144C     		ldr	r4, .L9
+ 104 000e 2368     		ldr	r3, [r4]
+ 105 0010 013B     		subs	r3, r3, #1
+ 106 0012 2360     		str	r3, [r4]
+  42:User/main.c   ****             Printf(0,64,240,32,32,0,"a:%d",a); 
+ 107              		.loc 1 42 13 is_stmt 1 view .LVU14
+ 108 0014 0393     		str	r3, [sp, #12]
+ 109 0016 134B     		ldr	r3, .L9+4
+ 110 0018 0293     		str	r3, [sp, #8]
+ 111 001a 0020     		movs	r0, #0
+ 112              	.LVL4:
+ 113              		.loc 1 42 13 is_stmt 0 view .LVU15
+ 114 001c 0190     		str	r0, [sp, #4]
+ 115 001e 2023     		movs	r3, #32
+ 116 0020 0093     		str	r3, [sp]
+ 117 0022 F022     		movs	r2, #240
+ 118 0024 4021     		movs	r1, #64
+ 119 0026 FFF7FEFF 		bl	Printf
+ 120              	.LVL5:
+  43:User/main.c   ****             printf("%d\r\n",a);
+ 121              		.loc 1 43 13 is_stmt 1 view .LVU16
+ 122 002a 2168     		ldr	r1, [r4]
+ 123 002c 0E48     		ldr	r0, .L9+8
+ 124 002e FFF7FEFF 		bl	printf
+ 125              	.LVL6:
+  44:User/main.c   ****         }
+  45:User/main.c   ****         break;
+ 126              		.loc 1 45 9 view .LVU17
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s 			page 4
+
+
+  46:User/main.c   ****         default:
+  47:User/main.c   ****             break;
+  48:User/main.c   ****     }
+  49:User/main.c   **** 
+  50:User/main.c   **** }
+ 127              		.loc 1 50 1 is_stmt 0 view .LVU18
+ 128 0032 12E0     		b	.L4
+ 129              	.LVL7:
+ 130              	.L5:
+  33:User/main.c   ****             Printf(0,64,240,32,32,0,"a:%d",a); 
+ 131              		.loc 1 33 13 is_stmt 1 view .LVU19
+  33:User/main.c   ****             Printf(0,64,240,32,32,0,"a:%d",a); 
+ 132              		.loc 1 33 14 is_stmt 0 view .LVU20
+ 133 0034 0A4C     		ldr	r4, .L9
+ 134 0036 2368     		ldr	r3, [r4]
+ 135 0038 0133     		adds	r3, r3, #1
+ 136 003a 2360     		str	r3, [r4]
+  34:User/main.c   ****             printf("%d\r\n",a);
+ 137              		.loc 1 34 13 is_stmt 1 view .LVU21
+ 138 003c 0393     		str	r3, [sp, #12]
+ 139 003e 094B     		ldr	r3, .L9+4
+ 140 0040 0293     		str	r3, [sp, #8]
+ 141 0042 0020     		movs	r0, #0
+ 142              	.LVL8:
+  34:User/main.c   ****             printf("%d\r\n",a);
+ 143              		.loc 1 34 13 is_stmt 0 view .LVU22
+ 144 0044 0190     		str	r0, [sp, #4]
+ 145 0046 2023     		movs	r3, #32
+ 146 0048 0093     		str	r3, [sp]
+ 147 004a F022     		movs	r2, #240
+ 148 004c 4021     		movs	r1, #64
+ 149 004e FFF7FEFF 		bl	Printf
+ 150              	.LVL9:
+  35:User/main.c   ****         }   
+ 151              		.loc 1 35 13 is_stmt 1 view .LVU23
+ 152 0052 2168     		ldr	r1, [r4]
+ 153 0054 0448     		ldr	r0, .L9+8
+ 154 0056 FFF7FEFF 		bl	printf
+ 155              	.LVL10:
+  37:User/main.c   ****         
+ 156              		.loc 1 37 9 view .LVU24
+ 157              	.L4:
+ 158              		.loc 1 50 1 is_stmt 0 view .LVU25
+ 159 005a 04B0     		add	sp, sp, #16
+ 160              	.LCFI3:
+ 161              		.cfi_def_cfa_offset 8
+ 162              		@ sp needed
+ 163 005c 10BD     		pop	{r4, pc}
+ 164              	.L10:
+ 165 005e 00BF     		.align	2
+ 166              	.L9:
+ 167 0060 00000000 		.word	a
+ 168 0064 00000000 		.word	.LC0
+ 169 0068 08000000 		.word	.LC1
+ 170              		.cfi_endproc
+ 171              	.LFE127:
+ 173              		.global	a
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s 			page 5
+
+
+ 174              		.section	.bss.a,"aw",%nobits
+ 175              		.align	2
+ 178              	a:
+ 179 0000 00000000 		.space	4
+ 180              		.text
+ 181              	.Letext0:
+ 182              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 183              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 184              		.file 4 "libraries/CMSIS/Device/ST/STM32F4xx/include/stm32f4xx.h"
+ 185              		.file 5 "HADRWARE/LCD/lcd.h"
+ 186              		.file 6 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/st
+ 187              		.file 7 "Lib/inc/lib.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s:21     .text.main:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s:27     .text.main:00000000 main
+C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s:65     .rodata.button_response.str1.4:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s:72     .text.button_response:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s:78     .text.button_response:00000000 button_response
+C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s:167    .text.button_response:00000060 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s:178    .bss.a:00000000 a
+C:\Users\ktkuru\AppData\Local\Temp\ccp5KfOX.s:175    .bss.a:00000000 $d
+
+UNDEFINED SYMBOLS
+BSP_Init
+LCD_DrawRectangle
+Printf
+printf

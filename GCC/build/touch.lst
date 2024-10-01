@@ -1,0 +1,1472 @@
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"touch.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "HADRWARE/TOUCH/touch.c"
+  20              		.section	.text.tp_write_byte,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	tp_write_byte:
+  27              	.LVL0:
+  28              	.LFB126:
+   1:HADRWARE/TOUCH/touch.c **** /**
+   2:HADRWARE/TOUCH/touch.c ****  **************************************************************************************************
+   3:HADRWARE/TOUCH/touch.c ****  * @file        touch.c
+   4:HADRWARE/TOUCH/touch.c ****  * @author      正点原子团队(ALIENTEK)
+   5:HADRWARE/TOUCH/touch.c ****  * @version     V1.1
+   6:HADRWARE/TOUCH/touch.c ****  * @date        2022-12-27
+   7:HADRWARE/TOUCH/touch.c ****  * @brief       触摸屏 驱动代码
+   8:HADRWARE/TOUCH/touch.c ****  * @note        支持电阻/电容式触摸屏
+   9:HADRWARE/TOUCH/touch.c ****  *              触摸屏驱动（支持ADS7843/7846/UH7843/7846/XPT2046/TSC2046/GT9147/GT9271/FT5206/GT115
+  10:HADRWARE/TOUCH/touch.c ****  *
+  11:HADRWARE/TOUCH/touch.c ****  * @license     Copyright (c) 2022-2032, 广州市星翼电子科技有限公司
+  12:HADRWARE/TOUCH/touch.c ****  **************************************************************************************************
+  13:HADRWARE/TOUCH/touch.c ****  * @attention
+  14:HADRWARE/TOUCH/touch.c ****  *
+  15:HADRWARE/TOUCH/touch.c ****  * 实验平台:正点原子 阿波罗 F429开发板
+  16:HADRWARE/TOUCH/touch.c ****  * 在线视频:www.yuanzige.com
+  17:HADRWARE/TOUCH/touch.c ****  * 技术论坛:www.openedv.com
+  18:HADRWARE/TOUCH/touch.c ****  * 公司网址:www.alientek.com
+  19:HADRWARE/TOUCH/touch.c ****  * 购买地址:openedv.taobao.com
+  20:HADRWARE/TOUCH/touch.c ****  *
+  21:HADRWARE/TOUCH/touch.c ****  * 修改说明
+  22:HADRWARE/TOUCH/touch.c ****  * V1.0 20221227
+  23:HADRWARE/TOUCH/touch.c ****  * 第一次发布
+  24:HADRWARE/TOUCH/touch.c ****  * V1.1 20230607
+  25:HADRWARE/TOUCH/touch.c ****  * 1，新增对ST7796 3.5寸屏 GT1151的支持
+  26:HADRWARE/TOUCH/touch.c ****  * 2，新增对ILI9806 4.3寸屏 GT1151的支持
+  27:HADRWARE/TOUCH/touch.c ****  *
+  28:HADRWARE/TOUCH/touch.c ****  **************************************************************************************************
+  29:HADRWARE/TOUCH/touch.c ****  */
+  30:HADRWARE/TOUCH/touch.c **** 
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 2
+
+
+  31:HADRWARE/TOUCH/touch.c **** #include "stdio.h"
+  32:HADRWARE/TOUCH/touch.c **** #include "stdlib.h"
+  33:HADRWARE/TOUCH/touch.c **** #include "lcd.h"
+  34:HADRWARE/TOUCH/touch.c **** #include "touch.h"
+  35:HADRWARE/TOUCH/touch.c **** //#include "24cxx.h"
+  36:HADRWARE/TOUCH/touch.c **** #include "delay.h"
+  37:HADRWARE/TOUCH/touch.c **** 
+  38:HADRWARE/TOUCH/touch.c **** 
+  39:HADRWARE/TOUCH/touch.c **** _m_tp_dev tp_dev =
+  40:HADRWARE/TOUCH/touch.c **** {
+  41:HADRWARE/TOUCH/touch.c ****     tp_init,
+  42:HADRWARE/TOUCH/touch.c ****     tp_scan,
+  43:HADRWARE/TOUCH/touch.c ****     //tp_adjust,
+  44:HADRWARE/TOUCH/touch.c ****     0,
+  45:HADRWARE/TOUCH/touch.c ****     0,
+  46:HADRWARE/TOUCH/touch.c ****     0,
+  47:HADRWARE/TOUCH/touch.c ****     0,
+  48:HADRWARE/TOUCH/touch.c ****     0,
+  49:HADRWARE/TOUCH/touch.c ****     0,
+  50:HADRWARE/TOUCH/touch.c ****     0,
+  51:HADRWARE/TOUCH/touch.c ****     0,
+  52:HADRWARE/TOUCH/touch.c **** };
+  53:HADRWARE/TOUCH/touch.c **** 
+  54:HADRWARE/TOUCH/touch.c **** 
+  55:HADRWARE/TOUCH/touch.c **** 
+  56:HADRWARE/TOUCH/touch.c **** /**
+  57:HADRWARE/TOUCH/touch.c ****  * @brief       SPI写数据
+  58:HADRWARE/TOUCH/touch.c ****  * @note        向触摸屏IC写入1 byte数据
+  59:HADRWARE/TOUCH/touch.c ****  * @param       data: 要写入的数据
+  60:HADRWARE/TOUCH/touch.c ****  * @retval      无
+  61:HADRWARE/TOUCH/touch.c ****  */
+  62:HADRWARE/TOUCH/touch.c **** static void tp_write_byte(uint8_t data)
+  63:HADRWARE/TOUCH/touch.c **** {
+  29              		.loc 1 63 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 63 1 is_stmt 0 view .LVU1
+  34 0000 70B5     		push	{r4, r5, r6, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 4, -16
+  38              		.cfi_offset 5, -12
+  39              		.cfi_offset 6, -8
+  40              		.cfi_offset 14, -4
+  41 0002 0446     		mov	r4, r0
+  64:HADRWARE/TOUCH/touch.c ****     uint8_t count = 0;
+  42              		.loc 1 64 5 is_stmt 1 view .LVU2
+  43              	.LVL1:
+  65:HADRWARE/TOUCH/touch.c **** 
+  66:HADRWARE/TOUCH/touch.c ****     for (count = 0; count < 8; count++)
+  44              		.loc 1 66 5 view .LVU3
+  45              		.loc 1 66 16 is_stmt 0 view .LVU4
+  46 0004 0025     		movs	r5, #0
+  47              		.loc 1 66 5 view .LVU5
+  48 0006 16E0     		b	.L2
+  49              	.LVL2:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 3
+
+
+  50              	.L3:
+  67:HADRWARE/TOUCH/touch.c ****     {
+  68:HADRWARE/TOUCH/touch.c ****         if (data & 0x80)    /* 发送1 */
+  69:HADRWARE/TOUCH/touch.c ****         {
+  70:HADRWARE/TOUCH/touch.c ****             T_MOSI(1);
+  71:HADRWARE/TOUCH/touch.c ****         }
+  72:HADRWARE/TOUCH/touch.c ****         else                /* 发送0 */
+  73:HADRWARE/TOUCH/touch.c ****         {
+  74:HADRWARE/TOUCH/touch.c ****             T_MOSI(0);
+  51              		.loc 1 74 13 is_stmt 1 view .LVU6
+  52 0008 0022     		movs	r2, #0
+  53 000a 0821     		movs	r1, #8
+  54 000c 1048     		ldr	r0, .L8
+  55 000e FFF7FEFF 		bl	sys_gpio_pin_set
+  56              	.LVL3:
+  57              	.L4:
+  75:HADRWARE/TOUCH/touch.c ****         }
+  76:HADRWARE/TOUCH/touch.c **** 
+  77:HADRWARE/TOUCH/touch.c ****         data <<= 1;
+  58              		.loc 1 77 9 view .LVU7
+  59              		.loc 1 77 14 is_stmt 0 view .LVU8
+  60 0012 6400     		lsls	r4, r4, #1
+  61              	.LVL4:
+  62              		.loc 1 77 14 view .LVU9
+  63 0014 E4B2     		uxtb	r4, r4
+  64              	.LVL5:
+  78:HADRWARE/TOUCH/touch.c ****         T_CLK(0);
+  65              		.loc 1 78 9 is_stmt 1 view .LVU10
+  66 0016 0F4E     		ldr	r6, .L8+4
+  67 0018 0022     		movs	r2, #0
+  68 001a 4021     		movs	r1, #64
+  69 001c 3046     		mov	r0, r6
+  70 001e FFF7FEFF 		bl	sys_gpio_pin_set
+  71              	.LVL6:
+  79:HADRWARE/TOUCH/touch.c ****         delay_us(1);
+  72              		.loc 1 79 9 view .LVU11
+  73 0022 0120     		movs	r0, #1
+  74 0024 FFF7FEFF 		bl	delay_us
+  75              	.LVL7:
+  80:HADRWARE/TOUCH/touch.c ****         T_CLK(1);           /* 上升沿有效 */
+  76              		.loc 1 80 9 view .LVU12
+  77 0028 0122     		movs	r2, #1
+  78 002a 4021     		movs	r1, #64
+  79 002c 3046     		mov	r0, r6
+  80 002e FFF7FEFF 		bl	sys_gpio_pin_set
+  81              	.LVL8:
+  66:HADRWARE/TOUCH/touch.c ****     {
+  82              		.loc 1 66 37 discriminator 2 view .LVU13
+  83 0032 0135     		adds	r5, r5, #1
+  84              	.LVL9:
+  66:HADRWARE/TOUCH/touch.c ****     {
+  85              		.loc 1 66 37 is_stmt 0 discriminator 2 view .LVU14
+  86 0034 EDB2     		uxtb	r5, r5
+  87              	.LVL10:
+  88              	.L2:
+  66:HADRWARE/TOUCH/touch.c ****     {
+  89              		.loc 1 66 27 is_stmt 1 discriminator 1 view .LVU15
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 4
+
+
+  90 0036 072D     		cmp	r5, #7
+  91 0038 08D8     		bhi	.L7
+  68:HADRWARE/TOUCH/touch.c ****         {
+  92              		.loc 1 68 9 view .LVU16
+  68:HADRWARE/TOUCH/touch.c ****         {
+  93              		.loc 1 68 12 is_stmt 0 view .LVU17
+  94 003a 14F0800F 		tst	r4, #128
+  95 003e E3D0     		beq	.L3
+  70:HADRWARE/TOUCH/touch.c ****         }
+  96              		.loc 1 70 13 is_stmt 1 view .LVU18
+  97 0040 0122     		movs	r2, #1
+  98 0042 0821     		movs	r1, #8
+  99 0044 0248     		ldr	r0, .L8
+ 100 0046 FFF7FEFF 		bl	sys_gpio_pin_set
+ 101              	.LVL11:
+ 102 004a E2E7     		b	.L4
+ 103              	.L7:
+  81:HADRWARE/TOUCH/touch.c ****     }
+  82:HADRWARE/TOUCH/touch.c **** }
+ 104              		.loc 1 82 1 is_stmt 0 view .LVU19
+ 105 004c 70BD     		pop	{r4, r5, r6, pc}
+ 106              	.LVL12:
+ 107              	.L9:
+ 108              		.loc 1 82 1 view .LVU20
+ 109 004e 00BF     		.align	2
+ 110              	.L8:
+ 111 0050 00200240 		.word	1073881088
+ 112 0054 001C0240 		.word	1073880064
+ 113              		.cfi_endproc
+ 114              	.LFE126:
+ 116              		.section	.text.tp_read_ad,"ax",%progbits
+ 117              		.align	1
+ 118              		.syntax unified
+ 119              		.thumb
+ 120              		.thumb_func
+ 122              	tp_read_ad:
+ 123              	.LVL13:
+ 124              	.LFB127:
+  83:HADRWARE/TOUCH/touch.c **** 
+  84:HADRWARE/TOUCH/touch.c **** /**
+  85:HADRWARE/TOUCH/touch.c ****  * @brief       SPI读数据
+  86:HADRWARE/TOUCH/touch.c ****  * @note        从触摸屏IC读取adc值
+  87:HADRWARE/TOUCH/touch.c ****  * @param       cmd: 指令
+  88:HADRWARE/TOUCH/touch.c ****  * @retval      读取到的数据,ADC值(12bit)
+  89:HADRWARE/TOUCH/touch.c ****  */
+  90:HADRWARE/TOUCH/touch.c **** static uint16_t tp_read_ad(uint8_t cmd)
+  91:HADRWARE/TOUCH/touch.c **** {
+ 125              		.loc 1 91 1 is_stmt 1 view -0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129              		.loc 1 91 1 is_stmt 0 view .LVU22
+ 130 0000 70B5     		push	{r4, r5, r6, lr}
+ 131              	.LCFI1:
+ 132              		.cfi_def_cfa_offset 16
+ 133              		.cfi_offset 4, -16
+ 134              		.cfi_offset 5, -12
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 5
+
+
+ 135              		.cfi_offset 6, -8
+ 136              		.cfi_offset 14, -4
+ 137 0002 0546     		mov	r5, r0
+  92:HADRWARE/TOUCH/touch.c ****     uint8_t count = 0;
+ 138              		.loc 1 92 5 is_stmt 1 view .LVU23
+ 139              	.LVL14:
+  93:HADRWARE/TOUCH/touch.c ****     uint16_t num = 0;
+ 140              		.loc 1 93 5 view .LVU24
+  94:HADRWARE/TOUCH/touch.c ****     T_CLK(0);           /* 先拉低时钟 */
+ 141              		.loc 1 94 5 view .LVU25
+ 142 0004 2A4C     		ldr	r4, .L16
+ 143 0006 0022     		movs	r2, #0
+ 144 0008 4021     		movs	r1, #64
+ 145 000a 2046     		mov	r0, r4
+ 146              	.LVL15:
+ 147              		.loc 1 94 5 is_stmt 0 view .LVU26
+ 148 000c FFF7FEFF 		bl	sys_gpio_pin_set
+ 149              	.LVL16:
+  95:HADRWARE/TOUCH/touch.c ****     T_MOSI(0);          /* 拉低数据线 */
+ 150              		.loc 1 95 5 is_stmt 1 view .LVU27
+ 151 0010 284E     		ldr	r6, .L16+4
+ 152 0012 0022     		movs	r2, #0
+ 153 0014 0821     		movs	r1, #8
+ 154 0016 3046     		mov	r0, r6
+ 155 0018 FFF7FEFF 		bl	sys_gpio_pin_set
+ 156              	.LVL17:
+  96:HADRWARE/TOUCH/touch.c ****     T_CS(0);            /* 选中触摸屏IC */
+ 157              		.loc 1 96 5 view .LVU28
+ 158 001c 0022     		movs	r2, #0
+ 159 001e 4FF48071 		mov	r1, #256
+ 160 0022 3046     		mov	r0, r6
+ 161 0024 FFF7FEFF 		bl	sys_gpio_pin_set
+ 162              	.LVL18:
+  97:HADRWARE/TOUCH/touch.c ****     tp_write_byte(cmd); /* 发送命令字 */
+ 163              		.loc 1 97 5 view .LVU29
+ 164 0028 2846     		mov	r0, r5
+ 165 002a FFF7FEFF 		bl	tp_write_byte
+ 166              	.LVL19:
+  98:HADRWARE/TOUCH/touch.c ****     delay_us(6);        /* ADS7846的转换时间最长为6us */
+ 167              		.loc 1 98 5 view .LVU30
+ 168 002e 0620     		movs	r0, #6
+ 169 0030 FFF7FEFF 		bl	delay_us
+ 170              	.LVL20:
+  99:HADRWARE/TOUCH/touch.c ****     T_CLK(0);
+ 171              		.loc 1 99 5 view .LVU31
+ 172 0034 0022     		movs	r2, #0
+ 173 0036 4021     		movs	r1, #64
+ 174 0038 2046     		mov	r0, r4
+ 175 003a FFF7FEFF 		bl	sys_gpio_pin_set
+ 176              	.LVL21:
+ 100:HADRWARE/TOUCH/touch.c ****     delay_us(1);
+ 177              		.loc 1 100 5 view .LVU32
+ 178 003e 0120     		movs	r0, #1
+ 179 0040 FFF7FEFF 		bl	delay_us
+ 180              	.LVL22:
+ 101:HADRWARE/TOUCH/touch.c ****     T_CLK(1);           /* 给1个时钟，清除BUSY */
+ 181              		.loc 1 101 5 view .LVU33
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 6
+
+
+ 182 0044 0122     		movs	r2, #1
+ 183 0046 4021     		movs	r1, #64
+ 184 0048 2046     		mov	r0, r4
+ 185 004a FFF7FEFF 		bl	sys_gpio_pin_set
+ 186              	.LVL23:
+ 102:HADRWARE/TOUCH/touch.c ****     delay_us(1);
+ 187              		.loc 1 102 5 view .LVU34
+ 188 004e 0120     		movs	r0, #1
+ 189 0050 FFF7FEFF 		bl	delay_us
+ 190              	.LVL24:
+ 103:HADRWARE/TOUCH/touch.c ****     T_CLK(0);
+ 191              		.loc 1 103 5 view .LVU35
+ 192 0054 0022     		movs	r2, #0
+ 193 0056 4021     		movs	r1, #64
+ 194 0058 2046     		mov	r0, r4
+ 195 005a FFF7FEFF 		bl	sys_gpio_pin_set
+ 196              	.LVL25:
+ 104:HADRWARE/TOUCH/touch.c **** 
+ 105:HADRWARE/TOUCH/touch.c ****     for (count = 0; count < 16; count++)    /* 读出16位数据,只有高12位有效 */
+ 197              		.loc 1 105 5 view .LVU36
+  93:HADRWARE/TOUCH/touch.c ****     T_CLK(0);           /* 先拉低时钟 */
+ 198              		.loc 1 93 14 is_stmt 0 view .LVU37
+ 199 005e 0024     		movs	r4, #0
+ 200              		.loc 1 105 16 view .LVU38
+ 201 0060 2546     		mov	r5, r4
+ 202              	.LVL26:
+ 203              		.loc 1 105 5 view .LVU39
+ 204 0062 01E0     		b	.L11
+ 205              	.LVL27:
+ 206              	.L12:
+ 207              		.loc 1 105 38 is_stmt 1 discriminator 2 view .LVU40
+ 208 0064 0135     		adds	r5, r5, #1
+ 209              	.LVL28:
+ 210              		.loc 1 105 38 is_stmt 0 discriminator 2 view .LVU41
+ 211 0066 EDB2     		uxtb	r5, r5
+ 212              	.LVL29:
+ 213              	.L11:
+ 214              		.loc 1 105 27 is_stmt 1 discriminator 1 view .LVU42
+ 215 0068 0F2D     		cmp	r5, #15
+ 216 006a 18D8     		bhi	.L15
+ 106:HADRWARE/TOUCH/touch.c ****     {
+ 107:HADRWARE/TOUCH/touch.c ****         num <<= 1;
+ 217              		.loc 1 107 9 view .LVU43
+ 218              		.loc 1 107 13 is_stmt 0 view .LVU44
+ 219 006c 6400     		lsls	r4, r4, #1
+ 220              	.LVL30:
+ 221              		.loc 1 107 13 view .LVU45
+ 222 006e A4B2     		uxth	r4, r4
+ 223              	.LVL31:
+ 108:HADRWARE/TOUCH/touch.c ****         T_CLK(0);       /* 下降沿有效 */
+ 224              		.loc 1 108 9 is_stmt 1 view .LVU46
+ 225 0070 0F4E     		ldr	r6, .L16
+ 226 0072 0022     		movs	r2, #0
+ 227 0074 4021     		movs	r1, #64
+ 228 0076 3046     		mov	r0, r6
+ 229 0078 FFF7FEFF 		bl	sys_gpio_pin_set
+ 230              	.LVL32:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 7
+
+
+ 109:HADRWARE/TOUCH/touch.c ****         delay_us(1);
+ 231              		.loc 1 109 9 view .LVU47
+ 232 007c 0120     		movs	r0, #1
+ 233 007e FFF7FEFF 		bl	delay_us
+ 234              	.LVL33:
+ 110:HADRWARE/TOUCH/touch.c ****         T_CLK(1);
+ 235              		.loc 1 110 9 view .LVU48
+ 236 0082 0122     		movs	r2, #1
+ 237 0084 4021     		movs	r1, #64
+ 238 0086 3046     		mov	r0, r6
+ 239 0088 FFF7FEFF 		bl	sys_gpio_pin_set
+ 240              	.LVL34:
+ 111:HADRWARE/TOUCH/touch.c **** 
+ 112:HADRWARE/TOUCH/touch.c ****         if (T_MISO)num++;
+ 241              		.loc 1 112 9 view .LVU49
+ 242              		.loc 1 112 13 is_stmt 0 view .LVU50
+ 243 008c 0821     		movs	r1, #8
+ 244 008e 0A48     		ldr	r0, .L16+8
+ 245 0090 FFF7FEFF 		bl	sys_gpio_pin_get
+ 246              	.LVL35:
+ 247              		.loc 1 112 12 discriminator 1 view .LVU51
+ 248 0094 0028     		cmp	r0, #0
+ 249 0096 E5D0     		beq	.L12
+ 250              		.loc 1 112 20 is_stmt 1 discriminator 1 view .LVU52
+ 251              		.loc 1 112 23 is_stmt 0 discriminator 1 view .LVU53
+ 252 0098 0134     		adds	r4, r4, #1
+ 253              	.LVL36:
+ 254              		.loc 1 112 23 discriminator 1 view .LVU54
+ 255 009a A4B2     		uxth	r4, r4
+ 256              	.LVL37:
+ 257              		.loc 1 112 23 discriminator 1 view .LVU55
+ 258 009c E2E7     		b	.L12
+ 259              	.L15:
+ 113:HADRWARE/TOUCH/touch.c ****     }
+ 114:HADRWARE/TOUCH/touch.c **** 
+ 115:HADRWARE/TOUCH/touch.c ****     num >>= 4;          /* 只有高12位有效. */
+ 260              		.loc 1 115 5 is_stmt 1 view .LVU56
+ 261              		.loc 1 115 9 is_stmt 0 view .LVU57
+ 262 009e 2409     		lsrs	r4, r4, #4
+ 263              	.LVL38:
+ 116:HADRWARE/TOUCH/touch.c ****     T_CS(1);            /* 释放片选 */
+ 264              		.loc 1 116 5 is_stmt 1 view .LVU58
+ 265 00a0 0122     		movs	r2, #1
+ 266 00a2 4FF48071 		mov	r1, #256
+ 267 00a6 0348     		ldr	r0, .L16+4
+ 268 00a8 FFF7FEFF 		bl	sys_gpio_pin_set
+ 269              	.LVL39:
+ 117:HADRWARE/TOUCH/touch.c ****     return num;
+ 270              		.loc 1 117 5 view .LVU59
+ 118:HADRWARE/TOUCH/touch.c **** }
+ 271              		.loc 1 118 1 is_stmt 0 view .LVU60
+ 272 00ac 2046     		mov	r0, r4
+ 273 00ae 70BD     		pop	{r4, r5, r6, pc}
+ 274              	.LVL40:
+ 275              	.L17:
+ 276              		.loc 1 118 1 view .LVU61
+ 277              		.align	2
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 8
+
+
+ 278              	.L16:
+ 279 00b0 001C0240 		.word	1073880064
+ 280 00b4 00200240 		.word	1073881088
+ 281 00b8 00180240 		.word	1073879040
+ 282              		.cfi_endproc
+ 283              	.LFE127:
+ 285              		.section	.text.tp_read_xoy,"ax",%progbits
+ 286              		.align	1
+ 287              		.syntax unified
+ 288              		.thumb
+ 289              		.thumb_func
+ 291              	tp_read_xoy:
+ 292              	.LVL41:
+ 293              	.LFB128:
+ 119:HADRWARE/TOUCH/touch.c **** 
+ 120:HADRWARE/TOUCH/touch.c **** /* 电阻触摸驱动芯片 数据采集 滤波用参数 */
+ 121:HADRWARE/TOUCH/touch.c **** #define TP_READ_TIMES   5       /* 读取次数 */
+ 122:HADRWARE/TOUCH/touch.c **** #define TP_LOST_VAL     1       /* 丢弃值 */
+ 123:HADRWARE/TOUCH/touch.c **** 
+ 124:HADRWARE/TOUCH/touch.c **** /**
+ 125:HADRWARE/TOUCH/touch.c ****  * @brief       读取一个坐标值(x或者y)
+ 126:HADRWARE/TOUCH/touch.c ****  * @note        连续读取TP_READ_TIMES次数据,对这些数据升序排列,
+ 127:HADRWARE/TOUCH/touch.c ****  *              然后去掉最低和最高TP_LOST_VAL个数, 取平均值
+ 128:HADRWARE/TOUCH/touch.c ****  *              设置时需满足: TP_READ_TIMES > 2*TP_LOST_VAL 的条件
+ 129:HADRWARE/TOUCH/touch.c ****  *
+ 130:HADRWARE/TOUCH/touch.c ****  * @param       cmd : 指令
+ 131:HADRWARE/TOUCH/touch.c ****  *   @arg       0XD0: 读取X轴坐标(@竖屏状态,横屏状态和Y对调.)
+ 132:HADRWARE/TOUCH/touch.c ****  *   @arg       0XD0: 读取Y轴坐标(@竖屏状态,横屏状态和X对调.)
+ 133:HADRWARE/TOUCH/touch.c ****  *
+ 134:HADRWARE/TOUCH/touch.c ****  * @retval      读取到的数据(滤波后的), ADC值(12bit)
+ 135:HADRWARE/TOUCH/touch.c ****  */
+ 136:HADRWARE/TOUCH/touch.c **** static uint16_t tp_read_xoy(uint8_t cmd)
+ 137:HADRWARE/TOUCH/touch.c **** {
+ 294              		.loc 1 137 1 is_stmt 1 view -0
+ 295              		.cfi_startproc
+ 296              		@ args = 0, pretend = 0, frame = 16
+ 297              		@ frame_needed = 0, uses_anonymous_args = 0
+ 298              		.loc 1 137 1 is_stmt 0 view .LVU63
+ 299 0000 30B5     		push	{r4, r5, lr}
+ 300              	.LCFI2:
+ 301              		.cfi_def_cfa_offset 12
+ 302              		.cfi_offset 4, -12
+ 303              		.cfi_offset 5, -8
+ 304              		.cfi_offset 14, -4
+ 305 0002 85B0     		sub	sp, sp, #20
+ 306              	.LCFI3:
+ 307              		.cfi_def_cfa_offset 32
+ 308 0004 0546     		mov	r5, r0
+ 138:HADRWARE/TOUCH/touch.c ****     uint16_t i, j;
+ 309              		.loc 1 138 5 is_stmt 1 view .LVU64
+ 139:HADRWARE/TOUCH/touch.c ****     uint16_t buf[TP_READ_TIMES];
+ 310              		.loc 1 139 5 view .LVU65
+ 140:HADRWARE/TOUCH/touch.c ****     uint16_t sum = 0;
+ 311              		.loc 1 140 5 view .LVU66
+ 312              	.LVL42:
+ 141:HADRWARE/TOUCH/touch.c ****     uint16_t temp;
+ 313              		.loc 1 141 5 view .LVU67
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 9
+
+
+ 142:HADRWARE/TOUCH/touch.c **** 
+ 143:HADRWARE/TOUCH/touch.c ****     for (i = 0; i < TP_READ_TIMES; i++)   /* 先读取TP_READ_TIMES次数据 */
+ 314              		.loc 1 143 5 view .LVU68
+ 315              		.loc 1 143 12 is_stmt 0 view .LVU69
+ 316 0006 0024     		movs	r4, #0
+ 317              		.loc 1 143 5 view .LVU70
+ 318 0008 09E0     		b	.L19
+ 319              	.LVL43:
+ 320              	.L20:
+ 144:HADRWARE/TOUCH/touch.c ****     {
+ 145:HADRWARE/TOUCH/touch.c ****         buf[i] = tp_read_ad(cmd);
+ 321              		.loc 1 145 9 is_stmt 1 view .LVU71
+ 322              		.loc 1 145 18 is_stmt 0 view .LVU72
+ 323 000a 2846     		mov	r0, r5
+ 324 000c FFF7FEFF 		bl	tp_read_ad
+ 325              	.LVL44:
+ 326              		.loc 1 145 16 discriminator 1 view .LVU73
+ 327 0010 04AB     		add	r3, sp, #16
+ 328 0012 03EB4403 		add	r3, r3, r4, lsl #1
+ 329 0016 23F80C0C 		strh	r0, [r3, #-12]	@ movhi
+ 143:HADRWARE/TOUCH/touch.c ****     {
+ 330              		.loc 1 143 37 is_stmt 1 discriminator 3 view .LVU74
+ 331 001a 0134     		adds	r4, r4, #1
+ 332              	.LVL45:
+ 143:HADRWARE/TOUCH/touch.c ****     {
+ 333              		.loc 1 143 37 is_stmt 0 discriminator 3 view .LVU75
+ 334 001c A4B2     		uxth	r4, r4
+ 335              	.LVL46:
+ 336              	.L19:
+ 143:HADRWARE/TOUCH/touch.c ****     {
+ 337              		.loc 1 143 19 is_stmt 1 discriminator 1 view .LVU76
+ 338 001e 042C     		cmp	r4, #4
+ 339 0020 F3D9     		bls	.L20
+ 146:HADRWARE/TOUCH/touch.c ****     }
+ 147:HADRWARE/TOUCH/touch.c **** 
+ 148:HADRWARE/TOUCH/touch.c ****     for (i = 0; i < TP_READ_TIMES - 1; i++)   /* 对数据进行排序 */
+ 340              		.loc 1 148 12 is_stmt 0 view .LVU77
+ 341 0022 0020     		movs	r0, #0
+ 342 0024 1AE0     		b	.L21
+ 343              	.LVL47:
+ 344              	.L23:
+ 149:HADRWARE/TOUCH/touch.c ****     {
+ 150:HADRWARE/TOUCH/touch.c ****         for (j = i + 1; j < TP_READ_TIMES; j++)
+ 345              		.loc 1 150 45 is_stmt 1 discriminator 2 view .LVU78
+ 346 0026 0133     		adds	r3, r3, #1
+ 347              	.LVL48:
+ 348              		.loc 1 150 45 is_stmt 0 discriminator 2 view .LVU79
+ 349 0028 9BB2     		uxth	r3, r3
+ 350              	.LVL49:
+ 351              	.L22:
+ 352              		.loc 1 150 27 is_stmt 1 discriminator 1 view .LVU80
+ 353 002a 042B     		cmp	r3, #4
+ 354 002c 15D8     		bhi	.L29
+ 151:HADRWARE/TOUCH/touch.c ****         {
+ 152:HADRWARE/TOUCH/touch.c ****             if (buf[i] > buf[j])   /* 升序排列 */
+ 355              		.loc 1 152 13 view .LVU81
+ 356              		.loc 1 152 20 is_stmt 0 view .LVU82
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 10
+
+
+ 357 002e 04AA     		add	r2, sp, #16
+ 358 0030 02EB4002 		add	r2, r2, r0, lsl #1
+ 359 0034 32F80C2C 		ldrh	r2, [r2, #-12]
+ 360              		.loc 1 152 29 view .LVU83
+ 361 0038 04A9     		add	r1, sp, #16
+ 362 003a 01EB4301 		add	r1, r1, r3, lsl #1
+ 363 003e 31F80C1C 		ldrh	r1, [r1, #-12]
+ 364              		.loc 1 152 16 view .LVU84
+ 365 0042 8A42     		cmp	r2, r1
+ 366 0044 EFD9     		bls	.L23
+ 153:HADRWARE/TOUCH/touch.c ****             {
+ 154:HADRWARE/TOUCH/touch.c ****                 temp = buf[i];
+ 367              		.loc 1 154 17 is_stmt 1 view .LVU85
+ 368              	.LVL50:
+ 155:HADRWARE/TOUCH/touch.c ****                 buf[i] = buf[j];
+ 369              		.loc 1 155 17 view .LVU86
+ 370              		.loc 1 155 24 is_stmt 0 view .LVU87
+ 371 0046 04AD     		add	r5, sp, #16
+ 372 0048 05EB400C 		add	ip, r5, r0, lsl #1
+ 373 004c 2CF80C1C 		strh	r1, [ip, #-12]	@ movhi
+ 156:HADRWARE/TOUCH/touch.c ****                 buf[j] = temp;
+ 374              		.loc 1 156 17 is_stmt 1 view .LVU88
+ 375              		.loc 1 156 24 is_stmt 0 view .LVU89
+ 376 0050 05EB4301 		add	r1, r5, r3, lsl #1
+ 377 0054 21F80C2C 		strh	r2, [r1, #-12]	@ movhi
+ 378 0058 E5E7     		b	.L23
+ 379              	.LVL51:
+ 380              	.L29:
+ 148:HADRWARE/TOUCH/touch.c ****     {
+ 381              		.loc 1 148 41 discriminator 2 view .LVU90
+ 382 005a 2046     		mov	r0, r4
+ 383              	.LVL52:
+ 384              	.L21:
+ 148:HADRWARE/TOUCH/touch.c ****     {
+ 385              		.loc 1 148 19 is_stmt 1 discriminator 1 view .LVU91
+ 386 005c 0328     		cmp	r0, #3
+ 387 005e 03D8     		bhi	.L30
+ 150:HADRWARE/TOUCH/touch.c ****         {
+ 388              		.loc 1 150 9 view .LVU92
+ 150:HADRWARE/TOUCH/touch.c ****         {
+ 389              		.loc 1 150 16 is_stmt 0 view .LVU93
+ 390 0060 441C     		adds	r4, r0, #1
+ 391 0062 A4B2     		uxth	r4, r4
+ 392              	.LVL53:
+ 150:HADRWARE/TOUCH/touch.c ****         {
+ 393              		.loc 1 150 16 view .LVU94
+ 394 0064 2346     		mov	r3, r4
+ 150:HADRWARE/TOUCH/touch.c ****         {
+ 395              		.loc 1 150 9 view .LVU95
+ 396 0066 E0E7     		b	.L22
+ 397              	.LVL54:
+ 398              	.L30:
+ 157:HADRWARE/TOUCH/touch.c ****             }
+ 158:HADRWARE/TOUCH/touch.c ****         }
+ 159:HADRWARE/TOUCH/touch.c ****     }
+ 160:HADRWARE/TOUCH/touch.c **** 
+ 161:HADRWARE/TOUCH/touch.c ****     sum = 0;
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 11
+
+
+ 399              		.loc 1 161 9 view .LVU96
+ 400 0068 0020     		movs	r0, #0
+ 401              	.LVL55:
+ 162:HADRWARE/TOUCH/touch.c **** 
+ 163:HADRWARE/TOUCH/touch.c ****     for (i = TP_LOST_VAL; i < TP_READ_TIMES - TP_LOST_VAL; i++)   /* 去掉两端的丢弃值 */
+ 402              		.loc 1 163 12 view .LVU97
+ 403 006a 0123     		movs	r3, #1
+ 404 006c 08E0     		b	.L26
+ 405              	.LVL56:
+ 406              	.L27:
+ 164:HADRWARE/TOUCH/touch.c ****     {
+ 165:HADRWARE/TOUCH/touch.c ****         sum += buf[i];  /* 累加去掉丢弃值以后的数据. */
+ 407              		.loc 1 165 9 is_stmt 1 view .LVU98
+ 408              		.loc 1 165 19 is_stmt 0 view .LVU99
+ 409 006e 04AA     		add	r2, sp, #16
+ 410 0070 02EB4302 		add	r2, r2, r3, lsl #1
+ 411 0074 32F80C2C 		ldrh	r2, [r2, #-12]
+ 412              		.loc 1 165 13 view .LVU100
+ 413 0078 1044     		add	r0, r0, r2
+ 414              	.LVL57:
+ 415              		.loc 1 165 13 view .LVU101
+ 416 007a 80B2     		uxth	r0, r0
+ 417              	.LVL58:
+ 163:HADRWARE/TOUCH/touch.c ****     {
+ 418              		.loc 1 163 61 is_stmt 1 discriminator 3 view .LVU102
+ 419 007c 0133     		adds	r3, r3, #1
+ 420              	.LVL59:
+ 163:HADRWARE/TOUCH/touch.c ****     {
+ 421              		.loc 1 163 61 is_stmt 0 discriminator 3 view .LVU103
+ 422 007e 9BB2     		uxth	r3, r3
+ 423              	.LVL60:
+ 424              	.L26:
+ 163:HADRWARE/TOUCH/touch.c ****     {
+ 425              		.loc 1 163 29 is_stmt 1 discriminator 1 view .LVU104
+ 426 0080 032B     		cmp	r3, #3
+ 427 0082 F4D9     		bls	.L27
+ 166:HADRWARE/TOUCH/touch.c ****     }
+ 167:HADRWARE/TOUCH/touch.c **** 
+ 168:HADRWARE/TOUCH/touch.c ****     temp = sum / (TP_READ_TIMES - 2 * TP_LOST_VAL); /* 取平均值 */
+ 428              		.loc 1 168 5 view .LVU105
+ 429              		.loc 1 168 10 is_stmt 0 view .LVU106
+ 430 0084 034B     		ldr	r3, .L31
+ 431              	.LVL61:
+ 432              		.loc 1 168 10 view .LVU107
+ 433 0086 A3FB0030 		umull	r3, r0, r3, r0
+ 434              	.LVL62:
+ 169:HADRWARE/TOUCH/touch.c ****     return temp;
+ 435              		.loc 1 169 5 is_stmt 1 view .LVU108
+ 170:HADRWARE/TOUCH/touch.c **** }
+ 436              		.loc 1 170 1 is_stmt 0 view .LVU109
+ 437 008a C0F34F00 		ubfx	r0, r0, #1, #16
+ 438              	.LVL63:
+ 439              		.loc 1 170 1 view .LVU110
+ 440 008e 05B0     		add	sp, sp, #20
+ 441              	.LCFI4:
+ 442              		.cfi_def_cfa_offset 12
+ 443              		@ sp needed
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 12
+
+
+ 444 0090 30BD     		pop	{r4, r5, pc}
+ 445              	.L32:
+ 446 0092 00BF     		.align	2
+ 447              	.L31:
+ 448 0094 ABAAAAAA 		.word	-1431655765
+ 449              		.cfi_endproc
+ 450              	.LFE128:
+ 452              		.section	.text.tp_init,"ax",%progbits
+ 453              		.align	1
+ 454              		.global	tp_init
+ 455              		.syntax unified
+ 456              		.thumb
+ 457              		.thumb_func
+ 459              	tp_init:
+ 460              	.LFB132:
+ 171:HADRWARE/TOUCH/touch.c **** 
+ 172:HADRWARE/TOUCH/touch.c **** /**
+ 173:HADRWARE/TOUCH/touch.c ****  * @brief       读取x, y坐标
+ 174:HADRWARE/TOUCH/touch.c ****  * @param       x,y: 读取到的坐标值
+ 175:HADRWARE/TOUCH/touch.c ****  * @retval      无
+ 176:HADRWARE/TOUCH/touch.c ****  */
+ 177:HADRWARE/TOUCH/touch.c **** void tp_read_xy(uint16_t *x, uint16_t *y)
+ 178:HADRWARE/TOUCH/touch.c **** {
+ 179:HADRWARE/TOUCH/touch.c ****     uint16_t xval, yval;
+ 180:HADRWARE/TOUCH/touch.c **** 
+ 181:HADRWARE/TOUCH/touch.c ****     if (tp_dev.touchtype & 0X01)    /* X,Y方向与屏幕相反 */
+ 182:HADRWARE/TOUCH/touch.c ****     {
+ 183:HADRWARE/TOUCH/touch.c ****         xval = tp_read_xoy(0X90);   /* 读取X轴坐标AD值, 并进行方向变换 */
+ 184:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0XD0);   /* 读取Y轴坐标AD值 */
+ 185:HADRWARE/TOUCH/touch.c ****     }
+ 186:HADRWARE/TOUCH/touch.c ****     else                    /* X,Y方向与屏幕相同 */
+ 187:HADRWARE/TOUCH/touch.c ****     {
+ 188:HADRWARE/TOUCH/touch.c ****         xval = tp_read_xoy(0XD0);   /* 读取X轴坐标AD值 */
+ 189:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0X90);   /* 读取Y轴坐标AD值 */
+ 190:HADRWARE/TOUCH/touch.c ****     }
+ 191:HADRWARE/TOUCH/touch.c **** 
+ 192:HADRWARE/TOUCH/touch.c ****     *x = xval;
+ 193:HADRWARE/TOUCH/touch.c ****     *y = yval;
+ 194:HADRWARE/TOUCH/touch.c **** }
+ 195:HADRWARE/TOUCH/touch.c **** 
+ 196:HADRWARE/TOUCH/touch.c **** /* 连续两次读取X,Y坐标的数据误差最大允许值 */
+ 197:HADRWARE/TOUCH/touch.c **** #define TP_ERR_RANGE    50      /* 误差范围 */
+ 198:HADRWARE/TOUCH/touch.c **** 
+ 199:HADRWARE/TOUCH/touch.c **** /**
+ 200:HADRWARE/TOUCH/touch.c ****  * @brief       连续读取2次触摸IC数据, 并滤波
+ 201:HADRWARE/TOUCH/touch.c ****  * @note        连续2次读取触摸屏IC,且这两次的偏差不能超过ERR_RANGE,满足
+ 202:HADRWARE/TOUCH/touch.c ****  *              条件,则认为读数正确,否则读数错误.该函数能大大提高准确度.
+ 203:HADRWARE/TOUCH/touch.c ****  *
+ 204:HADRWARE/TOUCH/touch.c ****  * @param       x,y: 读取到的坐标值
+ 205:HADRWARE/TOUCH/touch.c ****  * @retval      0, 失败; 1, 成功;
+ 206:HADRWARE/TOUCH/touch.c ****  */
+ 207:HADRWARE/TOUCH/touch.c **** static uint8_t tp_read_xy2(uint16_t *x, uint16_t *y)
+ 208:HADRWARE/TOUCH/touch.c **** {
+ 209:HADRWARE/TOUCH/touch.c ****     uint16_t x1, y1;
+ 210:HADRWARE/TOUCH/touch.c ****     uint16_t x2, y2;
+ 211:HADRWARE/TOUCH/touch.c **** 
+ 212:HADRWARE/TOUCH/touch.c ****     tp_read_xy(&x1, &y1);   /* 读取第一次数据 */
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 13
+
+
+ 213:HADRWARE/TOUCH/touch.c ****     tp_read_xy(&x2, &y2);   /* 读取第二次数据 */
+ 214:HADRWARE/TOUCH/touch.c **** 
+ 215:HADRWARE/TOUCH/touch.c ****     /* 前后两次采样在+-TP_ERR_RANGE内 */
+ 216:HADRWARE/TOUCH/touch.c ****     if (((x2 <= x1 && x1 < x2 + TP_ERR_RANGE) || (x1 <= x2 && x2 < x1 + TP_ERR_RANGE)) &&
+ 217:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 218:HADRWARE/TOUCH/touch.c ****     {
+ 219:HADRWARE/TOUCH/touch.c ****         *x = (x1 + x2) / 2;
+ 220:HADRWARE/TOUCH/touch.c ****         *y = (y1 + y2) / 2;
+ 221:HADRWARE/TOUCH/touch.c ****         return 1;
+ 222:HADRWARE/TOUCH/touch.c ****     }
+ 223:HADRWARE/TOUCH/touch.c **** 
+ 224:HADRWARE/TOUCH/touch.c ****     return 0;
+ 225:HADRWARE/TOUCH/touch.c **** }
+ 226:HADRWARE/TOUCH/touch.c **** 
+ 227:HADRWARE/TOUCH/touch.c **** 
+ 228:HADRWARE/TOUCH/touch.c **** 
+ 229:HADRWARE/TOUCH/touch.c **** /**
+ 230:HADRWARE/TOUCH/touch.c ****  * @brief       触摸按键扫描
+ 231:HADRWARE/TOUCH/touch.c ****  * @param       mode: 坐标模式
+ 232:HADRWARE/TOUCH/touch.c ****  *   @arg       0, 屏幕坐标;
+ 233:HADRWARE/TOUCH/touch.c ****  *   @arg       1, 物理坐标(校准等特殊场合用)
+ 234:HADRWARE/TOUCH/touch.c ****  *
+ 235:HADRWARE/TOUCH/touch.c ****  * @retval      0, 触屏无触摸; 1, 触屏有触摸;
+ 236:HADRWARE/TOUCH/touch.c ****  */
+ 237:HADRWARE/TOUCH/touch.c **** uint8_t tp_scan(uint8_t mode)
+ 238:HADRWARE/TOUCH/touch.c **** {
+ 239:HADRWARE/TOUCH/touch.c ****     if (T_PEN == 0)     /* 有按键按下 */
+ 240:HADRWARE/TOUCH/touch.c ****     {
+ 241:HADRWARE/TOUCH/touch.c ****         if (mode)       /* 读取物理坐标, 无需转换 */
+ 242:HADRWARE/TOUCH/touch.c ****         {
+ 243:HADRWARE/TOUCH/touch.c ****             tp_read_xy2(&tp_dev.x[0], &tp_dev.y[0]);
+ 244:HADRWARE/TOUCH/touch.c ****         }
+ 245:HADRWARE/TOUCH/touch.c ****         else if (tp_read_xy2(&tp_dev.x[0], &tp_dev.y[0]))     /* 读取屏幕坐标, 需要转换 */
+ 246:HADRWARE/TOUCH/touch.c ****         {
+ 247:HADRWARE/TOUCH/touch.c ****             /* 将X轴 物理坐标转换成逻辑坐标(即对应LCD屏幕上面的X坐标值) */
+ 248:HADRWARE/TOUCH/touch.c ****             tp_dev.x[0] = (signed short)(tp_dev.x[0] - tp_dev.xc) / tp_dev.xfac + lcddev.width / 2;
+ 249:HADRWARE/TOUCH/touch.c **** 
+ 250:HADRWARE/TOUCH/touch.c ****             /* 将Y轴 物理坐标转换成逻辑坐标(即对应LCD屏幕上面的Y坐标值) */
+ 251:HADRWARE/TOUCH/touch.c ****             tp_dev.y[0] = (signed short)(tp_dev.y[0] - tp_dev.yc) / tp_dev.yfac + lcddev.height / 2
+ 252:HADRWARE/TOUCH/touch.c ****         }
+ 253:HADRWARE/TOUCH/touch.c **** 
+ 254:HADRWARE/TOUCH/touch.c ****         if ((tp_dev.sta & TP_PRES_DOWN) == 0)   /* 之前没有被按下 */
+ 255:HADRWARE/TOUCH/touch.c ****         {
+ 256:HADRWARE/TOUCH/touch.c ****             tp_dev.sta = TP_PRES_DOWN | TP_CATH_PRES;   /* 按键按下 */
+ 257:HADRWARE/TOUCH/touch.c ****             tp_dev.x[CT_MAX_TOUCH - 1] = tp_dev.x[0];   /* 记录第一次按下时的坐标 */
+ 258:HADRWARE/TOUCH/touch.c ****             tp_dev.y[CT_MAX_TOUCH - 1] = tp_dev.y[0];
+ 259:HADRWARE/TOUCH/touch.c ****         }
+ 260:HADRWARE/TOUCH/touch.c ****     }
+ 261:HADRWARE/TOUCH/touch.c ****     else
+ 262:HADRWARE/TOUCH/touch.c ****     {
+ 263:HADRWARE/TOUCH/touch.c ****         if (tp_dev.sta & TP_PRES_DOWN)      /* 之前是被按下的 */
+ 264:HADRWARE/TOUCH/touch.c ****         {
+ 265:HADRWARE/TOUCH/touch.c ****             tp_dev.sta &= ~TP_PRES_DOWN;    /* 标记按键松开 */
+ 266:HADRWARE/TOUCH/touch.c ****         }
+ 267:HADRWARE/TOUCH/touch.c ****         else     /* 之前就没有被按下 */
+ 268:HADRWARE/TOUCH/touch.c ****         {
+ 269:HADRWARE/TOUCH/touch.c ****             tp_dev.x[CT_MAX_TOUCH - 1] = 0;
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 14
+
+
+ 270:HADRWARE/TOUCH/touch.c ****             tp_dev.y[CT_MAX_TOUCH - 1] = 0;
+ 271:HADRWARE/TOUCH/touch.c ****             tp_dev.x[0] = 0xffff;
+ 272:HADRWARE/TOUCH/touch.c ****             tp_dev.y[0] = 0xffff;
+ 273:HADRWARE/TOUCH/touch.c ****         }
+ 274:HADRWARE/TOUCH/touch.c ****     }
+ 275:HADRWARE/TOUCH/touch.c **** 
+ 276:HADRWARE/TOUCH/touch.c ****     return tp_dev.sta & TP_PRES_DOWN; /* 返回当前的触屏状态 */
+ 277:HADRWARE/TOUCH/touch.c **** }
+ 278:HADRWARE/TOUCH/touch.c **** 
+ 279:HADRWARE/TOUCH/touch.c **** /* TP_SAVE_ADDR_BASE定义触摸屏校准参数保存在EEPROM里面的位置(起始地址)
+ 280:HADRWARE/TOUCH/touch.c ****  * 占用空间 : 13字节.
+ 281:HADRWARE/TOUCH/touch.c ****  */
+ 282:HADRWARE/TOUCH/touch.c **** #define TP_SAVE_ADDR_BASE   40
+ 283:HADRWARE/TOUCH/touch.c **** 
+ 284:HADRWARE/TOUCH/touch.c **** 
+ 285:HADRWARE/TOUCH/touch.c **** /**
+ 286:HADRWARE/TOUCH/touch.c ****  * @brief       触摸屏初始化
+ 287:HADRWARE/TOUCH/touch.c ****  * @param       无
+ 288:HADRWARE/TOUCH/touch.c ****  * @retval      0,没有进行校准
+ 289:HADRWARE/TOUCH/touch.c ****  *              1,进行过校准
+ 290:HADRWARE/TOUCH/touch.c ****  */
+ 291:HADRWARE/TOUCH/touch.c **** uint8_t tp_init(void)
+ 292:HADRWARE/TOUCH/touch.c **** {
+ 461              		.loc 1 292 1 is_stmt 1 view -0
+ 462              		.cfi_startproc
+ 463              		@ args = 0, pretend = 0, frame = 0
+ 464              		@ frame_needed = 0, uses_anonymous_args = 0
+ 465 0000 38B5     		push	{r3, r4, r5, lr}
+ 466              	.LCFI5:
+ 467              		.cfi_def_cfa_offset 16
+ 468              		.cfi_offset 3, -16
+ 469              		.cfi_offset 4, -12
+ 470              		.cfi_offset 5, -8
+ 471              		.cfi_offset 14, -4
+ 293:HADRWARE/TOUCH/touch.c ****     tp_dev.touchtype = 0;                   /* 默认设置(电阻屏 & 竖屏) */
+ 472              		.loc 1 293 5 view .LVU112
+ 473              		.loc 1 293 22 is_stmt 0 view .LVU113
+ 474 0002 0B4C     		ldr	r4, .L35
+ 475 0004 0025     		movs	r5, #0
+ 476 0006 84F84450 		strb	r5, [r4, #68]
+ 294:HADRWARE/TOUCH/touch.c ****     tp_dev.touchtype |= lcddev.dir & 0X01;  /* 根据LCD判定是横屏还是竖屏 */
+ 477              		.loc 1 294 5 is_stmt 1 view .LVU114
+ 478              		.loc 1 294 31 is_stmt 0 view .LVU115
+ 479 000a 0A4B     		ldr	r3, .L35+4
+ 480 000c 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 481              		.loc 1 294 22 view .LVU116
+ 482 000e 03F00103 		and	r3, r3, #1
+ 483 0012 84F84430 		strb	r3, [r4, #68]
+ 295:HADRWARE/TOUCH/touch.c **** 
+ 296:HADRWARE/TOUCH/touch.c ****     gt9xxx_init();
+ 484              		.loc 1 296 5 is_stmt 1 view .LVU117
+ 485 0016 FFF7FEFF 		bl	gt9xxx_init
+ 486              	.LVL64:
+ 297:HADRWARE/TOUCH/touch.c ****     tp_dev.scan = gt9xxx_scan;  /* 扫描函数指向GT9147触摸屏扫描 */
+ 487              		.loc 1 297 5 view .LVU118
+ 488              		.loc 1 297 17 is_stmt 0 view .LVU119
+ 489 001a 074B     		ldr	r3, .L35+8
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 15
+
+
+ 490 001c 6360     		str	r3, [r4, #4]
+ 298:HADRWARE/TOUCH/touch.c ****         
+ 299:HADRWARE/TOUCH/touch.c ****     tp_dev.touchtype |= 0X80;       /* 电容屏 */
+ 491              		.loc 1 299 5 is_stmt 1 view .LVU120
+ 492              		.loc 1 299 11 is_stmt 0 view .LVU121
+ 493 001e 94F84430 		ldrb	r3, [r4, #68]	@ zero_extendqisi2
+ 494              		.loc 1 299 22 view .LVU122
+ 495 0022 63F07F03 		orn	r3, r3, #127
+ 496 0026 84F84430 		strb	r3, [r4, #68]
+ 300:HADRWARE/TOUCH/touch.c ****     return 0;
+ 497              		.loc 1 300 5 is_stmt 1 view .LVU123
+ 301:HADRWARE/TOUCH/touch.c **** 
+ 302:HADRWARE/TOUCH/touch.c **** }
+ 498              		.loc 1 302 1 is_stmt 0 view .LVU124
+ 499 002a 2846     		mov	r0, r5
+ 500 002c 38BD     		pop	{r3, r4, r5, pc}
+ 501              	.L36:
+ 502 002e 00BF     		.align	2
+ 503              	.L35:
+ 504 0030 00000000 		.word	tp_dev
+ 505 0034 00000000 		.word	lcddev
+ 506 0038 00000000 		.word	gt9xxx_scan
+ 507              		.cfi_endproc
+ 508              	.LFE132:
+ 510              		.section	.text.tp_read_xy,"ax",%progbits
+ 511              		.align	1
+ 512              		.global	tp_read_xy
+ 513              		.syntax unified
+ 514              		.thumb
+ 515              		.thumb_func
+ 517              	tp_read_xy:
+ 518              	.LVL65:
+ 519              	.LFB129:
+ 178:HADRWARE/TOUCH/touch.c ****     uint16_t xval, yval;
+ 520              		.loc 1 178 1 is_stmt 1 view -0
+ 521              		.cfi_startproc
+ 522              		@ args = 0, pretend = 0, frame = 0
+ 523              		@ frame_needed = 0, uses_anonymous_args = 0
+ 178:HADRWARE/TOUCH/touch.c ****     uint16_t xval, yval;
+ 524              		.loc 1 178 1 is_stmt 0 view .LVU126
+ 525 0000 70B5     		push	{r4, r5, r6, lr}
+ 526              	.LCFI6:
+ 527              		.cfi_def_cfa_offset 16
+ 528              		.cfi_offset 4, -16
+ 529              		.cfi_offset 5, -12
+ 530              		.cfi_offset 6, -8
+ 531              		.cfi_offset 14, -4
+ 532 0002 0546     		mov	r5, r0
+ 533 0004 0C46     		mov	r4, r1
+ 179:HADRWARE/TOUCH/touch.c **** 
+ 534              		.loc 1 179 5 is_stmt 1 view .LVU127
+ 181:HADRWARE/TOUCH/touch.c ****     {
+ 535              		.loc 1 181 5 view .LVU128
+ 181:HADRWARE/TOUCH/touch.c ****     {
+ 536              		.loc 1 181 15 is_stmt 0 view .LVU129
+ 537 0006 0D4B     		ldr	r3, .L41
+ 538 0008 93F84430 		ldrb	r3, [r3, #68]	@ zero_extendqisi2
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 16
+
+
+ 181:HADRWARE/TOUCH/touch.c ****     {
+ 539              		.loc 1 181 8 view .LVU130
+ 540 000c 13F0010F 		tst	r3, #1
+ 541 0010 0AD0     		beq	.L38
+ 183:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0XD0);   /* 读取Y轴坐标AD值 */
+ 542              		.loc 1 183 9 is_stmt 1 view .LVU131
+ 183:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0XD0);   /* 读取Y轴坐标AD值 */
+ 543              		.loc 1 183 16 is_stmt 0 view .LVU132
+ 544 0012 9020     		movs	r0, #144
+ 545              	.LVL66:
+ 183:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0XD0);   /* 读取Y轴坐标AD值 */
+ 546              		.loc 1 183 16 view .LVU133
+ 547 0014 FFF7FEFF 		bl	tp_read_xoy
+ 548              	.LVL67:
+ 183:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0XD0);   /* 读取Y轴坐标AD值 */
+ 549              		.loc 1 183 16 view .LVU134
+ 550 0018 0646     		mov	r6, r0
+ 551              	.LVL68:
+ 184:HADRWARE/TOUCH/touch.c ****     }
+ 552              		.loc 1 184 9 is_stmt 1 view .LVU135
+ 184:HADRWARE/TOUCH/touch.c ****     }
+ 553              		.loc 1 184 16 is_stmt 0 view .LVU136
+ 554 001a D020     		movs	r0, #208
+ 555 001c FFF7FEFF 		bl	tp_read_xoy
+ 556              	.LVL69:
+ 557 0020 0346     		mov	r3, r0
+ 558              	.LVL70:
+ 559              	.L39:
+ 192:HADRWARE/TOUCH/touch.c ****     *y = yval;
+ 560              		.loc 1 192 5 is_stmt 1 view .LVU137
+ 192:HADRWARE/TOUCH/touch.c ****     *y = yval;
+ 561              		.loc 1 192 8 is_stmt 0 view .LVU138
+ 562 0022 2E80     		strh	r6, [r5]	@ movhi
+ 193:HADRWARE/TOUCH/touch.c **** }
+ 563              		.loc 1 193 5 is_stmt 1 view .LVU139
+ 193:HADRWARE/TOUCH/touch.c **** }
+ 564              		.loc 1 193 8 is_stmt 0 view .LVU140
+ 565 0024 2380     		strh	r3, [r4]	@ movhi
+ 194:HADRWARE/TOUCH/touch.c **** 
+ 566              		.loc 1 194 1 view .LVU141
+ 567 0026 70BD     		pop	{r4, r5, r6, pc}
+ 568              	.LVL71:
+ 569              	.L38:
+ 188:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0X90);   /* 读取Y轴坐标AD值 */
+ 570              		.loc 1 188 9 is_stmt 1 view .LVU142
+ 188:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0X90);   /* 读取Y轴坐标AD值 */
+ 571              		.loc 1 188 16 is_stmt 0 view .LVU143
+ 572 0028 D020     		movs	r0, #208
+ 573              	.LVL72:
+ 188:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0X90);   /* 读取Y轴坐标AD值 */
+ 574              		.loc 1 188 16 view .LVU144
+ 575 002a FFF7FEFF 		bl	tp_read_xoy
+ 576              	.LVL73:
+ 188:HADRWARE/TOUCH/touch.c ****         yval = tp_read_xoy(0X90);   /* 读取Y轴坐标AD值 */
+ 577              		.loc 1 188 16 view .LVU145
+ 578 002e 0646     		mov	r6, r0
+ 579              	.LVL74:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 17
+
+
+ 189:HADRWARE/TOUCH/touch.c ****     }
+ 580              		.loc 1 189 9 is_stmt 1 view .LVU146
+ 189:HADRWARE/TOUCH/touch.c ****     }
+ 581              		.loc 1 189 16 is_stmt 0 view .LVU147
+ 582 0030 9020     		movs	r0, #144
+ 583 0032 FFF7FEFF 		bl	tp_read_xoy
+ 584              	.LVL75:
+ 585 0036 0346     		mov	r3, r0
+ 586              	.LVL76:
+ 189:HADRWARE/TOUCH/touch.c ****     }
+ 587              		.loc 1 189 16 view .LVU148
+ 588 0038 F3E7     		b	.L39
+ 589              	.L42:
+ 590 003a 00BF     		.align	2
+ 591              	.L41:
+ 592 003c 00000000 		.word	tp_dev
+ 593              		.cfi_endproc
+ 594              	.LFE129:
+ 596              		.section	.text.tp_read_xy2,"ax",%progbits
+ 597              		.align	1
+ 598              		.syntax unified
+ 599              		.thumb
+ 600              		.thumb_func
+ 602              	tp_read_xy2:
+ 603              	.LVL77:
+ 604              	.LFB130:
+ 208:HADRWARE/TOUCH/touch.c ****     uint16_t x1, y1;
+ 605              		.loc 1 208 1 is_stmt 1 view -0
+ 606              		.cfi_startproc
+ 607              		@ args = 0, pretend = 0, frame = 8
+ 608              		@ frame_needed = 0, uses_anonymous_args = 0
+ 208:HADRWARE/TOUCH/touch.c ****     uint16_t x1, y1;
+ 609              		.loc 1 208 1 is_stmt 0 view .LVU150
+ 610 0000 30B5     		push	{r4, r5, lr}
+ 611              	.LCFI7:
+ 612              		.cfi_def_cfa_offset 12
+ 613              		.cfi_offset 4, -12
+ 614              		.cfi_offset 5, -8
+ 615              		.cfi_offset 14, -4
+ 616 0002 83B0     		sub	sp, sp, #12
+ 617              	.LCFI8:
+ 618              		.cfi_def_cfa_offset 24
+ 619 0004 0546     		mov	r5, r0
+ 620 0006 0C46     		mov	r4, r1
+ 209:HADRWARE/TOUCH/touch.c ****     uint16_t x2, y2;
+ 621              		.loc 1 209 5 is_stmt 1 view .LVU151
+ 210:HADRWARE/TOUCH/touch.c **** 
+ 622              		.loc 1 210 5 view .LVU152
+ 212:HADRWARE/TOUCH/touch.c ****     tp_read_xy(&x2, &y2);   /* 读取第二次数据 */
+ 623              		.loc 1 212 5 view .LVU153
+ 624 0008 01A9     		add	r1, sp, #4
+ 625              	.LVL78:
+ 212:HADRWARE/TOUCH/touch.c ****     tp_read_xy(&x2, &y2);   /* 读取第二次数据 */
+ 626              		.loc 1 212 5 is_stmt 0 view .LVU154
+ 627 000a 0DF10600 		add	r0, sp, #6
+ 628              	.LVL79:
+ 212:HADRWARE/TOUCH/touch.c ****     tp_read_xy(&x2, &y2);   /* 读取第二次数据 */
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 18
+
+
+ 629              		.loc 1 212 5 view .LVU155
+ 630 000e FFF7FEFF 		bl	tp_read_xy
+ 631              	.LVL80:
+ 213:HADRWARE/TOUCH/touch.c **** 
+ 632              		.loc 1 213 5 is_stmt 1 view .LVU156
+ 633 0012 6946     		mov	r1, sp
+ 634 0014 0DF10200 		add	r0, sp, #2
+ 635 0018 FFF7FEFF 		bl	tp_read_xy
+ 636              	.LVL81:
+ 216:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 637              		.loc 1 216 5 view .LVU157
+ 216:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 638              		.loc 1 216 14 is_stmt 0 view .LVU158
+ 639 001c BDF80230 		ldrh	r3, [sp, #2]
+ 640 0020 BDF80620 		ldrh	r2, [sp, #6]
+ 216:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 641              		.loc 1 216 8 view .LVU159
+ 642 0024 9342     		cmp	r3, r2
+ 643 0026 03D8     		bhi	.L44
+ 216:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 644              		.loc 1 216 26 discriminator 1 view .LVU160
+ 645 0028 03F13101 		add	r1, r3, #49
+ 216:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 646              		.loc 1 216 20 discriminator 1 view .LVU161
+ 647 002c 9142     		cmp	r1, r2
+ 648 002e 05DA     		bge	.L45
+ 649              	.L44:
+ 216:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 650              		.loc 1 216 47 discriminator 4 view .LVU162
+ 651 0030 9342     		cmp	r3, r2
+ 652 0032 20D3     		bcc	.L49
+ 216:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 653              		.loc 1 216 66 discriminator 5 view .LVU163
+ 654 0034 02F13101 		add	r1, r2, #49
+ 216:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 655              		.loc 1 216 60 discriminator 5 view .LVU164
+ 656 0038 9942     		cmp	r1, r3
+ 657 003a 1FDB     		blt	.L50
+ 658              	.L45:
+ 217:HADRWARE/TOUCH/touch.c ****     {
+ 659              		.loc 1 217 18 view .LVU165
+ 660 003c BDF80000 		ldrh	r0, [sp]
+ 661 0040 BDF80410 		ldrh	r1, [sp, #4]
+ 216:HADRWARE/TOUCH/touch.c ****             ((y2 <= y1 && y1 < y2 + TP_ERR_RANGE) || (y1 <= y2 && y2 < y1 + TP_ERR_RANGE)))
+ 662              		.loc 1 216 88 discriminator 6 view .LVU166
+ 663 0044 8842     		cmp	r0, r1
+ 664 0046 03D8     		bhi	.L47
+ 217:HADRWARE/TOUCH/touch.c ****     {
+ 665              		.loc 1 217 30 view .LVU167
+ 666 0048 00F1310C 		add	ip, r0, #49
+ 217:HADRWARE/TOUCH/touch.c ****     {
+ 667              		.loc 1 217 24 view .LVU168
+ 668 004c 8C45     		cmp	ip, r1
+ 669 004e 06DA     		bge	.L48
+ 670              	.L47:
+ 217:HADRWARE/TOUCH/touch.c ****     {
+ 671              		.loc 1 217 51 discriminator 1 view .LVU169
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 19
+
+
+ 672 0050 8842     		cmp	r0, r1
+ 673 0052 15D3     		bcc	.L51
+ 217:HADRWARE/TOUCH/touch.c ****     {
+ 674              		.loc 1 217 70 discriminator 2 view .LVU170
+ 675 0054 3131     		adds	r1, r1, #49
+ 217:HADRWARE/TOUCH/touch.c ****     {
+ 676              		.loc 1 217 64 discriminator 2 view .LVU171
+ 677 0056 8142     		cmp	r1, r0
+ 678 0058 01DA     		bge	.L48
+ 224:HADRWARE/TOUCH/touch.c **** }
+ 679              		.loc 1 224 12 view .LVU172
+ 680 005a 0020     		movs	r0, #0
+ 681 005c 0CE0     		b	.L46
+ 682              	.L48:
+ 219:HADRWARE/TOUCH/touch.c ****         *y = (y1 + y2) / 2;
+ 683              		.loc 1 219 9 is_stmt 1 view .LVU173
+ 219:HADRWARE/TOUCH/touch.c ****         *y = (y1 + y2) / 2;
+ 684              		.loc 1 219 24 is_stmt 0 view .LVU174
+ 685 005e 1344     		add	r3, r3, r2
+ 686 0060 5B10     		asrs	r3, r3, #1
+ 219:HADRWARE/TOUCH/touch.c ****         *y = (y1 + y2) / 2;
+ 687              		.loc 1 219 12 view .LVU175
+ 688 0062 2B80     		strh	r3, [r5]	@ movhi
+ 220:HADRWARE/TOUCH/touch.c ****         return 1;
+ 689              		.loc 1 220 9 is_stmt 1 view .LVU176
+ 220:HADRWARE/TOUCH/touch.c ****         return 1;
+ 690              		.loc 1 220 18 is_stmt 0 view .LVU177
+ 691 0064 BDF80430 		ldrh	r3, [sp, #4]
+ 692 0068 BDF80020 		ldrh	r2, [sp]
+ 220:HADRWARE/TOUCH/touch.c ****         return 1;
+ 693              		.loc 1 220 24 view .LVU178
+ 694 006c 1344     		add	r3, r3, r2
+ 695 006e 5B10     		asrs	r3, r3, #1
+ 220:HADRWARE/TOUCH/touch.c ****         return 1;
+ 696              		.loc 1 220 12 view .LVU179
+ 697 0070 2380     		strh	r3, [r4]	@ movhi
+ 221:HADRWARE/TOUCH/touch.c ****     }
+ 698              		.loc 1 221 9 is_stmt 1 view .LVU180
+ 221:HADRWARE/TOUCH/touch.c ****     }
+ 699              		.loc 1 221 16 is_stmt 0 view .LVU181
+ 700 0072 0120     		movs	r0, #1
+ 701 0074 00E0     		b	.L46
+ 702              	.L49:
+ 224:HADRWARE/TOUCH/touch.c **** }
+ 703              		.loc 1 224 12 view .LVU182
+ 704 0076 0020     		movs	r0, #0
+ 705              	.L46:
+ 225:HADRWARE/TOUCH/touch.c **** 
+ 706              		.loc 1 225 1 view .LVU183
+ 707 0078 03B0     		add	sp, sp, #12
+ 708              	.LCFI9:
+ 709              		.cfi_remember_state
+ 710              		.cfi_def_cfa_offset 12
+ 711              		@ sp needed
+ 712 007a 30BD     		pop	{r4, r5, pc}
+ 713              	.LVL82:
+ 714              	.L50:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 20
+
+
+ 715              	.LCFI10:
+ 716              		.cfi_restore_state
+ 224:HADRWARE/TOUCH/touch.c **** }
+ 717              		.loc 1 224 12 view .LVU184
+ 718 007c 0020     		movs	r0, #0
+ 719 007e FBE7     		b	.L46
+ 720              	.L51:
+ 721 0080 0020     		movs	r0, #0
+ 722 0082 F9E7     		b	.L46
+ 723              		.cfi_endproc
+ 724              	.LFE130:
+ 726              		.section	.text.tp_scan,"ax",%progbits
+ 727              		.align	1
+ 728              		.global	tp_scan
+ 729              		.syntax unified
+ 730              		.thumb
+ 731              		.thumb_func
+ 733              	tp_scan:
+ 734              	.LVL83:
+ 735              	.LFB131:
+ 238:HADRWARE/TOUCH/touch.c ****     if (T_PEN == 0)     /* 有按键按下 */
+ 736              		.loc 1 238 1 is_stmt 1 view -0
+ 737              		.cfi_startproc
+ 738              		@ args = 0, pretend = 0, frame = 0
+ 739              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238:HADRWARE/TOUCH/touch.c ****     if (T_PEN == 0)     /* 有按键按下 */
+ 740              		.loc 1 238 1 is_stmt 0 view .LVU186
+ 741 0000 10B5     		push	{r4, lr}
+ 742              	.LCFI11:
+ 743              		.cfi_def_cfa_offset 8
+ 744              		.cfi_offset 4, -8
+ 745              		.cfi_offset 14, -4
+ 746 0002 0446     		mov	r4, r0
+ 239:HADRWARE/TOUCH/touch.c ****     {
+ 747              		.loc 1 239 5 is_stmt 1 view .LVU187
+ 239:HADRWARE/TOUCH/touch.c ****     {
+ 748              		.loc 1 239 9 is_stmt 0 view .LVU188
+ 749 0004 8021     		movs	r1, #128
+ 750 0006 3648     		ldr	r0, .L62
+ 751              	.LVL84:
+ 239:HADRWARE/TOUCH/touch.c ****     {
+ 752              		.loc 1 239 9 view .LVU189
+ 753 0008 FFF7FEFF 		bl	sys_gpio_pin_get
+ 754              	.LVL85:
+ 239:HADRWARE/TOUCH/touch.c ****     {
+ 755              		.loc 1 239 8 discriminator 1 view .LVU190
+ 756 000c 0028     		cmp	r0, #0
+ 757 000e 52D1     		bne	.L55
+ 241:HADRWARE/TOUCH/touch.c ****         {
+ 758              		.loc 1 241 9 is_stmt 1 view .LVU191
+ 241:HADRWARE/TOUCH/touch.c ****         {
+ 759              		.loc 1 241 12 is_stmt 0 view .LVU192
+ 760 0010 9CB1     		cbz	r4, .L56
+ 243:HADRWARE/TOUCH/touch.c ****         }
+ 761              		.loc 1 243 13 is_stmt 1 view .LVU193
+ 762 0012 3449     		ldr	r1, .L62+4
+ 763 0014 A1F11400 		sub	r0, r1, #20
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 21
+
+
+ 764 0018 FFF7FEFF 		bl	tp_read_xy2
+ 765              	.LVL86:
+ 766              	.L57:
+ 254:HADRWARE/TOUCH/touch.c ****         {
+ 767              		.loc 1 254 9 view .LVU194
+ 254:HADRWARE/TOUCH/touch.c ****         {
+ 768              		.loc 1 254 20 is_stmt 0 view .LVU195
+ 769 001c 324B     		ldr	r3, .L62+8
+ 254:HADRWARE/TOUCH/touch.c ****         {
+ 770              		.loc 1 254 41 view .LVU196
+ 771 001e B3F93430 		ldrsh	r3, [r3, #52]
+ 254:HADRWARE/TOUCH/touch.c ****         {
+ 772              		.loc 1 254 12 view .LVU197
+ 773 0022 002B     		cmp	r3, #0
+ 774 0024 07DB     		blt	.L58
+ 256:HADRWARE/TOUCH/touch.c ****             tp_dev.x[CT_MAX_TOUCH - 1] = tp_dev.x[0];   /* 记录第一次按下时的坐标 */
+ 775              		.loc 1 256 13 is_stmt 1 view .LVU198
+ 256:HADRWARE/TOUCH/touch.c ****             tp_dev.x[CT_MAX_TOUCH - 1] = tp_dev.x[0];   /* 记录第一次按下时的坐标 */
+ 776              		.loc 1 256 24 is_stmt 0 view .LVU199
+ 777 0026 304B     		ldr	r3, .L62+8
+ 778 0028 4FF44042 		mov	r2, #49152
+ 779 002c 9A86     		strh	r2, [r3, #52]	@ movhi
+ 257:HADRWARE/TOUCH/touch.c ****             tp_dev.y[CT_MAX_TOUCH - 1] = tp_dev.y[0];
+ 780              		.loc 1 257 13 is_stmt 1 view .LVU200
+ 257:HADRWARE/TOUCH/touch.c ****             tp_dev.y[CT_MAX_TOUCH - 1] = tp_dev.y[0];
+ 781              		.loc 1 257 50 is_stmt 0 view .LVU201
+ 782 002e 9A89     		ldrh	r2, [r3, #12]
+ 257:HADRWARE/TOUCH/touch.c ****             tp_dev.y[CT_MAX_TOUCH - 1] = tp_dev.y[0];
+ 783              		.loc 1 257 40 view .LVU202
+ 784 0030 DA83     		strh	r2, [r3, #30]	@ movhi
+ 258:HADRWARE/TOUCH/touch.c ****         }
+ 785              		.loc 1 258 13 is_stmt 1 view .LVU203
+ 258:HADRWARE/TOUCH/touch.c ****         }
+ 786              		.loc 1 258 50 is_stmt 0 view .LVU204
+ 787 0032 1A8C     		ldrh	r2, [r3, #32]
+ 258:HADRWARE/TOUCH/touch.c ****         }
+ 788              		.loc 1 258 40 view .LVU205
+ 789 0034 5A86     		strh	r2, [r3, #50]	@ movhi
+ 790              	.L58:
+ 276:HADRWARE/TOUCH/touch.c **** }
+ 791              		.loc 1 276 5 is_stmt 1 view .LVU206
+ 277:HADRWARE/TOUCH/touch.c **** 
+ 792              		.loc 1 277 1 is_stmt 0 view .LVU207
+ 793 0036 0020     		movs	r0, #0
+ 794 0038 10BD     		pop	{r4, pc}
+ 795              	.LVL87:
+ 796              	.L56:
+ 245:HADRWARE/TOUCH/touch.c ****         {
+ 797              		.loc 1 245 14 is_stmt 1 view .LVU208
+ 245:HADRWARE/TOUCH/touch.c ****         {
+ 798              		.loc 1 245 18 is_stmt 0 view .LVU209
+ 799 003a 2A49     		ldr	r1, .L62+4
+ 800 003c A1F11400 		sub	r0, r1, #20
+ 801 0040 FFF7FEFF 		bl	tp_read_xy2
+ 802              	.LVL88:
+ 245:HADRWARE/TOUCH/touch.c ****         {
+ 803              		.loc 1 245 17 discriminator 1 view .LVU210
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 22
+
+
+ 804 0044 0028     		cmp	r0, #0
+ 805 0046 E9D0     		beq	.L57
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 806              		.loc 1 248 13 is_stmt 1 view .LVU211
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 807              		.loc 1 248 50 is_stmt 0 view .LVU212
+ 808 0048 274A     		ldr	r2, .L62+8
+ 809 004a 9389     		ldrh	r3, [r2, #12]
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 810              		.loc 1 248 62 view .LVU213
+ 811 004c B2F84010 		ldrh	r1, [r2, #64]
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 812              		.loc 1 248 54 view .LVU214
+ 813 0050 5B1A     		subs	r3, r3, r1
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 814              		.loc 1 248 27 view .LVU215
+ 815 0052 1BB2     		sxth	r3, r3
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 816              		.loc 1 248 75 view .LVU216
+ 817 0054 D2ED0E6A 		vldr.32	s13, [r2, #56]
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 818              		.loc 1 248 67 view .LVU217
+ 819 0058 07EE903A 		vmov	s15, r3	@ int
+ 820 005c F8EEE77A 		vcvt.f32.s32	s15, s15
+ 821 0060 87EEA67A 		vdiv.f32	s14, s15, s13
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 822              		.loc 1 248 89 view .LVU218
+ 823 0064 2149     		ldr	r1, .L62+12
+ 824 0066 0B88     		ldrh	r3, [r1]
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 825              		.loc 1 248 96 view .LVU219
+ 826 0068 5B08     		lsrs	r3, r3, #1
+ 827 006a 07EE903A 		vmov	s15, r3	@ int
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 828              		.loc 1 248 81 view .LVU220
+ 829 006e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 830 0072 77EE877A 		vadd.f32	s15, s15, s14
+ 248:HADRWARE/TOUCH/touch.c **** 
+ 831              		.loc 1 248 25 view .LVU221
+ 832 0076 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 833 007a 17EE903A 		vmov	r3, s15	@ int
+ 834 007e 9381     		strh	r3, [r2, #12]	@ movhi
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 835              		.loc 1 251 13 is_stmt 1 view .LVU222
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 836              		.loc 1 251 50 is_stmt 0 view .LVU223
+ 837 0080 138C     		ldrh	r3, [r2, #32]
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 838              		.loc 1 251 62 view .LVU224
+ 839 0082 B2F84200 		ldrh	r0, [r2, #66]
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 840              		.loc 1 251 54 view .LVU225
+ 841 0086 1B1A     		subs	r3, r3, r0
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 842              		.loc 1 251 27 view .LVU226
+ 843 0088 1BB2     		sxth	r3, r3
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 23
+
+
+ 844              		.loc 1 251 75 view .LVU227
+ 845 008a D2ED0F6A 		vldr.32	s13, [r2, #60]
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 846              		.loc 1 251 67 view .LVU228
+ 847 008e 07EE903A 		vmov	s15, r3	@ int
+ 848 0092 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 849 0096 87EEA67A 		vdiv.f32	s14, s15, s13
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 850              		.loc 1 251 89 view .LVU229
+ 851 009a 4B88     		ldrh	r3, [r1, #2]
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 852              		.loc 1 251 97 view .LVU230
+ 853 009c 5B08     		lsrs	r3, r3, #1
+ 854 009e 07EE903A 		vmov	s15, r3	@ int
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 855              		.loc 1 251 81 view .LVU231
+ 856 00a2 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 857 00a6 77EE877A 		vadd.f32	s15, s15, s14
+ 251:HADRWARE/TOUCH/touch.c ****         }
+ 858              		.loc 1 251 25 view .LVU232
+ 859 00aa FCEEE77A 		vcvt.u32.f32	s15, s15
+ 860 00ae 17EE903A 		vmov	r3, s15	@ int
+ 861 00b2 1384     		strh	r3, [r2, #32]	@ movhi
+ 862 00b4 B2E7     		b	.L57
+ 863              	.L55:
+ 263:HADRWARE/TOUCH/touch.c ****         {
+ 864              		.loc 1 263 9 is_stmt 1 view .LVU233
+ 263:HADRWARE/TOUCH/touch.c ****         {
+ 865              		.loc 1 263 19 is_stmt 0 view .LVU234
+ 866 00b6 0C4B     		ldr	r3, .L62+8
+ 867 00b8 9A8E     		ldrh	r2, [r3, #52]
+ 263:HADRWARE/TOUCH/touch.c ****         {
+ 868              		.loc 1 263 13 view .LVU235
+ 869 00ba B3F93430 		ldrsh	r3, [r3, #52]
+ 263:HADRWARE/TOUCH/touch.c ****         {
+ 870              		.loc 1 263 12 view .LVU236
+ 871 00be 002B     		cmp	r3, #0
+ 872 00c0 08DB     		blt	.L61
+ 269:HADRWARE/TOUCH/touch.c ****             tp_dev.y[CT_MAX_TOUCH - 1] = 0;
+ 873              		.loc 1 269 13 is_stmt 1 view .LVU237
+ 269:HADRWARE/TOUCH/touch.c ****             tp_dev.y[CT_MAX_TOUCH - 1] = 0;
+ 874              		.loc 1 269 40 is_stmt 0 view .LVU238
+ 875 00c2 094B     		ldr	r3, .L62+8
+ 876 00c4 0022     		movs	r2, #0
+ 877 00c6 DA83     		strh	r2, [r3, #30]	@ movhi
+ 270:HADRWARE/TOUCH/touch.c ****             tp_dev.x[0] = 0xffff;
+ 878              		.loc 1 270 13 is_stmt 1 view .LVU239
+ 270:HADRWARE/TOUCH/touch.c ****             tp_dev.x[0] = 0xffff;
+ 879              		.loc 1 270 40 is_stmt 0 view .LVU240
+ 880 00c8 5A86     		strh	r2, [r3, #50]	@ movhi
+ 271:HADRWARE/TOUCH/touch.c ****             tp_dev.y[0] = 0xffff;
+ 881              		.loc 1 271 13 is_stmt 1 view .LVU241
+ 271:HADRWARE/TOUCH/touch.c ****             tp_dev.y[0] = 0xffff;
+ 882              		.loc 1 271 25 is_stmt 0 view .LVU242
+ 883 00ca 4FF6FF72 		movw	r2, #65535
+ 884 00ce 9A81     		strh	r2, [r3, #12]	@ movhi
+ 272:HADRWARE/TOUCH/touch.c ****         }
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 24
+
+
+ 885              		.loc 1 272 13 is_stmt 1 view .LVU243
+ 272:HADRWARE/TOUCH/touch.c ****         }
+ 886              		.loc 1 272 25 is_stmt 0 view .LVU244
+ 887 00d0 1A84     		strh	r2, [r3, #32]	@ movhi
+ 888 00d2 B0E7     		b	.L58
+ 889              	.L61:
+ 265:HADRWARE/TOUCH/touch.c ****         }
+ 890              		.loc 1 265 13 is_stmt 1 view .LVU245
+ 265:HADRWARE/TOUCH/touch.c ****         }
+ 891              		.loc 1 265 24 is_stmt 0 view .LVU246
+ 892 00d4 C2F30E02 		ubfx	r2, r2, #0, #15
+ 893 00d8 034B     		ldr	r3, .L62+8
+ 894 00da 9A86     		strh	r2, [r3, #52]	@ movhi
+ 895 00dc ABE7     		b	.L58
+ 896              	.L63:
+ 897 00de 00BF     		.align	2
+ 898              	.L62:
+ 899 00e0 001C0240 		.word	1073880064
+ 900 00e4 20000000 		.word	tp_dev+32
+ 901 00e8 00000000 		.word	tp_dev
+ 902 00ec 00000000 		.word	lcddev
+ 903              		.cfi_endproc
+ 904              	.LFE131:
+ 906              		.global	tp_dev
+ 907              		.section	.data.tp_dev,"aw"
+ 908              		.align	2
+ 911              	tp_dev:
+ 912 0000 00000000 		.word	tp_init
+ 913 0004 00000000 		.word	tp_scan
+ 914 0008 00000000 		.word	0
+ 915 000c 0000     		.short	0
+ 916 000e 0000     		.short	0
+ 917 0010 0000     		.short	0
+ 918 0012 0000     		.short	0
+ 919 0014 0000     		.short	0
+ 920 0016 0000     		.short	0
+ 921 0018 0000     		.short	0
+ 922 001a 00000000 		.space	6
+ 922      0000
+ 923 0020 00000000 		.space	40
+ 923      00000000 
+ 923      00000000 
+ 923      00000000 
+ 923      00000000 
+ 924              		.text
+ 925              	.Letext0:
+ 926              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 927              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 928              		.file 4 "libraries/CMSIS/Device/ST/STM32F4xx/include/stm32f4xx.h"
+ 929              		.file 5 "HADRWARE/TOUCH/touch.h"
+ 930              		.file 6 "HADRWARE/LCD/lcd.h"
+ 931              		.file 7 "HADRWARE/TOUCH/gt9xxx.h"
+ 932              		.file 8 "SYSTEM/sys/sys.h"
+ 933              		.file 9 "SYSTEM/delay/delay.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 touch.c
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:21     .text.tp_write_byte:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:26     .text.tp_write_byte:00000000 tp_write_byte
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:111    .text.tp_write_byte:00000050 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:117    .text.tp_read_ad:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:122    .text.tp_read_ad:00000000 tp_read_ad
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:279    .text.tp_read_ad:000000b0 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:286    .text.tp_read_xoy:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:291    .text.tp_read_xoy:00000000 tp_read_xoy
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:448    .text.tp_read_xoy:00000094 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:453    .text.tp_init:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:459    .text.tp_init:00000000 tp_init
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:504    .text.tp_init:00000030 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:911    .data.tp_dev:00000000 tp_dev
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:511    .text.tp_read_xy:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:517    .text.tp_read_xy:00000000 tp_read_xy
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:592    .text.tp_read_xy:0000003c $d
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:597    .text.tp_read_xy2:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:602    .text.tp_read_xy2:00000000 tp_read_xy2
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:727    .text.tp_scan:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:733    .text.tp_scan:00000000 tp_scan
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:899    .text.tp_scan:000000e0 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc5ceFpr.s:908    .data.tp_dev:00000000 $d
+
+UNDEFINED SYMBOLS
+sys_gpio_pin_set
+delay_us
+sys_gpio_pin_get
+gt9xxx_init
+lcddev
+gt9xxx_scan

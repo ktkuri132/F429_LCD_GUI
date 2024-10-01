@@ -1,0 +1,1593 @@
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"system_stm32f4xx.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c"
+  20              		.section	.text.SetSysClock,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	SetSysClock:
+  27              	.LFB125:
+   1:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+   2:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   ******************************************************************************
+   3:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @file    system_stm32f4xx.c
+   4:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @author  MCD Application Team
+   5:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @version V1.8.1
+   6:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @date    27-January-2022
+   7:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @brief   CMSIS Cortex-M4 Device Peripheral Access Layer System Source File.
+   8:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *          This file contains the system clock configuration for STM32F4xx devices.
+   9:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *             
+  10:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * 1.  This file provides two functions and one global variable to be called from 
+  11:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *     user application:
+  12:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *      - SystemInit(): Setups the system clock (System clock source, PLL Multiplier
+  13:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                      and Divider factors, AHB/APBx prescalers and Flash settings),
+  14:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                      depending on the configuration made in the clock xls tool. 
+  15:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                      This function is called at startup just after reset and 
+  16:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                      before branch to main program. This call is made inside
+  17:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                      the "startup_stm32f4xx.s" file.
+  18:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *
+  19:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *      - SystemCoreClock variable: Contains the core clock (HCLK), it can be used
+  20:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                                  by the user application to setup the SysTick 
+  21:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                                  timer or configure other parameters.
+  22:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                                     
+  23:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *      - SystemCoreClockUpdate(): Updates the variable SystemCoreClock and must
+  24:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                                 be called whenever the core clock is changed
+  25:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                                 during program execution.
+  26:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *
+  27:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * 2. After each device reset the HSI (16 MHz) is used as system clock source.
+  28:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *    Then SystemInit() function is called, in "startup_stm32f4xx.s" file, to
+  29:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *    configure the system clock before to branch to main program.
+  30:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *
+  31:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * 3. If the system clock source selected by user fails to startup, the SystemInit()
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 2
+
+
+  32:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *    function will do nothing and HSI still used as system clock source. User can 
+  33:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *    add some code to deal with this issue inside the SetSysClock() function.
+  34:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *
+  35:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * 4. The default value of HSE crystal is set to 25MHz, refer to "HSE_VALUE" define
+  36:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *    in "stm32f4xx.h" file. When HSE is used as system clock source, directly or
+  37:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *    through PLL, and you are using different crystal you have to adapt the HSE
+  38:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *    value to your own configuration.
+  39:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *
+  40:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * 5. This file configures the system clock as follows:
+  41:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+  42:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+  43:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                    Supported STM32F40xxx/41xxx devices
+  44:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  45:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        System Clock source                    | PLL (HSE)
+  46:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  47:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SYSCLK(Hz)                             | 168000000
+  48:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  49:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HCLK(Hz)                               | 168000000
+  50:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  51:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        AHB Prescaler                          | 1
+  52:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  53:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB1 Prescaler                         | 4
+  54:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  55:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB2 Prescaler                         | 2
+  56:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  57:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HSE Frequency(Hz)                      | 25000000
+  58:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  59:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_M                                  | 25
+  60:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  61:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_N                                  | 336
+  62:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  63:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_P                                  | 2
+  64:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  65:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_Q                                  | 7
+  66:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  67:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_N                               | NA
+  68:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  69:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_R                               | NA
+  70:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  71:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        I2S input clock                        | NA
+  72:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  73:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        VDD(V)                                 | 3.3
+  74:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  75:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Main regulator output voltage          | Scale1 mode
+  76:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  77:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Flash Latency(WS)                      | 5
+  78:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  79:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Prefetch Buffer                        | ON
+  80:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  81:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Instruction cache                      | ON
+  82:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  83:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Data cache                             | ON
+  84:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  85:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Require 48MHz for USB OTG FS,          | Disabled
+  86:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SDIO and RNG clock                     |
+  87:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  88:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 3
+
+
+  89:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+  90:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                    Supported STM32F42xxx/43xxx devices
+  91:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  92:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        System Clock source                    | PLL (HSE)
+  93:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  94:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SYSCLK(Hz)                             | 180000000
+  95:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  96:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HCLK(Hz)                               | 180000000
+  97:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+  98:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        AHB Prescaler                          | 1
+  99:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 100:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB1 Prescaler                         | 4
+ 101:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 102:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB2 Prescaler                         | 2
+ 103:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 104:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HSE Frequency(Hz)                      | 25000000
+ 105:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 106:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_M                                  | 25
+ 107:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 108:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_N                                  | 360
+ 109:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 110:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_P                                  | 2
+ 111:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 112:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_Q                                  | 7
+ 113:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 114:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_N                               | NA
+ 115:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 116:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_R                               | NA
+ 117:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 118:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        I2S input clock                        | NA
+ 119:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 120:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        VDD(V)                                 | 3.3
+ 121:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 122:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Main regulator output voltage          | Scale1 mode
+ 123:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 124:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Flash Latency(WS)                      | 5
+ 125:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 126:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Prefetch Buffer                        | ON
+ 127:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 128:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Instruction cache                      | ON
+ 129:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 130:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Data cache                             | ON
+ 131:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 132:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Require 48MHz for USB OTG FS,          | Disabled
+ 133:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SDIO and RNG clock                     |
+ 134:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 135:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+ 136:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+ 137:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                         Supported STM32F401xx devices
+ 138:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 139:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        System Clock source                    | PLL (HSE)
+ 140:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 141:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SYSCLK(Hz)                             | 84000000
+ 142:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 143:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HCLK(Hz)                               | 84000000
+ 144:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 145:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        AHB Prescaler                          | 1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 4
+
+
+ 146:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 147:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB1 Prescaler                         | 2
+ 148:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 149:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB2 Prescaler                         | 1
+ 150:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 151:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HSE Frequency(Hz)                      | 25000000
+ 152:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 153:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_M                                  | 25
+ 154:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 155:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_N                                  | 336
+ 156:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 157:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_P                                  | 4
+ 158:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 159:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_Q                                  | 7
+ 160:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 161:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_N                               | NA
+ 162:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 163:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_R                               | NA
+ 164:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 165:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        I2S input clock                        | NA
+ 166:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 167:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        VDD(V)                                 | 3.3
+ 168:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 169:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Main regulator output voltage          | Scale1 mode
+ 170:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 171:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Flash Latency(WS)                      | 2
+ 172:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 173:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Prefetch Buffer                        | ON
+ 174:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 175:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Instruction cache                      | ON
+ 176:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 177:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Data cache                             | ON
+ 178:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 179:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Require 48MHz for USB OTG FS,          | Disabled
+ 180:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SDIO and RNG clock                     |
+ 181:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 182:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+ 183:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+ 184:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                Supported STM32F411xx/STM32F410xx devices
+ 185:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 186:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        System Clock source                    | PLL (HSI)
+ 187:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 188:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SYSCLK(Hz)                             | 100000000
+ 189:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 190:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HCLK(Hz)                               | 100000000
+ 191:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 192:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        AHB Prescaler                          | 1
+ 193:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 194:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB1 Prescaler                         | 2
+ 195:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 196:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB2 Prescaler                         | 1
+ 197:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 198:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HSI Frequency(Hz)                      | 16000000
+ 199:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 200:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_M                                  | 16
+ 201:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 202:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_N                                  | 400
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 5
+
+
+ 203:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 204:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_P                                  | 4
+ 205:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 206:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_Q                                  | 7
+ 207:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 208:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_N                               | NA
+ 209:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 210:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_R                               | NA
+ 211:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 212:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        I2S input clock                        | NA
+ 213:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 214:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        VDD(V)                                 | 3.3
+ 215:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 216:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Main regulator output voltage          | Scale1 mode
+ 217:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 218:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Flash Latency(WS)                      | 3
+ 219:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 220:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Prefetch Buffer                        | ON
+ 221:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 222:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Instruction cache                      | ON
+ 223:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 224:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Data cache                             | ON
+ 225:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 226:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Require 48MHz for USB OTG FS,          | Disabled
+ 227:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SDIO and RNG clock                     |
+ 228:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 229:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+ 230:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+ 231:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                         Supported STM32F446xx devices
+ 232:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 233:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        System Clock source                    | PLL (HSE)
+ 234:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 235:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SYSCLK(Hz)                             | 180000000
+ 236:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 237:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HCLK(Hz)                               | 180000000
+ 238:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 239:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        AHB Prescaler                          | 1
+ 240:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 241:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB1 Prescaler                         | 4
+ 242:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 243:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        APB2 Prescaler                         | 2
+ 244:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 245:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        HSE Frequency(Hz)                      | 8000000
+ 246:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 247:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_M                                  | 8
+ 248:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 249:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_N                                  | 360
+ 250:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 251:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_P                                  | 2
+ 252:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 253:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_Q                                  | 7
+ 254:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 255:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLL_R                                  | NA
+ 256:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 257:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_M                               | NA
+ 258:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 259:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_N                               | NA
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 6
+
+
+ 260:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 261:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_P                               | NA
+ 262:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 263:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_Q                               | NA
+ 264:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 265:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        PLLI2S_R                               | NA
+ 266:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 267:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        I2S input clock                        | NA
+ 268:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 269:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        VDD(V)                                 | 3.3
+ 270:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 271:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Main regulator output voltage          | Scale1 mode
+ 272:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 273:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Flash Latency(WS)                      | 5
+ 274:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 275:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Prefetch Buffer                        | ON
+ 276:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 277:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Instruction cache                      | ON
+ 278:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 279:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Data cache                             | ON
+ 280:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 281:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        Require 48MHz for USB OTG FS,          | Disabled
+ 282:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *        SDIO and RNG clock                     |
+ 283:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *-----------------------------------------------------------------------------
+ 284:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *=============================================================================
+ 285:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   ******************************************************************************
+ 286:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @attention
+ 287:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *
+ 288:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * Copyright (c) 2016 STMicroelectronics.
+ 289:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * All rights reserved.
+ 290:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *
+ 291:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * This software is licensed under terms that can be found in the LICENSE file
+ 292:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * in the root directory of this software component.
+ 293:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+ 294:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *
+ 295:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   ******************************************************************************
+ 296:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 297:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 298:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /** @addtogroup CMSIS
+ 299:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @{
+ 300:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 301:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 302:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /** @addtogroup stm32f4xx_system
+ 303:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @{
+ 304:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */  
+ 305:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 306:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /** @addtogroup STM32F4xx_System_Private_Includes
+ 307:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @{
+ 308:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 309:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 310:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #include "stm32f4xx.h"
+ 311:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 312:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+ 313:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @}
+ 314:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 315:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 316:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /** @addtogroup STM32F4xx_System_Private_TypesDefinitions
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 7
+
+
+ 317:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @{
+ 318:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 319:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 320:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+ 321:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @}
+ 322:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 323:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 324:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /** @addtogroup STM32F4xx_System_Private_Defines
+ 325:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @{
+ 326:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 327:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 328:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /************************* Miscellaneous Configuration ************************/
+ 329:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /*!< Uncomment the following line if you need to use external SRAM or SDRAM mounted
+ 330:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****      on STM324xG_EVAL/STM324x7I_EVAL/STM324x9I_EVAL boards as data memory  */     
+ 331:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM3
+ 332:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* #define DATA_IN_ExtSRAM */
+ 333:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437x || STM32F429_439xx || STM32F469_479xx || STM32F413_423xx
+ 334:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 335:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM32F446xx) || defined(STM32F4
+ 336:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* #define DATA_IN_ExtSDRAM */
+ 337:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F427_437x || STM32F429_439xx || STM32F446xx || STM32F469_479xx */ 
+ 338:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 339:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F410xx) || defined(STM32F411xE)
+ 340:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /*!< Uncomment the following line if you need to clock the STM32F410xx/STM32F411xE by HSE Bypass
+ 341:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****      through STLINK MCO pin of STM32F103 microcontroller. The frequency cannot be changed
+ 342:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****      and is fixed at 8 MHz. 
+ 343:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****      Hardware configuration needed for Nucleo Board:
+ 344:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****      – SB54, SB55 OFF
+ 345:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****      – R35 removed
+ 346:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****      – SB16, SB50 ON */
+ 347:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* #define USE_HSE_BYPASS */
+ 348:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 349:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(USE_HSE_BYPASS)     
+ 350:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define HSE_BYPASS_INPUT_FREQUENCY   8000000
+ 351:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* USE_HSE_BYPASS */    
+ 352:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F410xx || STM32F411xE */
+ 353:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     
+ 354:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /*!< Uncomment the following line if you need to relocate your vector Table in
+ 355:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****      Internal SRAM. */
+ 356:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* #define VECT_TAB_SRAM */
+ 357:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define VECT_TAB_OFFSET  0x00 /*!< Vector Table base offset field. 
+ 358:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****                                    This value must be a multiple of 0x200. */
+ 359:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /******************************************************************************/
+ 360:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 361:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /************************* PLL Parameters *************************************/
+ 362:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM3
+ 363:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****  /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N */
+ 364:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****  #define PLL_M      25
+ 365:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #elif defined(STM32F412xG) || defined(STM32F413_423xx) || defined (STM32F446xx)
+ 366:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****  #define PLL_M      8
+ 367:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #elif defined (STM32F410xx) || defined (STM32F411xE)
+ 368:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****  #if defined(USE_HSE_BYPASS)
+ 369:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   #define PLL_M      8    
+ 370:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****  #else /* !USE_HSE_BYPASS */
+ 371:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   #define PLL_M      16
+ 372:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****  #endif /* USE_HSE_BYPASS */
+ 373:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #else
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 8
+
+
+ 374:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx || STM32F469_479xx */
+ 375:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 376:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* USB OTG FS, SDIO and RNG Clock =  PLL_VCO / PLLQ */
+ 377:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_Q      7
+ 378:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 379:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F446xx)
+ 380:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* PLL division factor for I2S, SAI, SYSTEM and SPDIF: Clock =  PLL_VCO / PLLR */
+ 381:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_R      7
+ 382:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #elif defined(STM32F412xG) || defined(STM32F413_423xx)
+ 383:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_R      2
+ 384:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #else
+ 385:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F446xx */ 
+ 386:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 387:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM32F446xx) || defined(STM32F4
+ 388:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_N      360
+ 389:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* SYSCLK = PLL_VCO / PLL_P */
+ 390:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_P      2
+ 391:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F427_437x || STM32F429_439xx || STM32F446xx || STM32F469_479xx */
+ 392:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 393:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined (STM32F40_41xxx)
+ 394:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_N      336
+ 395:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* SYSCLK = PLL_VCO / PLL_P */
+ 396:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_P      2
+ 397:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx */
+ 398:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 399:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F401xx)
+ 400:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_N      336
+ 401:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* SYSCLK = PLL_VCO / PLL_P */
+ 402:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_P      4
+ 403:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F401xx */
+ 404:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 405:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F410xx) || defined(STM32F411xE) || defined(STM32F412xG) || defined(STM32F413_423xx
+ 406:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_N      400
+ 407:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /* SYSCLK = PLL_VCO / PLL_P */
+ 408:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #define PLL_P      4   
+ 409:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F410xx || STM32F411xE || STM32F412xG || STM32F413_423xx */
+ 410:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 411:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /******************************************************************************/
+ 412:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 413:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+ 414:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @}
+ 415:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 416:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 417:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /** @addtogroup STM32F4xx_System_Private_Macros
+ 418:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @{
+ 419:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 420:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 421:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+ 422:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @}
+ 423:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 424:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 425:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /** @addtogroup STM32F4xx_System_Private_Variables
+ 426:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @{
+ 427:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 428:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 429:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F40_41xxx)
+ 430:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   uint32_t SystemCoreClock = 168000000;
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 9
+
+
+ 431:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx */
+ 432:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 433:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM32F446xx) || defined(STM32F4
+ 434:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   uint32_t SystemCoreClock = 180000000;
+ 435:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F427_437x || STM32F429_439xx || STM32F446xx || STM32F469_479xx */
+ 436:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 437:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F401xx)
+ 438:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   uint32_t SystemCoreClock = 84000000;
+ 439:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F401xx */
+ 440:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 441:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F410xx) || defined(STM32F411xE) || defined(STM32F412xG) || defined(STM32F413_423xx
+ 442:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   uint32_t SystemCoreClock = 100000000;
+ 443:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F410xx || STM32F401xE || STM32F412xG || STM32F413_423xx */
+ 444:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 445:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** __I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+ 446:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 447:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+ 448:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @}
+ 449:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 450:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 451:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /** @addtogroup STM32F4xx_System_Private_FunctionPrototypes
+ 452:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @{
+ 453:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 454:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 455:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** static void SetSysClock(void);
+ 456:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 457:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(DATA_IN_ExtSRAM) || defined(DATA_IN_ExtSDRAM)
+ 458:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** static void SystemInit_ExtMemCtl(void); 
+ 459:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* DATA_IN_ExtSRAM || DATA_IN_ExtSDRAM */
+ 460:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 461:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+ 462:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @}
+ 463:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 464:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 465:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /** @addtogroup STM32F4xx_System_Private_Functions
+ 466:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @{
+ 467:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 468:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 469:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+ 470:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @brief  Setup the microcontroller system
+ 471:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         Initialize the Embedded Flash Interface, the PLL and update the 
+ 472:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         SystemFrequency variable.
+ 473:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @param  None
+ 474:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @retval None
+ 475:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 476:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** void SystemInit(void)
+ 477:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** {
+ 478:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* FPU settings ------------------------------------------------------------*/
+ 479:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
+ 480:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  /* set CP10 and CP11 Full Access */
+ 481:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   #endif
+ 482:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Reset the RCC clock configuration to the default reset state ------------*/
+ 483:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Set HSION bit */
+ 484:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CR |= (uint32_t)0x00000001;
+ 485:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 486:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Reset CFGR register */
+ 487:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CFGR = 0x00000000;
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 10
+
+
+ 488:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 489:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Reset HSEON, CSSON and PLLON bits */
+ 490:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CR &= (uint32_t)0xFEF6FFFF;
+ 491:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 492:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Reset PLLCFGR register */
+ 493:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->PLLCFGR = 0x24003010;
+ 494:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 495:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Reset HSEBYP bit */
+ 496:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CR &= (uint32_t)0xFFFBFFFF;
+ 497:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 498:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Disable all interrupts */
+ 499:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CIR = 0x00000000;
+ 500:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 501:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(DATA_IN_ExtSRAM) || defined(DATA_IN_ExtSDRAM)
+ 502:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   SystemInit_ExtMemCtl(); 
+ 503:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* DATA_IN_ExtSRAM || DATA_IN_ExtSDRAM */
+ 504:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****          
+ 505:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Configure the System clock source, PLL Multiplier and Divider factors, 
+ 506:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****      AHB/APBx prescalers and Flash settings ----------------------------------*/
+ 507:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   SetSysClock();
+ 508:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 509:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Configure the Vector Table location add offset address ------------------*/
+ 510:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #ifdef VECT_TAB_SRAM
+ 511:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
+ 512:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #else
+ 513:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
+ 514:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif
+ 515:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** }
+ 516:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 517:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+ 518:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****    * @brief  Update SystemCoreClock variable according to Clock Register Values.
+ 519:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         The SystemCoreClock variable contains the core clock (HCLK), it can
+ 520:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         be used by the user application to setup the SysTick timer or configure
+ 521:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         other parameters.
+ 522:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *           
+ 523:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @note   Each time the core clock (HCLK) changes, this function must be called
+ 524:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         to update SystemCoreClock variable value. Otherwise, any configuration
+ 525:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         based on this variable will be incorrect.         
+ 526:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *     
+ 527:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @note   - The system frequency computed by this function is not the real 
+ 528:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *           frequency in the chip. It is calculated based on the predefined 
+ 529:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *           constant and the selected clock source:
+ 530:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *             
+ 531:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *           - If SYSCLK source is HSI, SystemCoreClock will contain the HSI_VALUE(*)
+ 532:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                                              
+ 533:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *           - If SYSCLK source is HSE, SystemCoreClock will contain the HSE_VALUE(**)
+ 534:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                          
+ 535:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *           - If SYSCLK source is PLL, SystemCoreClock will contain the HSE_VALUE(**) 
+ 536:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *             or HSI_VALUE(*) multiplied/divided by the PLL factors.
+ 537:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         
+ 538:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         (*) HSI_VALUE is a constant defined in stm32f4xx.h file (default value
+ 539:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *             16 MHz) but the real value may vary depending on the variations
+ 540:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *             in voltage and temperature.   
+ 541:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *    
+ 542:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         (**) HSE_VALUE is a constant defined in stm32f4xx.h file (default value
+ 543:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *              25 MHz), user has to ensure that HSE_VALUE is same as the real
+ 544:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *              frequency of the crystal used. Otherwise, this function may
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 11
+
+
+ 545:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *              have wrong result.
+ 546:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *                
+ 547:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         - The result of this function could be not correct when using fractional
+ 548:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *           value for HSE crystal.
+ 549:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *     
+ 550:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @param  None
+ 551:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @retval None
+ 552:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 553:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** void SystemCoreClockUpdate(void)
+ 554:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** {
+ 555:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   uint32_t tmp = 0, pllvco = 0, pllp = 2, pllsource = 0, pllm = 2;
+ 556:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F412xG) || defined(STM32F413_423xx) || defined(STM32F446xx)  
+ 557:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   uint32_t pllr = 2;
+ 558:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F412xG || STM32F413_423xx || STM32F446xx */
+ 559:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Get SYSCLK source -------------------------------------------------------*/
+ 560:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   tmp = RCC->CFGR & RCC_CFGR_SWS;
+ 561:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 562:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   switch (tmp)
+ 563:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 564:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     case 0x00:  /* HSI used as system clock source */
+ 565:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = HSI_VALUE;
+ 566:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 567:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     case 0x04:  /* HSE used as system clock source */
+ 568:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = HSE_VALUE;
+ 569:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 570:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     case 0x08:  /* PLL P used as system clock source */
+ 571:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****        /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N
+ 572:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****          SYSCLK = PLL_VCO / PLL_P
+ 573:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****          */    
+ 574:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC) >> 22;
+ 575:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+ 576:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       
+ 577:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM3
+ 578:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       if (pllsource != 0)
+ 579:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       {
+ 580:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         /* HSE used as PLL clock source */
+ 581:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         pllvco = (HSE_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+ 582:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 583:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       else
+ 584:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       {
+ 585:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         /* HSI used as PLL clock source */
+ 586:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+ 587:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 588:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #elif defined(STM32F410xx) || defined(STM32F411xE)
+ 589:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(USE_HSE_BYPASS)
+ 590:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       if (pllsource != 0)
+ 591:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       {
+ 592:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         /* HSE used as PLL clock source */
+ 593:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         pllvco = (HSE_BYPASS_INPUT_FREQUENCY / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+ 594:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }  
+ 595:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #else  
+ 596:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       if (pllsource == 0)
+ 597:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       {
+ 598:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         /* HSI used as PLL clock source */
+ 599:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+ 600:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }  
+ 601:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* USE_HSE_BYPASS */  
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 12
+
+
+ 602:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx || STM32F412xG || STM
+ 603:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       pllp = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >>16) + 1 ) *2;
+ 604:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = pllvco/pllp;      
+ 605:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 606:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F412xG) || defined(STM32F413_423xx) || defined(STM32F446xx)      
+ 607:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       case 0x0C:  /* PLL R used as system clock source */
+ 608:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****        /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N
+ 609:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****          SYSCLK = PLL_VCO / PLL_R
+ 610:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****          */    
+ 611:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC) >> 22;
+ 612:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+ 613:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       if (pllsource != 0)
+ 614:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       {
+ 615:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         /* HSE used as PLL clock source */
+ 616:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         pllvco = (HSE_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+ 617:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 618:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       else
+ 619:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       {
+ 620:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         /* HSI used as PLL clock source */
+ 621:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****         pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);      
+ 622:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 623:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****  
+ 624:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       pllr = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLR) >>28) + 1 ) *2;
+ 625:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = pllvco/pllr;      
+ 626:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 627:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F412xG || STM32F413_423xx || STM32F446xx */
+ 628:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     default:
+ 629:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = HSI_VALUE;
+ 630:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 631:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 632:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Compute HCLK frequency --------------------------------------------------*/
+ 633:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Get HCLK prescaler */
+ 634:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4)];
+ 635:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* HCLK frequency */
+ 636:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   SystemCoreClock >>= tmp;
+ 637:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** }
+ 638:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 639:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /**
+ 640:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @brief  Configures the System clock source, PLL Multiplier and Divider factors, 
+ 641:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         AHB/APBx prescalers and Flash settings
+ 642:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @Note   This function should be called only once the RCC clock configuration  
+ 643:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   *         is reset to the default reset state (done in SystemInit() function).   
+ 644:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @param  None
+ 645:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   * @retval None
+ 646:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   */
+ 647:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** static void SetSysClock(void)
+ 648:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** {
+  28              		.loc 1 648 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 82B0     		sub	sp, sp, #8
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+ 649:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM3
+ 650:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /******************************************************************************/
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 13
+
+
+ 651:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /*            PLL (clocked by HSE) used as System clock source                */
+ 652:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /******************************************************************************/
+ 653:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
+  36              		.loc 1 653 3 view .LVU1
+  37              		.loc 1 653 17 is_stmt 0 view .LVU2
+  38 0002 0023     		movs	r3, #0
+  39 0004 0193     		str	r3, [sp, #4]
+  40              		.loc 1 653 37 view .LVU3
+  41 0006 0093     		str	r3, [sp]
+ 654:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 655:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Enable HSE */
+ 656:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CR |= ((uint32_t)RCC_CR_HSEON);
+  42              		.loc 1 656 3 is_stmt 1 view .LVU4
+  43              		.loc 1 656 6 is_stmt 0 view .LVU5
+  44 0008 344A     		ldr	r2, .L13
+  45 000a 1368     		ldr	r3, [r2]
+  46              		.loc 1 656 11 view .LVU6
+  47 000c 43F48033 		orr	r3, r3, #65536
+  48 0010 1360     		str	r3, [r2]
+  49              	.L3:
+ 657:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****  
+ 658:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Wait till HSE is ready and if Time out is reached exit */
+ 659:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   do
+  50              		.loc 1 659 3 is_stmt 1 view .LVU7
+ 660:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 661:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     HSEStatus = RCC->CR & RCC_CR_HSERDY;
+  51              		.loc 1 661 5 view .LVU8
+  52              		.loc 1 661 20 is_stmt 0 view .LVU9
+  53 0012 324B     		ldr	r3, .L13
+  54 0014 1B68     		ldr	r3, [r3]
+  55              		.loc 1 661 25 view .LVU10
+  56 0016 03F40033 		and	r3, r3, #131072
+  57              		.loc 1 661 15 view .LVU11
+  58 001a 0093     		str	r3, [sp]
+ 662:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     StartUpCounter++;
+  59              		.loc 1 662 5 is_stmt 1 view .LVU12
+  60              		.loc 1 662 19 is_stmt 0 view .LVU13
+  61 001c 019B     		ldr	r3, [sp, #4]
+  62 001e 0133     		adds	r3, r3, #1
+  63 0020 0193     		str	r3, [sp, #4]
+ 663:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
+  64              		.loc 1 663 28 is_stmt 1 discriminator 2 view .LVU14
+  65              		.loc 1 663 22 is_stmt 0 discriminator 2 view .LVU15
+  66 0022 009B     		ldr	r3, [sp]
+  67              		.loc 1 663 28 discriminator 2 view .LVU16
+  68 0024 1BB9     		cbnz	r3, .L2
+  69              		.loc 1 663 47 discriminator 1 view .LVU17
+  70 0026 019B     		ldr	r3, [sp, #4]
+  71              		.loc 1 663 28 discriminator 1 view .LVU18
+  72 0028 B3F5A04F 		cmp	r3, #20480
+  73 002c F1D1     		bne	.L3
+  74              	.L2:
+ 664:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 665:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   if ((RCC->CR & RCC_CR_HSERDY) != RESET)
+  75              		.loc 1 665 3 is_stmt 1 view .LVU19
+  76              		.loc 1 665 11 is_stmt 0 view .LVU20
+  77 002e 2B4B     		ldr	r3, .L13
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 14
+
+
+  78 0030 1B68     		ldr	r3, [r3]
+  79              		.loc 1 665 6 view .LVU21
+  80 0032 13F4003F 		tst	r3, #131072
+  81 0036 06D0     		beq	.L4
+ 666:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 667:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     HSEStatus = (uint32_t)0x01;
+  82              		.loc 1 667 5 is_stmt 1 view .LVU22
+  83              		.loc 1 667 15 is_stmt 0 view .LVU23
+  84 0038 0123     		movs	r3, #1
+  85 003a 0093     		str	r3, [sp]
+  86              	.L5:
+ 668:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 669:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   else
+ 670:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 671:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     HSEStatus = (uint32_t)0x00;
+ 672:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 673:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 674:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   if (HSEStatus == (uint32_t)0x01)
+  87              		.loc 1 674 3 is_stmt 1 view .LVU24
+  88              		.loc 1 674 17 is_stmt 0 view .LVU25
+  89 003c 009B     		ldr	r3, [sp]
+  90              		.loc 1 674 6 view .LVU26
+  91 003e 012B     		cmp	r3, #1
+  92 0040 04D0     		beq	.L12
+  93              	.L1:
+ 675:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 676:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Select regulator voltage output Scale 1 mode */
+ 677:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+ 678:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     PWR->CR |= PWR_CR_VOS;
+ 679:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 680:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* HCLK = SYSCLK / 1*/
+ 681:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
+ 682:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 683:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) ||  defined(STM
+ 684:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* PCLK2 = HCLK / 2*/
+ 685:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_PPRE2_DIV2;
+ 686:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     
+ 687:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* PCLK1 = HCLK / 4*/
+ 688:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_PPRE1_DIV4;
+ 689:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437x || STM32F429_439xx  || STM32F412xG || STM32F446xx || STM
+ 690:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 691:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F401xx) || defined(STM32F413_423xx)
+ 692:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* PCLK2 = HCLK / 1*/
+ 693:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
+ 694:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     
+ 695:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* PCLK1 = HCLK / 2*/
+ 696:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;
+ 697:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F401xx || STM32F413_423xx */
+ 698:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 699:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM3
+ 700:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Configure the main PLL */
+ 701:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) |
+ 702:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****                    (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
+ 703:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F401xx || STM32F427_437x || STM32F429_439xx || STM32F469_479xx */
+ 704:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 705:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if  defined(STM32F412xG) || defined(STM32F413_423xx) || defined(STM32F446xx)
+ 706:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Configure the main PLL */
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 15
+
+
+ 707:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) |
+ 708:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****                    (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24) | (PLL_R << 28);
+ 709:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F412xG || STM32F413_423xx || STM32F446xx */    
+ 710:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     
+ 711:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Enable the main PLL */
+ 712:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CR |= RCC_CR_PLLON;
+ 713:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 714:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Wait till the main PLL is ready */
+ 715:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((RCC->CR & RCC_CR_PLLRDY) == 0)
+ 716:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 717:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     }
+ 718:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****    
+ 719:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM32F446xx) || defined(STM32F4
+ 720:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Enable the Over-drive to extend the clock frequency to 180 Mhz */
+ 721:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     PWR->CR |= PWR_CR_ODEN;
+ 722:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((PWR->CSR & PWR_CSR_ODRDY) == 0)
+ 723:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 724:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     }
+ 725:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     PWR->CR |= PWR_CR_ODSWEN;
+ 726:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((PWR->CSR & PWR_CSR_ODSWRDY) == 0)
+ 727:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 728:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     }      
+ 729:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+ 730:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_5WS;
+ 731:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F427_437x || STM32F429_439xx || STM32F446xx || STM32F469_479xx */
+ 732:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 733:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F40_41xxx)  || defined(STM32F412xG)  
+ 734:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+ 735:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_5WS;
+ 736:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx  || STM32F412xG */
+ 737:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 738:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F413_423xx)  
+ 739:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+ 740:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_3WS;
+ 741:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F413_423xx */
+ 742:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 743:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F401xx)
+ 744:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+ 745:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_2WS;
+ 746:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F401xx */
+ 747:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 748:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Select the main PLL as system clock source */
+ 749:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
+ 750:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_SW_PLL;
+ 751:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 752:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Wait till the main PLL is used as system clock source */
+ 753:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
+ 754:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 755:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     }
+ 756:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 757:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   else
+ 758:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   { /* If HSE fails to start-up, the application will have wrong clock
+ 759:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****          configuration. User can add here some code to deal with this error */
+ 760:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 761:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #elif defined(STM32F410xx) || defined(STM32F411xE)
+ 762:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(USE_HSE_BYPASS) 
+ 763:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /******************************************************************************/
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 16
+
+
+ 764:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /*            PLL (clocked by HSE) used as System clock source                */
+ 765:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** /******************************************************************************/
+ 766:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
+ 767:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 768:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Enable HSE and HSE BYPASS */
+ 769:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CR |= ((uint32_t)RCC_CR_HSEON | RCC_CR_HSEBYP);
+ 770:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****  
+ 771:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Wait till HSE is ready and if Time out is reached exit */
+ 772:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   do
+ 773:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 774:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     HSEStatus = RCC->CR & RCC_CR_HSERDY;
+ 775:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     StartUpCounter++;
+ 776:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
+ 777:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 778:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   if ((RCC->CR & RCC_CR_HSERDY) != RESET)
+ 779:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 780:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     HSEStatus = (uint32_t)0x01;
+ 781:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 782:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   else
+ 783:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 784:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     HSEStatus = (uint32_t)0x00;
+ 785:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 786:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 787:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   if (HSEStatus == (uint32_t)0x01)
+ 788:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 789:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Select regulator voltage output Scale 1 mode */
+ 790:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+ 791:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     PWR->CR |= PWR_CR_VOS;
+ 792:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 793:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* HCLK = SYSCLK / 1*/
+ 794:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
+ 795:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 796:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* PCLK2 = HCLK / 2*/
+ 797:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
+ 798:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     
+ 799:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* PCLK1 = HCLK / 4*/
+ 800:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;
+ 801:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 802:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Configure the main PLL */
+ 803:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) |
+ 804:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****                    (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
+ 805:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     
+ 806:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Enable the main PLL */
+ 807:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CR |= RCC_CR_PLLON;
+ 808:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 809:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Wait till the main PLL is ready */
+ 810:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((RCC->CR & RCC_CR_PLLRDY) == 0)
+ 811:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 812:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     }
+ 813:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 814:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+ 815:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_3WS;
+ 816:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 817:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Select the main PLL as system clock source */
+ 818:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
+ 819:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_SW_PLL;
+ 820:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 17
+
+
+ 821:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Wait till the main PLL is used as system clock source */
+ 822:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
+ 823:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 824:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     }
+ 825:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 826:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   else
+ 827:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   { /* If HSE fails to start-up, the application will have wrong clock
+ 828:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****          configuration. User can add here some code to deal with this error */
+ 829:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 830:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #else /* HSI will be used as PLL clock source */
+ 831:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Select regulator voltage output Scale 1 mode */
+ 832:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+ 833:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   PWR->CR |= PWR_CR_VOS;
+ 834:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 835:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* HCLK = SYSCLK / 1*/
+ 836:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
+ 837:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 838:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* PCLK2 = HCLK / 2*/
+ 839:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
+ 840:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 841:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* PCLK1 = HCLK / 4*/
+ 842:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;
+ 843:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 844:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Configure the main PLL */
+ 845:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) | (PLL_Q << 24); 
+ 846:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 847:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Enable the main PLL */
+ 848:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CR |= RCC_CR_PLLON;
+ 849:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 850:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Wait till the main PLL is ready */
+ 851:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   while((RCC->CR & RCC_CR_PLLRDY) == 0)
+ 852:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 853:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 854:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 855:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+ 856:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_3WS;
+ 857:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 858:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Select the main PLL as system clock source */
+ 859:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
+ 860:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   RCC->CFGR |= RCC_CFGR_SW_PLL;
+ 861:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   
+ 862:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* Wait till the main PLL is used as system clock source */
+ 863:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
+ 864:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 865:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 866:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* USE_HSE_BYPASS */  
+ 867:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx || STM32F469_479xx */
+ 868:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** }
+  94              		.loc 1 868 1 view .LVU27
+  95 0042 02B0     		add	sp, sp, #8
+  96              	.LCFI1:
+  97              		.cfi_remember_state
+  98              		.cfi_def_cfa_offset 0
+  99              		@ sp needed
+ 100 0044 7047     		bx	lr
+ 101              	.L4:
+ 102              	.LCFI2:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 18
+
+
+ 103              		.cfi_restore_state
+ 671:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 104              		.loc 1 671 5 is_stmt 1 view .LVU28
+ 671:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 105              		.loc 1 671 15 is_stmt 0 view .LVU29
+ 106 0046 0023     		movs	r3, #0
+ 107 0048 0093     		str	r3, [sp]
+ 108 004a F7E7     		b	.L5
+ 109              	.L12:
+ 677:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     PWR->CR |= PWR_CR_VOS;
+ 110              		.loc 1 677 5 is_stmt 1 view .LVU30
+ 677:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     PWR->CR |= PWR_CR_VOS;
+ 111              		.loc 1 677 8 is_stmt 0 view .LVU31
+ 112 004c 234B     		ldr	r3, .L13
+ 113 004e 1A6C     		ldr	r2, [r3, #64]
+ 677:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     PWR->CR |= PWR_CR_VOS;
+ 114              		.loc 1 677 18 view .LVU32
+ 115 0050 42F08052 		orr	r2, r2, #268435456
+ 116 0054 1A64     		str	r2, [r3, #64]
+ 678:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 117              		.loc 1 678 5 is_stmt 1 view .LVU33
+ 678:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 118              		.loc 1 678 8 is_stmt 0 view .LVU34
+ 119 0056 2249     		ldr	r1, .L13+4
+ 120 0058 0A68     		ldr	r2, [r1]
+ 678:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 121              		.loc 1 678 13 view .LVU35
+ 122 005a 42F44042 		orr	r2, r2, #49152
+ 123 005e 0A60     		str	r2, [r1]
+ 681:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 124              		.loc 1 681 5 is_stmt 1 view .LVU36
+ 681:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 125              		.loc 1 681 8 is_stmt 0 view .LVU37
+ 126 0060 9A68     		ldr	r2, [r3, #8]
+ 681:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 127              		.loc 1 681 15 view .LVU38
+ 128 0062 9A60     		str	r2, [r3, #8]
+ 685:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     
+ 129              		.loc 1 685 5 is_stmt 1 view .LVU39
+ 685:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     
+ 130              		.loc 1 685 8 is_stmt 0 view .LVU40
+ 131 0064 9A68     		ldr	r2, [r3, #8]
+ 685:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     
+ 132              		.loc 1 685 15 view .LVU41
+ 133 0066 42F40042 		orr	r2, r2, #32768
+ 134 006a 9A60     		str	r2, [r3, #8]
+ 688:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437x || STM32F429_439xx  || STM32F412xG || STM32F446xx || STM
+ 135              		.loc 1 688 5 is_stmt 1 view .LVU42
+ 688:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437x || STM32F429_439xx  || STM32F412xG || STM32F446xx || STM
+ 136              		.loc 1 688 8 is_stmt 0 view .LVU43
+ 137 006c 9A68     		ldr	r2, [r3, #8]
+ 688:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F40_41xxx || STM32F427_437x || STM32F429_439xx  || STM32F412xG || STM32F446xx || STM
+ 138              		.loc 1 688 15 view .LVU44
+ 139 006e 42F4A052 		orr	r2, r2, #5120
+ 140 0072 9A60     		str	r2, [r3, #8]
+ 701:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****                    (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
+ 141              		.loc 1 701 5 is_stmt 1 view .LVU45
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 19
+
+
+ 701:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****                    (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
+ 142              		.loc 1 701 18 is_stmt 0 view .LVU46
+ 143 0074 1B4A     		ldr	r2, .L13+8
+ 144 0076 5A60     		str	r2, [r3, #4]
+ 712:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 145              		.loc 1 712 5 is_stmt 1 view .LVU47
+ 712:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 146              		.loc 1 712 8 is_stmt 0 view .LVU48
+ 147 0078 1A68     		ldr	r2, [r3]
+ 712:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 148              		.loc 1 712 13 view .LVU49
+ 149 007a 42F08072 		orr	r2, r2, #16777216
+ 150 007e 1A60     		str	r2, [r3]
+ 715:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 151              		.loc 1 715 5 is_stmt 1 view .LVU50
+ 152              	.L7:
+ 717:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****    
+ 153              		.loc 1 717 5 view .LVU51
+ 715:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 154              		.loc 1 715 37 discriminator 1 view .LVU52
+ 715:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 155              		.loc 1 715 15 is_stmt 0 discriminator 1 view .LVU53
+ 156 0080 164B     		ldr	r3, .L13
+ 157 0082 1B68     		ldr	r3, [r3]
+ 715:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 158              		.loc 1 715 37 discriminator 1 view .LVU54
+ 159 0084 13F0007F 		tst	r3, #33554432
+ 160 0088 FAD0     		beq	.L7
+ 721:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((PWR->CSR & PWR_CSR_ODRDY) == 0)
+ 161              		.loc 1 721 5 is_stmt 1 view .LVU55
+ 721:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((PWR->CSR & PWR_CSR_ODRDY) == 0)
+ 162              		.loc 1 721 8 is_stmt 0 view .LVU56
+ 163 008a 154A     		ldr	r2, .L13+4
+ 164 008c 1368     		ldr	r3, [r2]
+ 721:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((PWR->CSR & PWR_CSR_ODRDY) == 0)
+ 165              		.loc 1 721 13 view .LVU57
+ 166 008e 43F48033 		orr	r3, r3, #65536
+ 167 0092 1360     		str	r3, [r2]
+ 722:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 168              		.loc 1 722 5 is_stmt 1 view .LVU58
+ 169              	.L8:
+ 724:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     PWR->CR |= PWR_CR_ODSWEN;
+ 170              		.loc 1 724 5 view .LVU59
+ 722:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 171              		.loc 1 722 38 discriminator 1 view .LVU60
+ 722:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 172              		.loc 1 722 15 is_stmt 0 discriminator 1 view .LVU61
+ 173 0094 124B     		ldr	r3, .L13+4
+ 174 0096 5B68     		ldr	r3, [r3, #4]
+ 722:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 175              		.loc 1 722 38 discriminator 1 view .LVU62
+ 176 0098 13F4803F 		tst	r3, #65536
+ 177 009c FAD0     		beq	.L8
+ 725:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((PWR->CSR & PWR_CSR_ODSWRDY) == 0)
+ 178              		.loc 1 725 5 is_stmt 1 view .LVU63
+ 725:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((PWR->CSR & PWR_CSR_ODSWRDY) == 0)
+ 179              		.loc 1 725 8 is_stmt 0 view .LVU64
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 20
+
+
+ 180 009e 104A     		ldr	r2, .L13+4
+ 181 00a0 1368     		ldr	r3, [r2]
+ 725:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     while((PWR->CSR & PWR_CSR_ODSWRDY) == 0)
+ 182              		.loc 1 725 13 view .LVU65
+ 183 00a2 43F40033 		orr	r3, r3, #131072
+ 184 00a6 1360     		str	r3, [r2]
+ 726:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 185              		.loc 1 726 5 is_stmt 1 view .LVU66
+ 186              	.L9:
+ 728:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+ 187              		.loc 1 728 5 view .LVU67
+ 726:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 188              		.loc 1 726 40 discriminator 1 view .LVU68
+ 726:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 189              		.loc 1 726 15 is_stmt 0 discriminator 1 view .LVU69
+ 190 00a8 0D4B     		ldr	r3, .L13+4
+ 191 00aa 5B68     		ldr	r3, [r3, #4]
+ 726:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 192              		.loc 1 726 40 discriminator 1 view .LVU70
+ 193 00ac 13F4003F 		tst	r3, #131072
+ 194 00b0 FAD0     		beq	.L9
+ 730:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F427_437x || STM32F429_439xx || STM32F446xx || STM32F469_479xx */
+ 195              		.loc 1 730 5 is_stmt 1 view .LVU71
+ 730:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif /* STM32F427_437x || STM32F429_439xx || STM32F446xx || STM32F469_479xx */
+ 196              		.loc 1 730 16 is_stmt 0 view .LVU72
+ 197 00b2 0D4B     		ldr	r3, .L13+12
+ 198 00b4 40F20572 		movw	r2, #1797
+ 199 00b8 1A60     		str	r2, [r3]
+ 749:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_SW_PLL;
+ 200              		.loc 1 749 5 is_stmt 1 view .LVU73
+ 749:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_SW_PLL;
+ 201              		.loc 1 749 8 is_stmt 0 view .LVU74
+ 202 00ba A3F58063 		sub	r3, r3, #1024
+ 203 00be 9A68     		ldr	r2, [r3, #8]
+ 749:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     RCC->CFGR |= RCC_CFGR_SW_PLL;
+ 204              		.loc 1 749 15 view .LVU75
+ 205 00c0 22F00302 		bic	r2, r2, #3
+ 206 00c4 9A60     		str	r2, [r3, #8]
+ 750:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 207              		.loc 1 750 5 is_stmt 1 view .LVU76
+ 750:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 208              		.loc 1 750 8 is_stmt 0 view .LVU77
+ 209 00c6 9A68     		ldr	r2, [r3, #8]
+ 750:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 210              		.loc 1 750 15 view .LVU78
+ 211 00c8 42F00202 		orr	r2, r2, #2
+ 212 00cc 9A60     		str	r2, [r3, #8]
+ 753:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 213              		.loc 1 753 5 is_stmt 1 view .LVU79
+ 214              	.L10:
+ 753:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 215              		.loc 1 753 50 discriminator 1 view .LVU80
+ 753:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 216              		.loc 1 753 16 is_stmt 0 discriminator 1 view .LVU81
+ 217 00ce 034B     		ldr	r3, .L13
+ 218 00d0 9B68     		ldr	r3, [r3, #8]
+ 753:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 21
+
+
+ 219              		.loc 1 753 23 discriminator 1 view .LVU82
+ 220 00d2 03F00C03 		and	r3, r3, #12
+ 753:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     {
+ 221              		.loc 1 753 50 discriminator 1 view .LVU83
+ 222 00d6 082B     		cmp	r3, #8
+ 223 00d8 F9D1     		bne	.L10
+ 224 00da B2E7     		b	.L1
+ 225              	.L14:
+ 226              		.align	2
+ 227              	.L13:
+ 228 00dc 00380240 		.word	1073887232
+ 229 00e0 00700040 		.word	1073770496
+ 230 00e4 195A4007 		.word	121657881
+ 231 00e8 003C0240 		.word	1073888256
+ 232              		.cfi_endproc
+ 233              	.LFE125:
+ 235              		.section	.text.SystemInit,"ax",%progbits
+ 236              		.align	1
+ 237              		.global	SystemInit
+ 238              		.syntax unified
+ 239              		.thumb
+ 240              		.thumb_func
+ 242              	SystemInit:
+ 243              	.LFB123:
+ 477:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* FPU settings ------------------------------------------------------------*/
+ 244              		.loc 1 477 1 is_stmt 1 view -0
+ 245              		.cfi_startproc
+ 246              		@ args = 0, pretend = 0, frame = 0
+ 247              		@ frame_needed = 0, uses_anonymous_args = 0
+ 248 0000 10B5     		push	{r4, lr}
+ 249              	.LCFI3:
+ 250              		.cfi_def_cfa_offset 8
+ 251              		.cfi_offset 4, -8
+ 252              		.cfi_offset 14, -4
+ 480:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   #endif
+ 253              		.loc 1 480 5 view .LVU85
+ 480:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   #endif
+ 254              		.loc 1 480 8 is_stmt 0 view .LVU86
+ 255 0002 104C     		ldr	r4, .L17
+ 256 0004 D4F88830 		ldr	r3, [r4, #136]
+ 480:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   #endif
+ 257              		.loc 1 480 16 view .LVU87
+ 258 0008 43F47003 		orr	r3, r3, #15728640
+ 259 000c C4F88830 		str	r3, [r4, #136]
+ 484:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 260              		.loc 1 484 3 is_stmt 1 view .LVU88
+ 484:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 261              		.loc 1 484 6 is_stmt 0 view .LVU89
+ 262 0010 0D4B     		ldr	r3, .L17+4
+ 263 0012 1A68     		ldr	r2, [r3]
+ 484:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 264              		.loc 1 484 11 view .LVU90
+ 265 0014 42F00102 		orr	r2, r2, #1
+ 266 0018 1A60     		str	r2, [r3]
+ 487:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 267              		.loc 1 487 3 is_stmt 1 view .LVU91
+ 487:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 22
+
+
+ 268              		.loc 1 487 13 is_stmt 0 view .LVU92
+ 269 001a 0021     		movs	r1, #0
+ 270 001c 9960     		str	r1, [r3, #8]
+ 490:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 271              		.loc 1 490 3 is_stmt 1 view .LVU93
+ 490:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 272              		.loc 1 490 6 is_stmt 0 view .LVU94
+ 273 001e 1A68     		ldr	r2, [r3]
+ 490:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 274              		.loc 1 490 11 view .LVU95
+ 275 0020 22F08472 		bic	r2, r2, #17301504
+ 276 0024 22F48032 		bic	r2, r2, #65536
+ 277 0028 1A60     		str	r2, [r3]
+ 493:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 278              		.loc 1 493 3 is_stmt 1 view .LVU96
+ 493:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 279              		.loc 1 493 16 is_stmt 0 view .LVU97
+ 280 002a 084A     		ldr	r2, .L17+8
+ 281 002c 5A60     		str	r2, [r3, #4]
+ 496:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 282              		.loc 1 496 3 is_stmt 1 view .LVU98
+ 496:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 283              		.loc 1 496 6 is_stmt 0 view .LVU99
+ 284 002e 1A68     		ldr	r2, [r3]
+ 496:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 285              		.loc 1 496 11 view .LVU100
+ 286 0030 22F48022 		bic	r2, r2, #262144
+ 287 0034 1A60     		str	r2, [r3]
+ 499:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 288              		.loc 1 499 3 is_stmt 1 view .LVU101
+ 499:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 289              		.loc 1 499 12 is_stmt 0 view .LVU102
+ 290 0036 D960     		str	r1, [r3, #12]
+ 507:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 291              		.loc 1 507 3 is_stmt 1 view .LVU103
+ 292 0038 FFF7FEFF 		bl	SetSysClock
+ 293              	.LVL0:
+ 513:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif
+ 294              		.loc 1 513 3 view .LVU104
+ 513:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #endif
+ 295              		.loc 1 513 13 is_stmt 0 view .LVU105
+ 296 003c 4FF00063 		mov	r3, #134217728
+ 297 0040 A360     		str	r3, [r4, #8]
+ 515:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 298              		.loc 1 515 1 view .LVU106
+ 299 0042 10BD     		pop	{r4, pc}
+ 300              	.L18:
+ 301              		.align	2
+ 302              	.L17:
+ 303 0044 00ED00E0 		.word	-536810240
+ 304 0048 00380240 		.word	1073887232
+ 305 004c 10300024 		.word	603992080
+ 306              		.cfi_endproc
+ 307              	.LFE123:
+ 309              		.section	.text.SystemCoreClockUpdate,"ax",%progbits
+ 310              		.align	1
+ 311              		.global	SystemCoreClockUpdate
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 23
+
+
+ 312              		.syntax unified
+ 313              		.thumb
+ 314              		.thumb_func
+ 316              	SystemCoreClockUpdate:
+ 317              	.LFB124:
+ 554:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   uint32_t tmp = 0, pllvco = 0, pllp = 2, pllsource = 0, pllm = 2;
+ 318              		.loc 1 554 1 is_stmt 1 view -0
+ 319              		.cfi_startproc
+ 320              		@ args = 0, pretend = 0, frame = 0
+ 321              		@ frame_needed = 0, uses_anonymous_args = 0
+ 322              		@ link register save eliminated.
+ 555:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F412xG) || defined(STM32F413_423xx) || defined(STM32F446xx)  
+ 323              		.loc 1 555 3 view .LVU108
+ 324              	.LVL1:
+ 560:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 325              		.loc 1 560 3 view .LVU109
+ 560:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 326              		.loc 1 560 12 is_stmt 0 view .LVU110
+ 327 0000 234B     		ldr	r3, .L26
+ 328 0002 9B68     		ldr	r3, [r3, #8]
+ 560:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 329              		.loc 1 560 7 view .LVU111
+ 330 0004 03F00C03 		and	r3, r3, #12
+ 331              	.LVL2:
+ 562:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   {
+ 332              		.loc 1 562 3 is_stmt 1 view .LVU112
+ 333 0008 042B     		cmp	r3, #4
+ 334 000a 12D0     		beq	.L20
+ 335 000c 082B     		cmp	r3, #8
+ 336 000e 14D0     		beq	.L21
+ 337 0010 002B     		cmp	r3, #0
+ 338 0012 38D1     		bne	.L22
+ 565:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 339              		.loc 1 565 7 view .LVU113
+ 565:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 340              		.loc 1 565 23 is_stmt 0 view .LVU114
+ 341 0014 1F4B     		ldr	r3, .L26+4
+ 342              	.LVL3:
+ 565:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 343              		.loc 1 565 23 view .LVU115
+ 344 0016 204A     		ldr	r2, .L26+8
+ 345 0018 1A60     		str	r2, [r3]
+ 566:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     case 0x04:  /* HSE used as system clock source */
+ 346              		.loc 1 566 7 is_stmt 1 view .LVU116
+ 347              	.LVL4:
+ 348              	.L23:
+ 634:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* HCLK frequency */
+ 349              		.loc 1 634 3 view .LVU117
+ 634:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* HCLK frequency */
+ 350              		.loc 1 634 28 is_stmt 0 view .LVU118
+ 351 001a 1D4B     		ldr	r3, .L26
+ 352 001c 9B68     		ldr	r3, [r3, #8]
+ 634:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* HCLK frequency */
+ 353              		.loc 1 634 52 view .LVU119
+ 354 001e C3F30313 		ubfx	r3, r3, #4, #4
+ 634:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   /* HCLK frequency */
+ 355              		.loc 1 634 22 view .LVU120
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 24
+
+
+ 356 0022 1E4A     		ldr	r2, .L26+12
+ 357 0024 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 358 0026 D2B2     		uxtb	r2, r2
+ 359              	.LVL5:
+ 636:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** }
+ 360              		.loc 1 636 3 is_stmt 1 view .LVU121
+ 636:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** }
+ 361              		.loc 1 636 19 is_stmt 0 view .LVU122
+ 362 0028 1A49     		ldr	r1, .L26+4
+ 363 002a 0B68     		ldr	r3, [r1]
+ 364 002c D340     		lsrs	r3, r3, r2
+ 365 002e 0B60     		str	r3, [r1]
+ 637:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** 
+ 366              		.loc 1 637 1 view .LVU123
+ 367 0030 7047     		bx	lr
+ 368              	.LVL6:
+ 369              	.L20:
+ 568:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 370              		.loc 1 568 7 is_stmt 1 view .LVU124
+ 568:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 371              		.loc 1 568 23 is_stmt 0 view .LVU125
+ 372 0032 184B     		ldr	r3, .L26+4
+ 373              	.LVL7:
+ 568:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 374              		.loc 1 568 23 view .LVU126
+ 375 0034 1A4A     		ldr	r2, .L26+16
+ 376 0036 1A60     		str	r2, [r3]
+ 569:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****     case 0x08:  /* PLL P used as system clock source */
+ 377              		.loc 1 569 7 is_stmt 1 view .LVU127
+ 378 0038 EFE7     		b	.L23
+ 379              	.LVL8:
+ 380              	.L21:
+ 574:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+ 381              		.loc 1 574 7 view .LVU128
+ 574:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+ 382              		.loc 1 574 23 is_stmt 0 view .LVU129
+ 383 003a 154B     		ldr	r3, .L26
+ 384              	.LVL9:
+ 574:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+ 385              		.loc 1 574 23 view .LVU130
+ 386 003c 5968     		ldr	r1, [r3, #4]
+ 387              	.LVL10:
+ 575:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       
+ 388              		.loc 1 575 7 is_stmt 1 view .LVU131
+ 575:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       
+ 389              		.loc 1 575 17 is_stmt 0 view .LVU132
+ 390 003e 5A68     		ldr	r2, [r3, #4]
+ 575:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       
+ 391              		.loc 1 575 12 view .LVU133
+ 392 0040 02F03F02 		and	r2, r2, #63
+ 393              	.LVL11:
+ 578:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       {
+ 394              		.loc 1 578 7 is_stmt 1 view .LVU134
+ 578:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       {
+ 395              		.loc 1 578 10 is_stmt 0 view .LVU135
+ 396 0044 11F4800F 		tst	r1, #4194304
+ 397 0048 13D0     		beq	.L24
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 25
+
+
+ 581:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 398              		.loc 1 581 9 is_stmt 1 view .LVU136
+ 581:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 399              		.loc 1 581 29 is_stmt 0 view .LVU137
+ 400 004a 154B     		ldr	r3, .L26+16
+ 401 004c B3FBF2F3 		udiv	r3, r3, r2
+ 581:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 402              		.loc 1 581 44 view .LVU138
+ 403 0050 0F4A     		ldr	r2, .L26
+ 404              	.LVL12:
+ 581:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 405              		.loc 1 581 44 view .LVU139
+ 406 0052 5268     		ldr	r2, [r2, #4]
+ 581:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 407              		.loc 1 581 74 view .LVU140
+ 408 0054 C2F38812 		ubfx	r2, r2, #6, #9
+ 581:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 409              		.loc 1 581 16 view .LVU141
+ 410 0058 02FB03F3 		mul	r3, r2, r3
+ 411              	.LVL13:
+ 412              	.L25:
+ 603:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = pllvco/pllp;      
+ 413              		.loc 1 603 7 is_stmt 1 view .LVU142
+ 603:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = pllvco/pllp;      
+ 414              		.loc 1 603 20 is_stmt 0 view .LVU143
+ 415 005c 0C4A     		ldr	r2, .L26
+ 416 005e 5268     		ldr	r2, [r2, #4]
+ 603:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = pllvco/pllp;      
+ 417              		.loc 1 603 50 view .LVU144
+ 418 0060 C2F30142 		ubfx	r2, r2, #16, #2
+ 603:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = pllvco/pllp;      
+ 419              		.loc 1 603 56 view .LVU145
+ 420 0064 0132     		adds	r2, r2, #1
+ 603:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       SystemCoreClock = pllvco/pllp;      
+ 421              		.loc 1 603 12 view .LVU146
+ 422 0066 5200     		lsls	r2, r2, #1
+ 423              	.LVL14:
+ 604:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 424              		.loc 1 604 7 is_stmt 1 view .LVU147
+ 604:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 425              		.loc 1 604 31 is_stmt 0 view .LVU148
+ 426 0068 B3FBF2F3 		udiv	r3, r3, r2
+ 427              	.LVL15:
+ 604:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 428              		.loc 1 604 23 view .LVU149
+ 429 006c 094A     		ldr	r2, .L26+4
+ 430              	.LVL16:
+ 604:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 431              		.loc 1 604 23 view .LVU150
+ 432 006e 1360     		str	r3, [r2]
+ 605:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c **** #if defined(STM32F412xG) || defined(STM32F413_423xx) || defined(STM32F446xx)      
+ 433              		.loc 1 605 7 is_stmt 1 view .LVU151
+ 434 0070 D3E7     		b	.L23
+ 435              	.LVL17:
+ 436              	.L24:
+ 586:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 437              		.loc 1 586 9 view .LVU152
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 26
+
+
+ 586:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 438              		.loc 1 586 29 is_stmt 0 view .LVU153
+ 439 0072 094B     		ldr	r3, .L26+8
+ 440 0074 B3FBF2F3 		udiv	r3, r3, r2
+ 586:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 441              		.loc 1 586 44 view .LVU154
+ 442 0078 054A     		ldr	r2, .L26
+ 443              	.LVL18:
+ 586:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 444              		.loc 1 586 44 view .LVU155
+ 445 007a 5268     		ldr	r2, [r2, #4]
+ 586:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 446              		.loc 1 586 74 view .LVU156
+ 447 007c C2F38812 		ubfx	r2, r2, #6, #9
+ 586:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 448              		.loc 1 586 16 view .LVU157
+ 449 0080 02FB03F3 		mul	r3, r2, r3
+ 450              	.LVL19:
+ 586:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       }
+ 451              		.loc 1 586 16 view .LVU158
+ 452 0084 EAE7     		b	.L25
+ 453              	.LVL20:
+ 454              	.L22:
+ 629:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 455              		.loc 1 629 7 is_stmt 1 view .LVU159
+ 629:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 456              		.loc 1 629 23 is_stmt 0 view .LVU160
+ 457 0086 034B     		ldr	r3, .L26+4
+ 458              	.LVL21:
+ 629:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****       break;
+ 459              		.loc 1 629 23 view .LVU161
+ 460 0088 034A     		ldr	r2, .L26+8
+ 461 008a 1A60     		str	r2, [r3]
+ 630:libraries/CMSIS/Device/ST/STM32F4xx/source/templates/system_stm32f4xx.c ****   }
+ 462              		.loc 1 630 7 is_stmt 1 view .LVU162
+ 463 008c C5E7     		b	.L23
+ 464              	.L27:
+ 465 008e 00BF     		.align	2
+ 466              	.L26:
+ 467 0090 00380240 		.word	1073887232
+ 468 0094 00000000 		.word	SystemCoreClock
+ 469 0098 0024F400 		.word	16000000
+ 470 009c 00000000 		.word	AHBPrescTable
+ 471 00a0 40787D01 		.word	25000000
+ 472              		.cfi_endproc
+ 473              	.LFE124:
+ 475              		.global	AHBPrescTable
+ 476              		.section	.rodata.AHBPrescTable,"a"
+ 477              		.align	2
+ 480              	AHBPrescTable:
+ 481 0000 00000000 		.ascii	"\000\000\000\000\000\000\000\000\001\002\003\004\006"
+ 481      00000000 
+ 481      01020304 
+ 481      06
+ 482 000d 070809   		.ascii	"\007\010\011"
+ 483              		.global	SystemCoreClock
+ 484              		.section	.data.SystemCoreClock,"aw"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 27
+
+
+ 485              		.align	2
+ 488              	SystemCoreClock:
+ 489 0000 0095BA0A 		.word	180000000
+ 490              		.text
+ 491              	.Letext0:
+ 492              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 493              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 494              		.file 4 "libraries/CMSIS/include/core_cm4.h"
+ 495              		.file 5 "libraries/CMSIS/Device/ST/STM32F4xx/include/stm32f4xx.h"
+ 496              		.file 6 "libraries/CMSIS/Device/ST/STM32F4xx/include/system_stm32f4xx.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 system_stm32f4xx.c
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:21     .text.SetSysClock:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:26     .text.SetSysClock:00000000 SetSysClock
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:228    .text.SetSysClock:000000dc $d
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:236    .text.SystemInit:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:242    .text.SystemInit:00000000 SystemInit
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:303    .text.SystemInit:00000044 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:310    .text.SystemCoreClockUpdate:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:316    .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:467    .text.SystemCoreClockUpdate:00000090 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:488    .data.SystemCoreClock:00000000 SystemCoreClock
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:480    .rodata.AHBPrescTable:00000000 AHBPrescTable
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:477    .rodata.AHBPrescTable:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\cc7afXl8.s:485    .data.SystemCoreClock:00000000 $d
+
+NO UNDEFINED SYMBOLS

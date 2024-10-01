@@ -1,0 +1,491 @@
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"bank.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Lib/src/bank.c"
+  20              		.section	.text.MY_NVIC_SetVectorTable,"ax",%progbits
+  21              		.align	1
+  22              		.global	MY_NVIC_SetVectorTable
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	MY_NVIC_SetVectorTable:
+  28              	.LVL0:
+  29              	.LFB126:
+   1:Lib/src/bank.c **** #include "lib.h"
+   2:Lib/src/bank.c **** 
+   3:Lib/src/bank.c **** void MY_NVIC_SetVectorTable(u32 NVIC_VectTab,u32 Offset)	 
+   4:Lib/src/bank.c **** { 	   	  
+  30              		.loc 1 4 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   5:Lib/src/bank.c **** 	SCB->VTOR=NVIC_VectTab|(Offset&(u32)0xFFFFFE00);
+  35              		.loc 1 5 2 view .LVU1
+  36              		.loc 1 5 32 is_stmt 0 view .LVU2
+  37 0000 6FF30801 		bfc	r1, #0, #9
+  38              	.LVL1:
+  39              		.loc 1 5 24 view .LVU3
+  40 0004 0143     		orrs	r1, r1, r0
+  41              		.loc 1 5 11 view .LVU4
+  42 0006 014B     		ldr	r3, .L2
+  43 0008 9960     		str	r1, [r3, #8]
+   6:Lib/src/bank.c **** }
+  44              		.loc 1 6 1 view .LVU5
+  45 000a 7047     		bx	lr
+  46              	.L3:
+  47              		.align	2
+  48              	.L2:
+  49 000c 00ED00E0 		.word	-536810240
+  50              		.cfi_endproc
+  51              	.LFE126:
+  53              		.section	.text.MY_NVIC_PriorityGroupConfig,"ax",%progbits
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s 			page 2
+
+
+  54              		.align	1
+  55              		.global	MY_NVIC_PriorityGroupConfig
+  56              		.syntax unified
+  57              		.thumb
+  58              		.thumb_func
+  60              	MY_NVIC_PriorityGroupConfig:
+  61              	.LVL2:
+  62              	.LFB127:
+   7:Lib/src/bank.c **** 		   
+   8:Lib/src/bank.c **** void MY_NVIC_PriorityGroupConfig(u8 NVIC_Group)	 
+   9:Lib/src/bank.c **** { 
+  63              		.loc 1 9 1 is_stmt 1 view -0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              		@ link register save eliminated.
+  10:Lib/src/bank.c **** 	u32 temp,temp1;	  
+  68              		.loc 1 10 2 view .LVU7
+  11:Lib/src/bank.c **** 	temp1=(~NVIC_Group)&0x07;
+  69              		.loc 1 11 2 view .LVU8
+  70              		.loc 1 11 9 is_stmt 0 view .LVU9
+  71 0000 C343     		mvns	r3, r0
+  72              	.LVL3:
+  12:Lib/src/bank.c **** 	temp1<<=8;
+  73              		.loc 1 12 2 is_stmt 1 view .LVU10
+  74              		.loc 1 12 7 is_stmt 0 view .LVU11
+  75 0002 1B02     		lsls	r3, r3, #8
+  76              	.LVL4:
+  77              		.loc 1 12 7 view .LVU12
+  78 0004 03F4E063 		and	r3, r3, #1792
+  79              	.LVL5:
+  13:Lib/src/bank.c **** 	temp=SCB->AIRCR;  
+  80              		.loc 1 13 2 is_stmt 1 view .LVU13
+  81              		.loc 1 13 6 is_stmt 0 view .LVU14
+  82 0008 0649     		ldr	r1, .L5
+  83 000a CA68     		ldr	r2, [r1, #12]
+  84              	.LVL6:
+  14:Lib/src/bank.c **** 	temp&=0X0000F8FF; 
+  85              		.loc 1 14 2 is_stmt 1 view .LVU15
+  86              		.loc 1 14 6 is_stmt 0 view .LVU16
+  87 000c 22F4E062 		bic	r2, r2, #1792
+  88              	.LVL7:
+  89              		.loc 1 14 6 view .LVU17
+  90 0010 1204     		lsls	r2, r2, #16
+  91 0012 120C     		lsrs	r2, r2, #16
+  92              	.LVL8:
+  15:Lib/src/bank.c **** 	temp|=0X05FA0000; 
+  93              		.loc 1 15 2 is_stmt 1 view .LVU18
+  94              		.loc 1 15 6 is_stmt 0 view .LVU19
+  95 0014 42F0BF62 		orr	r2, r2, #100139008
+  96              	.LVL9:
+  97              		.loc 1 15 6 view .LVU20
+  98 0018 42F40032 		orr	r2, r2, #131072
+  99              	.LVL10:
+  16:Lib/src/bank.c **** 	temp|=temp1;	   
+ 100              		.loc 1 16 2 is_stmt 1 view .LVU21
+ 101              		.loc 1 16 6 is_stmt 0 view .LVU22
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s 			page 3
+
+
+ 102 001c 1343     		orrs	r3, r3, r2
+ 103              	.LVL11:
+  17:Lib/src/bank.c **** 	SCB->AIRCR=temp; 	    	  				   
+ 104              		.loc 1 17 2 is_stmt 1 view .LVU23
+ 105              		.loc 1 17 12 is_stmt 0 view .LVU24
+ 106 001e CB60     		str	r3, [r1, #12]
+  18:Lib/src/bank.c **** }
+ 107              		.loc 1 18 1 view .LVU25
+ 108 0020 7047     		bx	lr
+ 109              	.L6:
+ 110 0022 00BF     		.align	2
+ 111              	.L5:
+ 112 0024 00ED00E0 		.word	-536810240
+ 113              		.cfi_endproc
+ 114              	.LFE127:
+ 116              		.section	.text.GPIO_Set,"ax",%progbits
+ 117              		.align	1
+ 118              		.global	GPIO_Set
+ 119              		.syntax unified
+ 120              		.thumb
+ 121              		.thumb_func
+ 123              	GPIO_Set:
+ 124              	.LVL12:
+ 125              	.LFB128:
+  19:Lib/src/bank.c **** 
+  20:Lib/src/bank.c **** void GPIO_Set(GPIO_TypeDef* GPIOx,u32 BITx,u32 MODE,u32 OTYPE,u32 OSPEED,u32 PUPD)
+  21:Lib/src/bank.c **** {
+ 126              		.loc 1 21 1 is_stmt 1 view -0
+ 127              		.cfi_startproc
+ 128              		@ args = 8, pretend = 0, frame = 0
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130              		.loc 1 21 1 is_stmt 0 view .LVU27
+ 131 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 132              	.LCFI0:
+ 133              		.cfi_def_cfa_offset 28
+ 134              		.cfi_offset 4, -28
+ 135              		.cfi_offset 5, -24
+ 136              		.cfi_offset 6, -20
+ 137              		.cfi_offset 7, -16
+ 138              		.cfi_offset 8, -12
+ 139              		.cfi_offset 9, -8
+ 140              		.cfi_offset 14, -4
+ 141 0004 079F     		ldr	r7, [sp, #28]
+ 142 0006 089E     		ldr	r6, [sp, #32]
+  22:Lib/src/bank.c ****     u32 pinpos=0,pos=0,curpin=0;
+ 143              		.loc 1 22 5 is_stmt 1 view .LVU28
+ 144              	.LVL13:
+  23:Lib/src/bank.c **** 	for(pinpos=0;pinpos<16;pinpos++)
+ 145              		.loc 1 23 2 view .LVU29
+ 146              		.loc 1 23 12 is_stmt 0 view .LVU30
+ 147 0008 4FF0000C 		mov	ip, #0
+ 148              		.loc 1 23 2 view .LVU31
+ 149 000c 01E0     		b	.L8
+ 150              	.LVL14:
+ 151              	.L9:
+ 152              		.loc 1 23 31 is_stmt 1 discriminator 2 view .LVU32
+ 153 000e 0CF1010C 		add	ip, ip, #1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s 			page 4
+
+
+ 154              	.LVL15:
+ 155              	.L8:
+ 156              		.loc 1 23 21 discriminator 1 view .LVU33
+ 157 0012 BCF10F0F 		cmp	ip, #15
+ 158 0016 38D8     		bhi	.L12
+  24:Lib/src/bank.c **** 	{
+  25:Lib/src/bank.c **** 		pos=1<<pinpos;	
+ 159              		.loc 1 25 3 view .LVU34
+ 160              		.loc 1 25 8 is_stmt 0 view .LVU35
+ 161 0018 4FF0010E 		mov	lr, #1
+ 162 001c 0EFA0CFE 		lsl	lr, lr, ip
+ 163              	.LVL16:
+  26:Lib/src/bank.c **** 		curpin=BITx&pos;
+ 164              		.loc 1 26 3 is_stmt 1 view .LVU36
+  27:Lib/src/bank.c **** 		if(curpin==pos)	
+ 165              		.loc 1 27 3 view .LVU37
+ 166              		.loc 1 27 5 is_stmt 0 view .LVU38
+ 167 0020 3EEA0104 		bics	r4, lr, r1
+ 168 0024 F3D1     		bne	.L9
+  28:Lib/src/bank.c **** 		{
+  29:Lib/src/bank.c **** 			GPIOx->MODER&=~(3<<(pinpos*2));	
+ 169              		.loc 1 29 4 is_stmt 1 view .LVU39
+ 170              		.loc 1 29 9 is_stmt 0 view .LVU40
+ 171 0026 D0F80090 		ldr	r9, [r0]
+ 172              		.loc 1 29 30 view .LVU41
+ 173 002a 4FEA4C05 		lsl	r5, ip, #1
+ 174              		.loc 1 29 21 view .LVU42
+ 175 002e 0324     		movs	r4, #3
+ 176 0030 AC40     		lsls	r4, r4, r5
+ 177              		.loc 1 29 18 view .LVU43
+ 178 0032 6FEA0408 		mvn	r8, r4
+ 179              		.loc 1 29 16 view .LVU44
+ 180 0036 29EA0404 		bic	r4, r9, r4
+ 181 003a 0460     		str	r4, [r0]
+  30:Lib/src/bank.c **** 			GPIOx->MODER|=MODE<<(pinpos*2);	
+ 182              		.loc 1 30 4 is_stmt 1 view .LVU45
+ 183              		.loc 1 30 9 is_stmt 0 view .LVU46
+ 184 003c 0468     		ldr	r4, [r0]
+ 185              		.loc 1 30 22 view .LVU47
+ 186 003e 02FA05F9 		lsl	r9, r2, r5
+ 187              		.loc 1 30 16 view .LVU48
+ 188 0042 44EA0904 		orr	r4, r4, r9
+ 189 0046 0460     		str	r4, [r0]
+  31:Lib/src/bank.c **** 			if((MODE==0X01)||(MODE==0X02))	
+ 190              		.loc 1 31 4 is_stmt 1 view .LVU49
+ 191              		.loc 1 31 19 is_stmt 0 view .LVU50
+ 192 0048 541E     		subs	r4, r2, #1
+ 193              		.loc 1 31 6 view .LVU51
+ 194 004a 012C     		cmp	r4, #1
+ 195 004c DFD8     		bhi	.L9
+  32:Lib/src/bank.c **** 			{  
+  33:Lib/src/bank.c **** 				GPIOx->OSPEEDR&=~(3<<(pinpos*2));	
+ 196              		.loc 1 33 5 is_stmt 1 view .LVU52
+ 197              		.loc 1 33 10 is_stmt 0 view .LVU53
+ 198 004e 8468     		ldr	r4, [r0, #8]
+ 199              		.loc 1 33 19 view .LVU54
+ 200 0050 08EA0404 		and	r4, r8, r4
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s 			page 5
+
+
+ 201 0054 8460     		str	r4, [r0, #8]
+  34:Lib/src/bank.c **** 				GPIOx->OSPEEDR|=(OSPEED<<(pinpos*2)); 
+ 202              		.loc 1 34 5 is_stmt 1 view .LVU55
+ 203              		.loc 1 34 10 is_stmt 0 view .LVU56
+ 204 0056 8468     		ldr	r4, [r0, #8]
+ 205              		.loc 1 34 28 view .LVU57
+ 206 0058 07FA05F9 		lsl	r9, r7, r5
+ 207              		.loc 1 34 19 view .LVU58
+ 208 005c 44EA0904 		orr	r4, r4, r9
+ 209 0060 8460     		str	r4, [r0, #8]
+  35:Lib/src/bank.c **** 				GPIOx->OTYPER&=~(1<<pinpos) ;		
+ 210              		.loc 1 35 5 is_stmt 1 view .LVU59
+ 211              		.loc 1 35 10 is_stmt 0 view .LVU60
+ 212 0062 4468     		ldr	r4, [r0, #4]
+ 213              		.loc 1 35 18 view .LVU61
+ 214 0064 24EA0E04 		bic	r4, r4, lr
+ 215 0068 4460     		str	r4, [r0, #4]
+  36:Lib/src/bank.c **** 				GPIOx->OTYPER|=OTYPE<<pinpos;		
+ 216              		.loc 1 36 5 is_stmt 1 view .LVU62
+ 217              		.loc 1 36 10 is_stmt 0 view .LVU63
+ 218 006a 4468     		ldr	r4, [r0, #4]
+ 219              		.loc 1 36 25 view .LVU64
+ 220 006c 03FA0CFE 		lsl	lr, r3, ip
+ 221              	.LVL17:
+ 222              		.loc 1 36 18 view .LVU65
+ 223 0070 44EA0E04 		orr	r4, r4, lr
+ 224 0074 4460     		str	r4, [r0, #4]
+  37:Lib/src/bank.c ****                 GPIOx->PUPDR&=~(3<<(pinpos*2));	
+ 225              		.loc 1 37 17 is_stmt 1 view .LVU66
+ 226              		.loc 1 37 22 is_stmt 0 view .LVU67
+ 227 0076 C468     		ldr	r4, [r0, #12]
+ 228              		.loc 1 37 29 view .LVU68
+ 229 0078 08EA0404 		and	r4, r8, r4
+ 230 007c C460     		str	r4, [r0, #12]
+  38:Lib/src/bank.c ****                 GPIOx->PUPDR|=PUPD<<(pinpos*2);	
+ 231              		.loc 1 38 17 is_stmt 1 view .LVU69
+ 232              		.loc 1 38 22 is_stmt 0 view .LVU70
+ 233 007e C468     		ldr	r4, [r0, #12]
+ 234              		.loc 1 38 35 view .LVU71
+ 235 0080 06FA05F5 		lsl	r5, r6, r5
+ 236              		.loc 1 38 29 view .LVU72
+ 237 0084 2C43     		orrs	r4, r4, r5
+ 238 0086 C460     		str	r4, [r0, #12]
+ 239 0088 C1E7     		b	.L9
+ 240              	.LVL18:
+ 241              	.L12:
+  39:Lib/src/bank.c **** 		    }
+  40:Lib/src/bank.c **** 	    }
+  41:Lib/src/bank.c ****     }
+  42:Lib/src/bank.c **** }
+ 242              		.loc 1 42 1 view .LVU73
+ 243 008a BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 244              		.loc 1 42 1 view .LVU74
+ 245              		.cfi_endproc
+ 246              	.LFE128:
+ 248              		.section	.text.GPIO_AF_Set,"ax",%progbits
+ 249              		.align	1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s 			page 6
+
+
+ 250              		.global	GPIO_AF_Set
+ 251              		.syntax unified
+ 252              		.thumb
+ 253              		.thumb_func
+ 255              	GPIO_AF_Set:
+ 256              	.LVL19:
+ 257              	.LFB129:
+  43:Lib/src/bank.c **** 
+  44:Lib/src/bank.c **** 
+  45:Lib/src/bank.c **** void GPIO_AF_Set(GPIO_TypeDef* GPIOx,u8 BITx,u8 AFx)
+  46:Lib/src/bank.c **** {  
+ 258              		.loc 1 46 1 is_stmt 1 view -0
+ 259              		.cfi_startproc
+ 260              		@ args = 0, pretend = 0, frame = 0
+ 261              		@ frame_needed = 0, uses_anonymous_args = 0
+ 262              		@ link register save eliminated.
+ 263              		.loc 1 46 1 is_stmt 0 view .LVU76
+ 264 0000 10B4     		push	{r4}
+ 265              	.LCFI1:
+ 266              		.cfi_def_cfa_offset 4
+ 267              		.cfi_offset 4, -4
+  47:Lib/src/bank.c **** 	GPIOx->AFR[BITx>>3]&=~(0X0F<<((BITx&0X07)*4));
+ 268              		.loc 1 47 2 is_stmt 1 view .LVU77
+ 269              		.loc 1 47 12 is_stmt 0 view .LVU78
+ 270 0002 CB08     		lsrs	r3, r1, #3
+ 271 0004 0833     		adds	r3, r3, #8
+ 272 0006 50F82340 		ldr	r4, [r0, r3, lsl #2]
+ 273              		.loc 1 47 37 view .LVU79
+ 274 000a 01F00701 		and	r1, r1, #7
+ 275              	.LVL20:
+ 276              		.loc 1 47 43 view .LVU80
+ 277 000e 8900     		lsls	r1, r1, #2
+ 278              		.loc 1 47 29 view .LVU81
+ 279 0010 4FF00F0C 		mov	ip, #15
+ 280 0014 0CFA01FC 		lsl	ip, ip, r1
+ 281              		.loc 1 47 21 view .LVU82
+ 282 0018 24EA0C04 		bic	r4, r4, ip
+ 283 001c 40F82340 		str	r4, [r0, r3, lsl #2]
+  48:Lib/src/bank.c **** 	GPIOx->AFR[BITx>>3]|=(u32)AFx<<((BITx&0X07)*4);
+ 284              		.loc 1 48 2 is_stmt 1 view .LVU83
+ 285              		.loc 1 48 12 is_stmt 0 view .LVU84
+ 286 0020 50F82340 		ldr	r4, [r0, r3, lsl #2]
+ 287              		.loc 1 48 31 view .LVU85
+ 288 0024 8A40     		lsls	r2, r2, r1
+ 289              	.LVL21:
+ 290              		.loc 1 48 21 view .LVU86
+ 291 0026 1443     		orrs	r4, r4, r2
+ 292 0028 40F82340 		str	r4, [r0, r3, lsl #2]
+  49:Lib/src/bank.c **** }  
+ 293              		.loc 1 49 1 view .LVU87
+ 294 002c 5DF8044B 		ldr	r4, [sp], #4
+ 295              	.LCFI2:
+ 296              		.cfi_restore 4
+ 297              		.cfi_def_cfa_offset 0
+ 298 0030 7047     		bx	lr
+ 299              		.cfi_endproc
+ 300              	.LFE129:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s 			page 7
+
+
+ 302              		.section	.text.MY_NVIC_Init,"ax",%progbits
+ 303              		.align	1
+ 304              		.global	MY_NVIC_Init
+ 305              		.syntax unified
+ 306              		.thumb
+ 307              		.thumb_func
+ 309              	MY_NVIC_Init:
+ 310              	.LVL22:
+ 311              	.LFB130:
+  50:Lib/src/bank.c **** 
+  51:Lib/src/bank.c **** 
+  52:Lib/src/bank.c **** void MY_NVIC_Init(u8 NVIC_PreemptionPriority,u8 NVIC_SubPriority,u8 NVIC_Channel,u8 NVIC_Group)	 
+  53:Lib/src/bank.c **** { 
+ 312              		.loc 1 53 1 is_stmt 1 view -0
+ 313              		.cfi_startproc
+ 314              		@ args = 0, pretend = 0, frame = 0
+ 315              		@ frame_needed = 0, uses_anonymous_args = 0
+ 316              		.loc 1 53 1 is_stmt 0 view .LVU89
+ 317 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 318              	.LCFI3:
+ 319              		.cfi_def_cfa_offset 24
+ 320              		.cfi_offset 3, -24
+ 321              		.cfi_offset 4, -20
+ 322              		.cfi_offset 5, -16
+ 323              		.cfi_offset 6, -12
+ 324              		.cfi_offset 7, -8
+ 325              		.cfi_offset 14, -4
+ 326 0002 0746     		mov	r7, r0
+ 327 0004 0C46     		mov	r4, r1
+ 328 0006 1646     		mov	r6, r2
+ 329 0008 1D46     		mov	r5, r3
+  54:Lib/src/bank.c **** 	u32 temp;	  
+ 330              		.loc 1 54 2 is_stmt 1 view .LVU90
+  55:Lib/src/bank.c **** 	MY_NVIC_PriorityGroupConfig(NVIC_Group);
+ 331              		.loc 1 55 2 view .LVU91
+ 332 000a 1846     		mov	r0, r3
+ 333              	.LVL23:
+ 334              		.loc 1 55 2 is_stmt 0 view .LVU92
+ 335 000c FFF7FEFF 		bl	MY_NVIC_PriorityGroupConfig
+ 336              	.LVL24:
+  56:Lib/src/bank.c **** 	temp=NVIC_PreemptionPriority<<(4-NVIC_Group);	  
+ 337              		.loc 1 56 2 is_stmt 1 view .LVU93
+ 338              		.loc 1 56 34 is_stmt 0 view .LVU94
+ 339 0010 C5F10403 		rsb	r3, r5, #4
+ 340              		.loc 1 56 30 view .LVU95
+ 341 0014 07FA03F1 		lsl	r1, r7, r3
+ 342              	.LVL25:
+  57:Lib/src/bank.c **** 	temp|=NVIC_SubPriority&(0x0f>>NVIC_Group);
+ 343              		.loc 1 57 2 is_stmt 1 view .LVU96
+ 344              		.loc 1 57 30 is_stmt 0 view .LVU97
+ 345 0018 0F23     		movs	r3, #15
+ 346 001a 2B41     		asrs	r3, r3, r5
+ 347              		.loc 1 57 24 view .LVU98
+ 348 001c 04EA0305 		and	r5, r4, r3
+ 349              	.LVL26:
+  58:Lib/src/bank.c **** 	temp&=0xf;								
+ 350              		.loc 1 58 2 is_stmt 1 view .LVU99
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s 			page 8
+
+
+  59:Lib/src/bank.c **** 	NVIC->ISER[NVIC_Channel/32]|=1<<NVIC_Channel%32;
+ 351              		.loc 1 59 2 view .LVU100
+ 352              		.loc 1 59 12 is_stmt 0 view .LVU101
+ 353 0020 7009     		lsrs	r0, r6, #5
+ 354 0022 0A4C     		ldr	r4, .L17
+ 355              	.LVL27:
+ 356              		.loc 1 59 12 view .LVU102
+ 357 0024 54F82030 		ldr	r3, [r4, r0, lsl #2]
+ 358              		.loc 1 59 46 view .LVU103
+ 359 0028 06F01F07 		and	r7, r6, #31
+ 360              	.LVL28:
+ 361              		.loc 1 59 32 view .LVU104
+ 362 002c 0122     		movs	r2, #1
+ 363 002e BA40     		lsls	r2, r2, r7
+ 364              		.loc 1 59 29 view .LVU105
+ 365 0030 1343     		orrs	r3, r3, r2
+ 366 0032 44F82030 		str	r3, [r4, r0, lsl #2]
+  60:Lib/src/bank.c **** 	NVIC->IP[NVIC_Channel]|=temp<<4;					    	  				   
+ 367              		.loc 1 60 2 is_stmt 1 view .LVU106
+ 368              		.loc 1 60 10 is_stmt 0 view .LVU107
+ 369 0036 3444     		add	r4, r4, r6
+ 370 0038 94F80033 		ldrb	r3, [r4, #768]	@ zero_extendqisi2
+ 371              		.loc 1 60 30 view .LVU108
+ 372 003c 2943     		orrs	r1, r1, r5
+ 373              	.LVL29:
+ 374              		.loc 1 60 30 view .LVU109
+ 375 003e 01F00F01 		and	r1, r1, #15
+ 376              	.LVL30:
+ 377              		.loc 1 60 24 view .LVU110
+ 378 0042 43EA0113 		orr	r3, r3, r1, lsl #4
+ 379 0046 84F80033 		strb	r3, [r4, #768]
+  61:Lib/src/bank.c **** }...
+ 380              		.loc 1 61 1 view .LVU111
+ 381 004a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 382              	.LVL31:
+ 383              	.L18:
+ 384              		.loc 1 61 1 view .LVU112
+ 385              		.align	2
+ 386              	.L17:
+ 387 004c 00E100E0 		.word	-536813312
+ 388              		.cfi_endproc
+ 389              	.LFE130:
+ 391              		.text
+ 392              	.Letext0:
+ 393              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 394              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 395              		.file 4 "libraries/CMSIS/include/core_cm4.h"
+ 396              		.file 5 "libraries/CMSIS/Device/ST/STM32F4xx/include/stm32f4xx.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bank.c
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:21     .text.MY_NVIC_SetVectorTable:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:27     .text.MY_NVIC_SetVectorTable:00000000 MY_NVIC_SetVectorTable
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:49     .text.MY_NVIC_SetVectorTable:0000000c $d
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:54     .text.MY_NVIC_PriorityGroupConfig:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:60     .text.MY_NVIC_PriorityGroupConfig:00000000 MY_NVIC_PriorityGroupConfig
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:112    .text.MY_NVIC_PriorityGroupConfig:00000024 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:117    .text.GPIO_Set:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:123    .text.GPIO_Set:00000000 GPIO_Set
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:249    .text.GPIO_AF_Set:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:255    .text.GPIO_AF_Set:00000000 GPIO_AF_Set
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:303    .text.MY_NVIC_Init:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:309    .text.MY_NVIC_Init:00000000 MY_NVIC_Init
+C:\Users\ktkuru\AppData\Local\Temp\ccbkaist.s:387    .text.MY_NVIC_Init:0000004c $d
+
+NO UNDEFINED SYMBOLS

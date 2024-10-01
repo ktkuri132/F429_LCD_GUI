@@ -1,0 +1,817 @@
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"sdram.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "HADRWARE/SDRAM/sdram.c"
+  20              		.section	.text.SDRAM_Send_Cmd,"ax",%progbits
+  21              		.align	1
+  22              		.global	SDRAM_Send_Cmd
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	SDRAM_Send_Cmd:
+  28              	.LVL0:
+  29              	.LFB126:
+   1:HADRWARE/SDRAM/sdram.c **** #include "sdram.h"
+   2:HADRWARE/SDRAM/sdram.c **** #include "delay.h"
+   3:HADRWARE/SDRAM/sdram.c **** //////////////////////////////////////////////////////////////////////////////////	 
+   4:HADRWARE/SDRAM/sdram.c **** 
+   5:HADRWARE/SDRAM/sdram.c **** //向SDRAM发送命令
+   6:HADRWARE/SDRAM/sdram.c **** //bankx:0,向BANK5上面的SDRAM发送指令
+   7:HADRWARE/SDRAM/sdram.c **** //      1,向BANK6上面的SDRAM发送指令
+   8:HADRWARE/SDRAM/sdram.c **** //cmd:指令(0,正常模式/1,时钟配置使能/2,预充电所有存储区/3,自动刷新/4,加载
+   9:HADRWARE/SDRAM/sdram.c **** //refresh:自刷新次数(cmd=3时有效)
+  10:HADRWARE/SDRAM/sdram.c **** //regval:模式寄存器的定义
+  11:HADRWARE/SDRAM/sdram.c **** //返回值:0,正常;1,失败.
+  12:HADRWARE/SDRAM/sdram.c **** u8 SDRAM_Send_Cmd(u8 bankx,u8 cmd,u8 refresh,u16 regval)
+  13:HADRWARE/SDRAM/sdram.c **** {
+  30              		.loc 1 13 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  14:HADRWARE/SDRAM/sdram.c **** 	u32 retry=0;
+  35              		.loc 1 14 2 view .LVU1
+  15:HADRWARE/SDRAM/sdram.c **** 	u32 tempreg=0; 
+  36              		.loc 1 15 2 view .LVU2
+  16:HADRWARE/SDRAM/sdram.c **** 	tempreg|=cmd<<0;			//设置指令
+  37              		.loc 1 16 2 view .LVU3
+  17:HADRWARE/SDRAM/sdram.c **** 	tempreg|=1<<(4-bankx);		//设置发送指令到bank5还是6
+  38              		.loc 1 17 2 view .LVU4
+  39              		.loc 1 17 16 is_stmt 0 view .LVU5
+  40 0000 C0F1040C 		rsb	ip, r0, #4
+  41              		.loc 1 17 12 view .LVU6
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 2
+
+
+  42 0004 0120     		movs	r0, #1
+  43              	.LVL1:
+  44              		.loc 1 17 12 view .LVU7
+  45 0006 00FA0CF0 		lsl	r0, r0, ip
+  46              		.loc 1 17 9 view .LVU8
+  47 000a 0143     		orrs	r1, r1, r0
+  48              	.LVL2:
+  18:HADRWARE/SDRAM/sdram.c **** 	tempreg|=refresh<<5;		//设置自刷新次数
+  49              		.loc 1 18 2 is_stmt 1 view .LVU9
+  50              		.loc 1 18 9 is_stmt 0 view .LVU10
+  51 000c 41EA4211 		orr	r1, r1, r2, lsl #5
+  52              	.LVL3:
+  19:HADRWARE/SDRAM/sdram.c **** 	tempreg|=regval<<9;			//设置模式寄存器的值
+  53              		.loc 1 19 2 is_stmt 1 view .LVU11
+  54              		.loc 1 19 9 is_stmt 0 view .LVU12
+  55 0010 41EA4321 		orr	r1, r1, r3, lsl #9
+  56              	.LVL4:
+  20:HADRWARE/SDRAM/sdram.c **** 	FMC_Bank5_6->SDCMR=tempreg;	//配置寄存器
+  57              		.loc 1 20 2 is_stmt 1 view .LVU13
+  58              		.loc 1 20 20 is_stmt 0 view .LVU14
+  59 0014 074B     		ldr	r3, .L7
+  60              	.LVL5:
+  61              		.loc 1 20 20 view .LVU15
+  62 0016 1965     		str	r1, [r3, #80]
+  21:HADRWARE/SDRAM/sdram.c **** 	while((FMC_Bank5_6->SDSR&(1<<5)))//等待指令发送完成 
+  63              		.loc 1 21 2 is_stmt 1 view .LVU16
+  14:HADRWARE/SDRAM/sdram.c **** 	u32 tempreg=0; 
+  64              		.loc 1 14 6 is_stmt 0 view .LVU17
+  65 0018 0023     		movs	r3, #0
+  66              	.LVL6:
+  67              	.L2:
+  68              		.loc 1 21 8 is_stmt 1 view .LVU18
+  69              		.loc 1 21 20 is_stmt 0 view .LVU19
+  70 001a 064A     		ldr	r2, .L7
+  71 001c 926D     		ldr	r2, [r2, #88]
+  72              		.loc 1 21 8 view .LVU20
+  73 001e 12F0200F 		tst	r2, #32
+  74 0022 05D0     		beq	.L6
+  22:HADRWARE/SDRAM/sdram.c **** 	{
+  23:HADRWARE/SDRAM/sdram.c **** 		retry++;
+  75              		.loc 1 23 3 is_stmt 1 view .LVU21
+  76              		.loc 1 23 8 is_stmt 0 view .LVU22
+  77 0024 0133     		adds	r3, r3, #1
+  78              	.LVL7:
+  24:HADRWARE/SDRAM/sdram.c **** 		if(retry>0X1FFFFF)return 1; 
+  79              		.loc 1 24 3 is_stmt 1 view .LVU23
+  80              		.loc 1 24 5 is_stmt 0 view .LVU24
+  81 0026 B3F5001F 		cmp	r3, #2097152
+  82 002a F6D3     		bcc	.L2
+  83              		.loc 1 24 28 discriminator 1 view .LVU25
+  84 002c 0120     		movs	r0, #1
+  25:HADRWARE/SDRAM/sdram.c **** 	}
+  26:HADRWARE/SDRAM/sdram.c **** 	return 0;	
+  27:HADRWARE/SDRAM/sdram.c **** } 
+  85              		.loc 1 27 1 view .LVU26
+  86 002e 7047     		bx	lr
+  87              	.L6:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 3
+
+
+  26:HADRWARE/SDRAM/sdram.c **** } 
+  88              		.loc 1 26 9 view .LVU27
+  89 0030 0020     		movs	r0, #0
+  90 0032 7047     		bx	lr
+  91              	.L8:
+  92              		.align	2
+  93              	.L7:
+  94 0034 000100A0 		.word	-1610612480
+  95              		.cfi_endproc
+  96              	.LFE126:
+  98              		.section	.text.SDRAM_Init,"ax",%progbits
+  99              		.align	1
+ 100              		.global	SDRAM_Init
+ 101              		.syntax unified
+ 102              		.thumb
+ 103              		.thumb_func
+ 105              	SDRAM_Init:
+ 106              	.LFB127:
+  28:HADRWARE/SDRAM/sdram.c **** 
+  29:HADRWARE/SDRAM/sdram.c **** //SDRAM初始化
+  30:HADRWARE/SDRAM/sdram.c **** void SDRAM_Init(void)
+  31:HADRWARE/SDRAM/sdram.c **** { 
+ 107              		.loc 1 31 1 is_stmt 1 view -0
+ 108              		.cfi_startproc
+ 109              		@ args = 0, pretend = 0, frame = 0
+ 110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 112              	.LCFI0:
+ 113              		.cfi_def_cfa_offset 32
+ 114              		.cfi_offset 4, -32
+ 115              		.cfi_offset 5, -28
+ 116              		.cfi_offset 6, -24
+ 117              		.cfi_offset 7, -20
+ 118              		.cfi_offset 8, -16
+ 119              		.cfi_offset 9, -12
+ 120              		.cfi_offset 10, -8
+ 121              		.cfi_offset 14, -4
+ 122 0004 82B0     		sub	sp, sp, #8
+ 123              	.LCFI1:
+ 124              		.cfi_def_cfa_offset 40
+  32:HADRWARE/SDRAM/sdram.c **** 	u32 sdctrlreg=0,sdtimereg=0;
+ 125              		.loc 1 32 2 view .LVU29
+ 126              	.LVL8:
+  33:HADRWARE/SDRAM/sdram.c **** 	u16 mregval=0;
+ 127              		.loc 1 33 2 view .LVU30
+  34:HADRWARE/SDRAM/sdram.c **** 	
+  35:HADRWARE/SDRAM/sdram.c **** 	RCC->AHB3ENR|=1<<0;     	//使能FMC时钟  
+ 128              		.loc 1 35 2 view .LVU31
+ 129              		.loc 1 35 5 is_stmt 0 view .LVU32
+ 130 0006 954B     		ldr	r3, .L11
+ 131 0008 9A6B     		ldr	r2, [r3, #56]
+ 132              		.loc 1 35 14 view .LVU33
+ 133 000a 42F00102 		orr	r2, r2, #1
+ 134 000e 9A63     		str	r2, [r3, #56]
+  36:HADRWARE/SDRAM/sdram.c **** 	RCC->AHB1ENR|=0X1F<<2;		//使能PC/PD/PE/PF/PG时钟  
+ 135              		.loc 1 36 2 is_stmt 1 view .LVU34
+ 136              		.loc 1 36 5 is_stmt 0 view .LVU35
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 4
+
+
+ 137 0010 1A6B     		ldr	r2, [r3, #48]
+ 138              		.loc 1 36 14 view .LVU36
+ 139 0012 42F07C02 		orr	r2, r2, #124
+ 140 0016 1A63     		str	r2, [r3, #48]
+  37:HADRWARE/SDRAM/sdram.c **** 	
+  38:HADRWARE/SDRAM/sdram.c **** 	GPIO_Set(GPIOC,PIN0|PIN2|PIN3,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU);			//PC0/2/
+ 141              		.loc 1 38 2 is_stmt 1 view .LVU37
+ 142 0018 DFF854A2 		ldr	r10, .L11+20
+ 143 001c 0126     		movs	r6, #1
+ 144 001e 0196     		str	r6, [sp, #4]
+ 145 0020 0327     		movs	r7, #3
+ 146 0022 0097     		str	r7, [sp]
+ 147 0024 0023     		movs	r3, #0
+ 148 0026 0222     		movs	r2, #2
+ 149 0028 0D21     		movs	r1, #13
+ 150 002a 5046     		mov	r0, r10
+ 151 002c FFF7FEFF 		bl	GPIO_Set
+ 152              	.LVL9:
+  39:HADRWARE/SDRAM/sdram.c **** 	GPIO_Set(GPIOD,3<<0|7<<8|3<<14,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU);		//PD0/1/
+ 153              		.loc 1 39 2 view .LVU38
+ 154 0030 DFF84092 		ldr	r9, .L11+24
+ 155 0034 0196     		str	r6, [sp, #4]
+ 156 0036 0097     		str	r7, [sp]
+ 157 0038 0023     		movs	r3, #0
+ 158 003a 0222     		movs	r2, #2
+ 159 003c 4CF20371 		movw	r1, #50947
+ 160 0040 4846     		mov	r0, r9
+ 161 0042 FFF7FEFF 		bl	GPIO_Set
+ 162              	.LVL10:
+  40:HADRWARE/SDRAM/sdram.c **** 	GPIO_Set(GPIOE,3<<0|0X1FF<<7,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU);			//PE0/1/7
+ 163              		.loc 1 40 2 view .LVU39
+ 164 0046 864D     		ldr	r5, .L11+4
+ 165 0048 0196     		str	r6, [sp, #4]
+ 166 004a 0097     		str	r7, [sp]
+ 167 004c 0023     		movs	r3, #0
+ 168 004e 0222     		movs	r2, #2
+ 169 0050 4FF68371 		movw	r1, #65411
+ 170 0054 2846     		mov	r0, r5
+ 171 0056 FFF7FEFF 		bl	GPIO_Set
+ 172              	.LVL11:
+  41:HADRWARE/SDRAM/sdram.c **** 	GPIO_Set(GPIOF,0X3F<<0|0X1F<<11,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU);		//PG0~5
+ 173              		.loc 1 41 2 view .LVU40
+ 174 005a 824C     		ldr	r4, .L11+8
+ 175 005c 0196     		str	r6, [sp, #4]
+ 176 005e 0097     		str	r7, [sp]
+ 177 0060 0023     		movs	r3, #0
+ 178 0062 0222     		movs	r2, #2
+ 179 0064 4FF63F01 		movw	r1, #63551
+ 180 0068 2046     		mov	r0, r4
+ 181 006a FFF7FEFF 		bl	GPIO_Set
+ 182              	.LVL12:
+  42:HADRWARE/SDRAM/sdram.c **** 	GPIO_Set(GPIOG,7<<0|3<<4|PIN8|PIN15,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU);	//PF
+ 183              		.loc 1 42 2 view .LVU41
+ 184 006e DFF80882 		ldr	r8, .L11+28
+ 185 0072 0196     		str	r6, [sp, #4]
+ 186 0074 0097     		str	r7, [sp]
+ 187 0076 0023     		movs	r3, #0
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 5
+
+
+ 188 0078 0222     		movs	r2, #2
+ 189 007a 48F23711 		movw	r1, #33079
+ 190 007e 4046     		mov	r0, r8
+ 191 0080 FFF7FEFF 		bl	GPIO_Set
+ 192              	.LVL13:
+  43:HADRWARE/SDRAM/sdram.c ****  
+  44:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOC,0,12);	//PC0,AF12
+ 193              		.loc 1 44 3 view .LVU42
+ 194 0084 0C22     		movs	r2, #12
+ 195 0086 0021     		movs	r1, #0
+ 196 0088 5046     		mov	r0, r10
+ 197 008a FFF7FEFF 		bl	GPIO_AF_Set
+ 198              	.LVL14:
+  45:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOC,2,12);	//PC2,AF12
+ 199              		.loc 1 45 3 view .LVU43
+ 200 008e 0C22     		movs	r2, #12
+ 201 0090 0221     		movs	r1, #2
+ 202 0092 5046     		mov	r0, r10
+ 203 0094 FFF7FEFF 		bl	GPIO_AF_Set
+ 204              	.LVL15:
+  46:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOC,3,12);	//PC3,AF12
+ 205              		.loc 1 46 3 view .LVU44
+ 206 0098 0C22     		movs	r2, #12
+ 207 009a 3946     		mov	r1, r7
+ 208 009c 5046     		mov	r0, r10
+ 209 009e FFF7FEFF 		bl	GPIO_AF_Set
+ 210              	.LVL16:
+  47:HADRWARE/SDRAM/sdram.c **** 	
+  48:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOD,0,12);	//PD0,AF12 
+ 211              		.loc 1 48 3 view .LVU45
+ 212 00a2 0C22     		movs	r2, #12
+ 213 00a4 0021     		movs	r1, #0
+ 214 00a6 4846     		mov	r0, r9
+ 215 00a8 FFF7FEFF 		bl	GPIO_AF_Set
+ 216              	.LVL17:
+  49:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOD,1,12);	//PD1,AF12 
+ 217              		.loc 1 49 3 view .LVU46
+ 218 00ac 0C22     		movs	r2, #12
+ 219 00ae 3146     		mov	r1, r6
+ 220 00b0 4846     		mov	r0, r9
+ 221 00b2 FFF7FEFF 		bl	GPIO_AF_Set
+ 222              	.LVL18:
+  50:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOD,8,12);	//PD8,AF12
+ 223              		.loc 1 50 3 view .LVU47
+ 224 00b6 0C22     		movs	r2, #12
+ 225 00b8 0821     		movs	r1, #8
+ 226 00ba 4846     		mov	r0, r9
+ 227 00bc FFF7FEFF 		bl	GPIO_AF_Set
+ 228              	.LVL19:
+  51:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOD,9,12);	//PD9,AF12
+ 229              		.loc 1 51 3 view .LVU48
+ 230 00c0 0C22     		movs	r2, #12
+ 231 00c2 0921     		movs	r1, #9
+ 232 00c4 4846     		mov	r0, r9
+ 233 00c6 FFF7FEFF 		bl	GPIO_AF_Set
+ 234              	.LVL20:
+  52:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOD,10,12);	//PD10,AF12  
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 6
+
+
+ 235              		.loc 1 52 3 view .LVU49
+ 236 00ca 0C22     		movs	r2, #12
+ 237 00cc 0A21     		movs	r1, #10
+ 238 00ce 4846     		mov	r0, r9
+ 239 00d0 FFF7FEFF 		bl	GPIO_AF_Set
+ 240              	.LVL21:
+  53:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOD,14,12);	//PD14,AF12
+ 241              		.loc 1 53 3 view .LVU50
+ 242 00d4 0C22     		movs	r2, #12
+ 243 00d6 0E21     		movs	r1, #14
+ 244 00d8 4846     		mov	r0, r9
+ 245 00da FFF7FEFF 		bl	GPIO_AF_Set
+ 246              	.LVL22:
+  54:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOD,15,12);	//PD15,AF12
+ 247              		.loc 1 54 3 view .LVU51
+ 248 00de 0C22     		movs	r2, #12
+ 249 00e0 0F21     		movs	r1, #15
+ 250 00e2 4846     		mov	r0, r9
+ 251 00e4 FFF7FEFF 		bl	GPIO_AF_Set
+ 252              	.LVL23:
+  55:HADRWARE/SDRAM/sdram.c **** 	
+  56:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,0,12);	//PE0,AF12 
+ 253              		.loc 1 56 3 view .LVU52
+ 254 00e8 0C22     		movs	r2, #12
+ 255 00ea 0021     		movs	r1, #0
+ 256 00ec 2846     		mov	r0, r5
+ 257 00ee FFF7FEFF 		bl	GPIO_AF_Set
+ 258              	.LVL24:
+  57:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,1,12);	//PE1,AF12 
+ 259              		.loc 1 57 3 view .LVU53
+ 260 00f2 0C22     		movs	r2, #12
+ 261 00f4 3146     		mov	r1, r6
+ 262 00f6 2846     		mov	r0, r5
+ 263 00f8 FFF7FEFF 		bl	GPIO_AF_Set
+ 264              	.LVL25:
+  58:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,7,12);	//PE7,AF12
+ 265              		.loc 1 58 3 view .LVU54
+ 266 00fc 0C22     		movs	r2, #12
+ 267 00fe 0721     		movs	r1, #7
+ 268 0100 2846     		mov	r0, r5
+ 269 0102 FFF7FEFF 		bl	GPIO_AF_Set
+ 270              	.LVL26:
+  59:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,8,12);	//PE8,AF12
+ 271              		.loc 1 59 3 view .LVU55
+ 272 0106 0C22     		movs	r2, #12
+ 273 0108 0821     		movs	r1, #8
+ 274 010a 2846     		mov	r0, r5
+ 275 010c FFF7FEFF 		bl	GPIO_AF_Set
+ 276              	.LVL27:
+  60:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,9,12);	//PE9,AF12
+ 277              		.loc 1 60 3 view .LVU56
+ 278 0110 0C22     		movs	r2, #12
+ 279 0112 0921     		movs	r1, #9
+ 280 0114 2846     		mov	r0, r5
+ 281 0116 FFF7FEFF 		bl	GPIO_AF_Set
+ 282              	.LVL28:
+  61:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,10,12);	//PE10,AF12
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 7
+
+
+ 283              		.loc 1 61 3 view .LVU57
+ 284 011a 0C22     		movs	r2, #12
+ 285 011c 0A21     		movs	r1, #10
+ 286 011e 2846     		mov	r0, r5
+ 287 0120 FFF7FEFF 		bl	GPIO_AF_Set
+ 288              	.LVL29:
+  62:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,11,12);	//PE11,AF12
+ 289              		.loc 1 62 3 view .LVU58
+ 290 0124 0C22     		movs	r2, #12
+ 291 0126 0B21     		movs	r1, #11
+ 292 0128 2846     		mov	r0, r5
+ 293 012a FFF7FEFF 		bl	GPIO_AF_Set
+ 294              	.LVL30:
+  63:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,12,12);	//PE12,AF12
+ 295              		.loc 1 63 3 view .LVU59
+ 296 012e 0C22     		movs	r2, #12
+ 297 0130 1146     		mov	r1, r2
+ 298 0132 2846     		mov	r0, r5
+ 299 0134 FFF7FEFF 		bl	GPIO_AF_Set
+ 300              	.LVL31:
+  64:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,13,12);	//PE13,AF12
+ 301              		.loc 1 64 3 view .LVU60
+ 302 0138 0C22     		movs	r2, #12
+ 303 013a 0D21     		movs	r1, #13
+ 304 013c 2846     		mov	r0, r5
+ 305 013e FFF7FEFF 		bl	GPIO_AF_Set
+ 306              	.LVL32:
+  65:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,14,12);	//PE14,AF12
+ 307              		.loc 1 65 3 view .LVU61
+ 308 0142 0C22     		movs	r2, #12
+ 309 0144 0E21     		movs	r1, #14
+ 310 0146 2846     		mov	r0, r5
+ 311 0148 FFF7FEFF 		bl	GPIO_AF_Set
+ 312              	.LVL33:
+  66:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOE,15,12);	//PE15,AF12
+ 313              		.loc 1 66 3 view .LVU62
+ 314 014c 0C22     		movs	r2, #12
+ 315 014e 0F21     		movs	r1, #15
+ 316 0150 2846     		mov	r0, r5
+ 317 0152 FFF7FEFF 		bl	GPIO_AF_Set
+ 318              	.LVL34:
+  67:HADRWARE/SDRAM/sdram.c **** 
+  68:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,0,12);	//PF0,AF12 
+ 319              		.loc 1 68 3 view .LVU63
+ 320 0156 0C22     		movs	r2, #12
+ 321 0158 0021     		movs	r1, #0
+ 322 015a 2046     		mov	r0, r4
+ 323 015c FFF7FEFF 		bl	GPIO_AF_Set
+ 324              	.LVL35:
+  69:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,1,12);	//PF1,AF12 
+ 325              		.loc 1 69 3 view .LVU64
+ 326 0160 0C22     		movs	r2, #12
+ 327 0162 3146     		mov	r1, r6
+ 328 0164 2046     		mov	r0, r4
+ 329 0166 FFF7FEFF 		bl	GPIO_AF_Set
+ 330              	.LVL36:
+  70:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,2,12);	//PF2,AF12
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 8
+
+
+ 331              		.loc 1 70 3 view .LVU65
+ 332 016a 0C22     		movs	r2, #12
+ 333 016c 0221     		movs	r1, #2
+ 334 016e 2046     		mov	r0, r4
+ 335 0170 FFF7FEFF 		bl	GPIO_AF_Set
+ 336              	.LVL37:
+  71:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,3,12);	//PF3,AF12
+ 337              		.loc 1 71 3 view .LVU66
+ 338 0174 0C22     		movs	r2, #12
+ 339 0176 3946     		mov	r1, r7
+ 340 0178 2046     		mov	r0, r4
+ 341 017a FFF7FEFF 		bl	GPIO_AF_Set
+ 342              	.LVL38:
+  72:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,4,12);	//PF4,AF12
+ 343              		.loc 1 72 3 view .LVU67
+ 344 017e 0C22     		movs	r2, #12
+ 345 0180 0421     		movs	r1, #4
+ 346 0182 2046     		mov	r0, r4
+ 347 0184 FFF7FEFF 		bl	GPIO_AF_Set
+ 348              	.LVL39:
+  73:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,5,12);	//PF5,AF12
+ 349              		.loc 1 73 3 view .LVU68
+ 350 0188 0C22     		movs	r2, #12
+ 351 018a 0521     		movs	r1, #5
+ 352 018c 2046     		mov	r0, r4
+ 353 018e FFF7FEFF 		bl	GPIO_AF_Set
+ 354              	.LVL40:
+  74:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,11,12);	//PF11,AF12
+ 355              		.loc 1 74 3 view .LVU69
+ 356 0192 0C22     		movs	r2, #12
+ 357 0194 0B21     		movs	r1, #11
+ 358 0196 2046     		mov	r0, r4
+ 359 0198 FFF7FEFF 		bl	GPIO_AF_Set
+ 360              	.LVL41:
+  75:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,12,12);	//PF12,AF12
+ 361              		.loc 1 75 3 view .LVU70
+ 362 019c 0C22     		movs	r2, #12
+ 363 019e 1146     		mov	r1, r2
+ 364 01a0 2046     		mov	r0, r4
+ 365 01a2 FFF7FEFF 		bl	GPIO_AF_Set
+ 366              	.LVL42:
+  76:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,13,12);	//PF13,AF12
+ 367              		.loc 1 76 3 view .LVU71
+ 368 01a6 0C22     		movs	r2, #12
+ 369 01a8 0D21     		movs	r1, #13
+ 370 01aa 2046     		mov	r0, r4
+ 371 01ac FFF7FEFF 		bl	GPIO_AF_Set
+ 372              	.LVL43:
+  77:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,14,12);	//PF14,AF12
+ 373              		.loc 1 77 3 view .LVU72
+ 374 01b0 0C22     		movs	r2, #12
+ 375 01b2 0E21     		movs	r1, #14
+ 376 01b4 2046     		mov	r0, r4
+ 377 01b6 FFF7FEFF 		bl	GPIO_AF_Set
+ 378              	.LVL44:
+  78:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOF,15,12);	//PF15,AF12
+ 379              		.loc 1 78 3 view .LVU73
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 9
+
+
+ 380 01ba 0C22     		movs	r2, #12
+ 381 01bc 0F21     		movs	r1, #15
+ 382 01be 2046     		mov	r0, r4
+ 383 01c0 FFF7FEFF 		bl	GPIO_AF_Set
+ 384              	.LVL45:
+  79:HADRWARE/SDRAM/sdram.c **** 	
+  80:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOG,0,12);	//PG0,AF12 
+ 385              		.loc 1 80 3 view .LVU74
+ 386 01c4 0C22     		movs	r2, #12
+ 387 01c6 0021     		movs	r1, #0
+ 388 01c8 4046     		mov	r0, r8
+ 389 01ca FFF7FEFF 		bl	GPIO_AF_Set
+ 390              	.LVL46:
+  81:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOG,1,12);	//PG1,AF12 
+ 391              		.loc 1 81 3 view .LVU75
+ 392 01ce 0C22     		movs	r2, #12
+ 393 01d0 3146     		mov	r1, r6
+ 394 01d2 4046     		mov	r0, r8
+ 395 01d4 FFF7FEFF 		bl	GPIO_AF_Set
+ 396              	.LVL47:
+  82:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOG,2,12);	//PG2,AF12
+ 397              		.loc 1 82 3 view .LVU76
+ 398 01d8 0C22     		movs	r2, #12
+ 399 01da 0221     		movs	r1, #2
+ 400 01dc 4046     		mov	r0, r8
+ 401 01de FFF7FEFF 		bl	GPIO_AF_Set
+ 402              	.LVL48:
+  83:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOG,4,12);	//PG4,AF12
+ 403              		.loc 1 83 3 view .LVU77
+ 404 01e2 0C22     		movs	r2, #12
+ 405 01e4 0421     		movs	r1, #4
+ 406 01e6 4046     		mov	r0, r8
+ 407 01e8 FFF7FEFF 		bl	GPIO_AF_Set
+ 408              	.LVL49:
+  84:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOG,5,12);	//PG5,AF12  
+ 409              		.loc 1 84 3 view .LVU78
+ 410 01ec 0C22     		movs	r2, #12
+ 411 01ee 0521     		movs	r1, #5
+ 412 01f0 4046     		mov	r0, r8
+ 413 01f2 FFF7FEFF 		bl	GPIO_AF_Set
+ 414              	.LVL50:
+  85:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOG,8,12);	//PG8,AF12
+ 415              		.loc 1 85 3 view .LVU79
+ 416 01f6 0C22     		movs	r2, #12
+ 417 01f8 0821     		movs	r1, #8
+ 418 01fa 4046     		mov	r0, r8
+ 419 01fc FFF7FEFF 		bl	GPIO_AF_Set
+ 420              	.LVL51:
+  86:HADRWARE/SDRAM/sdram.c ****  	GPIO_AF_Set(GPIOG,15,12);	//PG15,AF12	
+ 421              		.loc 1 86 3 view .LVU80
+ 422 0200 0C22     		movs	r2, #12
+ 423 0202 0F21     		movs	r1, #15
+ 424 0204 4046     		mov	r0, r8
+ 425 0206 FFF7FEFF 		bl	GPIO_AF_Set
+ 426              	.LVL52:
+  87:HADRWARE/SDRAM/sdram.c ****     
+  88:HADRWARE/SDRAM/sdram.c ****  	sdctrlreg|=1<<0;				//9位列地址
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 10
+
+
+ 427              		.loc 1 88 3 view .LVU81
+  89:HADRWARE/SDRAM/sdram.c **** 	sdctrlreg|=2<<2;				//13位行地址
+ 428              		.loc 1 89 2 view .LVU82
+  90:HADRWARE/SDRAM/sdram.c **** 	sdctrlreg|=1<<4;				//16位数据位宽
+ 429              		.loc 1 90 2 view .LVU83
+  91:HADRWARE/SDRAM/sdram.c **** 	sdctrlreg|=1<<6;				//4个内部存区(4 BANKS)
+ 430              		.loc 1 91 2 view .LVU84
+  92:HADRWARE/SDRAM/sdram.c **** 	sdctrlreg|=3<<7;				//3个CAS延迟
+ 431              		.loc 1 92 2 view .LVU85
+  93:HADRWARE/SDRAM/sdram.c **** 	sdctrlreg|=0<<9;				//允许写访问
+ 432              		.loc 1 93 2 view .LVU86
+  94:HADRWARE/SDRAM/sdram.c **** 	sdctrlreg|=2<<10;				//SDRAM时钟=HCLK/2=192M/2=96M=10.4ns
+ 433              		.loc 1 94 2 view .LVU87
+  95:HADRWARE/SDRAM/sdram.c **** 	sdctrlreg|=1<<12;				//使能突发访问 
+ 434              		.loc 1 95 2 view .LVU88
+  96:HADRWARE/SDRAM/sdram.c **** 	sdctrlreg|=0<<13;				//读通道延迟0个HCLK
+ 435              		.loc 1 96 2 view .LVU89
+  97:HADRWARE/SDRAM/sdram.c ****  	FMC_Bank5_6->SDCR[0]=sdctrlreg;	//设置FMC BANK5 SDRAM控制寄存器(BANK5和6用于管理SDRAM
+ 436              		.loc 1 97 3 view .LVU90
+ 437              		.loc 1 97 23 is_stmt 0 view .LVU91
+ 438 020a 174C     		ldr	r4, .L11+12
+ 439 020c 41F6D913 		movw	r3, #6617
+ 440 0210 2364     		str	r3, [r4, #64]
+  98:HADRWARE/SDRAM/sdram.c **** 
+  99:HADRWARE/SDRAM/sdram.c **** 	sdtimereg|=1<<0;				//加载模式寄存器到激活时间的延迟为2个时钟周期
+ 441              		.loc 1 99 2 is_stmt 1 view .LVU92
+ 442              	.LVL53:
+ 100:HADRWARE/SDRAM/sdram.c **** 	sdtimereg|=6<<4;				//退出自刷新延迟为7个时钟周期
+ 443              		.loc 1 100 2 view .LVU93
+ 101:HADRWARE/SDRAM/sdram.c **** 	sdtimereg|=5<<8;				//自刷新时间为6个时钟周期
+ 444              		.loc 1 101 2 view .LVU94
+ 102:HADRWARE/SDRAM/sdram.c **** 	sdtimereg|=5<<12;				//行循环延迟为6个时钟周期
+ 445              		.loc 1 102 2 view .LVU95
+ 103:HADRWARE/SDRAM/sdram.c **** 	sdtimereg|=1<<16;				//恢复延迟为2个时钟周期
+ 446              		.loc 1 103 2 view .LVU96
+ 104:HADRWARE/SDRAM/sdram.c **** 	sdtimereg|=1<<20;				//行预充电延迟为2个时钟周期
+ 447              		.loc 1 104 2 view .LVU97
+ 105:HADRWARE/SDRAM/sdram.c **** 	sdtimereg|=1<<24;				//行到列延迟为2个时钟周期
+ 448              		.loc 1 105 2 view .LVU98
+ 106:HADRWARE/SDRAM/sdram.c ****  	FMC_Bank5_6->SDTR[0]=sdtimereg;	//设置FMC BANK5 SDRAM时序寄存器 
+ 449              		.loc 1 106 3 view .LVU99
+ 450              		.loc 1 106 23 is_stmt 0 view .LVU100
+ 451 0212 164B     		ldr	r3, .L11+16
+ 452 0214 A364     		str	r3, [r4, #72]
+ 107:HADRWARE/SDRAM/sdram.c **** 
+ 108:HADRWARE/SDRAM/sdram.c **** 	SDRAM_Send_Cmd(0,1,0,0);		//时钟配置使能
+ 453              		.loc 1 108 2 is_stmt 1 view .LVU101
+ 454 0216 0023     		movs	r3, #0
+ 455 0218 1A46     		mov	r2, r3
+ 456 021a 3146     		mov	r1, r6
+ 457 021c 1846     		mov	r0, r3
+ 458 021e FFF7FEFF 		bl	SDRAM_Send_Cmd
+ 459              	.LVL54:
+ 109:HADRWARE/SDRAM/sdram.c **** 	delay_us(500);					//至少延迟200us.
+ 460              		.loc 1 109 2 view .LVU102
+ 461 0222 4FF4FA70 		mov	r0, #500
+ 462 0226 FFF7FEFF 		bl	delay_us
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 11
+
+
+ 463              	.LVL55:
+ 110:HADRWARE/SDRAM/sdram.c **** 	SDRAM_Send_Cmd(0,2,0,0);		//对所有存储区预充电
+ 464              		.loc 1 110 2 view .LVU103
+ 465 022a 0023     		movs	r3, #0
+ 466 022c 1A46     		mov	r2, r3
+ 467 022e 0221     		movs	r1, #2
+ 468 0230 1846     		mov	r0, r3
+ 469 0232 FFF7FEFF 		bl	SDRAM_Send_Cmd
+ 470              	.LVL56:
+ 111:HADRWARE/SDRAM/sdram.c **** 	SDRAM_Send_Cmd(0,3,8,0);		//设置自刷新次数 
+ 471              		.loc 1 111 2 view .LVU104
+ 472 0236 0023     		movs	r3, #0
+ 473 0238 0822     		movs	r2, #8
+ 474 023a 3946     		mov	r1, r7
+ 475 023c 1846     		mov	r0, r3
+ 476 023e FFF7FEFF 		bl	SDRAM_Send_Cmd
+ 477              	.LVL57:
+ 112:HADRWARE/SDRAM/sdram.c **** 	mregval|=3<<0;					//设置突发长度:8(可以是1/2/4/8)
+ 478              		.loc 1 112 2 view .LVU105
+ 113:HADRWARE/SDRAM/sdram.c **** 	mregval|=0<<3;					//设置突发类型:连续(可以是连续/交错)
+ 479              		.loc 1 113 2 view .LVU106
+ 114:HADRWARE/SDRAM/sdram.c **** 	mregval|=3<<4;					//设置CAS值:3(可以是2/3)
+ 480              		.loc 1 114 2 view .LVU107
+ 115:HADRWARE/SDRAM/sdram.c **** 	mregval|=0<<7;					//设置操作模式:0,标准模式
+ 481              		.loc 1 115 2 view .LVU108
+ 116:HADRWARE/SDRAM/sdram.c **** 	mregval|=1<<9;					//设置突发写模式:1,单点访问
+ 482              		.loc 1 116 2 view .LVU109
+ 117:HADRWARE/SDRAM/sdram.c **** 	SDRAM_Send_Cmd(0,4,0,mregval);	//设置SDRAM的模式寄存器
+ 483              		.loc 1 117 2 view .LVU110
+ 484 0242 40F23323 		movw	r3, #563
+ 485 0246 0022     		movs	r2, #0
+ 486 0248 0421     		movs	r1, #4
+ 487 024a 1046     		mov	r0, r2
+ 488 024c FFF7FEFF 		bl	SDRAM_Send_Cmd
+ 489              	.LVL58:
+ 118:HADRWARE/SDRAM/sdram.c **** 	
+ 119:HADRWARE/SDRAM/sdram.c **** 	//刷新频率计数器(以SDCLK频率计数),计算方法:
+ 120:HADRWARE/SDRAM/sdram.c **** 	//COUNT=SDRAM刷新周期/行数-20=SDRAM刷新周期(us)*SDCLK频率(Mhz)/行数
+ 121:HADRWARE/SDRAM/sdram.c **** 	//我们使用的SDRAM刷新周期为64ms,SDCLK=192/2=96Mhz,行数为8192(2^13).
+ 122:HADRWARE/SDRAM/sdram.c **** 	//所以,COUNT=64*1000*96/8192-20=730 
+ 123:HADRWARE/SDRAM/sdram.c **** 	FMC_Bank5_6->SDRTR=730<<1;		//设置刷新频率计数器
+ 490              		.loc 1 123 2 view .LVU111
+ 491              		.loc 1 123 20 is_stmt 0 view .LVU112
+ 492 0250 40F2B453 		movw	r3, #1460
+ 493 0254 6365     		str	r3, [r4, #84]
+ 124:HADRWARE/SDRAM/sdram.c **** } 
+ 494              		.loc 1 124 1 view .LVU113
+ 495 0256 02B0     		add	sp, sp, #8
+ 496              	.LCFI2:
+ 497              		.cfi_def_cfa_offset 32
+ 498              		@ sp needed
+ 499 0258 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 500              	.L12:
+ 501              		.align	2
+ 502              	.L11:
+ 503 025c 00380240 		.word	1073887232
+ 504 0260 00100240 		.word	1073876992
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 12
+
+
+ 505 0264 00140240 		.word	1073878016
+ 506 0268 000100A0 		.word	-1610612480
+ 507 026c 61551101 		.word	17913185
+ 508 0270 00080240 		.word	1073874944
+ 509 0274 000C0240 		.word	1073875968
+ 510 0278 00180240 		.word	1073879040
+ 511              		.cfi_endproc
+ 512              	.LFE127:
+ 514              		.section	.text.FMC_SDRAM_WriteBuffer,"ax",%progbits
+ 515              		.align	1
+ 516              		.global	FMC_SDRAM_WriteBuffer
+ 517              		.syntax unified
+ 518              		.thumb
+ 519              		.thumb_func
+ 521              	FMC_SDRAM_WriteBuffer:
+ 522              	.LVL59:
+ 523              	.LFB128:
+ 125:HADRWARE/SDRAM/sdram.c **** 
+ 126:HADRWARE/SDRAM/sdram.c **** //在指定地址(WriteAddr+Bank5_SDRAM_ADDR)开始,连续写入n个字节.
+ 127:HADRWARE/SDRAM/sdram.c **** //pBuffer:字节指针
+ 128:HADRWARE/SDRAM/sdram.c **** //WriteAddr:要写入的地址
+ 129:HADRWARE/SDRAM/sdram.c **** //n:要写入的字节数
+ 130:HADRWARE/SDRAM/sdram.c **** void FMC_SDRAM_WriteBuffer(u8 *pBuffer,u32 WriteAddr,u32 n)
+ 131:HADRWARE/SDRAM/sdram.c **** {
+ 524              		.loc 1 131 1 is_stmt 1 view -0
+ 525              		.cfi_startproc
+ 526              		@ args = 0, pretend = 0, frame = 0
+ 527              		@ frame_needed = 0, uses_anonymous_args = 0
+ 528              		@ link register save eliminated.
+ 132:HADRWARE/SDRAM/sdram.c **** 	for(;n!=0;n--)
+ 529              		.loc 1 132 2 view .LVU115
+ 530 0000 07E0     		b	.L14
+ 531              	.L15:
+ 133:HADRWARE/SDRAM/sdram.c **** 	{
+ 134:HADRWARE/SDRAM/sdram.c **** 		*(vu8*)(Bank5_SDRAM_ADDR+WriteAddr)=*pBuffer;
+ 532              		.loc 1 134 3 view .LVU116
+ 533              		.loc 1 134 27 is_stmt 0 view .LVU117
+ 534 0002 01F14043 		add	r3, r1, #-1073741824
+ 535              		.loc 1 134 39 view .LVU118
+ 536 0006 10F801CB 		ldrb	ip, [r0], #1	@ zero_extendqisi2
+ 537              	.LVL60:
+ 538              		.loc 1 134 38 view .LVU119
+ 539 000a 83F800C0 		strb	ip, [r3]
+ 135:HADRWARE/SDRAM/sdram.c **** 		WriteAddr++;
+ 540              		.loc 1 135 3 is_stmt 1 view .LVU120
+ 541              		.loc 1 135 12 is_stmt 0 view .LVU121
+ 542 000e 0131     		adds	r1, r1, #1
+ 543              	.LVL61:
+ 136:HADRWARE/SDRAM/sdram.c **** 		pBuffer++;
+ 544              		.loc 1 136 3 is_stmt 1 view .LVU122
+ 132:HADRWARE/SDRAM/sdram.c **** 	{
+ 545              		.loc 1 132 13 discriminator 2 view .LVU123
+ 546 0010 013A     		subs	r2, r2, #1
+ 547              	.LVL62:
+ 548              	.L14:
+ 132:HADRWARE/SDRAM/sdram.c **** 	{
+ 549              		.loc 1 132 8 discriminator 1 view .LVU124
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 13
+
+
+ 550 0012 002A     		cmp	r2, #0
+ 551 0014 F5D1     		bne	.L15
+ 137:HADRWARE/SDRAM/sdram.c **** 	}
+ 138:HADRWARE/SDRAM/sdram.c **** }
+ 552              		.loc 1 138 1 is_stmt 0 view .LVU125
+ 553 0016 7047     		bx	lr
+ 554              		.cfi_endproc
+ 555              	.LFE128:
+ 557              		.section	.text.FMC_SDRAM_ReadBuffer,"ax",%progbits
+ 558              		.align	1
+ 559              		.global	FMC_SDRAM_ReadBuffer
+ 560              		.syntax unified
+ 561              		.thumb
+ 562              		.thumb_func
+ 564              	FMC_SDRAM_ReadBuffer:
+ 565              	.LVL63:
+ 566              	.LFB129:
+ 139:HADRWARE/SDRAM/sdram.c **** 
+ 140:HADRWARE/SDRAM/sdram.c **** //在指定地址((WriteAddr+Bank5_SDRAM_ADDR))开始,连续读出n个字节.
+ 141:HADRWARE/SDRAM/sdram.c **** //pBuffer:字节指针
+ 142:HADRWARE/SDRAM/sdram.c **** //ReadAddr:要读出的起始地址
+ 143:HADRWARE/SDRAM/sdram.c **** //n:要写入的字节数
+ 144:HADRWARE/SDRAM/sdram.c **** void FMC_SDRAM_ReadBuffer(u8 *pBuffer,u32 ReadAddr,u32 n)
+ 145:HADRWARE/SDRAM/sdram.c **** {
+ 567              		.loc 1 145 1 is_stmt 1 view -0
+ 568              		.cfi_startproc
+ 569              		@ args = 0, pretend = 0, frame = 0
+ 570              		@ frame_needed = 0, uses_anonymous_args = 0
+ 571              		@ link register save eliminated.
+ 146:HADRWARE/SDRAM/sdram.c **** 	for(;n!=0;n--)
+ 572              		.loc 1 146 2 view .LVU127
+ 573 0000 06E0     		b	.L17
+ 574              	.L18:
+ 147:HADRWARE/SDRAM/sdram.c **** 	{
+ 148:HADRWARE/SDRAM/sdram.c **** 		*pBuffer++=*(vu8*)(Bank5_SDRAM_ADDR+ReadAddr);
+ 575              		.loc 1 148 3 view .LVU128
+ 576              		.loc 1 148 38 is_stmt 0 view .LVU129
+ 577 0002 01F14043 		add	r3, r1, #-1073741824
+ 578              	.LVL64:
+ 579              		.loc 1 148 14 view .LVU130
+ 580 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 581              		.loc 1 148 13 view .LVU131
+ 582 0008 00F8013B 		strb	r3, [r0], #1
+ 583              	.LVL65:
+ 149:HADRWARE/SDRAM/sdram.c **** 		ReadAddr++;
+ 584              		.loc 1 149 3 is_stmt 1 view .LVU132
+ 585              		.loc 1 149 11 is_stmt 0 view .LVU133
+ 586 000c 0131     		adds	r1, r1, #1
+ 587              	.LVL66:
+ 146:HADRWARE/SDRAM/sdram.c **** 	for(;n!=0;n--)
+ 588              		.loc 1 146 13 is_stmt 1 discriminator 2 view .LVU134
+ 589 000e 013A     		subs	r2, r2, #1
+ 590              	.LVL67:
+ 591              	.L17:
+ 146:HADRWARE/SDRAM/sdram.c **** 	for(;n!=0;n--)
+ 592              		.loc 1 146 8 discriminator 1 view .LVU135
+ 593 0010 002A     		cmp	r2, #0
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 14
+
+
+ 594 0012 F6D1     		bne	.L18
+ 150:HADRWARE/SDRAM/sdram.c **** 	}
+ 151:HADRWARE/SDRAM/sdram.c **** }
+ 595              		.loc 1 151 1 is_stmt 0 view .LVU136
+ 596 0014 7047     		bx	lr
+ 597              		.cfi_endproc
+ 598              	.LFE129:
+ 600              		.text
+ 601              	.Letext0:
+ 602              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 603              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 604              		.file 4 "libraries/CMSIS/Device/ST/STM32F4xx/include/stm32f4xx.h"
+ 605              		.file 5 "SYSTEM/delay/delay.h"
+ 606              		.file 6 "Lib/inc/lib.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sdram.c
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:21     .text.SDRAM_Send_Cmd:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:27     .text.SDRAM_Send_Cmd:00000000 SDRAM_Send_Cmd
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:94     .text.SDRAM_Send_Cmd:00000034 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:99     .text.SDRAM_Init:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:105    .text.SDRAM_Init:00000000 SDRAM_Init
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:503    .text.SDRAM_Init:0000025c $d
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:515    .text.FMC_SDRAM_WriteBuffer:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:521    .text.FMC_SDRAM_WriteBuffer:00000000 FMC_SDRAM_WriteBuffer
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:558    .text.FMC_SDRAM_ReadBuffer:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccNfxc0n.s:564    .text.FMC_SDRAM_ReadBuffer:00000000 FMC_SDRAM_ReadBuffer
+
+UNDEFINED SYMBOLS
+GPIO_Set
+GPIO_AF_Set
+delay_us

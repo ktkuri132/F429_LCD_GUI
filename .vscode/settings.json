@@ -1,0 +1,27 @@
+{
+    "files.associations": {
+        "stm32f10x.h": "c",
+        "lib.h": "c",
+        "sys.h": "c",
+        "stdio.h": "c",
+        "cstdio": "c",
+        "_newlib_version.h": "c",
+        "gpio.h": "c",
+        "usart.h": "c",
+        "stdarg.h": "c",
+        "stm32f4xx.h": "c",
+        "*.d": "c",
+        "math.h": "c",
+        "sdram.h": "c",
+        "ltdc.h": "c",
+        "font.h": "c",
+        "lcd.h": "c",
+        "ctiic.h": "c",
+        "gt9xxx.h": "c",
+        "touch.h": "c",
+        "guilib.h": "c",
+        "stm32f4xx_gpio.h": "c",
+        "stm32f4xx_conf.h": "c",
+        "jy61_usart6.h": "c"
+    }
+}

@@ -1,0 +1,397 @@
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"delay.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "SYSTEM/delay/delay.c"
+  20              		.section	.text.delay_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	delay_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	delay_init:
+  28              	.LVL0:
+  29              	.LFB126:
+   1:SYSTEM/delay/delay.c **** #include "delay.h"
+   2:SYSTEM/delay/delay.c **** #include "sys.h"
+   3:SYSTEM/delay/delay.c **** 
+   4:SYSTEM/delay/delay.c **** static u8  fac_us=0;							//us延时倍乘数			   
+   5:SYSTEM/delay/delay.c **** static u16 fac_ms=0;							//ms延时倍乘数,在os下,代表每个节拍的ms数
+   6:SYSTEM/delay/delay.c **** 	
+   7:SYSTEM/delay/delay.c **** 
+   8:SYSTEM/delay/delay.c **** //初始化延迟函数
+   9:SYSTEM/delay/delay.c **** //当使用OS的时候,此函数会初始化OS的时钟节拍
+  10:SYSTEM/delay/delay.c **** //SYSTICK的时钟固定为AHB时钟的1/8
+  11:SYSTEM/delay/delay.c **** //SYSCLK:系统时钟频率
+  12:SYSTEM/delay/delay.c **** void delay_init(u8 SYSCLK)
+  13:SYSTEM/delay/delay.c **** {
+  30              		.loc 1 13 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  14:SYSTEM/delay/delay.c ****  	SysTick->CTRL&=~(1<<2);
+  35              		.loc 1 14 3 view .LVU1
+  36              		.loc 1 14 10 is_stmt 0 view .LVU2
+  37 0000 4FF0E022 		mov	r2, #-536813568
+  38 0004 1369     		ldr	r3, [r2, #16]
+  39              		.loc 1 14 16 view .LVU3
+  40 0006 23F00403 		bic	r3, r3, #4
+  41 000a 1361     		str	r3, [r2, #16]
+  15:SYSTEM/delay/delay.c **** 	fac_us=SYSCLK/8;						//不论是否使用OS,fac_us都需要使用
+  42              		.loc 1 15 2 is_stmt 1 view .LVU4
+  43              		.loc 1 15 8 is_stmt 0 view .LVU5
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s 			page 2
+
+
+  44 000c C008     		lsrs	r0, r0, #3
+  45              	.LVL1:
+  46              		.loc 1 15 8 view .LVU6
+  47 000e 054B     		ldr	r3, .L2
+  48 0010 1870     		strb	r0, [r3]
+  16:SYSTEM/delay/delay.c **** 	fac_ms=(u16)fac_us*1000;				//非OS下,代表每个ms需要的systick时钟数   
+  49              		.loc 1 16 2 is_stmt 1 view .LVU7
+  50              		.loc 1 16 8 is_stmt 0 view .LVU8
+  51 0012 C0EB4013 		rsb	r3, r0, r0, lsl #5
+  52 0016 00EB8300 		add	r0, r0, r3, lsl #2
+  53 001a C000     		lsls	r0, r0, #3
+  54 001c 024B     		ldr	r3, .L2+4
+  55 001e 1880     		strh	r0, [r3]	@ movhi
+  17:SYSTEM/delay/delay.c **** }								    
+  56              		.loc 1 17 1 view .LVU9
+  57 0020 7047     		bx	lr
+  58              	.L3:
+  59 0022 00BF     		.align	2
+  60              	.L2:
+  61 0024 00000000 		.word	fac_us
+  62 0028 00000000 		.word	fac_ms
+  63              		.cfi_endproc
+  64              	.LFE126:
+  66              		.section	.text.delay_us,"ax",%progbits
+  67              		.align	1
+  68              		.global	delay_us
+  69              		.syntax unified
+  70              		.thumb
+  71              		.thumb_func
+  73              	delay_us:
+  74              	.LVL2:
+  75              	.LFB127:
+  18:SYSTEM/delay/delay.c **** 
+  19:SYSTEM/delay/delay.c **** //延时nus
+  20:SYSTEM/delay/delay.c **** //nus为要延时的us数.	
+  21:SYSTEM/delay/delay.c **** //注意:nus的值,不要大于798915us(最大值即2^24/fac_us@fac_us=21)
+  22:SYSTEM/delay/delay.c **** void delay_us(u32 nus)
+  23:SYSTEM/delay/delay.c **** {		
+  76              		.loc 1 23 1 is_stmt 1 view -0
+  77              		.cfi_startproc
+  78              		@ args = 0, pretend = 0, frame = 0
+  79              		@ frame_needed = 0, uses_anonymous_args = 0
+  80              		@ link register save eliminated.
+  24:SYSTEM/delay/delay.c **** 	u32 temp;	    	 
+  81              		.loc 1 24 2 view .LVU11
+  25:SYSTEM/delay/delay.c **** 	SysTick->LOAD=nus*fac_us; 				//时间加载	  		 
+  82              		.loc 1 25 2 view .LVU12
+  83              		.loc 1 25 19 is_stmt 0 view .LVU13
+  84 0000 0E4B     		ldr	r3, .L6
+  85 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  86 0004 03FB00F0 		mul	r0, r3, r0
+  87              	.LVL3:
+  88              		.loc 1 25 15 view .LVU14
+  89 0008 4FF0E023 		mov	r3, #-536813568
+  90 000c 5861     		str	r0, [r3, #20]
+  26:SYSTEM/delay/delay.c **** 	SysTick->VAL=0x00;        				//清空计数器
+  91              		.loc 1 26 2 is_stmt 1 view .LVU15
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s 			page 3
+
+
+  92              		.loc 1 26 14 is_stmt 0 view .LVU16
+  93 000e 0022     		movs	r2, #0
+  94 0010 9A61     		str	r2, [r3, #24]
+  27:SYSTEM/delay/delay.c **** 	SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ; //开始倒数 	 
+  95              		.loc 1 27 2 is_stmt 1 view .LVU17
+  96              		.loc 1 27 9 is_stmt 0 view .LVU18
+  97 0012 1A69     		ldr	r2, [r3, #16]
+  98              		.loc 1 27 15 view .LVU19
+  99 0014 42F00102 		orr	r2, r2, #1
+ 100 0018 1A61     		str	r2, [r3, #16]
+ 101              	.L5:
+  28:SYSTEM/delay/delay.c **** 	do
+ 102              		.loc 1 28 2 is_stmt 1 view .LVU20
+  29:SYSTEM/delay/delay.c **** 	{
+  30:SYSTEM/delay/delay.c **** 		temp=SysTick->CTRL;
+ 103              		.loc 1 30 3 view .LVU21
+ 104              		.loc 1 30 7 is_stmt 0 view .LVU22
+ 105 001a 4FF0E023 		mov	r3, #-536813568
+ 106 001e 1B69     		ldr	r3, [r3, #16]
+ 107              	.LVL4:
+  31:SYSTEM/delay/delay.c **** 	}while((temp&0x01)&&!(temp&(1<<16)));	//等待时间到达   
+ 108              		.loc 1 31 20 is_stmt 1 discriminator 1 view .LVU23
+ 109 0020 03F00113 		and	r3, r3, #65537
+ 110              	.LVL5:
+ 111              		.loc 1 31 20 is_stmt 0 discriminator 1 view .LVU24
+ 112 0024 012B     		cmp	r3, #1
+ 113 0026 F8D0     		beq	.L5
+  32:SYSTEM/delay/delay.c **** 	SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk; //关闭计数器
+ 114              		.loc 1 32 2 is_stmt 1 view .LVU25
+ 115              		.loc 1 32 9 is_stmt 0 view .LVU26
+ 116 0028 4FF0E023 		mov	r3, #-536813568
+ 117 002c 1A69     		ldr	r2, [r3, #16]
+ 118              		.loc 1 32 15 view .LVU27
+ 119 002e 22F00102 		bic	r2, r2, #1
+ 120 0032 1A61     		str	r2, [r3, #16]
+  33:SYSTEM/delay/delay.c **** 	SysTick->VAL =0X00;       				//清空计数器 
+ 121              		.loc 1 33 2 is_stmt 1 view .LVU28
+ 122              		.loc 1 33 15 is_stmt 0 view .LVU29
+ 123 0034 0022     		movs	r2, #0
+ 124 0036 9A61     		str	r2, [r3, #24]
+  34:SYSTEM/delay/delay.c **** }
+ 125              		.loc 1 34 1 view .LVU30
+ 126 0038 7047     		bx	lr
+ 127              	.L7:
+ 128 003a 00BF     		.align	2
+ 129              	.L6:
+ 130 003c 00000000 		.word	fac_us
+ 131              		.cfi_endproc
+ 132              	.LFE127:
+ 134              		.section	.text.delay_xms,"ax",%progbits
+ 135              		.align	1
+ 136              		.global	delay_xms
+ 137              		.syntax unified
+ 138              		.thumb
+ 139              		.thumb_func
+ 141              	delay_xms:
+ 142              	.LVL6:
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s 			page 4
+
+
+ 143              	.LFB128:
+  35:SYSTEM/delay/delay.c **** //延时nms
+  36:SYSTEM/delay/delay.c **** //注意nms的范围
+  37:SYSTEM/delay/delay.c **** //SysTick->LOAD为24位寄存器,所以,最大延时为:
+  38:SYSTEM/delay/delay.c **** //nms<=0xffffff*8*1000/SYSCLK
+  39:SYSTEM/delay/delay.c **** //SYSCLK单位为Hz,nms单位为ms
+  40:SYSTEM/delay/delay.c **** //对168M条件下,nms<=798ms 
+  41:SYSTEM/delay/delay.c **** void delay_xms(u16 nms)
+  42:SYSTEM/delay/delay.c **** {	 		  	  
+ 144              		.loc 1 42 1 is_stmt 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		@ link register save eliminated.
+  43:SYSTEM/delay/delay.c **** 	u32 temp;		   
+ 149              		.loc 1 43 2 view .LVU32
+  44:SYSTEM/delay/delay.c **** 	SysTick->LOAD=(u32)nms*fac_ms;			//时间加载(SysTick->LOAD为24bit)
+ 150              		.loc 1 44 2 view .LVU33
+ 151              		.loc 1 44 24 is_stmt 0 view .LVU34
+ 152 0000 0E4B     		ldr	r3, .L10
+ 153 0002 1B88     		ldrh	r3, [r3]
+ 154 0004 03FB00F0 		mul	r0, r3, r0
+ 155              	.LVL7:
+ 156              		.loc 1 44 15 view .LVU35
+ 157 0008 4FF0E023 		mov	r3, #-536813568
+ 158 000c 5861     		str	r0, [r3, #20]
+  45:SYSTEM/delay/delay.c **** 	SysTick->VAL =0x00;           			//清空计数器
+ 159              		.loc 1 45 2 is_stmt 1 view .LVU36
+ 160              		.loc 1 45 15 is_stmt 0 view .LVU37
+ 161 000e 0022     		movs	r2, #0
+ 162 0010 9A61     		str	r2, [r3, #24]
+  46:SYSTEM/delay/delay.c **** 	SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;          //开始倒数 
+ 163              		.loc 1 46 2 is_stmt 1 view .LVU38
+ 164              		.loc 1 46 9 is_stmt 0 view .LVU39
+ 165 0012 1A69     		ldr	r2, [r3, #16]
+ 166              		.loc 1 46 15 view .LVU40
+ 167 0014 42F00102 		orr	r2, r2, #1
+ 168 0018 1A61     		str	r2, [r3, #16]
+ 169              	.L9:
+  47:SYSTEM/delay/delay.c **** 	do
+ 170              		.loc 1 47 2 is_stmt 1 view .LVU41
+  48:SYSTEM/delay/delay.c **** 	{
+  49:SYSTEM/delay/delay.c **** 		temp=SysTick->CTRL;
+ 171              		.loc 1 49 3 view .LVU42
+ 172              		.loc 1 49 7 is_stmt 0 view .LVU43
+ 173 001a 4FF0E023 		mov	r3, #-536813568
+ 174 001e 1B69     		ldr	r3, [r3, #16]
+ 175              	.LVL8:
+  50:SYSTEM/delay/delay.c **** 	}while((temp&0x01)&&!(temp&(1<<16)));	//等待时间到达   
+ 176              		.loc 1 50 20 is_stmt 1 discriminator 1 view .LVU44
+ 177 0020 03F00113 		and	r3, r3, #65537
+ 178              	.LVL9:
+ 179              		.loc 1 50 20 is_stmt 0 discriminator 1 view .LVU45
+ 180 0024 012B     		cmp	r3, #1
+ 181 0026 F8D0     		beq	.L9
+  51:SYSTEM/delay/delay.c **** 	SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk;       //关闭计数器
+ 182              		.loc 1 51 2 is_stmt 1 view .LVU46
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s 			page 5
+
+
+ 183              		.loc 1 51 9 is_stmt 0 view .LVU47
+ 184 0028 4FF0E023 		mov	r3, #-536813568
+ 185 002c 1A69     		ldr	r2, [r3, #16]
+ 186              		.loc 1 51 15 view .LVU48
+ 187 002e 22F00102 		bic	r2, r2, #1
+ 188 0032 1A61     		str	r2, [r3, #16]
+  52:SYSTEM/delay/delay.c **** 	SysTick->VAL =0X00;     		  		//清空计数器	  	    
+ 189              		.loc 1 52 2 is_stmt 1 view .LVU49
+ 190              		.loc 1 52 15 is_stmt 0 view .LVU50
+ 191 0034 0022     		movs	r2, #0
+ 192 0036 9A61     		str	r2, [r3, #24]
+  53:SYSTEM/delay/delay.c **** } 
+ 193              		.loc 1 53 1 view .LVU51
+ 194 0038 7047     		bx	lr
+ 195              	.L11:
+ 196 003a 00BF     		.align	2
+ 197              	.L10:
+ 198 003c 00000000 		.word	fac_ms
+ 199              		.cfi_endproc
+ 200              	.LFE128:
+ 202              		.section	.text.delay_ms,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	delay_ms
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 209              	delay_ms:
+ 210              	.LVL10:
+ 211              	.LFB129:
+  54:SYSTEM/delay/delay.c **** //延时nms 
+  55:SYSTEM/delay/delay.c **** //nms:0~65535
+  56:SYSTEM/delay/delay.c **** void delay_ms(u16 nms)
+  57:SYSTEM/delay/delay.c **** {	 	 
+ 212              		.loc 1 57 1 is_stmt 1 view -0
+ 213              		.cfi_startproc
+ 214              		@ args = 0, pretend = 0, frame = 0
+ 215              		@ frame_needed = 0, uses_anonymous_args = 0
+ 216              		.loc 1 57 1 is_stmt 0 view .LVU53
+ 217 0000 38B5     		push	{r3, r4, r5, lr}
+ 218              	.LCFI0:
+ 219              		.cfi_def_cfa_offset 16
+ 220              		.cfi_offset 3, -16
+ 221              		.cfi_offset 4, -12
+ 222              		.cfi_offset 5, -8
+ 223              		.cfi_offset 14, -4
+  58:SYSTEM/delay/delay.c **** 	u8 repeat=nms/540;						//这里用540,是考虑到某些客户可能超频使用,
+ 224              		.loc 1 58 2 is_stmt 1 view .LVU54
+ 225              		.loc 1 58 5 is_stmt 0 view .LVU55
+ 226 0002 0C4C     		ldr	r4, .L18
+ 227 0004 A4FB0034 		umull	r3, r4, r4, r0
+ 228 0008 630A     		lsrs	r3, r4, #9
+ 229 000a 1C46     		mov	r4, r3
+ 230              	.LVL11:
+  59:SYSTEM/delay/delay.c **** 											//比如超频到248M的时候,delay_xms最大只能延时541ms左右了
+  60:SYSTEM/delay/delay.c **** 	u16 remain=nms%540;
+ 231              		.loc 1 60 2 is_stmt 1 view .LVU56
+ 232              		.loc 1 60 6 is_stmt 0 view .LVU57
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s 			page 6
+
+
+ 233 000c 4FF40772 		mov	r2, #540
+ 234 0010 02FB1300 		mls	r0, r2, r3, r0
+ 235              	.LVL12:
+ 236              		.loc 1 60 6 view .LVU58
+ 237 0014 85B2     		uxth	r5, r0
+ 238              	.LVL13:
+  61:SYSTEM/delay/delay.c **** 	while(repeat)
+ 239              		.loc 1 61 2 is_stmt 1 view .LVU59
+ 240              		.loc 1 61 7 is_stmt 0 view .LVU60
+ 241 0016 05E0     		b	.L13
+ 242              	.LVL14:
+ 243              	.L14:
+  62:SYSTEM/delay/delay.c **** 	{
+  63:SYSTEM/delay/delay.c **** 		delay_xms(540);
+ 244              		.loc 1 63 3 is_stmt 1 view .LVU61
+ 245 0018 4FF40770 		mov	r0, #540
+ 246 001c FFF7FEFF 		bl	delay_xms
+ 247              	.LVL15:
+  64:SYSTEM/delay/delay.c **** 		repeat--;
+ 248              		.loc 1 64 3 view .LVU62
+ 249              		.loc 1 64 9 is_stmt 0 view .LVU63
+ 250 0020 013C     		subs	r4, r4, #1
+ 251              	.LVL16:
+ 252              		.loc 1 64 9 view .LVU64
+ 253 0022 E4B2     		uxtb	r4, r4
+ 254              	.LVL17:
+ 255              	.L13:
+  61:SYSTEM/delay/delay.c **** 	while(repeat)
+ 256              		.loc 1 61 8 is_stmt 1 view .LVU65
+ 257 0024 002C     		cmp	r4, #0
+ 258 0026 F7D1     		bne	.L14
+  65:SYSTEM/delay/delay.c **** 	}
+  66:SYSTEM/delay/delay.c **** 	if(remain)delay_xms(remain);
+ 259              		.loc 1 66 2 view .LVU66
+ 260              		.loc 1 66 4 is_stmt 0 view .LVU67
+ 261 0028 05B9     		cbnz	r5, .L17
+ 262              	.L12:
+  67:SYSTEM/delay/delay.c **** } 
+ 263              		.loc 1 67 1 view .LVU68
+ 264 002a 38BD     		pop	{r3, r4, r5, pc}
+ 265              	.LVL18:
+ 266              	.L17:
+  66:SYSTEM/delay/delay.c **** } 
+ 267              		.loc 1 66 12 is_stmt 1 discriminator 1 view .LVU69
+ 268 002c 2846     		mov	r0, r5
+ 269 002e FFF7FEFF 		bl	delay_xms
+ 270              	.LVL19:
+ 271              		.loc 1 67 1 is_stmt 0 view .LVU70
+ 272 0032 FAE7     		b	.L12
+ 273              	.L19:
+ 274              		.align	2
+ 275              	.L18:
+ 276 0034 49D6B9F2 		.word	-222702007
+ 277              		.cfi_endproc
+ 278              	.LFE129:
+ 280              		.section	.bss.fac_ms,"aw",%nobits
+ 281              		.align	1
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s 			page 7
+
+
+ 284              	fac_ms:
+ 285 0000 0000     		.space	2
+ 286              		.section	.bss.fac_us,"aw",%nobits
+ 289              	fac_us:
+ 290 0000 00       		.space	1
+ 291              		.text
+ 292              	.Letext0:
+ 293              		.file 2 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/ma
+ 294              		.file 3 "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/arm-none-eabi/include/sy
+ 295              		.file 4 "libraries/CMSIS/include/core_cm4.h"
+ 296              		.file 5 "libraries/CMSIS/Device/ST/STM32F4xx/include/stm32f4xx.h"
+ARM GAS  C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 delay.c
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:21     .text.delay_init:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:27     .text.delay_init:00000000 delay_init
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:61     .text.delay_init:00000024 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:289    .bss.fac_us:00000000 fac_us
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:284    .bss.fac_ms:00000000 fac_ms
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:67     .text.delay_us:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:73     .text.delay_us:00000000 delay_us
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:130    .text.delay_us:0000003c $d
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:135    .text.delay_xms:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:141    .text.delay_xms:00000000 delay_xms
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:198    .text.delay_xms:0000003c $d
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:203    .text.delay_ms:00000000 $t
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:209    .text.delay_ms:00000000 delay_ms
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:276    .text.delay_ms:00000034 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:281    .bss.fac_ms:00000000 $d
+C:\Users\ktkuru\AppData\Local\Temp\ccXcbmcf.s:290    .bss.fac_us:00000000 $d
+
+NO UNDEFINED SYMBOLS
