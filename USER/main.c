@@ -10,10 +10,8 @@ int main()
 {
     BSP_Init();
     
-
-    LCD_DrawRectangle(360,250,100,50);
-    LCD_DrawRectangle(520,250,100,50);
     
+
 
     while(1)
     {    

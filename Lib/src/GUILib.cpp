@@ -16,6 +16,13 @@ uint8_t button_act[10];
 /// @param string 按键标签
 void Button_check(uint8_t *act_sign,uint8_t button_num,uint16_t x,uint16_t y,uint16_t w,uint16_t h,char *string)     
 {
+    //static int i=0;
+    //if(!i)
+    //{
+    //    LCD_DrawRectangle(x,y,w,h);
+    //    i=1;
+    //}
+    LCD_DrawRectangle(x,y,w,h);
     Printf(x+11,y+11,240,32,32,1,string);
     static int a=0;
     if(!button_act[button_num])  /* 检查按键状态  */
