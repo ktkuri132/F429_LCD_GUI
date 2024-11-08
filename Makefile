@@ -29,13 +29,13 @@ OPT = -Og
 # paths
 #######################################
 # Build path
-BUILD_DIR = GCC/build
+BUILD_DIR = ./GCC/build
 
 ######################################
 # source
 ######################################
 # ASM sources
-ASM_SOURCES =  libraries/CMSIS/Device/ST/STM32F4xx/source/templates/gcc_ride7/startup_stm32f429_439xx.s
+ASM_SOURCES =  Libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/gcc_ride7/startup_stm32f429_439xx.s
 
 
 # ASM sources
@@ -45,7 +45,7 @@ ASMM_SOURCES =
 
 
 #cmsis path
-CMSIS_PATH = libraries/CMSIS/Device/ST/STM32F4xx/include
+CMSIS_PATH = libraries/CMSIS/Device/ST/STM32F4xx/Include
 
 # C defines
 C_DEFS =  -DUSE_STDPERIPH_DRIVER 
@@ -54,9 +54,9 @@ C_DEFS += -DSTM32F429_439xx
 
 # C sources
 
-C_SOURCES = $(wildcard User/*.c)
-C_SOURCES += $(wildcard libraries/CMSIS/Device/ST/STM32F4xx/source/templates/*.c)
-C_SOURCES += $(wildcard libraries/STM32F4xx_StdPeriph_Driver/src/*.c)
+C_SOURCES = $(wildcard USER/*.c)
+C_SOURCES += $(wildcard Libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/*.c)
+C_SOURCES += $(wildcard Libraries/STM32F4xx_StdPeriph_Driver/src/*.c)
 
 C_SOURCES += $(wildcard SYSTEM/delay/*.c)
 C_SOURCES += $(wildcard SYSTEM/sys/*.c)
@@ -74,9 +74,9 @@ CXX_SOURCES = $(wildcard Lib/src/*.cpp)
 
 
 # C includes
-C_INCLUDES =  -Ilibraries/CMSIS/Device/ST/STM32F4xx/include/
-C_INCLUDES += -Ilibraries/CMSIS/include/
-C_INCLUDES += -Ilibraries/STM32F4xx_StdPeriph_Driver/inc/
+C_INCLUDES =  -ILibraries/CMSIS/Device/ST/STM32F4xx/Include/
+C_INCLUDES += -ILibraries/CMSIS/Include/
+C_INCLUDES += -ILibraries/STM32F4xx_StdPeriph_Driver/inc/
 
 C_INCLUDES += -ISYSTEM/delay/
 C_INCLUDES += -ISYSTEM/sys/

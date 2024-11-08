@@ -1,0 +1,2739 @@
+ARM GAS  /tmp/ccRkYwN3.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"ltdc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.LTDC_Switch,"ax",%progbits
+  18              		.align	1
+  19              		.global	LTDC_Switch
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	LTDC_Switch:
+  27              	.LVL0:
+  28              	.LFB126:
+  29              		.file 1 "HADRWARE/LCD/ltdc.c"
+   1:HADRWARE/LCD/ltdc.c **** #include "lcd.h"
+   2:HADRWARE/LCD/ltdc.c **** #include "ltdc.h" 
+   3:HADRWARE/LCD/ltdc.c **** //////////////////////////////////////////////////////////////////////////////////	 
+   4:HADRWARE/LCD/ltdc.c **** 
+   5:HADRWARE/LCD/ltdc.c **** //********************************************************************************
+   6:HADRWARE/LCD/ltdc.c **** 
+   7:HADRWARE/LCD/ltdc.c **** //////////////////////////////////////////////////////////////////////////////////	 
+   8:HADRWARE/LCD/ltdc.c **** 
+   9:HADRWARE/LCD/ltdc.c **** //根据不同的颜色格式,定义帧缓存数组
+  10:HADRWARE/LCD/ltdc.c **** #if LCD_PIXFORMAT==LCD_PIXFORMAT_ARGB8888||LCD_PIXFORMAT==LCD_PIXFORMAT_RGB888 
+  11:HADRWARE/LCD/ltdc.c **** 	u32 ltdc_lcd_framebuf[1280][800] __attribute__((at(LCD_FRAME_BUF_ADDR)));	//定义最大屏分辨�
+  12:HADRWARE/LCD/ltdc.c **** #else
+  13:HADRWARE/LCD/ltdc.c **** 	u16 ltdc_lcd_framebuf[1280][800] __attribute__ ((section (".ext_sram")));	//定义最大屏分辨�
+  14:HADRWARE/LCD/ltdc.c **** #endif
+  15:HADRWARE/LCD/ltdc.c **** 	
+  16:HADRWARE/LCD/ltdc.c **** u32 *ltdc_framebuf[2];					//LTDC LCD帧缓存数组指针,必须指向对应大小的内存区域
+  17:HADRWARE/LCD/ltdc.c **** _ltdc_dev lcdltdc;						//管理LCD LTDC的重要参数
+  18:HADRWARE/LCD/ltdc.c **** 
+  19:HADRWARE/LCD/ltdc.c **** //LTDC开关
+  20:HADRWARE/LCD/ltdc.c **** //sw:1,打开;0,关闭
+  21:HADRWARE/LCD/ltdc.c **** void LTDC_Switch(u8 sw)
+  22:HADRWARE/LCD/ltdc.c **** {
+  30              		.loc 1 22 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  23:HADRWARE/LCD/ltdc.c **** 	if(sw==1)LTDC->GCR|=1<<0;			//打开LTDC
+  35              		.loc 1 23 2 view .LVU1
+ARM GAS  /tmp/ccRkYwN3.s 			page 2
+
+
+  36              		.loc 1 23 4 is_stmt 0 view .LVU2
+  37 0000 0128     		cmp	r0, #1
+  38 0002 06D0     		beq	.L4
+  24:HADRWARE/LCD/ltdc.c **** 	else if(sw==0)LTDC->GCR&=~(1<<0);	//关闭LTDC
+  39              		.loc 1 24 7 is_stmt 1 view .LVU3
+  40              		.loc 1 24 9 is_stmt 0 view .LVU4
+  41 0004 20B9     		cbnz	r0, .L1
+  42              		.loc 1 24 16 is_stmt 1 discriminator 1 view .LVU5
+  43              		.loc 1 24 25 is_stmt 0 discriminator 1 view .LVU6
+  44 0006 064A     		ldr	r2, .L5
+  45 0008 9369     		ldr	r3, [r2, #24]
+  46 000a 23F00103 		bic	r3, r3, #1
+  47 000e 9361     		str	r3, [r2, #24]
+  48              	.L1:
+  25:HADRWARE/LCD/ltdc.c **** }
+  49              		.loc 1 25 1 view .LVU7
+  50 0010 7047     		bx	lr
+  51              	.L4:
+  23:HADRWARE/LCD/ltdc.c **** 	if(sw==1)LTDC->GCR|=1<<0;			//打开LTDC
+  52              		.loc 1 23 11 is_stmt 1 discriminator 1 view .LVU8
+  23:HADRWARE/LCD/ltdc.c **** 	if(sw==1)LTDC->GCR|=1<<0;			//打开LTDC
+  53              		.loc 1 23 20 is_stmt 0 discriminator 1 view .LVU9
+  54 0012 034A     		ldr	r2, .L5
+  55 0014 9369     		ldr	r3, [r2, #24]
+  56 0016 43F00103 		orr	r3, r3, #1
+  57 001a 9361     		str	r3, [r2, #24]
+  58 001c 7047     		bx	lr
+  59              	.L6:
+  60 001e 00BF     		.align	2
+  61              	.L5:
+  62 0020 00680140 		.word	1073833984
+  63              		.cfi_endproc
+  64              	.LFE126:
+  66              		.section	.text.LTDC_Layer_Switch,"ax",%progbits
+  67              		.align	1
+  68              		.global	LTDC_Layer_Switch
+  69              		.syntax unified
+  70              		.thumb
+  71              		.thumb_func
+  72              		.fpu fpv4-sp-d16
+  74              	LTDC_Layer_Switch:
+  75              	.LVL1:
+  76              	.LFB127:
+  26:HADRWARE/LCD/ltdc.c **** 
+  27:HADRWARE/LCD/ltdc.c **** //开关指定层
+  28:HADRWARE/LCD/ltdc.c **** //layerx:层号;0,第一层;1,第二层;
+  29:HADRWARE/LCD/ltdc.c **** //sw:1,打开;0,关闭
+  30:HADRWARE/LCD/ltdc.c **** void LTDC_Layer_Switch(u8 layerx,u8 sw)
+  31:HADRWARE/LCD/ltdc.c **** {
+  77              		.loc 1 31 1 is_stmt 1 view -0
+  78              		.cfi_startproc
+  79              		@ args = 0, pretend = 0, frame = 0
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+  81              		@ link register save eliminated.
+  32:HADRWARE/LCD/ltdc.c **** 	if(sw==1)
+  82              		.loc 1 32 2 view .LVU11
+  83              		.loc 1 32 4 is_stmt 0 view .LVU12
+ARM GAS  /tmp/ccRkYwN3.s 			page 3
+
+
+  84 0000 0129     		cmp	r1, #1
+  85 0002 09D0     		beq	.L12
+  33:HADRWARE/LCD/ltdc.c **** 	{
+  34:HADRWARE/LCD/ltdc.c **** 		if(layerx==0)LTDC_Layer1->CR|=1<<0;		//开启层1
+  35:HADRWARE/LCD/ltdc.c **** 		else LTDC_Layer2->CR|=1<<0;				//开启层2
+  36:HADRWARE/LCD/ltdc.c **** 	}else if(sw==0)  
+  86              		.loc 1 36 8 is_stmt 1 view .LVU13
+  87              		.loc 1 36 10 is_stmt 0 view .LVU14
+  88 0004 81B9     		cbnz	r1, .L10
+  37:HADRWARE/LCD/ltdc.c **** 	{
+  38:HADRWARE/LCD/ltdc.c **** 		if(layerx==0)LTDC_Layer1->CR&=~(1<<0);	//关闭层1
+  89              		.loc 1 38 3 is_stmt 1 view .LVU15
+  90              		.loc 1 38 5 is_stmt 0 view .LVU16
+  91 0006 D8B9     		cbnz	r0, .L11
+  92              		.loc 1 38 16 is_stmt 1 discriminator 1 view .LVU17
+  93              		.loc 1 38 31 is_stmt 0 discriminator 1 view .LVU18
+  94 0008 104A     		ldr	r2, .L13
+  95 000a D2F88430 		ldr	r3, [r2, #132]
+  96 000e 23F00103 		bic	r3, r3, #1
+  97 0012 C2F88430 		str	r3, [r2, #132]
+  98 0016 07E0     		b	.L10
+  99              	.L12:
+  34:HADRWARE/LCD/ltdc.c **** 		else LTDC_Layer2->CR|=1<<0;				//开启层2
+ 100              		.loc 1 34 3 is_stmt 1 view .LVU19
+  34:HADRWARE/LCD/ltdc.c **** 		else LTDC_Layer2->CR|=1<<0;				//开启层2
+ 101              		.loc 1 34 5 is_stmt 0 view .LVU20
+ 102 0018 60B9     		cbnz	r0, .L9
+  34:HADRWARE/LCD/ltdc.c **** 		else LTDC_Layer2->CR|=1<<0;				//开启层2
+ 103              		.loc 1 34 16 is_stmt 1 discriminator 1 view .LVU21
+  34:HADRWARE/LCD/ltdc.c **** 		else LTDC_Layer2->CR|=1<<0;				//开启层2
+ 104              		.loc 1 34 31 is_stmt 0 discriminator 1 view .LVU22
+ 105 001a 0C4A     		ldr	r2, .L13
+ 106 001c D2F88430 		ldr	r3, [r2, #132]
+ 107 0020 43F00103 		orr	r3, r3, #1
+ 108 0024 C2F88430 		str	r3, [r2, #132]
+ 109              	.L10:
+  39:HADRWARE/LCD/ltdc.c **** 		else LTDC_Layer2->CR&=~(1<<0);			//关闭层2
+  40:HADRWARE/LCD/ltdc.c **** 	}
+  41:HADRWARE/LCD/ltdc.c **** 	LTDC->SRCR|=1<<0;							//重新加载配置
+ 110              		.loc 1 41 2 is_stmt 1 view .LVU23
+ 111              		.loc 1 41 12 is_stmt 0 view .LVU24
+ 112 0028 084A     		ldr	r2, .L13
+ 113 002a 536A     		ldr	r3, [r2, #36]
+ 114 002c 43F00103 		orr	r3, r3, #1
+ 115 0030 5362     		str	r3, [r2, #36]
+  42:HADRWARE/LCD/ltdc.c **** }
+ 116              		.loc 1 42 1 view .LVU25
+ 117 0032 7047     		bx	lr
+ 118              	.L9:
+  35:HADRWARE/LCD/ltdc.c **** 	}else if(sw==0)  
+ 119              		.loc 1 35 8 is_stmt 1 view .LVU26
+  35:HADRWARE/LCD/ltdc.c **** 	}else if(sw==0)  
+ 120              		.loc 1 35 23 is_stmt 0 view .LVU27
+ 121 0034 064A     		ldr	r2, .L13+4
+ 122 0036 5368     		ldr	r3, [r2, #4]
+ 123 0038 43F00103 		orr	r3, r3, #1
+ 124 003c 5360     		str	r3, [r2, #4]
+ARM GAS  /tmp/ccRkYwN3.s 			page 4
+
+
+ 125 003e F3E7     		b	.L10
+ 126              	.L11:
+  39:HADRWARE/LCD/ltdc.c **** 		else LTDC_Layer2->CR&=~(1<<0);			//关闭层2
+ 127              		.loc 1 39 8 is_stmt 1 view .LVU28
+  39:HADRWARE/LCD/ltdc.c **** 		else LTDC_Layer2->CR&=~(1<<0);			//关闭层2
+ 128              		.loc 1 39 23 is_stmt 0 view .LVU29
+ 129 0040 034A     		ldr	r2, .L13+4
+ 130 0042 5368     		ldr	r3, [r2, #4]
+ 131 0044 23F00103 		bic	r3, r3, #1
+ 132 0048 5360     		str	r3, [r2, #4]
+ 133 004a EDE7     		b	.L10
+ 134              	.L14:
+ 135              		.align	2
+ 136              	.L13:
+ 137 004c 00680140 		.word	1073833984
+ 138 0050 00690140 		.word	1073834240
+ 139              		.cfi_endproc
+ 140              	.LFE127:
+ 142              		.section	.text.LTDC_Select_Layer,"ax",%progbits
+ 143              		.align	1
+ 144              		.global	LTDC_Select_Layer
+ 145              		.syntax unified
+ 146              		.thumb
+ 147              		.thumb_func
+ 148              		.fpu fpv4-sp-d16
+ 150              	LTDC_Select_Layer:
+ 151              	.LVL2:
+ 152              	.LFB128:
+  43:HADRWARE/LCD/ltdc.c **** 
+  44:HADRWARE/LCD/ltdc.c **** //选择层
+  45:HADRWARE/LCD/ltdc.c **** //layerx:层号;0,第一层;1,第二层;
+  46:HADRWARE/LCD/ltdc.c **** void LTDC_Select_Layer(u8 layerx)
+  47:HADRWARE/LCD/ltdc.c **** {
+ 153              		.loc 1 47 1 is_stmt 1 view -0
+ 154              		.cfi_startproc
+ 155              		@ args = 0, pretend = 0, frame = 0
+ 156              		@ frame_needed = 0, uses_anonymous_args = 0
+ 157              		@ link register save eliminated.
+  48:HADRWARE/LCD/ltdc.c **** 	lcdltdc.activelayer=layerx;
+ 158              		.loc 1 48 2 view .LVU31
+ 159              		.loc 1 48 21 is_stmt 0 view .LVU32
+ 160 0000 014B     		ldr	r3, .L16
+ 161 0002 1875     		strb	r0, [r3, #20]
+  49:HADRWARE/LCD/ltdc.c **** }
+ 162              		.loc 1 49 1 view .LVU33
+ 163 0004 7047     		bx	lr
+ 164              	.L17:
+ 165 0006 00BF     		.align	2
+ 166              	.L16:
+ 167 0008 00000000 		.word	.LANCHOR0
+ 168              		.cfi_endproc
+ 169              	.LFE128:
+ 171              		.section	.text.LTDC_Display_Dir,"ax",%progbits
+ 172              		.align	1
+ 173              		.global	LTDC_Display_Dir
+ 174              		.syntax unified
+ 175              		.thumb
+ARM GAS  /tmp/ccRkYwN3.s 			page 5
+
+
+ 176              		.thumb_func
+ 177              		.fpu fpv4-sp-d16
+ 179              	LTDC_Display_Dir:
+ 180              	.LVL3:
+ 181              	.LFB129:
+  50:HADRWARE/LCD/ltdc.c **** 
+  51:HADRWARE/LCD/ltdc.c **** //设置LCD显示方向
+  52:HADRWARE/LCD/ltdc.c **** //dir:0,竖屏；1,横屏
+  53:HADRWARE/LCD/ltdc.c **** void LTDC_Display_Dir(u8 dir)
+  54:HADRWARE/LCD/ltdc.c **** {
+ 182              		.loc 1 54 1 is_stmt 1 view -0
+ 183              		.cfi_startproc
+ 184              		@ args = 0, pretend = 0, frame = 0
+ 185              		@ frame_needed = 0, uses_anonymous_args = 0
+ 186              		@ link register save eliminated.
+  55:HADRWARE/LCD/ltdc.c ****     lcdltdc.dir=dir; 	//显示方向
+ 187              		.loc 1 55 5 view .LVU35
+ 188              		.loc 1 55 16 is_stmt 0 view .LVU36
+ 189 0000 084B     		ldr	r3, .L22
+ 190 0002 5875     		strb	r0, [r3, #21]
+  56:HADRWARE/LCD/ltdc.c **** 	if(dir==0)			//竖屏
+ 191              		.loc 1 56 2 is_stmt 1 view .LVU37
+ 192              		.loc 1 56 4 is_stmt 0 view .LVU38
+ 193 0004 20B9     		cbnz	r0, .L19
+  57:HADRWARE/LCD/ltdc.c **** 	{
+  58:HADRWARE/LCD/ltdc.c **** 		lcdltdc.width=lcdltdc.pheight;
+ 194              		.loc 1 58 3 is_stmt 1 view .LVU39
+ 195              		.loc 1 58 24 is_stmt 0 view .LVU40
+ 196 0006 5A68     		ldr	r2, [r3, #4]
+ 197              		.loc 1 58 16 view .LVU41
+ 198 0008 DA82     		strh	r2, [r3, #22]	@ movhi
+  59:HADRWARE/LCD/ltdc.c **** 		lcdltdc.height=lcdltdc.pwidth;	
+ 199              		.loc 1 59 3 is_stmt 1 view .LVU42
+ 200              		.loc 1 59 25 is_stmt 0 view .LVU43
+ 201 000a 1A68     		ldr	r2, [r3]
+ 202              		.loc 1 59 17 view .LVU44
+ 203 000c 1A83     		strh	r2, [r3, #24]	@ movhi
+ 204 000e 7047     		bx	lr
+ 205              	.L19:
+  60:HADRWARE/LCD/ltdc.c **** 	}else if(dir==1)	//横屏
+ 206              		.loc 1 60 8 is_stmt 1 view .LVU45
+ 207              		.loc 1 60 10 is_stmt 0 view .LVU46
+ 208 0010 0128     		cmp	r0, #1
+ 209 0012 00D0     		beq	.L21
+ 210              	.L18:
+  61:HADRWARE/LCD/ltdc.c **** 	{
+  62:HADRWARE/LCD/ltdc.c **** 		lcdltdc.width=lcdltdc.pwidth;
+  63:HADRWARE/LCD/ltdc.c **** 		lcdltdc.height=lcdltdc.pheight;
+  64:HADRWARE/LCD/ltdc.c **** 	}
+  65:HADRWARE/LCD/ltdc.c **** }
+ 211              		.loc 1 65 1 view .LVU47
+ 212 0014 7047     		bx	lr
+ 213              	.L21:
+  62:HADRWARE/LCD/ltdc.c **** 		lcdltdc.height=lcdltdc.pheight;
+ 214              		.loc 1 62 3 is_stmt 1 view .LVU48
+  62:HADRWARE/LCD/ltdc.c **** 		lcdltdc.height=lcdltdc.pheight;
+ 215              		.loc 1 62 24 is_stmt 0 view .LVU49
+ARM GAS  /tmp/ccRkYwN3.s 			page 6
+
+
+ 216 0016 034B     		ldr	r3, .L22
+ 217 0018 1A68     		ldr	r2, [r3]
+  62:HADRWARE/LCD/ltdc.c **** 		lcdltdc.height=lcdltdc.pheight;
+ 218              		.loc 1 62 16 view .LVU50
+ 219 001a DA82     		strh	r2, [r3, #22]	@ movhi
+  63:HADRWARE/LCD/ltdc.c **** 	}
+ 220              		.loc 1 63 3 is_stmt 1 view .LVU51
+  63:HADRWARE/LCD/ltdc.c **** 	}
+ 221              		.loc 1 63 25 is_stmt 0 view .LVU52
+ 222 001c 5A68     		ldr	r2, [r3, #4]
+  63:HADRWARE/LCD/ltdc.c **** 	}
+ 223              		.loc 1 63 17 view .LVU53
+ 224 001e 1A83     		strh	r2, [r3, #24]	@ movhi
+ 225              		.loc 1 65 1 view .LVU54
+ 226 0020 F8E7     		b	.L18
+ 227              	.L23:
+ 228 0022 00BF     		.align	2
+ 229              	.L22:
+ 230 0024 00000000 		.word	.LANCHOR0
+ 231              		.cfi_endproc
+ 232              	.LFE129:
+ 234              		.section	.text.LTDC_Draw_Point,"ax",%progbits
+ 235              		.align	1
+ 236              		.global	LTDC_Draw_Point
+ 237              		.syntax unified
+ 238              		.thumb
+ 239              		.thumb_func
+ 240              		.fpu fpv4-sp-d16
+ 242              	LTDC_Draw_Point:
+ 243              	.LVL4:
+ 244              	.LFB130:
+  66:HADRWARE/LCD/ltdc.c **** 
+  67:HADRWARE/LCD/ltdc.c **** //画点函数
+  68:HADRWARE/LCD/ltdc.c **** //x,y:写入坐标
+  69:HADRWARE/LCD/ltdc.c **** //color:颜色值
+  70:HADRWARE/LCD/ltdc.c **** void LTDC_Draw_Point(u16 x,u16 y,u32 color)
+  71:HADRWARE/LCD/ltdc.c **** { 
+ 245              		.loc 1 71 1 is_stmt 1 view -0
+ 246              		.cfi_startproc
+ 247              		@ args = 0, pretend = 0, frame = 0
+ 248              		@ frame_needed = 0, uses_anonymous_args = 0
+ 249              		@ link register save eliminated.
+ 250              		.loc 1 71 1 is_stmt 0 view .LVU56
+ 251 0000 70B4     		push	{r4, r5, r6}
+ 252              	.LCFI0:
+ 253              		.cfi_def_cfa_offset 12
+ 254              		.cfi_offset 4, -12
+ 255              		.cfi_offset 5, -8
+ 256              		.cfi_offset 6, -4
+  72:HADRWARE/LCD/ltdc.c **** #if LCD_PIXFORMAT==LCD_PIXFORMAT_ARGB8888||LCD_PIXFORMAT==LCD_PIXFORMAT_RGB888
+  73:HADRWARE/LCD/ltdc.c **** 	if(lcdltdc.dir)	//横屏
+  74:HADRWARE/LCD/ltdc.c **** 	{
+  75:HADRWARE/LCD/ltdc.c ****         *(u32*)((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*y+x))=color
+  76:HADRWARE/LCD/ltdc.c **** 	}else 			//竖屏
+  77:HADRWARE/LCD/ltdc.c **** 	{
+  78:HADRWARE/LCD/ltdc.c ****         *(u32*)((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*(lcdltdc.ph
+  79:HADRWARE/LCD/ltdc.c **** 	}
+ARM GAS  /tmp/ccRkYwN3.s 			page 7
+
+
+  80:HADRWARE/LCD/ltdc.c **** #else
+  81:HADRWARE/LCD/ltdc.c **** 	if(lcdltdc.dir)	//横屏
+ 257              		.loc 1 81 2 is_stmt 1 view .LVU57
+ 258              		.loc 1 81 12 is_stmt 0 view .LVU58
+ 259 0002 104B     		ldr	r3, .L28
+ 260 0004 5B7D     		ldrb	r3, [r3, #21]	@ zero_extendqisi2
+ 261              		.loc 1 81 4 view .LVU59
+ 262 0006 6BB1     		cbz	r3, .L25
+  82:HADRWARE/LCD/ltdc.c **** 	{
+  83:HADRWARE/LCD/ltdc.c ****         *(u16*)((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*y+x))=color
+ 263              		.loc 1 83 9 is_stmt 1 view .LVU60
+ 264              		.loc 1 83 43 is_stmt 0 view .LVU61
+ 265 0008 0E4C     		ldr	r4, .L28
+ 266 000a 257D     		ldrb	r5, [r4, #20]	@ zero_extendqisi2
+ 267              		.loc 1 83 35 view .LVU62
+ 268 000c 0E4B     		ldr	r3, .L28+4
+ 269 000e 53F82550 		ldr	r5, [r3, r5, lsl #2]
+ 270              		.loc 1 83 64 view .LVU63
+ 271 0012 E369     		ldr	r3, [r4, #28]
+ 272              		.loc 1 83 81 view .LVU64
+ 273 0014 2468     		ldr	r4, [r4]
+ 274              		.loc 1 83 90 view .LVU65
+ 275 0016 04FB0100 		mla	r0, r4, r1, r0
+ 276              	.LVL5:
+ 277              		.loc 1 83 72 view .LVU66
+ 278 001a 03FB00F0 		mul	r0, r3, r0
+ 279              		.loc 1 83 94 view .LVU67
+ 280 001e 2A52     		strh	r2, [r5, r0]	@ movhi
+ 281              	.LVL6:
+ 282              	.L24:
+  84:HADRWARE/LCD/ltdc.c **** 	}else 			//竖屏
+  85:HADRWARE/LCD/ltdc.c **** 	{
+  86:HADRWARE/LCD/ltdc.c ****         *(u16*)((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*(lcdltdc.ph
+  87:HADRWARE/LCD/ltdc.c **** 	}
+  88:HADRWARE/LCD/ltdc.c **** #endif
+  89:HADRWARE/LCD/ltdc.c **** }
+ 283              		.loc 1 89 1 view .LVU68
+ 284 0020 70BC     		pop	{r4, r5, r6}
+ 285              	.LCFI1:
+ 286              		.cfi_remember_state
+ 287              		.cfi_restore 6
+ 288              		.cfi_restore 5
+ 289              		.cfi_restore 4
+ 290              		.cfi_def_cfa_offset 0
+ 291 0022 7047     		bx	lr
+ 292              	.LVL7:
+ 293              	.L25:
+ 294              	.LCFI2:
+ 295              		.cfi_restore_state
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 296              		.loc 1 86 9 is_stmt 1 view .LVU69
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 297              		.loc 1 86 43 is_stmt 0 view .LVU70
+ 298 0024 074B     		ldr	r3, .L28
+ 299 0026 1D7D     		ldrb	r5, [r3, #20]	@ zero_extendqisi2
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 300              		.loc 1 86 35 view .LVU71
+ARM GAS  /tmp/ccRkYwN3.s 			page 8
+
+
+ 301 0028 074C     		ldr	r4, .L28+4
+ 302 002a 54F82550 		ldr	r5, [r4, r5, lsl #2]
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 303              		.loc 1 86 64 view .LVU72
+ 304 002e DC69     		ldr	r4, [r3, #28]
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 305              		.loc 1 86 81 view .LVU73
+ 306 0030 1E68     		ldr	r6, [r3]
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 307              		.loc 1 86 97 view .LVU74
+ 308 0032 5B68     		ldr	r3, [r3, #4]
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 309              		.loc 1 86 105 view .LVU75
+ 310 0034 181A     		subs	r0, r3, r0
+ 311              	.LVL8:
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 312              		.loc 1 86 107 view .LVU76
+ 313 0036 0138     		subs	r0, r0, #1
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 314              		.loc 1 86 110 view .LVU77
+ 315 0038 00FB0611 		mla	r1, r0, r6, r1
+ 316              	.LVL9:
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 317              		.loc 1 86 72 view .LVU78
+ 318 003c 04FB01F1 		mul	r1, r4, r1
+  86:HADRWARE/LCD/ltdc.c **** 	}
+ 319              		.loc 1 86 114 view .LVU79
+ 320 0040 6A52     		strh	r2, [r5, r1]	@ movhi
+ 321              		.loc 1 89 1 view .LVU80
+ 322 0042 EDE7     		b	.L24
+ 323              	.L29:
+ 324              		.align	2
+ 325              	.L28:
+ 326 0044 00000000 		.word	.LANCHOR0
+ 327 0048 00000000 		.word	.LANCHOR1
+ 328              		.cfi_endproc
+ 329              	.LFE130:
+ 331              		.section	.text.LTDC_Read_Point,"ax",%progbits
+ 332              		.align	1
+ 333              		.global	LTDC_Read_Point
+ 334              		.syntax unified
+ 335              		.thumb
+ 336              		.thumb_func
+ 337              		.fpu fpv4-sp-d16
+ 339              	LTDC_Read_Point:
+ 340              	.LVL10:
+ 341              	.LFB131:
+  90:HADRWARE/LCD/ltdc.c **** 
+  91:HADRWARE/LCD/ltdc.c **** //读点函数
+  92:HADRWARE/LCD/ltdc.c **** //x,y:读取点的坐标
+  93:HADRWARE/LCD/ltdc.c **** //返回值:颜色值
+  94:HADRWARE/LCD/ltdc.c **** u32 LTDC_Read_Point(u16 x,u16 y)
+  95:HADRWARE/LCD/ltdc.c **** { 
+ 342              		.loc 1 95 1 is_stmt 1 view -0
+ 343              		.cfi_startproc
+ 344              		@ args = 0, pretend = 0, frame = 0
+ 345              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccRkYwN3.s 			page 9
+
+
+ 346              		@ link register save eliminated.
+ 347              		.loc 1 95 1 is_stmt 0 view .LVU82
+ 348 0000 30B4     		push	{r4, r5}
+ 349              	.LCFI3:
+ 350              		.cfi_def_cfa_offset 8
+ 351              		.cfi_offset 4, -8
+ 352              		.cfi_offset 5, -4
+  96:HADRWARE/LCD/ltdc.c **** #if LCD_PIXFORMAT==LCD_PIXFORMAT_ARGB8888||LCD_PIXFORMAT==LCD_PIXFORMAT_RGB888
+  97:HADRWARE/LCD/ltdc.c **** 	if(lcdltdc.dir)	//横屏
+  98:HADRWARE/LCD/ltdc.c **** 	{
+  99:HADRWARE/LCD/ltdc.c **** 		return *(u32*)((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*y+x));
+ 100:HADRWARE/LCD/ltdc.c **** 	}else 			//竖屏
+ 101:HADRWARE/LCD/ltdc.c **** 	{
+ 102:HADRWARE/LCD/ltdc.c **** 		return *(u32*)((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*(lcdltdc.p
+ 103:HADRWARE/LCD/ltdc.c **** 	}
+ 104:HADRWARE/LCD/ltdc.c **** #else
+ 105:HADRWARE/LCD/ltdc.c **** 	if(lcdltdc.dir)	//横屏
+ 353              		.loc 1 105 2 is_stmt 1 view .LVU83
+ 354              		.loc 1 105 12 is_stmt 0 view .LVU84
+ 355 0002 104B     		ldr	r3, .L34
+ 356 0004 5B7D     		ldrb	r3, [r3, #21]	@ zero_extendqisi2
+ 357              		.loc 1 105 4 view .LVU85
+ 358 0006 6BB1     		cbz	r3, .L31
+ 106:HADRWARE/LCD/ltdc.c **** 	{
+ 107:HADRWARE/LCD/ltdc.c **** 		return *(u16*)((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*y+x));
+ 359              		.loc 1 107 3 is_stmt 1 view .LVU86
+ 360              		.loc 1 107 44 is_stmt 0 view .LVU87
+ 361 0008 0E4A     		ldr	r2, .L34
+ 362 000a 147D     		ldrb	r4, [r2, #20]	@ zero_extendqisi2
+ 363              		.loc 1 107 36 view .LVU88
+ 364 000c 0E4B     		ldr	r3, .L34+4
+ 365 000e 53F82440 		ldr	r4, [r3, r4, lsl #2]
+ 366              		.loc 1 107 65 view .LVU89
+ 367 0012 D369     		ldr	r3, [r2, #28]
+ 368              		.loc 1 107 82 view .LVU90
+ 369 0014 1268     		ldr	r2, [r2]
+ 370              		.loc 1 107 91 view .LVU91
+ 371 0016 02FB0101 		mla	r1, r2, r1, r0
+ 372              	.LVL11:
+ 373              		.loc 1 107 73 view .LVU92
+ 374 001a 03FB01F1 		mul	r1, r3, r1
+ 375              		.loc 1 107 10 view .LVU93
+ 376 001e 605A     		ldrh	r0, [r4, r1]
+ 377              	.LVL12:
+ 378              	.L30:
+ 108:HADRWARE/LCD/ltdc.c **** 	}else 			//竖屏
+ 109:HADRWARE/LCD/ltdc.c **** 	{
+ 110:HADRWARE/LCD/ltdc.c **** 		return *(u16*)((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*(lcdltdc.p
+ 111:HADRWARE/LCD/ltdc.c **** 	}
+ 112:HADRWARE/LCD/ltdc.c **** #endif 
+ 113:HADRWARE/LCD/ltdc.c **** }
+ 379              		.loc 1 113 1 view .LVU94
+ 380 0020 30BC     		pop	{r4, r5}
+ 381              	.LCFI4:
+ 382              		.cfi_remember_state
+ 383              		.cfi_restore 5
+ 384              		.cfi_restore 4
+ARM GAS  /tmp/ccRkYwN3.s 			page 10
+
+
+ 385              		.cfi_def_cfa_offset 0
+ 386 0022 7047     		bx	lr
+ 387              	.LVL13:
+ 388              	.L31:
+ 389              	.LCFI5:
+ 390              		.cfi_restore_state
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 391              		.loc 1 110 3 is_stmt 1 view .LVU95
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 392              		.loc 1 110 44 is_stmt 0 view .LVU96
+ 393 0024 074B     		ldr	r3, .L34
+ 394 0026 1C7D     		ldrb	r4, [r3, #20]	@ zero_extendqisi2
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 395              		.loc 1 110 36 view .LVU97
+ 396 0028 074A     		ldr	r2, .L34+4
+ 397 002a 52F82440 		ldr	r4, [r2, r4, lsl #2]
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 398              		.loc 1 110 65 view .LVU98
+ 399 002e DA69     		ldr	r2, [r3, #28]
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 400              		.loc 1 110 82 view .LVU99
+ 401 0030 1D68     		ldr	r5, [r3]
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 402              		.loc 1 110 98 view .LVU100
+ 403 0032 5B68     		ldr	r3, [r3, #4]
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 404              		.loc 1 110 106 view .LVU101
+ 405 0034 181A     		subs	r0, r3, r0
+ 406              	.LVL14:
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 407              		.loc 1 110 108 view .LVU102
+ 408 0036 0138     		subs	r0, r0, #1
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 409              		.loc 1 110 111 view .LVU103
+ 410 0038 00FB0511 		mla	r1, r0, r5, r1
+ 411              	.LVL15:
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 412              		.loc 1 110 73 view .LVU104
+ 413 003c 02FB01F1 		mul	r1, r2, r1
+ 110:HADRWARE/LCD/ltdc.c **** 	}
+ 414              		.loc 1 110 10 view .LVU105
+ 415 0040 605A     		ldrh	r0, [r4, r1]
+ 416 0042 EDE7     		b	.L30
+ 417              	.L35:
+ 418              		.align	2
+ 419              	.L34:
+ 420 0044 00000000 		.word	.LANCHOR0
+ 421 0048 00000000 		.word	.LANCHOR1
+ 422              		.cfi_endproc
+ 423              	.LFE131:
+ 425              		.section	.text.LTDC_Fill,"ax",%progbits
+ 426              		.align	1
+ 427              		.global	LTDC_Fill
+ 428              		.syntax unified
+ 429              		.thumb
+ 430              		.thumb_func
+ 431              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccRkYwN3.s 			page 11
+
+
+ 433              	LTDC_Fill:
+ 434              	.LVL16:
+ 435              	.LFB132:
+ 114:HADRWARE/LCD/ltdc.c **** 
+ 115:HADRWARE/LCD/ltdc.c **** //LTDC填充矩形,DMA2D填充
+ 116:HADRWARE/LCD/ltdc.c **** //(sx,sy),(ex,ey):填充矩形对角坐标,区域大小为:(ex-sx+1)*(ey-sy+1)   
+ 117:HADRWARE/LCD/ltdc.c **** //注意:sx,ex,不能大于lcddev.width-1;sy,ey,不能大于lcddev.height-1!!!
+ 118:HADRWARE/LCD/ltdc.c **** //color:要填充的颜色
+ 119:HADRWARE/LCD/ltdc.c **** void LTDC_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u32 color)
+ 120:HADRWARE/LCD/ltdc.c **** { 
+ 436              		.loc 1 120 1 is_stmt 1 view -0
+ 437              		.cfi_startproc
+ 438              		@ args = 4, pretend = 0, frame = 0
+ 439              		@ frame_needed = 0, uses_anonymous_args = 0
+ 440              		.loc 1 120 1 is_stmt 0 view .LVU107
+ 441 0000 70B5     		push	{r4, r5, r6, lr}
+ 442              	.LCFI6:
+ 443              		.cfi_def_cfa_offset 16
+ 444              		.cfi_offset 4, -16
+ 445              		.cfi_offset 5, -12
+ 446              		.cfi_offset 6, -8
+ 447              		.cfi_offset 14, -4
+ 448 0002 0446     		mov	r4, r0
+ 449 0004 9446     		mov	ip, r2
+ 450 0006 1A46     		mov	r2, r3
+ 451              	.LVL17:
+ 121:HADRWARE/LCD/ltdc.c **** 	u32 psx,psy,pex,pey;	//以LCD面板为基准的坐标系,不随横竖屏变化而变化
+ 452              		.loc 1 121 2 is_stmt 1 view .LVU108
+ 122:HADRWARE/LCD/ltdc.c **** 	u32 timeout=0; 
+ 453              		.loc 1 122 2 view .LVU109
+ 123:HADRWARE/LCD/ltdc.c **** 	u16 offline;
+ 454              		.loc 1 123 2 view .LVU110
+ 124:HADRWARE/LCD/ltdc.c **** 	u32 addr; 
+ 455              		.loc 1 124 2 view .LVU111
+ 125:HADRWARE/LCD/ltdc.c **** 	//坐标系转换
+ 126:HADRWARE/LCD/ltdc.c **** 	if(lcdltdc.dir)	//横屏
+ 456              		.loc 1 126 2 view .LVU112
+ 457              		.loc 1 126 12 is_stmt 0 view .LVU113
+ 458 0008 294B     		ldr	r3, .L43
+ 459              	.LVL18:
+ 460              		.loc 1 126 12 view .LVU114
+ 461 000a 5B7D     		ldrb	r3, [r3, #21]	@ zero_extendqisi2
+ 462              		.loc 1 126 4 view .LVU115
+ 463 000c 002B     		cmp	r3, #0
+ 464 000e 43D0     		beq	.L37
+ 127:HADRWARE/LCD/ltdc.c **** 	{
+ 128:HADRWARE/LCD/ltdc.c **** 		psx=sx;psy=sy;
+ 465              		.loc 1 128 3 is_stmt 1 view .LVU116
+ 466              		.loc 1 128 6 is_stmt 0 view .LVU117
+ 467 0010 8646     		mov	lr, r0
+ 468              	.LVL19:
+ 469              		.loc 1 128 10 is_stmt 1 view .LVU118
+ 129:HADRWARE/LCD/ltdc.c **** 		pex=ex;pey=ey;
+ 470              		.loc 1 129 3 view .LVU119
+ 471              		.loc 1 129 10 view .LVU120
+ 472              		.loc 1 129 13 is_stmt 0 view .LVU121
+ 473 0012 1046     		mov	r0, r2
+ARM GAS  /tmp/ccRkYwN3.s 			page 12
+
+
+ 474              	.LVL20:
+ 475              	.L38:
+ 130:HADRWARE/LCD/ltdc.c **** 	}else			//竖屏
+ 131:HADRWARE/LCD/ltdc.c **** 	{
+ 132:HADRWARE/LCD/ltdc.c **** 		psx=sy;psy=lcdltdc.pheight-ex-1;
+ 133:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 134:HADRWARE/LCD/ltdc.c **** 	} 
+ 135:HADRWARE/LCD/ltdc.c **** 	offline=lcdltdc.pwidth-(pex-psx+1);
+ 476              		.loc 1 135 2 is_stmt 1 view .LVU122
+ 477              		.loc 1 135 17 is_stmt 0 view .LVU123
+ 478 0014 264D     		ldr	r5, .L43
+ 479 0016 2B68     		ldr	r3, [r5]
+ 480              		.loc 1 135 29 view .LVU124
+ 481 0018 AEEB0C02 		sub	r2, lr, ip
+ 482              		.loc 1 135 24 view .LVU125
+ 483 001c 13FA82F2 		uxtah	r2, r3, r2
+ 484 0020 92B2     		uxth	r2, r2
+ 485              		.loc 1 135 9 view .LVU126
+ 486 0022 013A     		subs	r2, r2, #1
+ 487 0024 92B2     		uxth	r2, r2
+ 488              	.LVL21:
+ 136:HADRWARE/LCD/ltdc.c **** 	addr=((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*psy+psx));
+ 489              		.loc 1 136 2 is_stmt 1 view .LVU127
+ 490              		.loc 1 136 34 is_stmt 0 view .LVU128
+ 491 0026 2E7D     		ldrb	r6, [r5, #20]	@ zero_extendqisi2
+ 492              		.loc 1 136 26 view .LVU129
+ 493 0028 224C     		ldr	r4, .L43+4
+ 494 002a 54F82640 		ldr	r4, [r4, r6, lsl #2]
+ 495              		.loc 1 136 55 view .LVU130
+ 496 002e ED69     		ldr	r5, [r5, #28]
+ 497              		.loc 1 136 83 view .LVU131
+ 498 0030 01FB03E3 		mla	r3, r1, r3, lr
+ 499              		.loc 1 136 6 view .LVU132
+ 500 0034 03FB0544 		mla	r4, r3, r5, r4
+ 501              	.LVL22:
+ 137:HADRWARE/LCD/ltdc.c **** 	RCC->AHB1ENR|=1<<23;			//使能DM2D时钟
+ 502              		.loc 1 137 2 is_stmt 1 view .LVU133
+ 503              		.loc 1 137 14 is_stmt 0 view .LVU134
+ 504 0038 1F4D     		ldr	r5, .L43+8
+ 505 003a 2B6B     		ldr	r3, [r5, #48]
+ 506 003c 43F40003 		orr	r3, r3, #8388608
+ 507 0040 2B63     		str	r3, [r5, #48]
+ 508              	.LVL23:
+ 138:HADRWARE/LCD/ltdc.c **** 	DMA2D->CR&=~(1<<0);				//先停止DMA2D
+ 509              		.loc 1 138 2 is_stmt 1 view .LVU135
+ 510              		.loc 1 138 11 is_stmt 0 view .LVU136
+ 511 0042 1E4B     		ldr	r3, .L43+12
+ 512 0044 1D68     		ldr	r5, [r3]
+ 513 0046 25F00105 		bic	r5, r5, #1
+ 514 004a 1D60     		str	r5, [r3]
+ 139:HADRWARE/LCD/ltdc.c **** 	DMA2D->CR=3<<16;				//寄存器到存储器模式
+ 515              		.loc 1 139 2 is_stmt 1 view .LVU137
+ 516              		.loc 1 139 11 is_stmt 0 view .LVU138
+ 517 004c 4FF44035 		mov	r5, #196608
+ 518 0050 1D60     		str	r5, [r3]
+ 140:HADRWARE/LCD/ltdc.c **** 	DMA2D->OPFCCR=LCD_PIXFORMAT;	//设置颜色格式
+ 519              		.loc 1 140 2 is_stmt 1 view .LVU139
+ARM GAS  /tmp/ccRkYwN3.s 			page 13
+
+
+ 520              		.loc 1 140 15 is_stmt 0 view .LVU140
+ 521 0052 0225     		movs	r5, #2
+ 522 0054 5D63     		str	r5, [r3, #52]
+ 141:HADRWARE/LCD/ltdc.c **** 	DMA2D->OOR=offline;				//设置行偏移 
+ 523              		.loc 1 141 2 is_stmt 1 view .LVU141
+ 524              		.loc 1 141 12 is_stmt 0 view .LVU142
+ 525 0056 1A64     		str	r2, [r3, #64]
+ 142:HADRWARE/LCD/ltdc.c **** 	DMA2D->OMAR=addr;				//输出存储器地址
+ 526              		.loc 1 142 2 is_stmt 1 view .LVU143
+ 527              		.loc 1 142 13 is_stmt 0 view .LVU144
+ 528 0058 DC63     		str	r4, [r3, #60]
+ 143:HADRWARE/LCD/ltdc.c **** 	DMA2D->NLR=(pey-psy+1)|((pex-psx+1)<<16);	//设定行数寄存器
+ 529              		.loc 1 143 2 is_stmt 1 view .LVU145
+ 530              		.loc 1 143 17 is_stmt 0 view .LVU146
+ 531 005a 421A     		subs	r2, r0, r1
+ 532              	.LVL24:
+ 533              		.loc 1 143 21 view .LVU147
+ 534 005c 0132     		adds	r2, r2, #1
+ 535              		.loc 1 143 30 view .LVU148
+ 536 005e ACEB0E0C 		sub	ip, ip, lr
+ 537              	.LVL25:
+ 538              		.loc 1 143 34 view .LVU149
+ 539 0062 0CF1010C 		add	ip, ip, #1
+ 540              		.loc 1 143 24 view .LVU150
+ 541 0066 42EA0C42 		orr	r2, r2, ip, lsl #16
+ 542              		.loc 1 143 12 view .LVU151
+ 543 006a 5A64     		str	r2, [r3, #68]
+ 144:HADRWARE/LCD/ltdc.c **** 	DMA2D->OCOLR=color;				//设定输出颜色寄存器 
+ 544              		.loc 1 144 2 is_stmt 1 view .LVU152
+ 545              		.loc 1 144 14 is_stmt 0 view .LVU153
+ 546 006c 049A     		ldr	r2, [sp, #16]
+ 547 006e 9A63     		str	r2, [r3, #56]
+ 145:HADRWARE/LCD/ltdc.c **** 	DMA2D->CR|=1<<0;				//启动DMA2D
+ 548              		.loc 1 145 2 is_stmt 1 view .LVU154
+ 549              		.loc 1 145 11 is_stmt 0 view .LVU155
+ 550 0070 1A68     		ldr	r2, [r3]
+ 551 0072 42F00102 		orr	r2, r2, #1
+ 552 0076 1A60     		str	r2, [r3]
+ 146:HADRWARE/LCD/ltdc.c **** 	while((DMA2D->ISR&(1<<1))==0)	//等待传输完成
+ 553              		.loc 1 146 2 is_stmt 1 view .LVU156
+ 122:HADRWARE/LCD/ltdc.c **** 	u16 offline;
+ 554              		.loc 1 122 6 is_stmt 0 view .LVU157
+ 555 0078 0023     		movs	r3, #0
+ 556              	.LVL26:
+ 557              	.L39:
+ 558              		.loc 1 146 7 is_stmt 1 view .LVU158
+ 559              		.loc 1 146 14 is_stmt 0 view .LVU159
+ 560 007a 104A     		ldr	r2, .L43+12
+ 561 007c 5268     		ldr	r2, [r2, #4]
+ 562              		.loc 1 146 7 view .LVU160
+ 563 007e 12F0020F 		tst	r2, #2
+ 564 0082 03D1     		bne	.L40
+ 147:HADRWARE/LCD/ltdc.c **** 	{
+ 148:HADRWARE/LCD/ltdc.c **** 		timeout++;
+ 565              		.loc 1 148 3 is_stmt 1 view .LVU161
+ 566              		.loc 1 148 10 is_stmt 0 view .LVU162
+ 567 0084 0133     		adds	r3, r3, #1
+ARM GAS  /tmp/ccRkYwN3.s 			page 14
+
+
+ 568              	.LVL27:
+ 149:HADRWARE/LCD/ltdc.c **** 		if(timeout>0X1FFFFF)break;	//超时退出
+ 569              		.loc 1 149 3 is_stmt 1 view .LVU163
+ 570              		.loc 1 149 5 is_stmt 0 view .LVU164
+ 571 0086 B3F5001F 		cmp	r3, #2097152
+ 572 008a F6D3     		bcc	.L39
+ 573              	.L40:
+ 150:HADRWARE/LCD/ltdc.c **** 	}  
+ 151:HADRWARE/LCD/ltdc.c **** 	DMA2D->IFCR|=1<<1;				//清除传输完成标志 	
+ 574              		.loc 1 151 2 is_stmt 1 view .LVU165
+ 575              		.loc 1 151 13 is_stmt 0 view .LVU166
+ 576 008c 0B4A     		ldr	r2, .L43+12
+ 577 008e 9368     		ldr	r3, [r2, #8]
+ 578              	.LVL28:
+ 579              		.loc 1 151 13 view .LVU167
+ 580 0090 43F00203 		orr	r3, r3, #2
+ 581 0094 9360     		str	r3, [r2, #8]
+ 152:HADRWARE/LCD/ltdc.c **** }
+ 582              		.loc 1 152 1 view .LVU168
+ 583 0096 70BD     		pop	{r4, r5, r6, pc}
+ 584              	.LVL29:
+ 585              	.L37:
+ 132:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 586              		.loc 1 132 3 is_stmt 1 view .LVU169
+ 132:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 587              		.loc 1 132 6 is_stmt 0 view .LVU170
+ 588 0098 8E46     		mov	lr, r1
+ 589              	.LVL30:
+ 132:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 590              		.loc 1 132 10 is_stmt 1 view .LVU171
+ 132:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 591              		.loc 1 132 21 is_stmt 0 view .LVU172
+ 592 009a 054B     		ldr	r3, .L43
+ 593 009c 5868     		ldr	r0, [r3, #4]
+ 594              	.LVL31:
+ 132:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 595              		.loc 1 132 29 view .LVU173
+ 596 009e A0EB0C0C 		sub	ip, r0, ip
+ 132:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 597              		.loc 1 132 13 view .LVU174
+ 598 00a2 0CF1FF31 		add	r1, ip, #-1
+ 599              	.LVL32:
+ 133:HADRWARE/LCD/ltdc.c **** 	} 
+ 600              		.loc 1 133 3 is_stmt 1 view .LVU175
+ 133:HADRWARE/LCD/ltdc.c **** 	} 
+ 601              		.loc 1 133 6 is_stmt 0 view .LVU176
+ 602 00a6 9446     		mov	ip, r2
+ 603              	.LVL33:
+ 133:HADRWARE/LCD/ltdc.c **** 	} 
+ 604              		.loc 1 133 10 is_stmt 1 view .LVU177
+ 133:HADRWARE/LCD/ltdc.c **** 	} 
+ 605              		.loc 1 133 29 is_stmt 0 view .LVU178
+ 606 00a8 001B     		subs	r0, r0, r4
+ 133:HADRWARE/LCD/ltdc.c **** 	} 
+ 607              		.loc 1 133 13 view .LVU179
+ 608 00aa 0138     		subs	r0, r0, #1
+ 609              	.LVL34:
+ARM GAS  /tmp/ccRkYwN3.s 			page 15
+
+
+ 133:HADRWARE/LCD/ltdc.c **** 	} 
+ 610              		.loc 1 133 13 view .LVU180
+ 611 00ac B2E7     		b	.L38
+ 612              	.L44:
+ 613 00ae 00BF     		.align	2
+ 614              	.L43:
+ 615 00b0 00000000 		.word	.LANCHOR0
+ 616 00b4 00000000 		.word	.LANCHOR1
+ 617 00b8 00380240 		.word	1073887232
+ 618 00bc 00B00240 		.word	1073917952
+ 619              		.cfi_endproc
+ 620              	.LFE132:
+ 622              		.section	.text.LTDC_Color_Fill,"ax",%progbits
+ 623              		.align	1
+ 624              		.global	LTDC_Color_Fill
+ 625              		.syntax unified
+ 626              		.thumb
+ 627              		.thumb_func
+ 628              		.fpu fpv4-sp-d16
+ 630              	LTDC_Color_Fill:
+ 631              	.LVL35:
+ 632              	.LFB133:
+ 153:HADRWARE/LCD/ltdc.c **** 
+ 154:HADRWARE/LCD/ltdc.c **** //在指定区域内填充指定颜色块,DMA2D填充	
+ 155:HADRWARE/LCD/ltdc.c **** //此函数仅支持u16,RGB565格式的颜色数组填充.
+ 156:HADRWARE/LCD/ltdc.c **** //(sx,sy),(ex,ey):填充矩形对角坐标,区域大小为:(ex-sx+1)*(ey-sy+1)  
+ 157:HADRWARE/LCD/ltdc.c **** //注意:sx,ex,不能大于lcddev.width-1;sy,ey,不能大于lcddev.height-1!!!
+ 158:HADRWARE/LCD/ltdc.c **** //color:要填充的颜色数组首地址
+ 159:HADRWARE/LCD/ltdc.c **** void LTDC_Color_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 *color)
+ 160:HADRWARE/LCD/ltdc.c **** {
+ 633              		.loc 1 160 1 is_stmt 1 view -0
+ 634              		.cfi_startproc
+ 635              		@ args = 4, pretend = 0, frame = 0
+ 636              		@ frame_needed = 0, uses_anonymous_args = 0
+ 637              		.loc 1 160 1 is_stmt 0 view .LVU182
+ 638 0000 70B5     		push	{r4, r5, r6, lr}
+ 639              	.LCFI7:
+ 640              		.cfi_def_cfa_offset 16
+ 641              		.cfi_offset 4, -16
+ 642              		.cfi_offset 5, -12
+ 643              		.cfi_offset 6, -8
+ 644              		.cfi_offset 14, -4
+ 645 0002 9446     		mov	ip, r2
+ 161:HADRWARE/LCD/ltdc.c **** 	u32 psx,psy,pex,pey;	//以LCD面板为基准的坐标系,不随横竖屏变化而变化
+ 646              		.loc 1 161 2 is_stmt 1 view .LVU183
+ 162:HADRWARE/LCD/ltdc.c **** 	u32 timeout=0; 
+ 647              		.loc 1 162 2 view .LVU184
+ 648              	.LVL36:
+ 163:HADRWARE/LCD/ltdc.c **** 	u16 offline;
+ 649              		.loc 1 163 2 view .LVU185
+ 164:HADRWARE/LCD/ltdc.c **** 	u32 addr; 
+ 650              		.loc 1 164 2 view .LVU186
+ 165:HADRWARE/LCD/ltdc.c **** 	//坐标系转换
+ 166:HADRWARE/LCD/ltdc.c **** 	if(lcdltdc.dir)	//横屏
+ 651              		.loc 1 166 2 view .LVU187
+ 652              		.loc 1 166 12 is_stmt 0 view .LVU188
+ 653 0004 2A4A     		ldr	r2, .L52
+ARM GAS  /tmp/ccRkYwN3.s 			page 16
+
+
+ 654              	.LVL37:
+ 655              		.loc 1 166 12 view .LVU189
+ 656 0006 527D     		ldrb	r2, [r2, #21]	@ zero_extendqisi2
+ 657              		.loc 1 166 4 view .LVU190
+ 658 0008 002A     		cmp	r2, #0
+ 659 000a 45D0     		beq	.L46
+ 167:HADRWARE/LCD/ltdc.c **** 	{
+ 168:HADRWARE/LCD/ltdc.c **** 		psx=sx;psy=sy;
+ 660              		.loc 1 168 3 is_stmt 1 view .LVU191
+ 661              		.loc 1 168 6 is_stmt 0 view .LVU192
+ 662 000c 0446     		mov	r4, r0
+ 663              	.LVL38:
+ 664              		.loc 1 168 10 is_stmt 1 view .LVU193
+ 665              		.loc 1 168 13 is_stmt 0 view .LVU194
+ 666 000e 8E46     		mov	lr, r1
+ 667              	.LVL39:
+ 169:HADRWARE/LCD/ltdc.c **** 		pex=ex;pey=ey;
+ 668              		.loc 1 169 3 is_stmt 1 view .LVU195
+ 669              		.loc 1 169 10 view .LVU196
+ 670              		.loc 1 169 13 is_stmt 0 view .LVU197
+ 671 0010 1846     		mov	r0, r3
+ 672              	.LVL40:
+ 673              	.L47:
+ 170:HADRWARE/LCD/ltdc.c **** 	}else			//竖屏
+ 171:HADRWARE/LCD/ltdc.c **** 	{
+ 172:HADRWARE/LCD/ltdc.c **** 		psx=sy;psy=lcdltdc.pheight-ex-1;
+ 173:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 174:HADRWARE/LCD/ltdc.c **** 	}
+ 175:HADRWARE/LCD/ltdc.c **** 	offline=lcdltdc.pwidth-(pex-psx+1);
+ 674              		.loc 1 175 2 is_stmt 1 view .LVU198
+ 675              		.loc 1 175 17 is_stmt 0 view .LVU199
+ 676 0012 274D     		ldr	r5, .L52
+ 677 0014 2A68     		ldr	r2, [r5]
+ 678              		.loc 1 175 29 view .LVU200
+ 679 0016 A4EB0C03 		sub	r3, r4, ip
+ 680              	.LVL41:
+ 681              		.loc 1 175 24 view .LVU201
+ 682 001a 12FA83F3 		uxtah	r3, r2, r3
+ 683 001e 9BB2     		uxth	r3, r3
+ 684              		.loc 1 175 9 view .LVU202
+ 685 0020 013B     		subs	r3, r3, #1
+ 686 0022 99B2     		uxth	r1, r3
+ 687              	.LVL42:
+ 176:HADRWARE/LCD/ltdc.c **** 	addr=((u32)ltdc_framebuf[lcdltdc.activelayer]+lcdltdc.pixsize*(lcdltdc.pwidth*psy+psx));
+ 688              		.loc 1 176 2 is_stmt 1 view .LVU203
+ 689              		.loc 1 176 34 is_stmt 0 view .LVU204
+ 690 0024 2E7D     		ldrb	r6, [r5, #20]	@ zero_extendqisi2
+ 691              		.loc 1 176 26 view .LVU205
+ 692 0026 234B     		ldr	r3, .L52+4
+ 693 0028 53F82630 		ldr	r3, [r3, r6, lsl #2]
+ 694              		.loc 1 176 55 view .LVU206
+ 695 002c ED69     		ldr	r5, [r5, #28]
+ 696              		.loc 1 176 83 view .LVU207
+ 697 002e 0EFB0242 		mla	r2, lr, r2, r4
+ 698              		.loc 1 176 6 view .LVU208
+ 699 0032 02FB0535 		mla	r5, r2, r5, r3
+ 700              	.LVL43:
+ARM GAS  /tmp/ccRkYwN3.s 			page 17
+
+
+ 177:HADRWARE/LCD/ltdc.c **** 	RCC->AHB1ENR|=1<<23;			//使能DM2D时钟
+ 701              		.loc 1 177 2 is_stmt 1 view .LVU209
+ 702              		.loc 1 177 14 is_stmt 0 view .LVU210
+ 703 0036 204A     		ldr	r2, .L52+8
+ 704 0038 136B     		ldr	r3, [r2, #48]
+ 705 003a 43F40003 		orr	r3, r3, #8388608
+ 706 003e 1363     		str	r3, [r2, #48]
+ 707              	.LVL44:
+ 178:HADRWARE/LCD/ltdc.c **** 	DMA2D->CR&=~(1<<0);				//先停止DMA2D
+ 708              		.loc 1 178 2 is_stmt 1 view .LVU211
+ 709              		.loc 1 178 11 is_stmt 0 view .LVU212
+ 710 0040 02F5F042 		add	r2, r2, #30720
+ 711 0044 1368     		ldr	r3, [r2]
+ 712 0046 23F00103 		bic	r3, r3, #1
+ 713 004a 1360     		str	r3, [r2]
+ 179:HADRWARE/LCD/ltdc.c **** 	DMA2D->CR=0<<16;				//存储器到存储器模式
+ 714              		.loc 1 179 2 is_stmt 1 view .LVU213
+ 715              		.loc 1 179 11 is_stmt 0 view .LVU214
+ 716 004c 0023     		movs	r3, #0
+ 717 004e 1360     		str	r3, [r2]
+ 180:HADRWARE/LCD/ltdc.c **** 	DMA2D->FGPFCCR=LCD_PIXFORMAT;	//设置颜色格式
+ 718              		.loc 1 180 2 is_stmt 1 view .LVU215
+ 719              		.loc 1 180 16 is_stmt 0 view .LVU216
+ 720 0050 0226     		movs	r6, #2
+ 721 0052 D661     		str	r6, [r2, #28]
+ 181:HADRWARE/LCD/ltdc.c **** 	DMA2D->FGOR=0;					//前景层行偏移为0
+ 722              		.loc 1 181 2 is_stmt 1 view .LVU217
+ 723              		.loc 1 181 13 is_stmt 0 view .LVU218
+ 724 0054 1361     		str	r3, [r2, #16]
+ 182:HADRWARE/LCD/ltdc.c **** 	DMA2D->OOR=offline;				//设置行偏移 
+ 725              		.loc 1 182 2 is_stmt 1 view .LVU219
+ 726              		.loc 1 182 12 is_stmt 0 view .LVU220
+ 727 0056 1164     		str	r1, [r2, #64]
+ 183:HADRWARE/LCD/ltdc.c **** 	DMA2D->FGMAR=(u32)color;		//源地址
+ 728              		.loc 1 183 2 is_stmt 1 view .LVU221
+ 729              		.loc 1 183 14 is_stmt 0 view .LVU222
+ 730 0058 0499     		ldr	r1, [sp, #16]
+ 731              	.LVL45:
+ 732              		.loc 1 183 14 view .LVU223
+ 733 005a D160     		str	r1, [r2, #12]
+ 734              	.LVL46:
+ 184:HADRWARE/LCD/ltdc.c **** 	DMA2D->OMAR=addr;				//输出存储器地址
+ 735              		.loc 1 184 2 is_stmt 1 view .LVU224
+ 736              		.loc 1 184 13 is_stmt 0 view .LVU225
+ 737 005c D563     		str	r5, [r2, #60]
+ 185:HADRWARE/LCD/ltdc.c **** 	DMA2D->NLR=(pey-psy+1)|((pex-psx+1)<<16);	//设定行数寄存器 
+ 738              		.loc 1 185 2 is_stmt 1 view .LVU226
+ 739              		.loc 1 185 17 is_stmt 0 view .LVU227
+ 740 005e A0EB0E01 		sub	r1, r0, lr
+ 741              		.loc 1 185 21 view .LVU228
+ 742 0062 0131     		adds	r1, r1, #1
+ 743              		.loc 1 185 30 view .LVU229
+ 744 0064 ACEB040C 		sub	ip, ip, r4
+ 745              	.LVL47:
+ 746              		.loc 1 185 34 view .LVU230
+ 747 0068 0CF1010C 		add	ip, ip, #1
+ 748              		.loc 1 185 24 view .LVU231
+ARM GAS  /tmp/ccRkYwN3.s 			page 18
+
+
+ 749 006c 41EA0C41 		orr	r1, r1, ip, lsl #16
+ 750              		.loc 1 185 12 view .LVU232
+ 751 0070 5164     		str	r1, [r2, #68]
+ 186:HADRWARE/LCD/ltdc.c **** 	DMA2D->CR|=1<<0;				//启动DMA2D
+ 752              		.loc 1 186 2 is_stmt 1 view .LVU233
+ 753              		.loc 1 186 11 is_stmt 0 view .LVU234
+ 754 0072 1168     		ldr	r1, [r2]
+ 755 0074 41F00101 		orr	r1, r1, #1
+ 756 0078 1160     		str	r1, [r2]
+ 187:HADRWARE/LCD/ltdc.c **** 	while((DMA2D->ISR&(1<<1))==0)	//等待传输完成
+ 757              		.loc 1 187 2 is_stmt 1 view .LVU235
+ 758              	.LVL48:
+ 759              	.L48:
+ 760              		.loc 1 187 7 view .LVU236
+ 761              		.loc 1 187 14 is_stmt 0 view .LVU237
+ 762 007a 104A     		ldr	r2, .L52+12
+ 763 007c 5268     		ldr	r2, [r2, #4]
+ 764              		.loc 1 187 7 view .LVU238
+ 765 007e 12F0020F 		tst	r2, #2
+ 766 0082 03D1     		bne	.L49
+ 188:HADRWARE/LCD/ltdc.c **** 	{
+ 189:HADRWARE/LCD/ltdc.c **** 		timeout++;
+ 767              		.loc 1 189 3 is_stmt 1 view .LVU239
+ 768              		.loc 1 189 10 is_stmt 0 view .LVU240
+ 769 0084 0133     		adds	r3, r3, #1
+ 770              	.LVL49:
+ 190:HADRWARE/LCD/ltdc.c **** 		if(timeout>0X1FFFFF)break;	//超时退出
+ 771              		.loc 1 190 3 is_stmt 1 view .LVU241
+ 772              		.loc 1 190 5 is_stmt 0 view .LVU242
+ 773 0086 B3F5001F 		cmp	r3, #2097152
+ 774 008a F6D3     		bcc	.L48
+ 775              	.L49:
+ 191:HADRWARE/LCD/ltdc.c **** 	} 
+ 192:HADRWARE/LCD/ltdc.c **** 	DMA2D->IFCR|=1<<1;				//清除传输完成标志  	
+ 776              		.loc 1 192 2 is_stmt 1 view .LVU243
+ 777              		.loc 1 192 13 is_stmt 0 view .LVU244
+ 778 008c 0B4A     		ldr	r2, .L52+12
+ 779 008e 9368     		ldr	r3, [r2, #8]
+ 780              	.LVL50:
+ 781              		.loc 1 192 13 view .LVU245
+ 782 0090 43F00203 		orr	r3, r3, #2
+ 783 0094 9360     		str	r3, [r2, #8]
+ 193:HADRWARE/LCD/ltdc.c **** }  
+ 784              		.loc 1 193 1 view .LVU246
+ 785 0096 70BD     		pop	{r4, r5, r6, pc}
+ 786              	.LVL51:
+ 787              	.L46:
+ 172:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 788              		.loc 1 172 3 is_stmt 1 view .LVU247
+ 172:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 789              		.loc 1 172 6 is_stmt 0 view .LVU248
+ 790 0098 0C46     		mov	r4, r1
+ 791              	.LVL52:
+ 172:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 792              		.loc 1 172 10 is_stmt 1 view .LVU249
+ 172:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 793              		.loc 1 172 21 is_stmt 0 view .LVU250
+ARM GAS  /tmp/ccRkYwN3.s 			page 19
+
+
+ 794 009a 054A     		ldr	r2, .L52
+ 795 009c 5168     		ldr	r1, [r2, #4]
+ 796              	.LVL53:
+ 172:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 797              		.loc 1 172 29 view .LVU251
+ 798 009e A1EB0C0C 		sub	ip, r1, ip
+ 172:HADRWARE/LCD/ltdc.c **** 		pex=ey;pey=lcdltdc.pheight-sx-1;
+ 799              		.loc 1 172 13 view .LVU252
+ 800 00a2 0CF1FF3E 		add	lr, ip, #-1
+ 801              	.LVL54:
+ 173:HADRWARE/LCD/ltdc.c **** 	}
+ 802              		.loc 1 173 3 is_stmt 1 view .LVU253
+ 173:HADRWARE/LCD/ltdc.c **** 	}
+ 803              		.loc 1 173 6 is_stmt 0 view .LVU254
+ 804 00a6 9C46     		mov	ip, r3
+ 805              	.LVL55:
+ 173:HADRWARE/LCD/ltdc.c **** 	}
+ 806              		.loc 1 173 10 is_stmt 1 view .LVU255
+ 173:HADRWARE/LCD/ltdc.c **** 	}
+ 807              		.loc 1 173 29 is_stmt 0 view .LVU256
+ 808 00a8 091A     		subs	r1, r1, r0
+ 173:HADRWARE/LCD/ltdc.c **** 	}
+ 809              		.loc 1 173 13 view .LVU257
+ 810 00aa 481E     		subs	r0, r1, #1
+ 811              	.LVL56:
+ 173:HADRWARE/LCD/ltdc.c **** 	}
+ 812              		.loc 1 173 13 view .LVU258
+ 813 00ac B1E7     		b	.L47
+ 814              	.L53:
+ 815 00ae 00BF     		.align	2
+ 816              	.L52:
+ 817 00b0 00000000 		.word	.LANCHOR0
+ 818 00b4 00000000 		.word	.LANCHOR1
+ 819 00b8 00380240 		.word	1073887232
+ 820 00bc 00B00240 		.word	1073917952
+ 821              		.cfi_endproc
+ 822              	.LFE133:
+ 824              		.section	.text.LTDC_Clear,"ax",%progbits
+ 825              		.align	1
+ 826              		.global	LTDC_Clear
+ 827              		.syntax unified
+ 828              		.thumb
+ 829              		.thumb_func
+ 830              		.fpu fpv4-sp-d16
+ 832              	LTDC_Clear:
+ 833              	.LVL57:
+ 834              	.LFB134:
+ 194:HADRWARE/LCD/ltdc.c **** 
+ 195:HADRWARE/LCD/ltdc.c **** //LCD清屏
+ 196:HADRWARE/LCD/ltdc.c **** //color:颜色值
+ 197:HADRWARE/LCD/ltdc.c **** void LTDC_Clear(u32 color)
+ 198:HADRWARE/LCD/ltdc.c **** {
+ 835              		.loc 1 198 1 is_stmt 1 view -0
+ 836              		.cfi_startproc
+ 837              		@ args = 0, pretend = 0, frame = 0
+ 838              		@ frame_needed = 0, uses_anonymous_args = 0
+ 839              		.loc 1 198 1 is_stmt 0 view .LVU260
+ARM GAS  /tmp/ccRkYwN3.s 			page 20
+
+
+ 840 0000 00B5     		push	{lr}
+ 841              	.LCFI8:
+ 842              		.cfi_def_cfa_offset 4
+ 843              		.cfi_offset 14, -4
+ 844 0002 83B0     		sub	sp, sp, #12
+ 845              	.LCFI9:
+ 846              		.cfi_def_cfa_offset 16
+ 199:HADRWARE/LCD/ltdc.c **** 	LTDC_Fill(0,0,lcdltdc.width-1,lcdltdc.height-1,color);
+ 847              		.loc 1 199 2 is_stmt 1 view .LVU261
+ 848              		.loc 1 199 23 is_stmt 0 view .LVU262
+ 849 0004 074B     		ldr	r3, .L56
+ 850 0006 DA8A     		ldrh	r2, [r3, #22]
+ 851              		.loc 1 199 39 view .LVU263
+ 852 0008 1B8B     		ldrh	r3, [r3, #24]
+ 853              		.loc 1 199 2 view .LVU264
+ 854 000a 013B     		subs	r3, r3, #1
+ 855 000c 013A     		subs	r2, r2, #1
+ 856 000e 0090     		str	r0, [sp]
+ 857 0010 9BB2     		uxth	r3, r3
+ 858 0012 92B2     		uxth	r2, r2
+ 859 0014 0021     		movs	r1, #0
+ 860 0016 0846     		mov	r0, r1
+ 861              	.LVL58:
+ 862              		.loc 1 199 2 view .LVU265
+ 863 0018 FFF7FEFF 		bl	LTDC_Fill
+ 864              	.LVL59:
+ 200:HADRWARE/LCD/ltdc.c **** }
+ 865              		.loc 1 200 1 view .LVU266
+ 866 001c 03B0     		add	sp, sp, #12
+ 867              	.LCFI10:
+ 868              		.cfi_def_cfa_offset 4
+ 869              		@ sp needed
+ 870 001e 5DF804FB 		ldr	pc, [sp], #4
+ 871              	.L57:
+ 872 0022 00BF     		.align	2
+ 873              	.L56:
+ 874 0024 00000000 		.word	.LANCHOR0
+ 875              		.cfi_endproc
+ 876              	.LFE134:
+ 878              		.section	.text.LTDC_Clk_Set,"ax",%progbits
+ 879              		.align	1
+ 880              		.global	LTDC_Clk_Set
+ 881              		.syntax unified
+ 882              		.thumb
+ 883              		.thumb_func
+ 884              		.fpu fpv4-sp-d16
+ 886              	LTDC_Clk_Set:
+ 887              	.LVL60:
+ 888              	.LFB135:
+ 201:HADRWARE/LCD/ltdc.c **** 
+ 202:HADRWARE/LCD/ltdc.c **** //LTDC时钟(Fdclk)设置函数
+ 203:HADRWARE/LCD/ltdc.c **** //Fvco=Fin*pllsain; 
+ 204:HADRWARE/LCD/ltdc.c **** //Fdclk=Fvco/pllsair/2*2^pllsaidivr=Fin*pllsain/pllsair/2*2^pllsaidivr;
+ 205:HADRWARE/LCD/ltdc.c **** 
+ 206:HADRWARE/LCD/ltdc.c **** //Fvco:VCO频率
+ 207:HADRWARE/LCD/ltdc.c **** //Fin:输入时钟频率一般为1Mhz(来自系统时钟PLLM分频后的时钟,见时钟树图)
+ 208:HADRWARE/LCD/ltdc.c **** //pllsain:SAI时钟倍频系数N,取值范围:50~432.  
+ARM GAS  /tmp/ccRkYwN3.s 			page 21
+
+
+ 209:HADRWARE/LCD/ltdc.c **** //pllsair:SAI时钟的分频系数R,取值范围:2~7
+ 210:HADRWARE/LCD/ltdc.c **** //pllsaidivr:LCD时钟分频系数,取值范围:0~3,对应分频2^(pllsaidivr+1) 
+ 211:HADRWARE/LCD/ltdc.c **** //假设:外部晶振为25M,pllm=25的时候,Fin=1Mhz.
+ 212:HADRWARE/LCD/ltdc.c **** //例如:要得到20M的LTDC时钟,则可以设置:pllsain=400,pllsair=5,pllsaidivr=1
+ 213:HADRWARE/LCD/ltdc.c **** //Fdclk=1*396/3/2*2^1=396/12=33Mhz
+ 214:HADRWARE/LCD/ltdc.c **** //返回值:0,成功;1,失败。
+ 215:HADRWARE/LCD/ltdc.c **** u8 LTDC_Clk_Set(u32 pllsain,u32 pllsair,u32 pllsaidivr)
+ 216:HADRWARE/LCD/ltdc.c **** { 
+ 889              		.loc 1 216 1 is_stmt 1 view -0
+ 890              		.cfi_startproc
+ 891              		@ args = 0, pretend = 0, frame = 0
+ 892              		@ frame_needed = 0, uses_anonymous_args = 0
+ 893              		@ link register save eliminated.
+ 894              		.loc 1 216 1 is_stmt 0 view .LVU268
+ 895 0000 10B4     		push	{r4}
+ 896              	.LCFI11:
+ 897              		.cfi_def_cfa_offset 4
+ 898              		.cfi_offset 4, -4
+ 217:HADRWARE/LCD/ltdc.c **** 	u16 retry=0;
+ 899              		.loc 1 217 2 is_stmt 1 view .LVU269
+ 900              	.LVL61:
+ 218:HADRWARE/LCD/ltdc.c **** 	u8 status=0;
+ 901              		.loc 1 218 2 view .LVU270
+ 219:HADRWARE/LCD/ltdc.c **** 	u32 tempreg=0;
+ 902              		.loc 1 219 2 view .LVU271
+ 220:HADRWARE/LCD/ltdc.c **** 	RCC->CR&=~(1<<28);					//关闭SAI时钟 
+ 903              		.loc 1 220 2 view .LVU272
+ 904              		.loc 1 220 9 is_stmt 0 view .LVU273
+ 905 0002 224C     		ldr	r4, .L69
+ 906 0004 2368     		ldr	r3, [r4]
+ 907 0006 23F08053 		bic	r3, r3, #268435456
+ 908 000a 2360     		str	r3, [r4]
+ 221:HADRWARE/LCD/ltdc.c **** 	while(((RCC->CR&(1<<29)))&&(retry<0X1FFF))retry++;//等待SAI时钟失锁
+ 909              		.loc 1 221 2 is_stmt 1 view .LVU274
+ 217:HADRWARE/LCD/ltdc.c **** 	u8 status=0;
+ 910              		.loc 1 217 6 is_stmt 0 view .LVU275
+ 911 000c 0023     		movs	r3, #0
+ 912              	.LVL62:
+ 913              	.L59:
+ 914              		.loc 1 221 7 is_stmt 1 discriminator 1 view .LVU276
+ 915              		.loc 1 221 13 is_stmt 0 discriminator 1 view .LVU277
+ 916 000e 1F4C     		ldr	r4, .L69
+ 917 0010 2468     		ldr	r4, [r4]
+ 918              		.loc 1 221 7 discriminator 1 view .LVU278
+ 919 0012 14F0005F 		tst	r4, #536870912
+ 920 0016 06D0     		beq	.L60
+ 921              		.loc 1 221 27 discriminator 2 view .LVU279
+ 922 0018 41F6FE74 		movw	r4, #8190
+ 923 001c A342     		cmp	r3, r4
+ 924 001e 02D8     		bhi	.L60
+ 925              		.loc 1 221 44 is_stmt 1 discriminator 3 view .LVU280
+ 926              		.loc 1 221 49 is_stmt 0 discriminator 3 view .LVU281
+ 927 0020 0133     		adds	r3, r3, #1
+ 928              	.LVL63:
+ 929              		.loc 1 221 49 discriminator 3 view .LVU282
+ 930 0022 9BB2     		uxth	r3, r3
+ 931              	.LVL64:
+ARM GAS  /tmp/ccRkYwN3.s 			page 22
+
+
+ 932              		.loc 1 221 49 discriminator 3 view .LVU283
+ 933 0024 F3E7     		b	.L59
+ 934              	.L60:
+ 222:HADRWARE/LCD/ltdc.c ****  	if(retry==0X1FFF)status=1;			//LTDC时钟关闭失败
+ 935              		.loc 1 222 3 is_stmt 1 view .LVU284
+ 936              		.loc 1 222 5 is_stmt 0 view .LVU285
+ 937 0026 41F6FF74 		movw	r4, #8191
+ 938 002a A342     		cmp	r3, r4
+ 939 002c 29D0     		beq	.L66
+ 223:HADRWARE/LCD/ltdc.c **** 	else   
+ 224:HADRWARE/LCD/ltdc.c **** 	{ 
+ 225:HADRWARE/LCD/ltdc.c **** 		tempreg|=pllsain<<6;
+ 940              		.loc 1 225 3 is_stmt 1 view .LVU286
+ 941              	.LVL65:
+ 226:HADRWARE/LCD/ltdc.c **** 		tempreg|=pllsair<<28;
+ 942              		.loc 1 226 3 view .LVU287
+ 943              		.loc 1 226 19 is_stmt 0 view .LVU288
+ 944 002e 0907     		lsls	r1, r1, #28
+ 945              	.LVL66:
+ 946              		.loc 1 226 10 view .LVU289
+ 947 0030 41EA8011 		orr	r1, r1, r0, lsl #6
+ 948              	.LVL67:
+ 227:HADRWARE/LCD/ltdc.c **** 		RCC->PLLSAICFGR=tempreg;		//设置LTDC的倍频和分频
+ 949              		.loc 1 227 3 is_stmt 1 view .LVU290
+ 950              		.loc 1 227 18 is_stmt 0 view .LVU291
+ 951 0034 1548     		ldr	r0, .L69
+ 952              	.LVL68:
+ 953              		.loc 1 227 18 view .LVU292
+ 954 0036 C0F88810 		str	r1, [r0, #136]
+ 228:HADRWARE/LCD/ltdc.c **** 		RCC->DCKCFGR&=~(3<<16);			//清除原来的设置.
+ 955              		.loc 1 228 3 is_stmt 1 view .LVU293
+ 956              		.loc 1 228 15 is_stmt 0 view .LVU294
+ 957 003a D0F88C10 		ldr	r1, [r0, #140]
+ 958              	.LVL69:
+ 959              		.loc 1 228 15 view .LVU295
+ 960 003e 21F44031 		bic	r1, r1, #196608
+ 961 0042 C0F88C10 		str	r1, [r0, #140]
+ 962              	.LVL70:
+ 229:HADRWARE/LCD/ltdc.c **** 		RCC->DCKCFGR|=pllsaidivr<<16;	//设置fdclk分频
+ 963              		.loc 1 229 3 is_stmt 1 view .LVU296
+ 964              		.loc 1 229 15 is_stmt 0 view .LVU297
+ 965 0046 D0F88C10 		ldr	r1, [r0, #140]
+ 966 004a 41EA0242 		orr	r2, r1, r2, lsl #16
+ 967              	.LVL71:
+ 968              		.loc 1 229 15 view .LVU298
+ 969 004e C0F88C20 		str	r2, [r0, #140]
+ 230:HADRWARE/LCD/ltdc.c **** 
+ 231:HADRWARE/LCD/ltdc.c **** 		RCC->CR|=1<<28;					//开启SAI时钟 
+ 970              		.loc 1 231 3 is_stmt 1 view .LVU299
+ 971              		.loc 1 231 10 is_stmt 0 view .LVU300
+ 972 0052 0268     		ldr	r2, [r0]
+ 973 0054 42F08052 		orr	r2, r2, #268435456
+ 974 0058 0260     		str	r2, [r0]
+ 232:HADRWARE/LCD/ltdc.c **** 		while(((RCC->CR&(1<<29))==0)&&(retry<0X1FFF))retry++;//等待SAI时钟锁定
+ 975              		.loc 1 232 3 is_stmt 1 view .LVU301
+ 976              	.L63:
+ 977              		.loc 1 232 8 discriminator 1 view .LVU302
+ARM GAS  /tmp/ccRkYwN3.s 			page 23
+
+
+ 978              		.loc 1 232 14 is_stmt 0 discriminator 1 view .LVU303
+ 979 005a 0C4A     		ldr	r2, .L69
+ 980 005c 1268     		ldr	r2, [r2]
+ 981              		.loc 1 232 8 discriminator 1 view .LVU304
+ 982 005e 12F0005F 		tst	r2, #536870912
+ 983 0062 06D1     		bne	.L64
+ 984              		.loc 1 232 31 discriminator 2 view .LVU305
+ 985 0064 41F6FE72 		movw	r2, #8190
+ 986 0068 9342     		cmp	r3, r2
+ 987 006a 02D8     		bhi	.L64
+ 988              		.loc 1 232 48 is_stmt 1 discriminator 3 view .LVU306
+ 989              		.loc 1 232 53 is_stmt 0 discriminator 3 view .LVU307
+ 990 006c 0133     		adds	r3, r3, #1
+ 991              	.LVL72:
+ 992              		.loc 1 232 53 discriminator 3 view .LVU308
+ 993 006e 9BB2     		uxth	r3, r3
+ 994              	.LVL73:
+ 995              		.loc 1 232 53 discriminator 3 view .LVU309
+ 996 0070 F3E7     		b	.L63
+ 997              	.L64:
+ 233:HADRWARE/LCD/ltdc.c **** 		if(retry==0X1FFF)status=2;	
+ 998              		.loc 1 233 3 is_stmt 1 view .LVU310
+ 999              		.loc 1 233 5 is_stmt 0 view .LVU311
+ 1000 0072 41F6FF72 		movw	r2, #8191
+ 1001 0076 9342     		cmp	r3, r2
+ 1002 0078 05D0     		beq	.L67
+ 218:HADRWARE/LCD/ltdc.c **** 	u32 tempreg=0;
+ 1003              		.loc 1 218 5 view .LVU312
+ 1004 007a 0020     		movs	r0, #0
+ 1005              	.LVL74:
+ 1006              	.L62:
+ 234:HADRWARE/LCD/ltdc.c ****  	} 
+ 235:HADRWARE/LCD/ltdc.c **** 	return status;
+ 1007              		.loc 1 235 2 is_stmt 1 view .LVU313
+ 236:HADRWARE/LCD/ltdc.c **** }   
+ 1008              		.loc 1 236 1 is_stmt 0 view .LVU314
+ 1009 007c 5DF8044B 		ldr	r4, [sp], #4
+ 1010              	.LCFI12:
+ 1011              		.cfi_remember_state
+ 1012              		.cfi_restore 4
+ 1013              		.cfi_def_cfa_offset 0
+ 1014 0080 7047     		bx	lr
+ 1015              	.LVL75:
+ 1016              	.L66:
+ 1017              	.LCFI13:
+ 1018              		.cfi_restore_state
+ 222:HADRWARE/LCD/ltdc.c **** 	else   
+ 1019              		.loc 1 222 26 view .LVU315
+ 1020 0082 0120     		movs	r0, #1
+ 1021              	.LVL76:
+ 222:HADRWARE/LCD/ltdc.c **** 	else   
+ 1022              		.loc 1 222 26 view .LVU316
+ 1023 0084 FAE7     		b	.L62
+ 1024              	.LVL77:
+ 1025              	.L67:
+ 233:HADRWARE/LCD/ltdc.c ****  	} 
+ 1026              		.loc 1 233 26 view .LVU317
+ARM GAS  /tmp/ccRkYwN3.s 			page 24
+
+
+ 1027 0086 0220     		movs	r0, #2
+ 1028 0088 F8E7     		b	.L62
+ 1029              	.L70:
+ 1030 008a 00BF     		.align	2
+ 1031              	.L69:
+ 1032 008c 00380240 		.word	1073887232
+ 1033              		.cfi_endproc
+ 1034              	.LFE135:
+ 1036              		.section	.text.LTDC_Layer_Window_Config,"ax",%progbits
+ 1037              		.align	1
+ 1038              		.global	LTDC_Layer_Window_Config
+ 1039              		.syntax unified
+ 1040              		.thumb
+ 1041              		.thumb_func
+ 1042              		.fpu fpv4-sp-d16
+ 1044              	LTDC_Layer_Window_Config:
+ 1045              	.LVL78:
+ 1046              	.LFB136:
+ 237:HADRWARE/LCD/ltdc.c **** 
+ 238:HADRWARE/LCD/ltdc.c **** //LTDC,层窗口设置,窗口以LCD面板坐标系为基准
+ 239:HADRWARE/LCD/ltdc.c **** //注意:此函数必须在LTDC_Layer_Parameter_Config之后再设置.另外,当设置的窗口值�
+ 240:HADRWARE/LCD/ltdc.c **** //寸时,GRAM的操作(读/写点函数),也要根据窗口的宽高来进行修改,否则显示不
+ 241:HADRWARE/LCD/ltdc.c **** //layerx:层值,0/1.
+ 242:HADRWARE/LCD/ltdc.c **** //sx,sy:起始坐标
+ 243:HADRWARE/LCD/ltdc.c **** //width,height:宽度和高度
+ 244:HADRWARE/LCD/ltdc.c **** void LTDC_Layer_Window_Config(u8 layerx,u16 sx,u16 sy,u16 width,u16 height)
+ 245:HADRWARE/LCD/ltdc.c **** {
+ 1047              		.loc 1 245 1 is_stmt 1 view -0
+ 1048              		.cfi_startproc
+ 1049              		@ args = 4, pretend = 0, frame = 0
+ 1050              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1051              		.loc 1 245 1 is_stmt 0 view .LVU319
+ 1052 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1053              	.LCFI14:
+ 1054              		.cfi_def_cfa_offset 24
+ 1055              		.cfi_offset 3, -24
+ 1056              		.cfi_offset 4, -20
+ 1057              		.cfi_offset 5, -16
+ 1058              		.cfi_offset 6, -12
+ 1059              		.cfi_offset 7, -8
+ 1060              		.cfi_offset 14, -4
+ 1061 0002 BDF81840 		ldrh	r4, [sp, #24]
+ 246:HADRWARE/LCD/ltdc.c **** 	u32 temp;
+ 1062              		.loc 1 246 2 is_stmt 1 view .LVU320
+ 247:HADRWARE/LCD/ltdc.c **** 	u8 pixformat=0; 
+ 1063              		.loc 1 247 2 view .LVU321
+ 1064              	.LVL79:
+ 248:HADRWARE/LCD/ltdc.c **** 	if(layerx==0)
+ 1065              		.loc 1 248 2 view .LVU322
+ 1066              		.loc 1 248 4 is_stmt 0 view .LVU323
+ 1067 0006 0028     		cmp	r0, #0
+ 1068 0008 3CD1     		bne	.L72
+ 249:HADRWARE/LCD/ltdc.c **** 	{
+ 250:HADRWARE/LCD/ltdc.c **** 		temp=(sx+width+((LTDC->BPCR&0X0FFF0000)>>16))<<16; 
+ 1069              		.loc 1 250 3 is_stmt 1 view .LVU324
+ 1070              		.loc 1 250 11 is_stmt 0 view .LVU325
+ 1071 000a CF18     		adds	r7, r1, r3
+ARM GAS  /tmp/ccRkYwN3.s 			page 25
+
+
+ 1072              		.loc 1 250 24 view .LVU326
+ 1073 000c 384D     		ldr	r5, .L85
+ 1074 000e EE68     		ldr	r6, [r5, #12]
+ 1075              		.loc 1 250 42 view .LVU327
+ 1076 0010 C6F30B46 		ubfx	r6, r6, #16, #12
+ 1077              		.loc 1 250 17 view .LVU328
+ 1078 0014 3744     		add	r7, r7, r6
+ 1079              	.LVL80:
+ 251:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer1->WHPCR=(sx+((LTDC->BPCR&0X0FFF0000)>>16)+1)|temp;//设置行起始和结束位置 
+ 1080              		.loc 1 251 3 is_stmt 1 view .LVU329
+ 1081              		.loc 1 251 32 is_stmt 0 view .LVU330
+ 1082 0016 EE68     		ldr	r6, [r5, #12]
+ 1083              		.loc 1 251 50 view .LVU331
+ 1084 0018 C6F30B4C 		ubfx	ip, r6, #16, #12
+ 1085              		.loc 1 251 25 view .LVU332
+ 1086 001c 6144     		add	r1, r1, ip
+ 1087              	.LVL81:
+ 1088              		.loc 1 251 55 view .LVU333
+ 1089 001e 0131     		adds	r1, r1, #1
+ 1090              		.loc 1 251 58 view .LVU334
+ 1091 0020 41EA0741 		orr	r1, r1, r7, lsl #16
+ 1092              		.loc 1 251 21 view .LVU335
+ 1093 0024 C5F88810 		str	r1, [r5, #136]
+ 1094              	.LVL82:
+ 252:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 1095              		.loc 1 252 3 is_stmt 1 view .LVU336
+ 1096              		.loc 1 252 11 is_stmt 0 view .LVU337
+ 1097 0028 1619     		adds	r6, r2, r4
+ 1098              		.loc 1 252 24 view .LVU338
+ 1099 002a E968     		ldr	r1, [r5, #12]
+ 1100              		.loc 1 252 30 view .LVU339
+ 1101 002c C1F30A01 		ubfx	r1, r1, #0, #11
+ 1102              		.loc 1 252 18 view .LVU340
+ 1103 0030 0E44     		add	r6, r6, r1
+ 1104              	.LVL83:
+ 253:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer1->WVPCR=(sy+(LTDC->BPCR&0X7FF)+1)|temp;		//设置列起始和结束位置
+ 1105              		.loc 1 253 3 is_stmt 1 view .LVU341
+ 1106              		.loc 1 253 31 is_stmt 0 view .LVU342
+ 1107 0032 E968     		ldr	r1, [r5, #12]
+ 1108              		.loc 1 253 37 view .LVU343
+ 1109 0034 C1F30A01 		ubfx	r1, r1, #0, #11
+ 1110              		.loc 1 253 25 view .LVU344
+ 1111 0038 0A44     		add	r2, r2, r1
+ 1112              	.LVL84:
+ 1113              		.loc 1 253 44 view .LVU345
+ 1114 003a 0132     		adds	r2, r2, #1
+ 1115              		.loc 1 253 47 view .LVU346
+ 1116 003c 42EA0642 		orr	r2, r2, r6, lsl #16
+ 1117              		.loc 1 253 21 view .LVU347
+ 1118 0040 C5F88C20 		str	r2, [r5, #140]
+ 254:HADRWARE/LCD/ltdc.c **** 		pixformat=LTDC_Layer1->PFCR&0X07;						//得到颜色格式
+ 1119              		.loc 1 254 3 is_stmt 1 view .LVU348
+ 1120              		.loc 1 254 24 is_stmt 0 view .LVU349
+ 1121 0044 D5F89420 		ldr	r2, [r5, #148]
+ 1122              	.LVL85:
+ 255:HADRWARE/LCD/ltdc.c **** 		if(pixformat==0)temp=4;									//ARGB8888,一个点4个字节
+ 1123              		.loc 1 255 3 is_stmt 1 view .LVU350
+ARM GAS  /tmp/ccRkYwN3.s 			page 26
+
+
+ 1124              		.loc 1 255 5 is_stmt 0 view .LVU351
+ 1125 0048 12F00702 		ands	r2, r2, #7
+ 1126              	.LVL86:
+ 1127              		.loc 1 255 5 view .LVU352
+ 1128 004c 09D0     		beq	.L76
+ 256:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==1)temp=3;							//RGB888,一个点3个字节
+ 1129              		.loc 1 256 8 is_stmt 1 view .LVU353
+ 1130              		.loc 1 256 10 is_stmt 0 view .LVU354
+ 1131 004e 012A     		cmp	r2, #1
+ 1132 0050 16D0     		beq	.L77
+ 257:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==5||pixformat==6)temp=1;				//L8/AL44,一个点1个字节
+ 1133              		.loc 1 257 8 is_stmt 1 view .LVU355
+ 1134              		.loc 1 257 23 is_stmt 0 view .LVU356
+ 1135 0052 053A     		subs	r2, r2, #5
+ 1136 0054 D2B2     		uxtb	r2, r2
+ 1137              		.loc 1 257 10 view .LVU357
+ 1138 0056 012A     		cmp	r2, #1
+ 1139 0058 01D9     		bls	.L83
+ 258:HADRWARE/LCD/ltdc.c **** 		else temp=2;											//其他格式,一个点2个字节
+ 1140              		.loc 1 258 12 view .LVU358
+ 1141 005a 0222     		movs	r2, #2
+ 1142 005c 02E0     		b	.L73
+ 1143              	.L83:
+ 257:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==5||pixformat==6)temp=1;				//L8/AL44,一个点1个字节
+ 1144              		.loc 1 257 42 view .LVU359
+ 1145 005e 0122     		movs	r2, #1
+ 1146 0060 00E0     		b	.L73
+ 1147              	.L76:
+ 255:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==1)temp=3;							//RGB888,一个点3个字节
+ 1148              		.loc 1 255 23 view .LVU360
+ 1149 0062 0422     		movs	r2, #4
+ 1150              	.L73:
+ 1151              	.LVL87:
+ 259:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer1->CFBLR=(width*temp<<16)|(width*temp+3);		//帧缓冲区长度设置(字节为单位)
+ 1152              		.loc 1 259 3 is_stmt 1 view .LVU361
+ 1153              		.loc 1 259 28 is_stmt 0 view .LVU362
+ 1154 0064 02FB03F3 		mul	r3, r2, r3
+ 1155              	.LVL88:
+ 1156              		.loc 1 259 50 view .LVU363
+ 1157 0068 DA1C     		adds	r2, r3, #3
+ 1158              	.LVL89:
+ 1159              		.loc 1 259 38 view .LVU364
+ 1160 006a 42EA0343 		orr	r3, r2, r3, lsl #16
+ 1161              		.loc 1 259 21 view .LVU365
+ 1162 006e 204A     		ldr	r2, .L85
+ 1163 0070 C2F8B030 		str	r3, [r2, #176]
+ 260:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer1->CFBLNR=height;								//帧缓冲区行数设置	
+ 1164              		.loc 1 260 3 is_stmt 1 view .LVU366
+ 1165              		.loc 1 260 22 is_stmt 0 view .LVU367
+ 1166 0074 C2F8B440 		str	r4, [r2, #180]
+ 1167              	.L74:
+ 261:HADRWARE/LCD/ltdc.c **** 	}else
+ 262:HADRWARE/LCD/ltdc.c **** 	{
+ 263:HADRWARE/LCD/ltdc.c **** 		temp=(sx+width+((LTDC->BPCR&0X0FFF0000)>>16))<<16; 
+ 264:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WHPCR=(sx+((LTDC->BPCR&0X0FFF0000)>>16)+1)|temp;//设置行起始和结束位置 
+ 265:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 266:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WVPCR=(sy+(LTDC->BPCR&0X7FF)+1)|temp;		//设置列起始和结束位置
+ARM GAS  /tmp/ccRkYwN3.s 			page 27
+
+
+ 267:HADRWARE/LCD/ltdc.c **** 		pixformat=LTDC_Layer2->PFCR&0X07;						//得到颜色格式
+ 268:HADRWARE/LCD/ltdc.c **** 		if(pixformat==0)temp=4;									//ARGB8888,一个点4个字节
+ 269:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==1)temp=3;							//RGB888,一个点3个字节
+ 270:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==5||pixformat==6)temp=1;				//L8/AL44,一个点1个字节
+ 271:HADRWARE/LCD/ltdc.c **** 		else temp=2;											//其他格式,一个点2个字节
+ 272:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CFBLR=(width*temp<<16)|(width*temp+3);		//帧缓冲区长度设置(字节为单位)
+ 273:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CFBLNR=height;								//帧缓冲区行数设置	
+ 274:HADRWARE/LCD/ltdc.c **** 	}	 
+ 275:HADRWARE/LCD/ltdc.c **** 	LTDC_Layer_Switch(layerx,1);								//层使能		
+ 1168              		.loc 1 275 2 is_stmt 1 view .LVU368
+ 1169 0078 0121     		movs	r1, #1
+ 1170 007a FFF7FEFF 		bl	LTDC_Layer_Switch
+ 1171              	.LVL90:
+ 276:HADRWARE/LCD/ltdc.c **** }
+ 1172              		.loc 1 276 1 is_stmt 0 view .LVU369
+ 1173 007e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1174              	.LVL91:
+ 1175              	.L77:
+ 256:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==5||pixformat==6)temp=1;				//L8/AL44,一个点1个字节
+ 1176              		.loc 1 256 28 view .LVU370
+ 1177 0080 0322     		movs	r2, #3
+ 1178 0082 EFE7     		b	.L73
+ 1179              	.LVL92:
+ 1180              	.L72:
+ 263:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WHPCR=(sx+((LTDC->BPCR&0X0FFF0000)>>16)+1)|temp;//设置行起始和结束位置 
+ 1181              		.loc 1 263 3 is_stmt 1 view .LVU371
+ 263:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WHPCR=(sx+((LTDC->BPCR&0X0FFF0000)>>16)+1)|temp;//设置行起始和结束位置 
+ 1182              		.loc 1 263 11 is_stmt 0 view .LVU372
+ 1183 0084 CE18     		adds	r6, r1, r3
+ 263:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WHPCR=(sx+((LTDC->BPCR&0X0FFF0000)>>16)+1)|temp;//设置行起始和结束位置 
+ 1184              		.loc 1 263 24 view .LVU373
+ 1185 0086 1A4D     		ldr	r5, .L85
+ 1186 0088 EF68     		ldr	r7, [r5, #12]
+ 263:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WHPCR=(sx+((LTDC->BPCR&0X0FFF0000)>>16)+1)|temp;//设置行起始和结束位置 
+ 1187              		.loc 1 263 42 view .LVU374
+ 1188 008a C7F30B47 		ubfx	r7, r7, #16, #12
+ 263:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WHPCR=(sx+((LTDC->BPCR&0X0FFF0000)>>16)+1)|temp;//设置行起始和结束位置 
+ 1189              		.loc 1 263 17 view .LVU375
+ 1190 008e 3E44     		add	r6, r6, r7
+ 1191              	.LVL93:
+ 264:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 1192              		.loc 1 264 3 is_stmt 1 view .LVU376
+ 264:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 1193              		.loc 1 264 32 is_stmt 0 view .LVU377
+ 1194 0090 EF68     		ldr	r7, [r5, #12]
+ 264:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 1195              		.loc 1 264 50 view .LVU378
+ 1196 0092 C7F30B47 		ubfx	r7, r7, #16, #12
+ 264:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 1197              		.loc 1 264 25 view .LVU379
+ 1198 0096 3944     		add	r1, r1, r7
+ 1199              	.LVL94:
+ 264:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 1200              		.loc 1 264 55 view .LVU380
+ 1201 0098 0131     		adds	r1, r1, #1
+ 264:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 1202              		.loc 1 264 58 view .LVU381
+ARM GAS  /tmp/ccRkYwN3.s 			page 28
+
+
+ 1203 009a 41EA0641 		orr	r1, r1, r6, lsl #16
+ 264:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 1204              		.loc 1 264 21 view .LVU382
+ 1205 009e 154E     		ldr	r6, .L85+4
+ 1206              	.LVL95:
+ 264:HADRWARE/LCD/ltdc.c **** 		temp=(sy+height+(LTDC->BPCR&0X7FF))<<16; 
+ 1207              		.loc 1 264 21 view .LVU383
+ 1208 00a0 B160     		str	r1, [r6, #8]
+ 1209              	.LVL96:
+ 265:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WVPCR=(sy+(LTDC->BPCR&0X7FF)+1)|temp;		//设置列起始和结束位置
+ 1210              		.loc 1 265 3 is_stmt 1 view .LVU384
+ 265:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WVPCR=(sy+(LTDC->BPCR&0X7FF)+1)|temp;		//设置列起始和结束位置
+ 1211              		.loc 1 265 11 is_stmt 0 view .LVU385
+ 1212 00a2 1119     		adds	r1, r2, r4
+ 265:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WVPCR=(sy+(LTDC->BPCR&0X7FF)+1)|temp;		//设置列起始和结束位置
+ 1213              		.loc 1 265 24 view .LVU386
+ 1214 00a4 EF68     		ldr	r7, [r5, #12]
+ 265:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WVPCR=(sy+(LTDC->BPCR&0X7FF)+1)|temp;		//设置列起始和结束位置
+ 1215              		.loc 1 265 30 view .LVU387
+ 1216 00a6 C7F30A0C 		ubfx	ip, r7, #0, #11
+ 265:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->WVPCR=(sy+(LTDC->BPCR&0X7FF)+1)|temp;		//设置列起始和结束位置
+ 1217              		.loc 1 265 18 view .LVU388
+ 1218 00aa 6144     		add	r1, r1, ip
+ 1219              	.LVL97:
+ 266:HADRWARE/LCD/ltdc.c **** 		pixformat=LTDC_Layer2->PFCR&0X07;						//得到颜色格式
+ 1220              		.loc 1 266 3 is_stmt 1 view .LVU389
+ 266:HADRWARE/LCD/ltdc.c **** 		pixformat=LTDC_Layer2->PFCR&0X07;						//得到颜色格式
+ 1221              		.loc 1 266 31 is_stmt 0 view .LVU390
+ 1222 00ac ED68     		ldr	r5, [r5, #12]
+ 266:HADRWARE/LCD/ltdc.c **** 		pixformat=LTDC_Layer2->PFCR&0X07;						//得到颜色格式
+ 1223              		.loc 1 266 37 view .LVU391
+ 1224 00ae C5F30A05 		ubfx	r5, r5, #0, #11
+ 266:HADRWARE/LCD/ltdc.c **** 		pixformat=LTDC_Layer2->PFCR&0X07;						//得到颜色格式
+ 1225              		.loc 1 266 25 view .LVU392
+ 1226 00b2 2A44     		add	r2, r2, r5
+ 1227              	.LVL98:
+ 266:HADRWARE/LCD/ltdc.c **** 		pixformat=LTDC_Layer2->PFCR&0X07;						//得到颜色格式
+ 1228              		.loc 1 266 44 view .LVU393
+ 1229 00b4 0132     		adds	r2, r2, #1
+ 266:HADRWARE/LCD/ltdc.c **** 		pixformat=LTDC_Layer2->PFCR&0X07;						//得到颜色格式
+ 1230              		.loc 1 266 47 view .LVU394
+ 1231 00b6 42EA0142 		orr	r2, r2, r1, lsl #16
+ 266:HADRWARE/LCD/ltdc.c **** 		pixformat=LTDC_Layer2->PFCR&0X07;						//得到颜色格式
+ 1232              		.loc 1 266 21 view .LVU395
+ 1233 00ba F260     		str	r2, [r6, #12]
+ 267:HADRWARE/LCD/ltdc.c **** 		if(pixformat==0)temp=4;									//ARGB8888,一个点4个字节
+ 1234              		.loc 1 267 3 is_stmt 1 view .LVU396
+ 267:HADRWARE/LCD/ltdc.c **** 		if(pixformat==0)temp=4;									//ARGB8888,一个点4个字节
+ 1235              		.loc 1 267 24 is_stmt 0 view .LVU397
+ 1236 00bc 7269     		ldr	r2, [r6, #20]
+ 1237              	.LVL99:
+ 268:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==1)temp=3;							//RGB888,一个点3个字节
+ 1238              		.loc 1 268 3 is_stmt 1 view .LVU398
+ 268:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==1)temp=3;							//RGB888,一个点3个字节
+ 1239              		.loc 1 268 5 is_stmt 0 view .LVU399
+ 1240 00be 12F00702 		ands	r2, r2, #7
+ 1241              	.LVL100:
+ARM GAS  /tmp/ccRkYwN3.s 			page 29
+
+
+ 268:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==1)temp=3;							//RGB888,一个点3个字节
+ 1242              		.loc 1 268 5 view .LVU400
+ 1243 00c2 09D0     		beq	.L79
+ 269:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==5||pixformat==6)temp=1;				//L8/AL44,一个点1个字节
+ 1244              		.loc 1 269 8 is_stmt 1 view .LVU401
+ 269:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==5||pixformat==6)temp=1;				//L8/AL44,一个点1个字节
+ 1245              		.loc 1 269 10 is_stmt 0 view .LVU402
+ 1246 00c4 012A     		cmp	r2, #1
+ 1247 00c6 11D0     		beq	.L80
+ 270:HADRWARE/LCD/ltdc.c **** 		else temp=2;											//其他格式,一个点2个字节
+ 1248              		.loc 1 270 8 is_stmt 1 view .LVU403
+ 270:HADRWARE/LCD/ltdc.c **** 		else temp=2;											//其他格式,一个点2个字节
+ 1249              		.loc 1 270 23 is_stmt 0 view .LVU404
+ 1250 00c8 053A     		subs	r2, r2, #5
+ 1251 00ca D2B2     		uxtb	r2, r2
+ 270:HADRWARE/LCD/ltdc.c **** 		else temp=2;											//其他格式,一个点2个字节
+ 1252              		.loc 1 270 10 view .LVU405
+ 1253 00cc 012A     		cmp	r2, #1
+ 1254 00ce 01D9     		bls	.L84
+ 271:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CFBLR=(width*temp<<16)|(width*temp+3);		//帧缓冲区长度设置(字节为单位)
+ 1255              		.loc 1 271 12 view .LVU406
+ 1256 00d0 0222     		movs	r2, #2
+ 1257 00d2 02E0     		b	.L75
+ 1258              	.L84:
+ 270:HADRWARE/LCD/ltdc.c **** 		else temp=2;											//其他格式,一个点2个字节
+ 1259              		.loc 1 270 42 view .LVU407
+ 1260 00d4 0122     		movs	r2, #1
+ 1261 00d6 00E0     		b	.L75
+ 1262              	.L79:
+ 268:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==1)temp=3;							//RGB888,一个点3个字节
+ 1263              		.loc 1 268 23 view .LVU408
+ 1264 00d8 0422     		movs	r2, #4
+ 1265              	.L75:
+ 1266              	.LVL101:
+ 272:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CFBLNR=height;								//帧缓冲区行数设置	
+ 1267              		.loc 1 272 3 is_stmt 1 view .LVU409
+ 272:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CFBLNR=height;								//帧缓冲区行数设置	
+ 1268              		.loc 1 272 28 is_stmt 0 view .LVU410
+ 1269 00da 02FB03F3 		mul	r3, r2, r3
+ 1270              	.LVL102:
+ 272:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CFBLNR=height;								//帧缓冲区行数设置	
+ 1271              		.loc 1 272 50 view .LVU411
+ 1272 00de DA1C     		adds	r2, r3, #3
+ 1273              	.LVL103:
+ 272:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CFBLNR=height;								//帧缓冲区行数设置	
+ 1274              		.loc 1 272 38 view .LVU412
+ 1275 00e0 42EA0343 		orr	r3, r2, r3, lsl #16
+ 272:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CFBLNR=height;								//帧缓冲区行数设置	
+ 1276              		.loc 1 272 21 view .LVU413
+ 1277 00e4 034A     		ldr	r2, .L85+4
+ 1278 00e6 1363     		str	r3, [r2, #48]
+ 273:HADRWARE/LCD/ltdc.c **** 	}	 
+ 1279              		.loc 1 273 3 is_stmt 1 view .LVU414
+ 273:HADRWARE/LCD/ltdc.c **** 	}	 
+ 1280              		.loc 1 273 22 is_stmt 0 view .LVU415
+ 1281 00e8 5463     		str	r4, [r2, #52]
+ 1282 00ea C5E7     		b	.L74
+ARM GAS  /tmp/ccRkYwN3.s 			page 30
+
+
+ 1283              	.LVL104:
+ 1284              	.L80:
+ 269:HADRWARE/LCD/ltdc.c **** 		else if(pixformat==5||pixformat==6)temp=1;				//L8/AL44,一个点1个字节
+ 1285              		.loc 1 269 28 view .LVU416
+ 1286 00ec 0322     		movs	r2, #3
+ 1287 00ee F4E7     		b	.L75
+ 1288              	.L86:
+ 1289              		.align	2
+ 1290              	.L85:
+ 1291 00f0 00680140 		.word	1073833984
+ 1292 00f4 00690140 		.word	1073834240
+ 1293              		.cfi_endproc
+ 1294              	.LFE136:
+ 1296              		.section	.text.LTDC_Layer_Parameter_Config,"ax",%progbits
+ 1297              		.align	1
+ 1298              		.global	LTDC_Layer_Parameter_Config
+ 1299              		.syntax unified
+ 1300              		.thumb
+ 1301              		.thumb_func
+ 1302              		.fpu fpv4-sp-d16
+ 1304              	LTDC_Layer_Parameter_Config:
+ 1305              	.LVL105:
+ 1306              	.LFB137:
+ 277:HADRWARE/LCD/ltdc.c **** 
+ 278:HADRWARE/LCD/ltdc.c **** //LTDC,基本参数设置.
+ 279:HADRWARE/LCD/ltdc.c **** //注意:此函数,必须在LTDC_Layer_Window_Config之前设置.
+ 280:HADRWARE/LCD/ltdc.c **** //layerx:层值,0/1.
+ 281:HADRWARE/LCD/ltdc.c **** //bufaddr:层颜色帧缓存起始地址
+ 282:HADRWARE/LCD/ltdc.c **** //pixformat:颜色格式.0,ARGB8888;1,RGB888;2,RGB565;3,ARGB1555;4,ARGB4444;5,L8;6;AL44;7;AL88
+ 283:HADRWARE/LCD/ltdc.c **** //alpha:层颜色Alpha值,0,全透明;255,不透明
+ 284:HADRWARE/LCD/ltdc.c **** //alpha0:默认颜色Alpha值,0,全透明;255,不透明
+ 285:HADRWARE/LCD/ltdc.c **** //bfac1:混合系数1,4(100),恒定的Alpha;6(101),像素Alpha*恒定Alpha
+ 286:HADRWARE/LCD/ltdc.c **** //bfac2:混合系数2,5(101),恒定的Alpha;7(111),像素Alpha*恒定Alpha
+ 287:HADRWARE/LCD/ltdc.c **** //bkcolor:层默认颜色,32位,低24位有效,RGB888格式
+ 288:HADRWARE/LCD/ltdc.c **** //返回值:无
+ 289:HADRWARE/LCD/ltdc.c **** void LTDC_Layer_Parameter_Config(u8 layerx,u32 bufaddr,u8 pixformat,u8 alpha,u8 alpha0,u8 bfac1,u8 
+ 290:HADRWARE/LCD/ltdc.c **** {
+ 1307              		.loc 1 290 1 is_stmt 1 view -0
+ 1308              		.cfi_startproc
+ 1309              		@ args = 16, pretend = 0, frame = 0
+ 1310              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1311              		.loc 1 290 1 is_stmt 0 view .LVU418
+ 1312 0000 10B5     		push	{r4, lr}
+ 1313              	.LCFI15:
+ 1314              		.cfi_def_cfa_offset 8
+ 1315              		.cfi_offset 4, -8
+ 1316              		.cfi_offset 14, -4
+ 1317 0002 9DF808E0 		ldrb	lr, [sp, #8]	@ zero_extendqisi2
+ 1318 0006 9DF80C40 		ldrb	r4, [sp, #12]	@ zero_extendqisi2
+ 1319 000a 9DF810C0 		ldrb	ip, [sp, #16]	@ zero_extendqisi2
+ 291:HADRWARE/LCD/ltdc.c **** 	if(layerx==0)
+ 1320              		.loc 1 291 2 is_stmt 1 view .LVU419
+ 1321              		.loc 1 291 4 is_stmt 0 view .LVU420
+ 1322 000e 80B9     		cbnz	r0, .L88
+ 292:HADRWARE/LCD/ltdc.c **** 	{
+ 293:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer1->CFBAR=bufaddr;					//设置层颜色帧缓存起始地址
+ 1323              		.loc 1 293 3 is_stmt 1 view .LVU421
+ARM GAS  /tmp/ccRkYwN3.s 			page 31
+
+
+ 1324              		.loc 1 293 21 is_stmt 0 view .LVU422
+ 1325 0010 0E48     		ldr	r0, .L91
+ 1326              	.LVL106:
+ 1327              		.loc 1 293 21 view .LVU423
+ 1328 0012 C0F8AC10 		str	r1, [r0, #172]
+ 1329              	.LVL107:
+ 294:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer1->PFCR=pixformat;				//设置层颜色格式
+ 1330              		.loc 1 294 3 is_stmt 1 view .LVU424
+ 1331              		.loc 1 294 20 is_stmt 0 view .LVU425
+ 1332 0016 C0F89420 		str	r2, [r0, #148]
+ 295:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer1->CACR=alpha;					//设置层颜色Alpha值,255分频;设置255,则不透明
+ 1333              		.loc 1 295 3 is_stmt 1 view .LVU426
+ 1334              		.loc 1 295 20 is_stmt 0 view .LVU427
+ 1335 001a C0F89830 		str	r3, [r0, #152]
+ 296:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer1->DCCR=((u32)alpha0<<24)|bkcolor;//设置默认颜色Alpha值,以及默认颜色
+ 1336              		.loc 1 296 3 is_stmt 1 view .LVU428
+ 1337              		.loc 1 296 38 is_stmt 0 view .LVU429
+ 1338 001e 059B     		ldr	r3, [sp, #20]
+ 1339              	.LVL108:
+ 1340              		.loc 1 296 38 view .LVU430
+ 1341 0020 43EA0E62 		orr	r2, r3, lr, lsl #24
+ 1342              	.LVL109:
+ 1343              		.loc 1 296 20 view .LVU431
+ 1344 0024 C0F89C20 		str	r2, [r0, #156]
+ 297:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer1->BFCR=((u32)bfac1<<8)|bfac2;	//设置层混合系数
+ 1345              		.loc 1 297 3 is_stmt 1 view .LVU432
+ 1346              		.loc 1 297 36 is_stmt 0 view .LVU433
+ 1347 0028 4CEA0424 		orr	r4, ip, r4, lsl #8
+ 1348              		.loc 1 297 20 view .LVU434
+ 1349 002c C0F8A040 		str	r4, [r0, #160]
+ 1350              	.L87:
+ 298:HADRWARE/LCD/ltdc.c **** 	}else
+ 299:HADRWARE/LCD/ltdc.c **** 	{
+ 300:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CFBAR=bufaddr;					//设置层颜色帧缓存起始地址
+ 301:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->PFCR=pixformat;				//设置层颜色格式
+ 302:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CACR=alpha;					//设置层颜色Alpha值,255分频;设置255,则不透明
+ 303:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->DCCR=((u32)alpha0<<24)|bkcolor;//设置默认颜色Alpha值,以及默认颜色
+ 304:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->BFCR=((u32)bfac1<<8)|bfac2;	//设置层混合系数
+ 305:HADRWARE/LCD/ltdc.c **** 	}
+ 306:HADRWARE/LCD/ltdc.c **** } 
+ 1351              		.loc 1 306 1 view .LVU435
+ 1352 0030 10BD     		pop	{r4, pc}
+ 1353              	.LVL110:
+ 1354              	.L88:
+ 300:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->PFCR=pixformat;				//设置层颜色格式
+ 1355              		.loc 1 300 3 is_stmt 1 view .LVU436
+ 300:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->PFCR=pixformat;				//设置层颜色格式
+ 1356              		.loc 1 300 21 is_stmt 0 view .LVU437
+ 1357 0032 0748     		ldr	r0, .L91+4
+ 1358              	.LVL111:
+ 300:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->PFCR=pixformat;				//设置层颜色格式
+ 1359              		.loc 1 300 21 view .LVU438
+ 1360 0034 C162     		str	r1, [r0, #44]
+ 1361              	.LVL112:
+ 301:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CACR=alpha;					//设置层颜色Alpha值,255分频;设置255,则不透明
+ 1362              		.loc 1 301 3 is_stmt 1 view .LVU439
+ 301:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->CACR=alpha;					//设置层颜色Alpha值,255分频;设置255,则不透明
+ARM GAS  /tmp/ccRkYwN3.s 			page 32
+
+
+ 1363              		.loc 1 301 20 is_stmt 0 view .LVU440
+ 1364 0036 4261     		str	r2, [r0, #20]
+ 302:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->DCCR=((u32)alpha0<<24)|bkcolor;//设置默认颜色Alpha值,以及默认颜色
+ 1365              		.loc 1 302 3 is_stmt 1 view .LVU441
+ 302:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->DCCR=((u32)alpha0<<24)|bkcolor;//设置默认颜色Alpha值,以及默认颜色
+ 1366              		.loc 1 302 20 is_stmt 0 view .LVU442
+ 1367 0038 8361     		str	r3, [r0, #24]
+ 303:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->BFCR=((u32)bfac1<<8)|bfac2;	//设置层混合系数
+ 1368              		.loc 1 303 3 is_stmt 1 view .LVU443
+ 303:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->BFCR=((u32)bfac1<<8)|bfac2;	//设置层混合系数
+ 1369              		.loc 1 303 38 is_stmt 0 view .LVU444
+ 1370 003a 059B     		ldr	r3, [sp, #20]
+ 1371              	.LVL113:
+ 303:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->BFCR=((u32)bfac1<<8)|bfac2;	//设置层混合系数
+ 1372              		.loc 1 303 38 view .LVU445
+ 1373 003c 43EA0E62 		orr	r2, r3, lr, lsl #24
+ 1374              	.LVL114:
+ 303:HADRWARE/LCD/ltdc.c **** 		LTDC_Layer2->BFCR=((u32)bfac1<<8)|bfac2;	//设置层混合系数
+ 1375              		.loc 1 303 20 view .LVU446
+ 1376 0040 C261     		str	r2, [r0, #28]
+ 304:HADRWARE/LCD/ltdc.c **** 	}
+ 1377              		.loc 1 304 3 is_stmt 1 view .LVU447
+ 304:HADRWARE/LCD/ltdc.c **** 	}
+ 1378              		.loc 1 304 36 is_stmt 0 view .LVU448
+ 1379 0042 4CEA0424 		orr	r4, ip, r4, lsl #8
+ 304:HADRWARE/LCD/ltdc.c **** 	}
+ 1380              		.loc 1 304 20 view .LVU449
+ 1381 0046 0462     		str	r4, [r0, #32]
+ 1382              		.loc 1 306 1 view .LVU450
+ 1383 0048 F2E7     		b	.L87
+ 1384              	.L92:
+ 1385 004a 00BF     		.align	2
+ 1386              	.L91:
+ 1387 004c 00680140 		.word	1073833984
+ 1388 0050 00690140 		.word	1073834240
+ 1389              		.cfi_endproc
+ 1390              	.LFE137:
+ 1392              		.section	.text.LTDC_PanelID_Read,"ax",%progbits
+ 1393              		.align	1
+ 1394              		.global	LTDC_PanelID_Read
+ 1395              		.syntax unified
+ 1396              		.thumb
+ 1397              		.thumb_func
+ 1398              		.fpu fpv4-sp-d16
+ 1400              	LTDC_PanelID_Read:
+ 1401              	.LFB138:
+ 307:HADRWARE/LCD/ltdc.c **** 
+ 308:HADRWARE/LCD/ltdc.c **** //读取面板参数
+ 309:HADRWARE/LCD/ltdc.c **** //PG6=R7(M0);PI2=G7(M1);PI7=B7(M2);
+ 310:HADRWARE/LCD/ltdc.c **** //M2:M1:M0
+ 311:HADRWARE/LCD/ltdc.c **** //0 :0 :0	//4.3寸480*272 RGB屏,ID=0X4342
+ 312:HADRWARE/LCD/ltdc.c **** //0 :0 :1	//7寸800*480 RGB屏,ID=0X7084
+ 313:HADRWARE/LCD/ltdc.c **** //0 :1 :0	//7寸1024*600 RGB屏,ID=0X7016			<---
+ 314:HADRWARE/LCD/ltdc.c **** //0 :1 :1	//7寸1280*800 RGB屏,ID=0X7018
+ 315:HADRWARE/LCD/ltdc.c **** //1 :0 :0	//8寸1024*600 RGB屏,ID=0X8016 
+ 316:HADRWARE/LCD/ltdc.c **** //返回值:LCD ID:0,非法;其他值,ID;
+ 317:HADRWARE/LCD/ltdc.c **** u16 LTDC_PanelID_Read(void)
+ARM GAS  /tmp/ccRkYwN3.s 			page 33
+
+
+ 318:HADRWARE/LCD/ltdc.c **** {
+ 1402              		.loc 1 318 1 is_stmt 1 view -0
+ 1403              		.cfi_startproc
+ 1404              		@ args = 0, pretend = 0, frame = 0
+ 1405              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1406 0000 30B5     		push	{r4, r5, lr}
+ 1407              	.LCFI16:
+ 1408              		.cfi_def_cfa_offset 12
+ 1409              		.cfi_offset 4, -12
+ 1410              		.cfi_offset 5, -8
+ 1411              		.cfi_offset 14, -4
+ 1412 0002 83B0     		sub	sp, sp, #12
+ 1413              	.LCFI17:
+ 1414              		.cfi_def_cfa_offset 24
+ 319:HADRWARE/LCD/ltdc.c **** 	u8 idx=0;
+ 1415              		.loc 1 319 2 view .LVU452
+ 1416              	.LVL115:
+ 320:HADRWARE/LCD/ltdc.c **** 	RCC->AHB1ENR|=1<<6|1<<8; 		//使能PG/PI时钟   
+ 1417              		.loc 1 320 2 view .LVU453
+ 1418              		.loc 1 320 14 is_stmt 0 view .LVU454
+ 1419 0004 204A     		ldr	r2, .L102
+ 1420 0006 136B     		ldr	r3, [r2, #48]
+ 1421 0008 43F4A073 		orr	r3, r3, #320
+ 1422 000c 1363     		str	r3, [r2, #48]
+ 321:HADRWARE/LCD/ltdc.c **** 	GPIO_Set(GPIOG,PIN6,GPIO_MODE_IN,0,0,GPIO_PUPD_PU); 			//PG6上拉输入 
+ 1423              		.loc 1 321 2 is_stmt 1 view .LVU455
+ 1424 000e 0125     		movs	r5, #1
+ 1425 0010 0195     		str	r5, [sp, #4]
+ 1426 0012 0024     		movs	r4, #0
+ 1427 0014 0094     		str	r4, [sp]
+ 1428 0016 2346     		mov	r3, r4
+ 1429 0018 2246     		mov	r2, r4
+ 1430 001a 4021     		movs	r1, #64
+ 1431 001c 1B48     		ldr	r0, .L102+4
+ 1432 001e FFF7FEFF 		bl	GPIO_Set
+ 1433              	.LVL116:
+ 322:HADRWARE/LCD/ltdc.c **** 	GPIO_Set(GPIOI,PIN2|PIN7,GPIO_MODE_IN,0,0,GPIO_PUPD_PU); 		//PI2/PI7上拉输入
+ 1434              		.loc 1 322 2 view .LVU456
+ 1435 0022 0195     		str	r5, [sp, #4]
+ 1436 0024 0094     		str	r4, [sp]
+ 1437 0026 2346     		mov	r3, r4
+ 1438 0028 2246     		mov	r2, r4
+ 1439 002a 8421     		movs	r1, #132
+ 1440 002c 1848     		ldr	r0, .L102+8
+ 1441 002e FFF7FEFF 		bl	GPIO_Set
+ 1442              	.LVL117:
+ 323:HADRWARE/LCD/ltdc.c **** 	idx=PGin(6);					//读取M1
+ 1443              		.loc 1 323 2 view .LVU457
+ 1444              		.loc 1 323 6 is_stmt 0 view .LVU458
+ 1445 0032 184B     		ldr	r3, .L102+12
+ 1446 0034 D3F81832 		ldr	r3, [r3, #536]
+ 1447              		.loc 1 323 5 view .LVU459
+ 1448 0038 DBB2     		uxtb	r3, r3
+ 1449              	.LVL118:
+ 324:HADRWARE/LCD/ltdc.c **** 	idx|=PIin(2)<<1;				//读取M0
+ 1450              		.loc 1 324 2 is_stmt 1 view .LVU460
+ 1451              		.loc 1 324 7 is_stmt 0 view .LVU461
+ARM GAS  /tmp/ccRkYwN3.s 			page 34
+
+
+ 1452 003a 174A     		ldr	r2, .L102+16
+ 1453 003c D2F80812 		ldr	r1, [r2, #520]
+ 1454              		.loc 1 324 5 view .LVU462
+ 1455 0040 43EA4103 		orr	r3, r3, r1, lsl #1
+ 1456              	.LVL119:
+ 1457              		.loc 1 324 5 view .LVU463
+ 1458 0044 DBB2     		uxtb	r3, r3
+ 1459              	.LVL120:
+ 325:HADRWARE/LCD/ltdc.c **** 	idx|=PIin(7)<<2;				//读取M2 
+ 1460              		.loc 1 325 2 is_stmt 1 view .LVU464
+ 1461              		.loc 1 325 7 is_stmt 0 view .LVU465
+ 1462 0046 D2F81C22 		ldr	r2, [r2, #540]
+ 1463              		.loc 1 325 5 view .LVU466
+ 1464 004a 43EA8203 		orr	r3, r3, r2, lsl #2
+ 1465              	.LVL121:
+ 326:HADRWARE/LCD/ltdc.c **** 	if(idx==0)return 0X4342;		//4.3寸屏,480*272分辨率
+ 1466              		.loc 1 326 2 is_stmt 1 view .LVU467
+ 1467              		.loc 1 326 4 is_stmt 0 view .LVU468
+ 1468 004e 13F0FF03 		ands	r3, r3, #255
+ 1469              	.LVL122:
+ 1470              		.loc 1 326 4 view .LVU469
+ 1471 0052 0DD0     		beq	.L95
+ 327:HADRWARE/LCD/ltdc.c **** 	else if(idx==1)return 0X7084;	//7寸屏,800*480分辨率
+ 1472              		.loc 1 327 7 is_stmt 1 view .LVU470
+ 1473              		.loc 1 327 9 is_stmt 0 view .LVU471
+ 1474 0054 AB42     		cmp	r3, r5
+ 1475 0056 0ED0     		beq	.L96
+ 328:HADRWARE/LCD/ltdc.c **** 	else if(idx==2)return 0X7016;	//7寸屏,1024*600分辨率
+ 1476              		.loc 1 328 7 is_stmt 1 view .LVU472
+ 1477              		.loc 1 328 9 is_stmt 0 view .LVU473
+ 1478 0058 022B     		cmp	r3, #2
+ 1479 005a 0FD0     		beq	.L97
+ 329:HADRWARE/LCD/ltdc.c **** 	else if(idx==3)return 0X7018;	//7寸屏,1280*800分辨率
+ 1480              		.loc 1 329 7 is_stmt 1 view .LVU474
+ 1481              		.loc 1 329 9 is_stmt 0 view .LVU475
+ 1482 005c 032B     		cmp	r3, #3
+ 1483 005e 10D0     		beq	.L98
+ 330:HADRWARE/LCD/ltdc.c **** 	else if(idx==4)return 0X8016; 	//8寸屏,1024*600分辨率
+ 1484              		.loc 1 330 7 is_stmt 1 view .LVU476
+ 1485              		.loc 1 330 9 is_stmt 0 view .LVU477
+ 1486 0060 042B     		cmp	r3, #4
+ 1487 0062 02D0     		beq	.L101
+ 331:HADRWARE/LCD/ltdc.c **** 	else return 0;
+ 1488              		.loc 1 331 14 view .LVU478
+ 1489 0064 0020     		movs	r0, #0
+ 1490              	.L94:
+ 332:HADRWARE/LCD/ltdc.c **** }
+ 1491              		.loc 1 332 1 view .LVU479
+ 1492 0066 03B0     		add	sp, sp, #12
+ 1493              	.LCFI18:
+ 1494              		.cfi_remember_state
+ 1495              		.cfi_def_cfa_offset 12
+ 1496              		@ sp needed
+ 1497 0068 30BD     		pop	{r4, r5, pc}
+ 1498              	.L101:
+ 1499              	.LCFI19:
+ 1500              		.cfi_restore_state
+ARM GAS  /tmp/ccRkYwN3.s 			page 35
+
+
+ 330:HADRWARE/LCD/ltdc.c **** 	else if(idx==4)return 0X8016; 	//8寸屏,1024*600分辨率
+ 1501              		.loc 1 330 24 view .LVU480
+ 1502 006a 48F21600 		movw	r0, #32790
+ 1503 006e FAE7     		b	.L94
+ 1504              	.L95:
+ 326:HADRWARE/LCD/ltdc.c **** 	else if(idx==1)return 0X7084;	//7寸屏,800*480分辨率
+ 1505              		.loc 1 326 19 view .LVU481
+ 1506 0070 44F24230 		movw	r0, #17218
+ 1507 0074 F7E7     		b	.L94
+ 1508              	.L96:
+ 327:HADRWARE/LCD/ltdc.c **** 	else if(idx==2)return 0X7016;	//7寸屏,1024*600分辨率
+ 1509              		.loc 1 327 24 view .LVU482
+ 1510 0076 47F28400 		movw	r0, #28804
+ 1511 007a F4E7     		b	.L94
+ 1512              	.L97:
+ 328:HADRWARE/LCD/ltdc.c **** 	else if(idx==3)return 0X7018;	//7寸屏,1280*800分辨率
+ 1513              		.loc 1 328 24 view .LVU483
+ 1514 007c 47F21600 		movw	r0, #28694
+ 1515 0080 F1E7     		b	.L94
+ 1516              	.L98:
+ 329:HADRWARE/LCD/ltdc.c **** 	else if(idx==4)return 0X8016; 	//8寸屏,1024*600分辨率
+ 1517              		.loc 1 329 24 view .LVU484
+ 1518 0082 47F21800 		movw	r0, #28696
+ 1519 0086 EEE7     		b	.L94
+ 1520              	.L103:
+ 1521              		.align	2
+ 1522              	.L102:
+ 1523 0088 00380240 		.word	1073887232
+ 1524 008c 00180240 		.word	1073879040
+ 1525 0090 00200240 		.word	1073881088
+ 1526 0094 00004342 		.word	1111687168
+ 1527 0098 00004442 		.word	1111752704
+ 1528              		.cfi_endproc
+ 1529              	.LFE138:
+ 1531              		.section	.text.__LTDC_Init,"ax",%progbits
+ 1532              		.align	1
+ 1533              		.global	__LTDC_Init
+ 1534              		.syntax unified
+ 1535              		.thumb
+ 1536              		.thumb_func
+ 1537              		.fpu fpv4-sp-d16
+ 1539              	__LTDC_Init:
+ 1540              	.LFB139:
+ 333:HADRWARE/LCD/ltdc.c **** 
+ 334:HADRWARE/LCD/ltdc.c **** //LTDC初始化函数
+ 335:HADRWARE/LCD/ltdc.c **** void __LTDC_Init(void)
+ 336:HADRWARE/LCD/ltdc.c **** {   
+ 1541              		.loc 1 336 1 is_stmt 1 view -0
+ 1542              		.cfi_startproc
+ 1543              		@ args = 0, pretend = 0, frame = 0
+ 1544              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1545 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 1546              	.LCFI20:
+ 1547              		.cfi_def_cfa_offset 32
+ 1548              		.cfi_offset 4, -32
+ 1549              		.cfi_offset 5, -28
+ 1550              		.cfi_offset 6, -24
+ARM GAS  /tmp/ccRkYwN3.s 			page 36
+
+
+ 1551              		.cfi_offset 7, -20
+ 1552              		.cfi_offset 8, -16
+ 1553              		.cfi_offset 9, -12
+ 1554              		.cfi_offset 10, -8
+ 1555              		.cfi_offset 14, -4
+ 1556 0004 84B0     		sub	sp, sp, #16
+ 1557              	.LCFI21:
+ 1558              		.cfi_def_cfa_offset 48
+ 337:HADRWARE/LCD/ltdc.c **** 	u32 tempreg=0;
+ 1559              		.loc 1 337 2 view .LVU486
+ 1560              	.LVL123:
+ 338:HADRWARE/LCD/ltdc.c **** 	
+ 339:HADRWARE/LCD/ltdc.c **** 	RCC->APB2ENR|=1<<26;			//开启LTDC时钟
+ 1561              		.loc 1 339 2 view .LVU487
+ 1562              		.loc 1 339 14 is_stmt 0 view .LVU488
+ 1563 0006 8F4B     		ldr	r3, .L106
+ 1564 0008 5A6C     		ldr	r2, [r3, #68]
+ 1565 000a 42F08062 		orr	r2, r2, #67108864
+ 1566 000e 5A64     		str	r2, [r3, #68]
+ 340:HADRWARE/LCD/ltdc.c **** 	RCC->AHB1ENR|=1<<1;				//使能PORTB时钟 
+ 1567              		.loc 1 340 2 is_stmt 1 view .LVU489
+ 1568              		.loc 1 340 14 is_stmt 0 view .LVU490
+ 1569 0010 1A6B     		ldr	r2, [r3, #48]
+ 1570 0012 42F00202 		orr	r2, r2, #2
+ 1571 0016 1A63     		str	r2, [r3, #48]
+ 341:HADRWARE/LCD/ltdc.c **** 	RCC->AHB1ENR|=0XF<<5; 			//使能PF/PG/PH/PI时钟    
+ 1572              		.loc 1 341 2 is_stmt 1 view .LVU491
+ 1573              		.loc 1 341 14 is_stmt 0 view .LVU492
+ 1574 0018 1A6B     		ldr	r2, [r3, #48]
+ 1575 001a 42F4F072 		orr	r2, r2, #480
+ 1576 001e 1A63     		str	r2, [r3, #48]
+ 342:HADRWARE/LCD/ltdc.c **** 	GPIO_Set(GPIOB,PIN5,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_SPEED_50M,GPIO_PUPD_PU);				//PB5 推挽输�
+ 1577              		.loc 1 342 2 is_stmt 1 view .LVU493
+ 1578 0020 0125     		movs	r5, #1
+ 1579 0022 0195     		str	r5, [sp, #4]
+ 1580 0024 0227     		movs	r7, #2
+ 1581 0026 0097     		str	r7, [sp]
+ 1582 0028 0023     		movs	r3, #0
+ 1583 002a 2A46     		mov	r2, r5
+ 1584 002c 2021     		movs	r1, #32
+ 1585 002e 8648     		ldr	r0, .L106+4
+ 1586 0030 FFF7FEFF 		bl	GPIO_Set
+ 1587              	.LVL124:
+ 343:HADRWARE/LCD/ltdc.c **** 	GPIO_Set(GPIOF,PIN10,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU);				//PF10		
+ 1588              		.loc 1 343 2 view .LVU494
+ 1589 0034 DFF834A2 		ldr	r10, .L106+40
+ 1590 0038 0195     		str	r5, [sp, #4]
+ 1591 003a 4FF00308 		mov	r8, #3
+ 1592 003e CDF80080 		str	r8, [sp]
+ 1593 0042 0023     		movs	r3, #0
+ 1594 0044 3A46     		mov	r2, r7
+ 1595 0046 4FF48061 		mov	r1, #1024
+ 1596 004a 5046     		mov	r0, r10
+ 1597 004c FFF7FEFF 		bl	GPIO_Set
+ 1598              	.LVL125:
+ 344:HADRWARE/LCD/ltdc.c **** 	GPIO_Set(GPIOG,3<<6|1<<11,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU);			//PG6/7/11
+ 1599              		.loc 1 344 2 view .LVU495
+ARM GAS  /tmp/ccRkYwN3.s 			page 37
+
+
+ 1600 0050 DFF81C92 		ldr	r9, .L106+44
+ 1601 0054 0195     		str	r5, [sp, #4]
+ 1602 0056 CDF80080 		str	r8, [sp]
+ 1603 005a 0023     		movs	r3, #0
+ 1604 005c 3A46     		mov	r2, r7
+ 1605 005e 4FF40C61 		mov	r1, #2240
+ 1606 0062 4846     		mov	r0, r9
+ 1607 0064 FFF7FEFF 		bl	GPIO_Set
+ 1608              	.LVL126:
+ 345:HADRWARE/LCD/ltdc.c **** 	GPIO_Set(GPIOH,0X7F<<9,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU);			//PH9~15
+ 1609              		.loc 1 345 2 view .LVU496
+ 1610 0068 784E     		ldr	r6, .L106+8
+ 1611 006a 0195     		str	r5, [sp, #4]
+ 1612 006c CDF80080 		str	r8, [sp]
+ 1613 0070 0023     		movs	r3, #0
+ 1614 0072 3A46     		mov	r2, r7
+ 1615 0074 4FF47E41 		mov	r1, #65024
+ 1616 0078 3046     		mov	r0, r6
+ 1617 007a FFF7FEFF 		bl	GPIO_Set
+ 1618              	.LVL127:
+ 346:HADRWARE/LCD/ltdc.c **** 	GPIO_Set(GPIOI,7<<0|0XF<<4|3<<9,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU);	//PI0~2/
+ 1619              		.loc 1 346 2 view .LVU497
+ 1620 007e 744C     		ldr	r4, .L106+12
+ 1621 0080 0195     		str	r5, [sp, #4]
+ 1622 0082 CDF80080 		str	r8, [sp]
+ 1623 0086 0023     		movs	r3, #0
+ 1624 0088 3A46     		mov	r2, r7
+ 1625 008a 40F2F761 		movw	r1, #1783
+ 1626 008e 2046     		mov	r0, r4
+ 1627 0090 FFF7FEFF 		bl	GPIO_Set
+ 1628              	.LVL128:
+ 347:HADRWARE/LCD/ltdc.c **** 	 
+ 348:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOF,10,14);		//PF10,AF14
+ 1629              		.loc 1 348 3 view .LVU498
+ 1630 0094 0E22     		movs	r2, #14
+ 1631 0096 0A21     		movs	r1, #10
+ 1632 0098 5046     		mov	r0, r10
+ 1633 009a FFF7FEFF 		bl	GPIO_AF_Set
+ 1634              	.LVL129:
+ 349:HADRWARE/LCD/ltdc.c **** 	
+ 350:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOG,6,14);		//PG6,AF14
+ 1635              		.loc 1 350 3 view .LVU499
+ 1636 009e 0E22     		movs	r2, #14
+ 1637 00a0 0621     		movs	r1, #6
+ 1638 00a2 4846     		mov	r0, r9
+ 1639 00a4 FFF7FEFF 		bl	GPIO_AF_Set
+ 1640              	.LVL130:
+ 351:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOG,7,14);		//PG7,AF14
+ 1641              		.loc 1 351 3 view .LVU500
+ 1642 00a8 0E22     		movs	r2, #14
+ 1643 00aa 0721     		movs	r1, #7
+ 1644 00ac 4846     		mov	r0, r9
+ 1645 00ae FFF7FEFF 		bl	GPIO_AF_Set
+ 1646              	.LVL131:
+ 352:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOG,11,14);		//PG11,AF14
+ 1647              		.loc 1 352 3 view .LVU501
+ 1648 00b2 0E22     		movs	r2, #14
+ARM GAS  /tmp/ccRkYwN3.s 			page 38
+
+
+ 1649 00b4 0B21     		movs	r1, #11
+ 1650 00b6 4846     		mov	r0, r9
+ 1651 00b8 FFF7FEFF 		bl	GPIO_AF_Set
+ 1652              	.LVL132:
+ 353:HADRWARE/LCD/ltdc.c **** 	
+ 354:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOH,9,14);		//PH9,AF14
+ 1653              		.loc 1 354 3 view .LVU502
+ 1654 00bc 0E22     		movs	r2, #14
+ 1655 00be 0921     		movs	r1, #9
+ 1656 00c0 3046     		mov	r0, r6
+ 1657 00c2 FFF7FEFF 		bl	GPIO_AF_Set
+ 1658              	.LVL133:
+ 355:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOH,10,14);		//PH10,AF14
+ 1659              		.loc 1 355 3 view .LVU503
+ 1660 00c6 0E22     		movs	r2, #14
+ 1661 00c8 0A21     		movs	r1, #10
+ 1662 00ca 3046     		mov	r0, r6
+ 1663 00cc FFF7FEFF 		bl	GPIO_AF_Set
+ 1664              	.LVL134:
+ 356:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOH,11,14);		//PH11,AF14
+ 1665              		.loc 1 356 3 view .LVU504
+ 1666 00d0 0E22     		movs	r2, #14
+ 1667 00d2 0B21     		movs	r1, #11
+ 1668 00d4 3046     		mov	r0, r6
+ 1669 00d6 FFF7FEFF 		bl	GPIO_AF_Set
+ 1670              	.LVL135:
+ 357:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOH,12,14);		//PH12,AF14
+ 1671              		.loc 1 357 3 view .LVU505
+ 1672 00da 0E22     		movs	r2, #14
+ 1673 00dc 0C21     		movs	r1, #12
+ 1674 00de 3046     		mov	r0, r6
+ 1675 00e0 FFF7FEFF 		bl	GPIO_AF_Set
+ 1676              	.LVL136:
+ 358:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOH,13,14);		//PH13,AF14
+ 1677              		.loc 1 358 3 view .LVU506
+ 1678 00e4 0E22     		movs	r2, #14
+ 1679 00e6 0D21     		movs	r1, #13
+ 1680 00e8 3046     		mov	r0, r6
+ 1681 00ea FFF7FEFF 		bl	GPIO_AF_Set
+ 1682              	.LVL137:
+ 359:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOH,14,14);		//PH14,AF14
+ 1683              		.loc 1 359 3 view .LVU507
+ 1684 00ee 0E22     		movs	r2, #14
+ 1685 00f0 1146     		mov	r1, r2
+ 1686 00f2 3046     		mov	r0, r6
+ 1687 00f4 FFF7FEFF 		bl	GPIO_AF_Set
+ 1688              	.LVL138:
+ 360:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOH,15,14);		//PH15,AF14
+ 1689              		.loc 1 360 3 view .LVU508
+ 1690 00f8 0E22     		movs	r2, #14
+ 1691 00fa 0F21     		movs	r1, #15
+ 1692 00fc 3046     		mov	r0, r6
+ 1693 00fe FFF7FEFF 		bl	GPIO_AF_Set
+ 1694              	.LVL139:
+ 361:HADRWARE/LCD/ltdc.c **** 	
+ 362:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOI,0,14);		//PI0,AF14
+ 1695              		.loc 1 362 3 view .LVU509
+ARM GAS  /tmp/ccRkYwN3.s 			page 39
+
+
+ 1696 0102 0E22     		movs	r2, #14
+ 1697 0104 0021     		movs	r1, #0
+ 1698 0106 2046     		mov	r0, r4
+ 1699 0108 FFF7FEFF 		bl	GPIO_AF_Set
+ 1700              	.LVL140:
+ 363:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOI,1,14);		//PI1,AF14
+ 1701              		.loc 1 363 3 view .LVU510
+ 1702 010c 0E22     		movs	r2, #14
+ 1703 010e 2946     		mov	r1, r5
+ 1704 0110 2046     		mov	r0, r4
+ 1705 0112 FFF7FEFF 		bl	GPIO_AF_Set
+ 1706              	.LVL141:
+ 364:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOI,2,14);		//PI2,AF14
+ 1707              		.loc 1 364 3 view .LVU511
+ 1708 0116 0E22     		movs	r2, #14
+ 1709 0118 3946     		mov	r1, r7
+ 1710 011a 2046     		mov	r0, r4
+ 1711 011c FFF7FEFF 		bl	GPIO_AF_Set
+ 1712              	.LVL142:
+ 365:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOI,4,14);		//PI4,AF14
+ 1713              		.loc 1 365 3 view .LVU512
+ 1714 0120 0E22     		movs	r2, #14
+ 1715 0122 0421     		movs	r1, #4
+ 1716 0124 2046     		mov	r0, r4
+ 1717 0126 FFF7FEFF 		bl	GPIO_AF_Set
+ 1718              	.LVL143:
+ 366:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOI,5,14);		//PI5,AF14
+ 1719              		.loc 1 366 3 view .LVU513
+ 1720 012a 0E22     		movs	r2, #14
+ 1721 012c 0521     		movs	r1, #5
+ 1722 012e 2046     		mov	r0, r4
+ 1723 0130 FFF7FEFF 		bl	GPIO_AF_Set
+ 1724              	.LVL144:
+ 367:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOI,6,14);		//PI6,AF14
+ 1725              		.loc 1 367 3 view .LVU514
+ 1726 0134 0E22     		movs	r2, #14
+ 1727 0136 0621     		movs	r1, #6
+ 1728 0138 2046     		mov	r0, r4
+ 1729 013a FFF7FEFF 		bl	GPIO_AF_Set
+ 1730              	.LVL145:
+ 368:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOI,7,14);		//PI7,AF14
+ 1731              		.loc 1 368 3 view .LVU515
+ 1732 013e 0E22     		movs	r2, #14
+ 1733 0140 0721     		movs	r1, #7
+ 1734 0142 2046     		mov	r0, r4
+ 1735 0144 FFF7FEFF 		bl	GPIO_AF_Set
+ 1736              	.LVL146:
+ 369:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOI,9,14);		//PI9,AF14
+ 1737              		.loc 1 369 3 view .LVU516
+ 1738 0148 0E22     		movs	r2, #14
+ 1739 014a 0921     		movs	r1, #9
+ 1740 014c 2046     		mov	r0, r4
+ 1741 014e FFF7FEFF 		bl	GPIO_AF_Set
+ 1742              	.LVL147:
+ 370:HADRWARE/LCD/ltdc.c ****  	GPIO_AF_Set(GPIOI,10,14);		//PI10,AF14 
+ 1743              		.loc 1 370 3 view .LVU517
+ 1744 0152 0E22     		movs	r2, #14
+ARM GAS  /tmp/ccRkYwN3.s 			page 40
+
+
+ 1745 0154 0A21     		movs	r1, #10
+ 1746 0156 2046     		mov	r0, r4
+ 1747 0158 FFF7FEFF 		bl	GPIO_AF_Set
+ 1748              	.LVL148:
+ 371:HADRWARE/LCD/ltdc.c **** 	
+ 372:HADRWARE/LCD/ltdc.c **** 	
+ 373:HADRWARE/LCD/ltdc.c **** 		lcdltdc.pwidth=1024;		//面板宽度,单位:像素
+ 1749              		.loc 1 373 3 view .LVU518
+ 1750              		.loc 1 373 17 is_stmt 0 view .LVU519
+ 1751 015c 3D4C     		ldr	r4, .L106+16
+ 1752 015e 4FF48063 		mov	r3, #1024
+ 1753 0162 2360     		str	r3, [r4]
+ 374:HADRWARE/LCD/ltdc.c **** 		lcdltdc.pheight=600;		//面板高度,单位:像素
+ 1754              		.loc 1 374 3 is_stmt 1 view .LVU520
+ 1755              		.loc 1 374 18 is_stmt 0 view .LVU521
+ 1756 0164 4FF41673 		mov	r3, #600
+ 1757 0168 6360     		str	r3, [r4, #4]
+ 375:HADRWARE/LCD/ltdc.c **** 		lcdltdc.hsw=20;				//水平同步宽度
+ 1758              		.loc 1 375 3 is_stmt 1 view .LVU522
+ 1759              		.loc 1 375 14 is_stmt 0 view .LVU523
+ 1760 016a 1423     		movs	r3, #20
+ 1761 016c 2381     		strh	r3, [r4, #8]	@ movhi
+ 376:HADRWARE/LCD/ltdc.c **** 		lcdltdc.vsw=3;				//垂直同步宽度
+ 1762              		.loc 1 376 3 is_stmt 1 view .LVU524
+ 1763              		.loc 1 376 14 is_stmt 0 view .LVU525
+ 1764 016e A4F80A80 		strh	r8, [r4, #10]	@ movhi
+ 377:HADRWARE/LCD/ltdc.c **** 		lcdltdc.hbp=140;			//水平后廊
+ 1765              		.loc 1 377 3 is_stmt 1 view .LVU526
+ 1766              		.loc 1 377 14 is_stmt 0 view .LVU527
+ 1767 0172 8C22     		movs	r2, #140
+ 1768 0174 A281     		strh	r2, [r4, #12]	@ movhi
+ 378:HADRWARE/LCD/ltdc.c **** 		lcdltdc.vbp=20;				//垂直后廊
+ 1769              		.loc 1 378 3 is_stmt 1 view .LVU528
+ 1770              		.loc 1 378 14 is_stmt 0 view .LVU529
+ 1771 0176 E381     		strh	r3, [r4, #14]	@ movhi
+ 379:HADRWARE/LCD/ltdc.c **** 		lcdltdc.hfp=160;			//水平前廊
+ 1772              		.loc 1 379 3 is_stmt 1 view .LVU530
+ 1773              		.loc 1 379 14 is_stmt 0 view .LVU531
+ 1774 0178 A023     		movs	r3, #160
+ 1775 017a 2382     		strh	r3, [r4, #16]	@ movhi
+ 380:HADRWARE/LCD/ltdc.c **** 		lcdltdc.vfp=12;				//垂直前廊
+ 1776              		.loc 1 380 3 is_stmt 1 view .LVU532
+ 1777              		.loc 1 380 14 is_stmt 0 view .LVU533
+ 1778 017c 0C23     		movs	r3, #12
+ 1779 017e 6382     		strh	r3, [r4, #18]	@ movhi
+ 381:HADRWARE/LCD/ltdc.c **** 		LTDC_Clk_Set(360,2,1); 		//设置像素时钟  45Mhz 
+ 1780              		.loc 1 381 3 is_stmt 1 view .LVU534
+ 1781 0180 2A46     		mov	r2, r5
+ 1782 0182 3946     		mov	r1, r7
+ 1783 0184 4FF4B470 		mov	r0, #360
+ 1784 0188 FFF7FEFF 		bl	LTDC_Clk_Set
+ 1785              	.LVL149:
+ 382:HADRWARE/LCD/ltdc.c **** 	
+ 383:HADRWARE/LCD/ltdc.c **** 
+ 384:HADRWARE/LCD/ltdc.c **** 	 
+ 385:HADRWARE/LCD/ltdc.c **** 	tempreg=0<<28;					//像素时钟极性:不反向
+ 1786              		.loc 1 385 2 view .LVU535
+ARM GAS  /tmp/ccRkYwN3.s 			page 41
+
+
+ 386:HADRWARE/LCD/ltdc.c **** 	tempreg|=0<<29;					//数据使能极性:低电平有效
+ 1787              		.loc 1 386 2 view .LVU536
+ 387:HADRWARE/LCD/ltdc.c **** 	tempreg|=0<<30;					//垂直同步极性:低电平有效
+ 1788              		.loc 1 387 2 view .LVU537
+ 388:HADRWARE/LCD/ltdc.c **** 	tempreg|=0<<31;					//水平同步极性:低电平有效
+ 1789              		.loc 1 388 2 view .LVU538
+ 389:HADRWARE/LCD/ltdc.c **** 	LTDC->GCR=tempreg;				//设置全局控制寄存器 
+ 1790              		.loc 1 389 2 view .LVU539
+ 1791              		.loc 1 389 11 is_stmt 0 view .LVU540
+ 1792 018c 3248     		ldr	r0, .L106+20
+ 1793 018e 0026     		movs	r6, #0
+ 1794 0190 8661     		str	r6, [r0, #24]
+ 390:HADRWARE/LCD/ltdc.c **** 	tempreg=(lcdltdc.vsw-1)<<0;		//垂直脉宽-1
+ 1795              		.loc 1 390 2 is_stmt 1 view .LVU541
+ 1796              		.loc 1 390 18 is_stmt 0 view .LVU542
+ 1797 0192 6389     		ldrh	r3, [r4, #10]
+ 1798              		.loc 1 390 25 view .LVU543
+ 1799 0194 013B     		subs	r3, r3, #1
+ 1800              	.LVL150:
+ 391:HADRWARE/LCD/ltdc.c **** 	tempreg|=(lcdltdc.hsw-1)<<16;	//水平脉宽-1
+ 1801              		.loc 1 391 2 is_stmt 1 view .LVU544
+ 1802              		.loc 1 391 19 is_stmt 0 view .LVU545
+ 1803 0196 2289     		ldrh	r2, [r4, #8]
+ 1804              		.loc 1 391 23 view .LVU546
+ 1805 0198 013A     		subs	r2, r2, #1
+ 1806              		.loc 1 391 9 view .LVU547
+ 1807 019a 43EA0243 		orr	r3, r3, r2, lsl #16
+ 1808              	.LVL151:
+ 392:HADRWARE/LCD/ltdc.c **** 	LTDC->SSCR=tempreg;				//设置同步大小配置寄存器
+ 1809              		.loc 1 392 2 is_stmt 1 view .LVU548
+ 1810              		.loc 1 392 12 is_stmt 0 view .LVU549
+ 1811 019e 8360     		str	r3, [r0, #8]
+ 393:HADRWARE/LCD/ltdc.c **** 
+ 394:HADRWARE/LCD/ltdc.c **** 	tempreg=(lcdltdc.vsw+lcdltdc.vbp-1)<<0;		//累加垂直后沿=垂直脉宽+垂直后沿-1
+ 1812              		.loc 1 394 2 is_stmt 1 view .LVU550
+ 1813              		.loc 1 394 18 is_stmt 0 view .LVU551
+ 1814 01a0 6389     		ldrh	r3, [r4, #10]
+ 1815              	.LVL152:
+ 1816              		.loc 1 394 30 view .LVU552
+ 1817 01a2 E189     		ldrh	r1, [r4, #14]
+ 1818              		.loc 1 394 22 view .LVU553
+ 1819 01a4 1944     		add	r1, r1, r3
+ 1820              		.loc 1 394 37 view .LVU554
+ 1821 01a6 0139     		subs	r1, r1, #1
+ 1822              	.LVL153:
+ 395:HADRWARE/LCD/ltdc.c **** 	tempreg|=(lcdltdc.hsw+lcdltdc.hbp-1)<<16;	//累加水平后沿=水平脉宽+水平后沿-1
+ 1823              		.loc 1 395 2 is_stmt 1 view .LVU555
+ 1824              		.loc 1 395 19 is_stmt 0 view .LVU556
+ 1825 01a8 2289     		ldrh	r2, [r4, #8]
+ 1826              		.loc 1 395 31 view .LVU557
+ 1827 01aa B4F80CC0 		ldrh	ip, [r4, #12]
+ 1828              		.loc 1 395 23 view .LVU558
+ 1829 01ae 9444     		add	ip, ip, r2
+ 1830              		.loc 1 395 35 view .LVU559
+ 1831 01b0 0CF1FF3C 		add	ip, ip, #-1
+ 1832              		.loc 1 395 9 view .LVU560
+ 1833 01b4 41EA0C41 		orr	r1, r1, ip, lsl #16
+ARM GAS  /tmp/ccRkYwN3.s 			page 42
+
+
+ 1834              	.LVL154:
+ 396:HADRWARE/LCD/ltdc.c **** 	LTDC->BPCR=tempreg;							//设置后沿配置寄存器
+ 1835              		.loc 1 396 2 is_stmt 1 view .LVU561
+ 1836              		.loc 1 396 12 is_stmt 0 view .LVU562
+ 1837 01b8 C160     		str	r1, [r0, #12]
+ 397:HADRWARE/LCD/ltdc.c **** 	
+ 398:HADRWARE/LCD/ltdc.c **** 	tempreg=(lcdltdc.vsw+lcdltdc.vbp+lcdltdc.pheight-1)<<0;	//累加有效高度=垂直脉宽+垂直�
+ 1838              		.loc 1 398 2 is_stmt 1 view .LVU563
+ 1839              		.loc 1 398 30 is_stmt 0 view .LVU564
+ 1840 01ba E189     		ldrh	r1, [r4, #14]
+ 1841              	.LVL155:
+ 1842              		.loc 1 398 22 view .LVU565
+ 1843 01bc 0B44     		add	r3, r3, r1
+ 1844              		.loc 1 398 42 view .LVU566
+ 1845 01be 6168     		ldr	r1, [r4, #4]
+ 1846              		.loc 1 398 34 view .LVU567
+ 1847 01c0 0B44     		add	r3, r3, r1
+ 1848              		.loc 1 398 9 view .LVU568
+ 1849 01c2 591E     		subs	r1, r3, #1
+ 1850              	.LVL156:
+ 399:HADRWARE/LCD/ltdc.c **** 	tempreg|=(lcdltdc.hsw+lcdltdc.hbp+lcdltdc.pwidth-1)<<16;//累加有效宽度=水平脉宽+水平�
+ 1851              		.loc 1 399 2 is_stmt 1 view .LVU569
+ 1852              		.loc 1 399 31 is_stmt 0 view .LVU570
+ 1853 01c4 B4F80CC0 		ldrh	ip, [r4, #12]
+ 1854              		.loc 1 399 23 view .LVU571
+ 1855 01c8 9444     		add	ip, ip, r2
+ 1856              		.loc 1 399 35 view .LVU572
+ 1857 01ca 2268     		ldr	r2, [r4]
+ 1858 01cc 6244     		add	r2, r2, ip
+ 1859              		.loc 1 399 50 view .LVU573
+ 1860 01ce 02F1FF3C 		add	ip, r2, #-1
+ 1861              		.loc 1 399 9 view .LVU574
+ 1862 01d2 41EA0C41 		orr	r1, r1, ip, lsl #16
+ 1863              	.LVL157:
+ 400:HADRWARE/LCD/ltdc.c **** 	LTDC->AWCR=tempreg;							//设置有效宽度配置寄存器
+ 1864              		.loc 1 400 2 is_stmt 1 view .LVU575
+ 1865              		.loc 1 400 12 is_stmt 0 view .LVU576
+ 1866 01d6 0161     		str	r1, [r0, #16]
+ 401:HADRWARE/LCD/ltdc.c **** 
+ 402:HADRWARE/LCD/ltdc.c ****  	tempreg=(lcdltdc.vsw+lcdltdc.vbp+lcdltdc.pheight+lcdltdc.vfp-1)<<0;	//总高度=垂直脉宽+垂�
+ 1867              		.loc 1 402 3 is_stmt 1 view .LVU577
+ 1868              		.loc 1 402 59 is_stmt 0 view .LVU578
+ 1869 01d8 618A     		ldrh	r1, [r4, #18]
+ 1870              	.LVL158:
+ 1871              		.loc 1 402 51 view .LVU579
+ 1872 01da 0B44     		add	r3, r3, r1
+ 1873              		.loc 1 402 10 view .LVU580
+ 1874 01dc 013B     		subs	r3, r3, #1
+ 1875              	.LVL159:
+ 403:HADRWARE/LCD/ltdc.c **** 	tempreg|=(lcdltdc.hsw+lcdltdc.hbp+lcdltdc.pwidth+lcdltdc.hfp-1)<<16;//总宽度=水平脉宽+水�
+ 1876              		.loc 1 403 2 is_stmt 1 view .LVU581
+ 1877              		.loc 1 403 58 is_stmt 0 view .LVU582
+ 1878 01de 218A     		ldrh	r1, [r4, #16]
+ 1879              		.loc 1 403 50 view .LVU583
+ 1880 01e0 0A44     		add	r2, r2, r1
+ 1881              		.loc 1 403 62 view .LVU584
+ 1882 01e2 013A     		subs	r2, r2, #1
+ARM GAS  /tmp/ccRkYwN3.s 			page 43
+
+
+ 1883              		.loc 1 403 9 view .LVU585
+ 1884 01e4 43EA0242 		orr	r2, r3, r2, lsl #16
+ 1885              	.LVL160:
+ 404:HADRWARE/LCD/ltdc.c **** 	LTDC->TWCR=tempreg;				//设置总宽度配置寄存器
+ 1886              		.loc 1 404 2 is_stmt 1 view .LVU586
+ 1887              		.loc 1 404 12 is_stmt 0 view .LVU587
+ 1888 01e8 4261     		str	r2, [r0, #20]
+ 405:HADRWARE/LCD/ltdc.c **** 	
+ 406:HADRWARE/LCD/ltdc.c **** 	LTDC->BCCR=LTDC_BACKLAYERCOLOR;	//设置背景层颜色寄存器(RGB888格式)
+ 1889              		.loc 1 406 2 is_stmt 1 view .LVU588
+ 1890              		.loc 1 406 12 is_stmt 0 view .LVU589
+ 1891 01ea C662     		str	r6, [r0, #44]
+ 407:HADRWARE/LCD/ltdc.c **** 	LTDC_Switch(1);					//开启LTDC
+ 1892              		.loc 1 407 2 is_stmt 1 view .LVU590
+ 1893 01ec 2846     		mov	r0, r5
+ 1894 01ee FFF7FEFF 		bl	LTDC_Switch
+ 1895              	.LVL161:
+ 408:HADRWARE/LCD/ltdc.c **** 	
+ 409:HADRWARE/LCD/ltdc.c **** 
+ 410:HADRWARE/LCD/ltdc.c **** #if LCD_PIXFORMAT==LCD_PIXFORMAT_ARGB8888||LCD_PIXFORMAT==LCD_PIXFORMAT_RGB888 
+ 411:HADRWARE/LCD/ltdc.c **** 	ltdc_framebuf[0]=(u32*)&ltdc_lcd_framebuf;
+ 412:HADRWARE/LCD/ltdc.c **** 	lcdltdc.pixsize=4;				//每个像素占4个字节
+ 413:HADRWARE/LCD/ltdc.c **** #else 
+ 414:HADRWARE/LCD/ltdc.c **** 	ltdc_framebuf[0]=(u32*)&ltdc_lcd_framebuf;
+ 1896              		.loc 1 414 2 view .LVU591
+ 1897              		.loc 1 414 18 is_stmt 0 view .LVU592
+ 1898 01f2 1A49     		ldr	r1, .L106+24
+ 1899 01f4 1A4B     		ldr	r3, .L106+28
+ 1900 01f6 1960     		str	r1, [r3]
+ 415:HADRWARE/LCD/ltdc.c **** 	//ltdc_framebuf[1]=(u32*)&ltdc_lcd_framebuf1;
+ 416:HADRWARE/LCD/ltdc.c **** 	lcdltdc.pixsize=2;				//每个像素占2个字节
+ 1901              		.loc 1 416 2 is_stmt 1 view .LVU593
+ 1902              		.loc 1 416 17 is_stmt 0 view .LVU594
+ 1903 01f8 E761     		str	r7, [r4, #28]
+ 417:HADRWARE/LCD/ltdc.c **** #endif 	
+ 418:HADRWARE/LCD/ltdc.c **** 	//层配置
+ 419:HADRWARE/LCD/ltdc.c **** 	LTDC_Layer_Parameter_Config(0,(u32)ltdc_framebuf[0],LCD_PIXFORMAT,255,0,6,7,0X000000);//层参数�
+ 1904              		.loc 1 419 2 is_stmt 1 view .LVU595
+ 1905 01fa 0396     		str	r6, [sp, #12]
+ 1906 01fc 0723     		movs	r3, #7
+ 1907 01fe 0293     		str	r3, [sp, #8]
+ 1908 0200 0623     		movs	r3, #6
+ 1909 0202 0193     		str	r3, [sp, #4]
+ 1910 0204 0096     		str	r6, [sp]
+ 1911 0206 FF23     		movs	r3, #255
+ 1912 0208 3A46     		mov	r2, r7
+ 1913 020a 3046     		mov	r0, r6
+ 1914 020c FFF7FEFF 		bl	LTDC_Layer_Parameter_Config
+ 1915              	.LVL162:
+ 420:HADRWARE/LCD/ltdc.c **** 	LTDC_Layer_Window_Config(0,0,0,lcdltdc.pwidth,lcdltdc.pheight);	//层窗口配置,以LCD面板坐�
+ 1916              		.loc 1 420 2 view .LVU596
+ 1917 0210 A388     		ldrh	r3, [r4, #4]
+ 1918 0212 0093     		str	r3, [sp]
+ 1919 0214 2388     		ldrh	r3, [r4]
+ 1920 0216 3246     		mov	r2, r6
+ 1921 0218 3146     		mov	r1, r6
+ 1922 021a 3046     		mov	r0, r6
+ARM GAS  /tmp/ccRkYwN3.s 			page 44
+
+
+ 1923 021c FFF7FEFF 		bl	LTDC_Layer_Window_Config
+ 1924              	.LVL163:
+ 421:HADRWARE/LCD/ltdc.c **** 	
+ 422:HADRWARE/LCD/ltdc.c **** 	//LTDC_Layer_Parameter_Config(1,(u32)ltdc_framebuf[1],LCD_PIXFORMAT,127,0,6,7,0X000000);//层参�
+ 423:HADRWARE/LCD/ltdc.c **** 	//LTDC_Layer_Window_Config(1,0,0,lcdltdc.pwidth,lcdltdc.pheight);	//层窗口配置,以LCD面板�
+ 424:HADRWARE/LCD/ltdc.c **** 
+ 425:HADRWARE/LCD/ltdc.c **** 	
+ 426:HADRWARE/LCD/ltdc.c **** 	
+ 427:HADRWARE/LCD/ltdc.c **** 	lcddev.width=lcdltdc.pwidth;	//设置lcddev的宽度参数
+ 1925              		.loc 1 427 2 view .LVU597
+ 1926              		.loc 1 427 22 is_stmt 0 view .LVU598
+ 1927 0220 2268     		ldr	r2, [r4]
+ 1928              		.loc 1 427 14 view .LVU599
+ 1929 0222 104B     		ldr	r3, .L106+32
+ 1930 0224 1A80     		strh	r2, [r3]	@ movhi
+ 428:HADRWARE/LCD/ltdc.c **** 	lcddev.height=lcdltdc.pheight; 	//设置lcddev的宽度参数
+ 1931              		.loc 1 428 2 is_stmt 1 view .LVU600
+ 1932              		.loc 1 428 23 is_stmt 0 view .LVU601
+ 1933 0226 6268     		ldr	r2, [r4, #4]
+ 1934              		.loc 1 428 15 view .LVU602
+ 1935 0228 5A80     		strh	r2, [r3, #2]	@ movhi
+ 429:HADRWARE/LCD/ltdc.c **** 	//LTDC_Display_Dir(0);			//默认竖屏，在LCD_Init函数里面设置
+ 430:HADRWARE/LCD/ltdc.c **** 	LTDC_Select_Layer(0); 			//选择第1层
+ 1936              		.loc 1 430 2 is_stmt 1 view .LVU603
+ 1937 022a 3046     		mov	r0, r6
+ 1938 022c FFF7FEFF 		bl	LTDC_Select_Layer
+ 1939              	.LVL164:
+ 431:HADRWARE/LCD/ltdc.c ****     LCD_LED=1;         		 		//点亮背光
+ 1940              		.loc 1 431 5 view .LVU604
+ 1941              		.loc 1 431 12 is_stmt 0 view .LVU605
+ 1942 0230 0D4B     		ldr	r3, .L106+36
+ 1943 0232 C3F89452 		str	r5, [r3, #660]
+ 432:HADRWARE/LCD/ltdc.c ****     LTDC_Clear(0XFFFFFFFF);			//清屏
+ 1944              		.loc 1 432 5 is_stmt 1 view .LVU606
+ 1945 0236 4FF0FF30 		mov	r0, #-1
+ 1946 023a FFF7FEFF 		bl	LTDC_Clear
+ 1947              	.LVL165:
+ 433:HADRWARE/LCD/ltdc.c **** }
+ 1948              		.loc 1 433 1 is_stmt 0 view .LVU607
+ 1949 023e 04B0     		add	sp, sp, #16
+ 1950              	.LCFI22:
+ 1951              		.cfi_def_cfa_offset 32
+ 1952              		@ sp needed
+ 1953 0240 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1954              	.L107:
+ 1955              		.align	2
+ 1956              	.L106:
+ 1957 0244 00380240 		.word	1073887232
+ 1958 0248 00040240 		.word	1073873920
+ 1959 024c 001C0240 		.word	1073880064
+ 1960 0250 00200240 		.word	1073881088
+ 1961 0254 00000000 		.word	.LANCHOR0
+ 1962 0258 00680140 		.word	1073833984
+ 1963 025c 00000000 		.word	ltdc_lcd_framebuf
+ 1964 0260 00000000 		.word	.LANCHOR1
+ 1965 0264 00000000 		.word	lcddev
+ 1966 0268 00804042 		.word	1111523328
+ARM GAS  /tmp/ccRkYwN3.s 			page 45
+
+
+ 1967 026c 00140240 		.word	1073878016
+ 1968 0270 00180240 		.word	1073879040
+ 1969              		.cfi_endproc
+ 1970              	.LFE139:
+ 1972              		.global	lcdltdc
+ 1973              		.global	ltdc_framebuf
+ 1974              		.global	ltdc_lcd_framebuf
+ 1975              		.section	.bss.lcdltdc,"aw",%nobits
+ 1976              		.align	2
+ 1977              		.set	.LANCHOR0,. + 0
+ 1980              	lcdltdc:
+ 1981 0000 00000000 		.space	32
+ 1981      00000000 
+ 1981      00000000 
+ 1981      00000000 
+ 1981      00000000 
+ 1982              		.section	.bss.ltdc_framebuf,"aw",%nobits
+ 1983              		.align	2
+ 1984              		.set	.LANCHOR1,. + 0
+ 1987              	ltdc_framebuf:
+ 1988 0000 00000000 		.space	8
+ 1988      00000000 
+ 1989              		.section	.ext_sram,"aw"
+ 1990              		.align	2
+ 1993              	ltdc_lcd_framebuf:
+ 1994 0000 00000000 		.space	2048000
+ 1994      00000000 
+ 1994      00000000 
+ 1994      00000000 
+ 1994      00000000 
+ 1995              		.text
+ 1996              	.Letext0:
+ 1997              		.file 2 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/machine/_default_types.h"
+ 1998              		.file 3 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/sys/_stdint.h"
+ 1999              		.file 4 "Libraries/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 2000              		.file 5 "HADRWARE/LCD/ltdc.h"
+ 2001              		.file 6 "HADRWARE/LCD/lcd.h"
+ 2002              		.file 7 "Lib/inc/lib.h"
+ARM GAS  /tmp/ccRkYwN3.s 			page 46
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ltdc.c
+     /tmp/ccRkYwN3.s:18     .text.LTDC_Switch:0000000000000000 $t
+     /tmp/ccRkYwN3.s:26     .text.LTDC_Switch:0000000000000000 LTDC_Switch
+     /tmp/ccRkYwN3.s:62     .text.LTDC_Switch:0000000000000020 $d
+     /tmp/ccRkYwN3.s:67     .text.LTDC_Layer_Switch:0000000000000000 $t
+     /tmp/ccRkYwN3.s:74     .text.LTDC_Layer_Switch:0000000000000000 LTDC_Layer_Switch
+     /tmp/ccRkYwN3.s:137    .text.LTDC_Layer_Switch:000000000000004c $d
+     /tmp/ccRkYwN3.s:143    .text.LTDC_Select_Layer:0000000000000000 $t
+     /tmp/ccRkYwN3.s:150    .text.LTDC_Select_Layer:0000000000000000 LTDC_Select_Layer
+     /tmp/ccRkYwN3.s:167    .text.LTDC_Select_Layer:0000000000000008 $d
+     /tmp/ccRkYwN3.s:172    .text.LTDC_Display_Dir:0000000000000000 $t
+     /tmp/ccRkYwN3.s:179    .text.LTDC_Display_Dir:0000000000000000 LTDC_Display_Dir
+     /tmp/ccRkYwN3.s:230    .text.LTDC_Display_Dir:0000000000000024 $d
+     /tmp/ccRkYwN3.s:235    .text.LTDC_Draw_Point:0000000000000000 $t
+     /tmp/ccRkYwN3.s:242    .text.LTDC_Draw_Point:0000000000000000 LTDC_Draw_Point
+     /tmp/ccRkYwN3.s:326    .text.LTDC_Draw_Point:0000000000000044 $d
+     /tmp/ccRkYwN3.s:332    .text.LTDC_Read_Point:0000000000000000 $t
+     /tmp/ccRkYwN3.s:339    .text.LTDC_Read_Point:0000000000000000 LTDC_Read_Point
+     /tmp/ccRkYwN3.s:420    .text.LTDC_Read_Point:0000000000000044 $d
+     /tmp/ccRkYwN3.s:426    .text.LTDC_Fill:0000000000000000 $t
+     /tmp/ccRkYwN3.s:433    .text.LTDC_Fill:0000000000000000 LTDC_Fill
+     /tmp/ccRkYwN3.s:615    .text.LTDC_Fill:00000000000000b0 $d
+     /tmp/ccRkYwN3.s:623    .text.LTDC_Color_Fill:0000000000000000 $t
+     /tmp/ccRkYwN3.s:630    .text.LTDC_Color_Fill:0000000000000000 LTDC_Color_Fill
+     /tmp/ccRkYwN3.s:817    .text.LTDC_Color_Fill:00000000000000b0 $d
+     /tmp/ccRkYwN3.s:825    .text.LTDC_Clear:0000000000000000 $t
+     /tmp/ccRkYwN3.s:832    .text.LTDC_Clear:0000000000000000 LTDC_Clear
+     /tmp/ccRkYwN3.s:874    .text.LTDC_Clear:0000000000000024 $d
+     /tmp/ccRkYwN3.s:879    .text.LTDC_Clk_Set:0000000000000000 $t
+     /tmp/ccRkYwN3.s:886    .text.LTDC_Clk_Set:0000000000000000 LTDC_Clk_Set
+     /tmp/ccRkYwN3.s:1032   .text.LTDC_Clk_Set:000000000000008c $d
+     /tmp/ccRkYwN3.s:1037   .text.LTDC_Layer_Window_Config:0000000000000000 $t
+     /tmp/ccRkYwN3.s:1044   .text.LTDC_Layer_Window_Config:0000000000000000 LTDC_Layer_Window_Config
+     /tmp/ccRkYwN3.s:1291   .text.LTDC_Layer_Window_Config:00000000000000f0 $d
+     /tmp/ccRkYwN3.s:1297   .text.LTDC_Layer_Parameter_Config:0000000000000000 $t
+     /tmp/ccRkYwN3.s:1304   .text.LTDC_Layer_Parameter_Config:0000000000000000 LTDC_Layer_Parameter_Config
+     /tmp/ccRkYwN3.s:1387   .text.LTDC_Layer_Parameter_Config:000000000000004c $d
+     /tmp/ccRkYwN3.s:1393   .text.LTDC_PanelID_Read:0000000000000000 $t
+     /tmp/ccRkYwN3.s:1400   .text.LTDC_PanelID_Read:0000000000000000 LTDC_PanelID_Read
+     /tmp/ccRkYwN3.s:1523   .text.LTDC_PanelID_Read:0000000000000088 $d
+     /tmp/ccRkYwN3.s:1532   .text.__LTDC_Init:0000000000000000 $t
+     /tmp/ccRkYwN3.s:1539   .text.__LTDC_Init:0000000000000000 __LTDC_Init
+     /tmp/ccRkYwN3.s:1957   .text.__LTDC_Init:0000000000000244 $d
+     /tmp/ccRkYwN3.s:1993   .ext_sram:0000000000000000 ltdc_lcd_framebuf
+     /tmp/ccRkYwN3.s:1980   .bss.lcdltdc:0000000000000000 lcdltdc
+     /tmp/ccRkYwN3.s:1987   .bss.ltdc_framebuf:0000000000000000 ltdc_framebuf
+     /tmp/ccRkYwN3.s:1976   .bss.lcdltdc:0000000000000000 $d
+     /tmp/ccRkYwN3.s:1983   .bss.ltdc_framebuf:0000000000000000 $d
+     /tmp/ccRkYwN3.s:1990   .ext_sram:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+GPIO_Set
+GPIO_AF_Set
+lcddev

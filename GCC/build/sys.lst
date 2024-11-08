@@ -1,0 +1,727 @@
+ARM GAS  /tmp/ccgrpjmr.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"sys.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.sys_gpio_af_set,"ax",%progbits
+  18              		.align	1
+  19              		.global	sys_gpio_af_set
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	sys_gpio_af_set:
+  27              	.LVL0:
+  28              	.LFB126:
+  29              		.file 1 "SYSTEM/sys/sys.c"
+   1:SYSTEM/sys/sys.c **** #include "sys.h"
+   2:SYSTEM/sys/sys.c **** 
+   3:SYSTEM/sys/sys.c **** 
+   4:SYSTEM/sys/sys.c **** /**
+   5:SYSTEM/sys/sys.c ****  * @brief       GPIO复用功能选择设置
+   6:SYSTEM/sys/sys.c ****  * @param       p_gpiox: GPIOA~GPIOI, GPIO指针
+   7:SYSTEM/sys/sys.c ****  * @param       pinx: 0X0000~0XFFFF, 引脚位置, 每个位代表一个IO, 第0位代表Px0, 第1�
+   8:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_PIN0~SYS_GPIO_PIN15, 1<<0 ~ 1<<15
+   9:SYSTEM/sys/sys.c ****  * @param       afx:0~15, 代表AF0~AF15.
+  10:SYSTEM/sys/sys.c ****  *              AF0~15设置情况(这里仅是列出常用的,详细的请见429/746数据手册,T
+  11:SYSTEM/sys/sys.c ****  *   @arg       AF0:MCO/SWD/SWCLK/RTC;      AF1:TIM1/TIM2;                  AF2:TIM3~5;            
+  12:SYSTEM/sys/sys.c ****  *   @arg       AF4:I2C1~I2C4;              AF5:SPI1~SPI6;                  AF6:SPI3/SAI1;         
+  13:SYSTEM/sys/sys.c ****  *   @arg       AF8:USART4~8/SPDIFRX/SAI2;  AF9;CAN1~2/TIM12~14/LCD/QSPI;   AF10:USB_OTG/USB_HS/SAI
+  14:SYSTEM/sys/sys.c ****  *   @arg       AF12:FMC/SDIO/OTG/HS;       AF13:DCIM;                      AF14:LCD;              
+  15:SYSTEM/sys/sys.c ****  * @retval      无
+  16:SYSTEM/sys/sys.c ****  */
+  17:SYSTEM/sys/sys.c **** void sys_gpio_af_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t afx)
+  18:SYSTEM/sys/sys.c **** {
+  30              		.loc 1 18 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  19:SYSTEM/sys/sys.c ****     uint32_t pinpos = 0, pos = 0, curpin = 0;;
+  34              		.loc 1 19 5 view .LVU1
+  35              		.loc 1 19 46 view .LVU2
+  20:SYSTEM/sys/sys.c **** 
+  21:SYSTEM/sys/sys.c ****     for (pinpos = 0; pinpos < 16; pinpos++)
+  36              		.loc 1 21 5 view .LVU3
+  37              		.loc 1 21 17 is_stmt 0 view .LVU4
+ARM GAS  /tmp/ccgrpjmr.s 			page 2
+
+
+  38 0000 0023     		movs	r3, #0
+  39              	.LVL1:
+  40              		.loc 1 21 22 is_stmt 1 view .LVU5
+  41              		.loc 1 21 5 is_stmt 0 view .LVU6
+  42 0002 0F2B     		cmp	r3, #15
+  43 0004 26D8     		bhi	.L8
+  18:SYSTEM/sys/sys.c ****     uint32_t pinpos = 0, pos = 0, curpin = 0;;
+  44              		.loc 1 18 1 view .LVU7
+  45 0006 30B5     		push	{r4, r5, lr}
+  46              	.LCFI0:
+  47              		.cfi_def_cfa_offset 12
+  48              		.cfi_offset 4, -12
+  49              		.cfi_offset 5, -8
+  50              		.cfi_offset 14, -4
+  51 0008 02E0     		b	.L4
+  52              	.LVL2:
+  53              	.L3:
+  54              		.loc 1 21 35 is_stmt 1 discriminator 2 view .LVU8
+  55              		.loc 1 21 41 is_stmt 0 discriminator 2 view .LVU9
+  56 000a 0133     		adds	r3, r3, #1
+  57              	.LVL3:
+  58              		.loc 1 21 22 is_stmt 1 discriminator 2 view .LVU10
+  59              		.loc 1 21 5 is_stmt 0 discriminator 2 view .LVU11
+  60 000c 0F2B     		cmp	r3, #15
+  61 000e 20D8     		bhi	.L9
+  62              	.LVL4:
+  63              	.L4:
+  22:SYSTEM/sys/sys.c ****     {
+  23:SYSTEM/sys/sys.c ****         pos = 1 << pinpos;      /* 一个个位检查 */
+  64              		.loc 1 23 9 is_stmt 1 view .LVU12
+  65              		.loc 1 23 17 is_stmt 0 view .LVU13
+  66 0010 4FF0010C 		mov	ip, #1
+  67 0014 0CFA03FC 		lsl	ip, ip, r3
+  68              	.LVL5:
+  24:SYSTEM/sys/sys.c ****         curpin = pinx & pos;    /* 检查引脚是否要设置 */
+  69              		.loc 1 24 9 is_stmt 1 view .LVU14
+  25:SYSTEM/sys/sys.c **** 
+  26:SYSTEM/sys/sys.c ****         if (curpin == pos)      /* 需要设置 */
+  70              		.loc 1 26 9 view .LVU15
+  71              		.loc 1 26 12 is_stmt 0 view .LVU16
+  72 0018 3CEA0104 		bics	r4, ip, r1
+  73 001c F5D1     		bne	.L3
+  27:SYSTEM/sys/sys.c ****         {
+  28:SYSTEM/sys/sys.c ****             p_gpiox->AFR[pinpos >> 3] &= ~(0X0F << ((pinpos & 0X07) * 4));
+  74              		.loc 1 28 13 is_stmt 1 view .LVU17
+  75              		.loc 1 28 39 is_stmt 0 view .LVU18
+  76 001e 4FEAD30C 		lsr	ip, r3, #3
+  77              	.LVL6:
+  78              		.loc 1 28 39 view .LVU19
+  79 0022 0CF1080C 		add	ip, ip, #8
+  80 0026 50F82C40 		ldr	r4, [r0, ip, lsl #2]
+  81              		.loc 1 28 61 view .LVU20
+  82 002a 03F0070E 		and	lr, r3, #7
+  83              		.loc 1 28 69 view .LVU21
+  84 002e 4FEA8E0E 		lsl	lr, lr, #2
+  85              		.loc 1 28 49 view .LVU22
+  86 0032 0F25     		movs	r5, #15
+ARM GAS  /tmp/ccgrpjmr.s 			page 3
+
+
+  87 0034 05FA0EF5 		lsl	r5, r5, lr
+  88              		.loc 1 28 39 view .LVU23
+  89 0038 24EA0504 		bic	r4, r4, r5
+  90 003c 40F82C40 		str	r4, [r0, ip, lsl #2]
+  29:SYSTEM/sys/sys.c ****             p_gpiox->AFR[pinpos >> 3] |= (uint32_t)afx << ((pinpos & 0X07) * 4);
+  91              		.loc 1 29 13 is_stmt 1 view .LVU24
+  92              		.loc 1 29 39 is_stmt 0 view .LVU25
+  93 0040 50F82C40 		ldr	r4, [r0, ip, lsl #2]
+  94              		.loc 1 29 56 view .LVU26
+  95 0044 02FA0EFE 		lsl	lr, r2, lr
+  96              		.loc 1 29 39 view .LVU27
+  97 0048 44EA0E04 		orr	r4, r4, lr
+  98 004c 40F82C40 		str	r4, [r0, ip, lsl #2]
+  99 0050 DBE7     		b	.L3
+ 100              	.LVL7:
+ 101              	.L9:
+  30:SYSTEM/sys/sys.c ****         }
+  31:SYSTEM/sys/sys.c ****     }
+  32:SYSTEM/sys/sys.c **** }
+ 102              		.loc 1 32 1 view .LVU28
+ 103 0052 30BD     		pop	{r4, r5, pc}
+ 104              	.LVL8:
+ 105              	.L8:
+ 106              	.LCFI1:
+ 107              		.cfi_def_cfa_offset 0
+ 108              		.cfi_restore 4
+ 109              		.cfi_restore 5
+ 110              		.cfi_restore 14
+ 111              		.loc 1 32 1 view .LVU29
+ 112 0054 7047     		bx	lr
+ 113              		.cfi_endproc
+ 114              	.LFE126:
+ 116              		.section	.text.sys_gpio_set,"ax",%progbits
+ 117              		.align	1
+ 118              		.global	sys_gpio_set
+ 119              		.syntax unified
+ 120              		.thumb
+ 121              		.thumb_func
+ 122              		.fpu fpv4-sp-d16
+ 124              	sys_gpio_set:
+ 125              	.LVL9:
+ 126              	.LFB127:
+  33:SYSTEM/sys/sys.c **** 
+  34:SYSTEM/sys/sys.c **** /**
+  35:SYSTEM/sys/sys.c ****  * @brief       GPIO通用设置
+  36:SYSTEM/sys/sys.c ****  * @param       p_gpiox: GPIOA~GPIOI, GPIO指针
+  37:SYSTEM/sys/sys.c ****  * @param       pinx: 0X0000~0XFFFF, 引脚位置, 每个位代表一个IO, 第0位代表Px0, 第1�
+  38:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_PIN0~SYS_GPIO_PIN15, 1<<0 ~ 1<<15
+  39:SYSTEM/sys/sys.c ****  *
+  40:SYSTEM/sys/sys.c ****  * @param       mode: 0~3; 模式选择, 设置如下:
+  41:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_MODE_IN,  0, 输入模式(系统复位默认状态)
+  42:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_MODE_OUT, 1, 输出模式
+  43:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_MODE_AF,  2, 复用功能模式
+  44:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_MODE_AIN, 3, 模拟输入模式
+  45:SYSTEM/sys/sys.c ****  *
+  46:SYSTEM/sys/sys.c ****  * @param       otype: 0 / 1; 输出类型选择, 设置如下:
+  47:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_OTYPE_PP, 0, 推挽输出
+ARM GAS  /tmp/ccgrpjmr.s 			page 4
+
+
+  48:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_OTYPE_OD, 1, 开漏输出
+  49:SYSTEM/sys/sys.c ****  *
+  50:SYSTEM/sys/sys.c ****  * @param       ospeed: 0~3; 输出速度, 设置如下:
+  51:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_SPEED_LOW,  0, 低速
+  52:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_SPEED_MID,  1, 中速
+  53:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_SPEED_FAST, 2, 快速
+  54:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_SPEED_HIGH, 3, 高速
+  55:SYSTEM/sys/sys.c ****  *
+  56:SYSTEM/sys/sys.c ****  * @param       pupd: 0~3: 上下拉设置, 设置如下:
+  57:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_PUPD_NONE, 0, 不带上下拉
+  58:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_PUPD_PU,   1, 上拉
+  59:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_PUPD_PD,   2, 下拉
+  60:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_PUPD_RES,  3, 保留
+  61:SYSTEM/sys/sys.c ****  *
+  62:SYSTEM/sys/sys.c ****  * @note:       注意: 在输入模式(普通输入/模拟输入)下, OTYPE和OSPEED参数无效!!
+  63:SYSTEM/sys/sys.c ****  * @retval      无
+  64:SYSTEM/sys/sys.c ****  */
+  65:SYSTEM/sys/sys.c **** void sys_gpio_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint32_t mode, uint32_t otype, uint32_t osp
+  66:SYSTEM/sys/sys.c **** {
+ 127              		.loc 1 66 1 is_stmt 1 view -0
+ 128              		.cfi_startproc
+ 129              		@ args = 8, pretend = 0, frame = 0
+ 130              		@ frame_needed = 0, uses_anonymous_args = 0
+ 131              		.loc 1 66 1 is_stmt 0 view .LVU31
+ 132 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 133              	.LCFI2:
+ 134              		.cfi_def_cfa_offset 28
+ 135              		.cfi_offset 4, -28
+ 136              		.cfi_offset 5, -24
+ 137              		.cfi_offset 6, -20
+ 138              		.cfi_offset 7, -16
+ 139              		.cfi_offset 8, -12
+ 140              		.cfi_offset 9, -8
+ 141              		.cfi_offset 14, -4
+ 142 0004 DDF81C80 		ldr	r8, [sp, #28]
+ 143 0008 089F     		ldr	r7, [sp, #32]
+  67:SYSTEM/sys/sys.c ****     uint32_t pinpos = 0, pos = 0, curpin = 0;
+ 144              		.loc 1 67 5 is_stmt 1 view .LVU32
+ 145              	.LVL10:
+  68:SYSTEM/sys/sys.c **** 
+  69:SYSTEM/sys/sys.c ****     for (pinpos = 0; pinpos < 16; pinpos++)
+ 146              		.loc 1 69 5 view .LVU33
+ 147              		.loc 1 69 17 is_stmt 0 view .LVU34
+ 148 000a 4FF0000C 		mov	ip, #0
+ 149              		.loc 1 69 5 view .LVU35
+ 150 000e 0AE0     		b	.L11
+ 151              	.LVL11:
+ 152              	.L13:
+  70:SYSTEM/sys/sys.c ****     {
+  71:SYSTEM/sys/sys.c ****         pos = 1 << pinpos;      /* 一个个位检查 */
+  72:SYSTEM/sys/sys.c ****         curpin = pinx & pos;    /* 检查引脚是否要设置 */
+  73:SYSTEM/sys/sys.c **** 
+  74:SYSTEM/sys/sys.c ****         if (curpin == pos)      /* 需要设置 */
+  75:SYSTEM/sys/sys.c ****         {
+  76:SYSTEM/sys/sys.c ****             p_gpiox->MODER &= ~(3 << (pinpos * 2)); /* 先清除原来的设置 */
+  77:SYSTEM/sys/sys.c ****             p_gpiox->MODER |= mode << (pinpos * 2); /* 设置新的模式 */
+  78:SYSTEM/sys/sys.c **** 
+ARM GAS  /tmp/ccgrpjmr.s 			page 5
+
+
+  79:SYSTEM/sys/sys.c ****             if ((mode == 0X01) || (mode == 0X02))   /* 如果是输出模式/复用功能模式 */
+  80:SYSTEM/sys/sys.c ****             {
+  81:SYSTEM/sys/sys.c ****                 p_gpiox->OSPEEDR &= ~(3 << (pinpos * 2));       /* 清除原来的设置 */
+  82:SYSTEM/sys/sys.c ****                 p_gpiox->OSPEEDR |= (ospeed << (pinpos * 2));   /* 设置新的速度值 */
+  83:SYSTEM/sys/sys.c ****                 p_gpiox->OTYPER &= ~(1 << pinpos) ;             /* 清除原来的设置 */
+  84:SYSTEM/sys/sys.c ****                 p_gpiox->OTYPER |= otype << pinpos;             /* 设置新的输出模式 */
+  85:SYSTEM/sys/sys.c ****             }
+  86:SYSTEM/sys/sys.c **** 
+  87:SYSTEM/sys/sys.c ****             p_gpiox->PUPDR &= ~(3 << (pinpos * 2)); /* 先清除原来的设置 */
+ 153              		.loc 1 87 13 is_stmt 1 view .LVU36
+ 154              		.loc 1 87 28 is_stmt 0 view .LVU37
+ 155 0010 C568     		ldr	r5, [r0, #12]
+ 156 0012 2E40     		ands	r6, r6, r5
+ 157 0014 C660     		str	r6, [r0, #12]
+  88:SYSTEM/sys/sys.c ****             p_gpiox->PUPDR |= pupd << (pinpos * 2); /* 设置新的上下拉 */
+ 158              		.loc 1 88 13 is_stmt 1 view .LVU38
+ 159              		.loc 1 88 28 is_stmt 0 view .LVU39
+ 160 0016 C568     		ldr	r5, [r0, #12]
+ 161              		.loc 1 88 36 view .LVU40
+ 162 0018 07FA04FE 		lsl	lr, r7, r4
+ 163              		.loc 1 88 28 view .LVU41
+ 164 001c 45EA0E05 		orr	r5, r5, lr
+ 165 0020 C560     		str	r5, [r0, #12]
+ 166              	.L12:
+  69:SYSTEM/sys/sys.c ****     {
+ 167              		.loc 1 69 35 is_stmt 1 discriminator 2 view .LVU42
+  69:SYSTEM/sys/sys.c ****     {
+ 168              		.loc 1 69 41 is_stmt 0 discriminator 2 view .LVU43
+ 169 0022 0CF1010C 		add	ip, ip, #1
+ 170              	.LVL12:
+ 171              	.L11:
+  69:SYSTEM/sys/sys.c ****     {
+ 172              		.loc 1 69 22 is_stmt 1 discriminator 1 view .LVU44
+  69:SYSTEM/sys/sys.c ****     {
+ 173              		.loc 1 69 5 is_stmt 0 discriminator 1 view .LVU45
+ 174 0026 BCF10F0F 		cmp	ip, #15
+ 175 002a 2DD8     		bhi	.L16
+  71:SYSTEM/sys/sys.c ****         curpin = pinx & pos;    /* 检查引脚是否要设置 */
+ 176              		.loc 1 71 9 is_stmt 1 view .LVU46
+  71:SYSTEM/sys/sys.c ****         curpin = pinx & pos;    /* 检查引脚是否要设置 */
+ 177              		.loc 1 71 17 is_stmt 0 view .LVU47
+ 178 002c 4FF0010E 		mov	lr, #1
+ 179 0030 0EFA0CFE 		lsl	lr, lr, ip
+ 180              	.LVL13:
+  72:SYSTEM/sys/sys.c **** 
+ 181              		.loc 1 72 9 is_stmt 1 view .LVU48
+  74:SYSTEM/sys/sys.c ****         {
+ 182              		.loc 1 74 9 view .LVU49
+  74:SYSTEM/sys/sys.c ****         {
+ 183              		.loc 1 74 12 is_stmt 0 view .LVU50
+ 184 0034 3EEA0104 		bics	r4, lr, r1
+ 185 0038 F3D1     		bne	.L12
+  76:SYSTEM/sys/sys.c ****             p_gpiox->MODER |= mode << (pinpos * 2); /* 设置新的模式 */
+ 186              		.loc 1 76 13 is_stmt 1 view .LVU51
+  76:SYSTEM/sys/sys.c ****             p_gpiox->MODER |= mode << (pinpos * 2); /* 设置新的模式 */
+ 187              		.loc 1 76 28 is_stmt 0 view .LVU52
+ 188 003a D0F80090 		ldr	r9, [r0]
+ARM GAS  /tmp/ccgrpjmr.s 			page 6
+
+
+  76:SYSTEM/sys/sys.c ****             p_gpiox->MODER |= mode << (pinpos * 2); /* 设置新的模式 */
+ 189              		.loc 1 76 46 view .LVU53
+ 190 003e 4FEA4C04 		lsl	r4, ip, #1
+  76:SYSTEM/sys/sys.c ****             p_gpiox->MODER |= mode << (pinpos * 2); /* 设置新的模式 */
+ 191              		.loc 1 76 35 view .LVU54
+ 192 0042 0325     		movs	r5, #3
+ 193 0044 A540     		lsls	r5, r5, r4
+  76:SYSTEM/sys/sys.c ****             p_gpiox->MODER |= mode << (pinpos * 2); /* 设置新的模式 */
+ 194              		.loc 1 76 31 view .LVU55
+ 195 0046 EE43     		mvns	r6, r5
+  76:SYSTEM/sys/sys.c ****             p_gpiox->MODER |= mode << (pinpos * 2); /* 设置新的模式 */
+ 196              		.loc 1 76 28 view .LVU56
+ 197 0048 29EA0505 		bic	r5, r9, r5
+ 198 004c 0560     		str	r5, [r0]
+  77:SYSTEM/sys/sys.c **** 
+ 199              		.loc 1 77 13 is_stmt 1 view .LVU57
+  77:SYSTEM/sys/sys.c **** 
+ 200              		.loc 1 77 28 is_stmt 0 view .LVU58
+ 201 004e 0568     		ldr	r5, [r0]
+  77:SYSTEM/sys/sys.c **** 
+ 202              		.loc 1 77 36 view .LVU59
+ 203 0050 02FA04F9 		lsl	r9, r2, r4
+  77:SYSTEM/sys/sys.c **** 
+ 204              		.loc 1 77 28 view .LVU60
+ 205 0054 45EA0905 		orr	r5, r5, r9
+ 206 0058 0560     		str	r5, [r0]
+  79:SYSTEM/sys/sys.c ****             {
+ 207              		.loc 1 79 13 is_stmt 1 view .LVU61
+  79:SYSTEM/sys/sys.c ****             {
+ 208              		.loc 1 79 32 is_stmt 0 view .LVU62
+ 209 005a 551E     		subs	r5, r2, #1
+  79:SYSTEM/sys/sys.c ****             {
+ 210              		.loc 1 79 16 view .LVU63
+ 211 005c 012D     		cmp	r5, #1
+ 212 005e D7D8     		bhi	.L13
+  81:SYSTEM/sys/sys.c ****                 p_gpiox->OSPEEDR |= (ospeed << (pinpos * 2));   /* 设置新的速度值 */
+ 213              		.loc 1 81 17 is_stmt 1 view .LVU64
+  81:SYSTEM/sys/sys.c ****                 p_gpiox->OSPEEDR |= (ospeed << (pinpos * 2));   /* 设置新的速度值 */
+ 214              		.loc 1 81 34 is_stmt 0 view .LVU65
+ 215 0060 8568     		ldr	r5, [r0, #8]
+ 216 0062 3540     		ands	r5, r5, r6
+ 217 0064 8560     		str	r5, [r0, #8]
+  82:SYSTEM/sys/sys.c ****                 p_gpiox->OTYPER &= ~(1 << pinpos) ;             /* 清除原来的设置 */
+ 218              		.loc 1 82 17 is_stmt 1 view .LVU66
+  82:SYSTEM/sys/sys.c ****                 p_gpiox->OTYPER &= ~(1 << pinpos) ;             /* 清除原来的设置 */
+ 219              		.loc 1 82 34 is_stmt 0 view .LVU67
+ 220 0066 8568     		ldr	r5, [r0, #8]
+  82:SYSTEM/sys/sys.c ****                 p_gpiox->OTYPER &= ~(1 << pinpos) ;             /* 清除原来的设置 */
+ 221              		.loc 1 82 45 view .LVU68
+ 222 0068 08FA04F9 		lsl	r9, r8, r4
+  82:SYSTEM/sys/sys.c ****                 p_gpiox->OTYPER &= ~(1 << pinpos) ;             /* 清除原来的设置 */
+ 223              		.loc 1 82 34 view .LVU69
+ 224 006c 45EA0905 		orr	r5, r5, r9
+ 225 0070 8560     		str	r5, [r0, #8]
+  83:SYSTEM/sys/sys.c ****                 p_gpiox->OTYPER |= otype << pinpos;             /* 设置新的输出模式 */
+ 226              		.loc 1 83 17 is_stmt 1 view .LVU70
+  83:SYSTEM/sys/sys.c ****                 p_gpiox->OTYPER |= otype << pinpos;             /* 设置新的输出模式 */
+ARM GAS  /tmp/ccgrpjmr.s 			page 7
+
+
+ 227              		.loc 1 83 33 is_stmt 0 view .LVU71
+ 228 0072 4568     		ldr	r5, [r0, #4]
+ 229 0074 25EA0E05 		bic	r5, r5, lr
+ 230 0078 4560     		str	r5, [r0, #4]
+  84:SYSTEM/sys/sys.c ****             }
+ 231              		.loc 1 84 17 is_stmt 1 view .LVU72
+  84:SYSTEM/sys/sys.c ****             }
+ 232              		.loc 1 84 33 is_stmt 0 view .LVU73
+ 233 007a 4568     		ldr	r5, [r0, #4]
+  84:SYSTEM/sys/sys.c ****             }
+ 234              		.loc 1 84 42 view .LVU74
+ 235 007c 03FA0CFE 		lsl	lr, r3, ip
+ 236              	.LVL14:
+  84:SYSTEM/sys/sys.c ****             }
+ 237              		.loc 1 84 33 view .LVU75
+ 238 0080 45EA0E05 		orr	r5, r5, lr
+ 239 0084 4560     		str	r5, [r0, #4]
+ 240 0086 C3E7     		b	.L13
+ 241              	.LVL15:
+ 242              	.L16:
+  89:SYSTEM/sys/sys.c ****         }
+  90:SYSTEM/sys/sys.c ****     }
+  91:SYSTEM/sys/sys.c **** }
+ 243              		.loc 1 91 1 view .LVU76
+ 244 0088 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 245              		.loc 1 91 1 view .LVU77
+ 246              		.cfi_endproc
+ 247              	.LFE127:
+ 249              		.section	.text.sys_gpio_pin_set,"ax",%progbits
+ 250              		.align	1
+ 251              		.global	sys_gpio_pin_set
+ 252              		.syntax unified
+ 253              		.thumb
+ 254              		.thumb_func
+ 255              		.fpu fpv4-sp-d16
+ 257              	sys_gpio_pin_set:
+ 258              	.LVL16:
+ 259              	.LFB128:
+  92:SYSTEM/sys/sys.c **** 
+  93:SYSTEM/sys/sys.c **** /**
+  94:SYSTEM/sys/sys.c ****  * @brief       设置GPIO某个引脚的输出状态
+  95:SYSTEM/sys/sys.c ****  * @param       p_gpiox: GPIOA~GPIOI, GPIO指针
+  96:SYSTEM/sys/sys.c ****  * @param       pinx: 0X0000~0XFFFF, 引脚位置, 每个位代表一个IO, 第0位代表Px0, 第1�
+  97:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_PIN0~SYS_GPIO_PIN15, 1<<0 ~ 1<<15
+  98:SYSTEM/sys/sys.c ****  * @param       status: 0/1, 引脚状态(仅最低位有效), 设置如下:
+  99:SYSTEM/sys/sys.c ****  *   @arg       0, 输出低电平
+ 100:SYSTEM/sys/sys.c ****  *   @arg       1, 输出高电平
+ 101:SYSTEM/sys/sys.c ****  * @retval      无
+ 102:SYSTEM/sys/sys.c ****  */
+ 103:SYSTEM/sys/sys.c **** void sys_gpio_pin_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t status)
+ 104:SYSTEM/sys/sys.c **** {
+ 260              		.loc 1 104 1 is_stmt 1 view -0
+ 261              		.cfi_startproc
+ 262              		@ args = 0, pretend = 0, frame = 0
+ 263              		@ frame_needed = 0, uses_anonymous_args = 0
+ 264              		@ link register save eliminated.
+ 105:SYSTEM/sys/sys.c ****     if (status & 0X01)
+ARM GAS  /tmp/ccgrpjmr.s 			page 8
+
+
+ 265              		.loc 1 105 5 view .LVU79
+ 266              		.loc 1 105 8 is_stmt 0 view .LVU80
+ 267 0000 12F0010F 		tst	r2, #1
+ 268 0004 03D0     		beq	.L18
+ 106:SYSTEM/sys/sys.c ****     {
+ 107:SYSTEM/sys/sys.c ****         p_gpiox->BSRR |= pinx;  /* 设置GPIOx的pinx为1 */
+ 269              		.loc 1 107 9 is_stmt 1 view .LVU81
+ 270              		.loc 1 107 23 is_stmt 0 view .LVU82
+ 271 0006 8369     		ldr	r3, [r0, #24]
+ 272 0008 1943     		orrs	r1, r1, r3
+ 273              	.LVL17:
+ 274              		.loc 1 107 23 view .LVU83
+ 275 000a 8161     		str	r1, [r0, #24]
+ 276 000c 7047     		bx	lr
+ 277              	.LVL18:
+ 278              	.L18:
+ 108:SYSTEM/sys/sys.c ****     }
+ 109:SYSTEM/sys/sys.c ****     else
+ 110:SYSTEM/sys/sys.c ****     {
+ 111:SYSTEM/sys/sys.c ****         p_gpiox->BSRR |= (uint32_t)pinx << 16;  /* 设置GPIOx的pinx为0 */
+ 279              		.loc 1 111 9 is_stmt 1 view .LVU84
+ 280              		.loc 1 111 23 is_stmt 0 view .LVU85
+ 281 000e 8369     		ldr	r3, [r0, #24]
+ 282 0010 43EA0141 		orr	r1, r3, r1, lsl #16
+ 283              	.LVL19:
+ 284              		.loc 1 111 23 view .LVU86
+ 285 0014 8161     		str	r1, [r0, #24]
+ 112:SYSTEM/sys/sys.c ****     }
+ 113:SYSTEM/sys/sys.c **** }
+ 286              		.loc 1 113 1 view .LVU87
+ 287 0016 7047     		bx	lr
+ 288              		.cfi_endproc
+ 289              	.LFE128:
+ 291              		.section	.text.sys_gpio_pin_get,"ax",%progbits
+ 292              		.align	1
+ 293              		.global	sys_gpio_pin_get
+ 294              		.syntax unified
+ 295              		.thumb
+ 296              		.thumb_func
+ 297              		.fpu fpv4-sp-d16
+ 299              	sys_gpio_pin_get:
+ 300              	.LVL20:
+ 301              	.LFB129:
+ 114:SYSTEM/sys/sys.c **** 
+ 115:SYSTEM/sys/sys.c **** /**
+ 116:SYSTEM/sys/sys.c ****  * @brief       读取GPIO某个引脚的状态
+ 117:SYSTEM/sys/sys.c ****  * @param       p_gpiox: GPIOA~GPIOG, GPIO指针
+ 118:SYSTEM/sys/sys.c ****  * @param       pinx: 0X0000~0XFFFF, 引脚位置, 每个位代表一个IO, 第0位代表Px0, 第1�
+ 119:SYSTEM/sys/sys.c ****  *   @arg       SYS_GPIO_PIN0~SYS_GPIO_PIN15, 1<<0 ~ 1<<15
+ 120:SYSTEM/sys/sys.c ****  * @retval      返回引脚状态, 0, 低电平; 1, 高电平
+ 121:SYSTEM/sys/sys.c ****  */
+ 122:SYSTEM/sys/sys.c **** uint8_t sys_gpio_pin_get(GPIO_TypeDef *p_gpiox, uint16_t pinx)
+ 123:SYSTEM/sys/sys.c **** {
+ 302              		.loc 1 123 1 is_stmt 1 view -0
+ 303              		.cfi_startproc
+ 304              		@ args = 0, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccgrpjmr.s 			page 9
+
+
+ 306              		@ link register save eliminated.
+ 124:SYSTEM/sys/sys.c ****     if (p_gpiox->IDR & pinx)
+ 307              		.loc 1 124 5 view .LVU89
+ 308              		.loc 1 124 16 is_stmt 0 view .LVU90
+ 309 0000 0369     		ldr	r3, [r0, #16]
+ 310              		.loc 1 124 8 view .LVU91
+ 311 0002 1942     		tst	r1, r3
+ 312 0004 01D0     		beq	.L22
+ 125:SYSTEM/sys/sys.c ****     {
+ 126:SYSTEM/sys/sys.c ****         return 1;   /* pinx的状态为1 */
+ 313              		.loc 1 126 16 view .LVU92
+ 314 0006 0120     		movs	r0, #1
+ 315              	.LVL21:
+ 316              		.loc 1 126 16 view .LVU93
+ 317 0008 7047     		bx	lr
+ 318              	.LVL22:
+ 319              	.L22:
+ 127:SYSTEM/sys/sys.c ****     }
+ 128:SYSTEM/sys/sys.c ****     else
+ 129:SYSTEM/sys/sys.c ****     {
+ 130:SYSTEM/sys/sys.c ****         return 0;   /* pinx的状态为0 */
+ 320              		.loc 1 130 16 view .LVU94
+ 321 000a 0020     		movs	r0, #0
+ 322              	.LVL23:
+ 131:SYSTEM/sys/sys.c ****     }
+ 132:SYSTEM/sys/sys.c **** }
+ 323              		.loc 1 132 1 view .LVU95
+ 324 000c 7047     		bx	lr
+ 325              		.cfi_endproc
+ 326              	.LFE129:
+ 328              		.section	.text.WFI_SET,"ax",%progbits
+ 329              		.align	1
+ 330              		.global	WFI_SET
+ 331              		.syntax unified
+ 332              		.thumb
+ 333              		.thumb_func
+ 334              		.fpu fpv4-sp-d16
+ 336              	WFI_SET:
+ 337              	.LFB130:
+ 133:SYSTEM/sys/sys.c **** 
+ 134:SYSTEM/sys/sys.c **** void WFI_SET(void)
+ 135:SYSTEM/sys/sys.c **** {
+ 338              		.loc 1 135 1 is_stmt 1 view -0
+ 339              		.cfi_startproc
+ 340              		@ args = 0, pretend = 0, frame = 0
+ 341              		@ frame_needed = 0, uses_anonymous_args = 0
+ 342              		@ link register save eliminated.
+ 136:SYSTEM/sys/sys.c ****     __ASM volatile("WFI");
+ 343              		.loc 1 136 5 view .LVU97
+ 344              		.syntax unified
+ 345              	@ 136 "SYSTEM/sys/sys.c" 1
+ 346 0000 30BF     		WFI
+ 347              	@ 0 "" 2
+ 137:SYSTEM/sys/sys.c **** }
+ 348              		.loc 1 137 1 is_stmt 0 view .LVU98
+ 349              		.thumb
+ 350              		.syntax unified
+ARM GAS  /tmp/ccgrpjmr.s 			page 10
+
+
+ 351 0002 7047     		bx	lr
+ 352              		.cfi_endproc
+ 353              	.LFE130:
+ 355              		.section	.text.INTX_DISABLE,"ax",%progbits
+ 356              		.align	1
+ 357              		.global	INTX_DISABLE
+ 358              		.syntax unified
+ 359              		.thumb
+ 360              		.thumb_func
+ 361              		.fpu fpv4-sp-d16
+ 363              	INTX_DISABLE:
+ 364              	.LFB131:
+ 138:SYSTEM/sys/sys.c **** 
+ 139:SYSTEM/sys/sys.c **** void INTX_DISABLE(void)
+ 140:SYSTEM/sys/sys.c **** {
+ 365              		.loc 1 140 1 is_stmt 1 view -0
+ 366              		.cfi_startproc
+ 367              		@ args = 0, pretend = 0, frame = 0
+ 368              		@ frame_needed = 0, uses_anonymous_args = 0
+ 369              		@ link register save eliminated.
+ 141:SYSTEM/sys/sys.c **** 	__ASM volatile("CPSID   I");
+ 370              		.loc 1 141 2 view .LVU100
+ 371              		.syntax unified
+ 372              	@ 141 "SYSTEM/sys/sys.c" 1
+ 373 0000 72B6     		CPSID   I
+ 374              	@ 0 "" 2
+ 142:SYSTEM/sys/sys.c **** 	__ASM volatile("BX      LR");  
+ 375              		.loc 1 142 2 view .LVU101
+ 376              	@ 142 "SYSTEM/sys/sys.c" 1
+ 377 0002 7047     		BX      LR
+ 378              	@ 0 "" 2
+ 143:SYSTEM/sys/sys.c **** }
+ 379              		.loc 1 143 1 is_stmt 0 view .LVU102
+ 380              		.thumb
+ 381              		.syntax unified
+ 382 0004 7047     		bx	lr
+ 383              		.cfi_endproc
+ 384              	.LFE131:
+ 386              		.section	.text.INTX_ENABLE,"ax",%progbits
+ 387              		.align	1
+ 388              		.global	INTX_ENABLE
+ 389              		.syntax unified
+ 390              		.thumb
+ 391              		.thumb_func
+ 392              		.fpu fpv4-sp-d16
+ 394              	INTX_ENABLE:
+ 395              	.LFB132:
+ 144:SYSTEM/sys/sys.c **** 
+ 145:SYSTEM/sys/sys.c **** void INTX_ENABLE(void)
+ 146:SYSTEM/sys/sys.c **** {
+ 396              		.loc 1 146 1 is_stmt 1 view -0
+ 397              		.cfi_startproc
+ 398              		@ args = 0, pretend = 0, frame = 0
+ 399              		@ frame_needed = 0, uses_anonymous_args = 0
+ 400              		@ link register save eliminated.
+ 147:SYSTEM/sys/sys.c **** 	__ASM volatile("CPSIE   I");
+ 401              		.loc 1 147 2 view .LVU104
+ARM GAS  /tmp/ccgrpjmr.s 			page 11
+
+
+ 402              		.syntax unified
+ 403              	@ 147 "SYSTEM/sys/sys.c" 1
+ 404 0000 62B6     		CPSIE   I
+ 405              	@ 0 "" 2
+ 148:SYSTEM/sys/sys.c **** 	__ASM volatile("BX      LR");
+ 406              		.loc 1 148 2 view .LVU105
+ 407              	@ 148 "SYSTEM/sys/sys.c" 1
+ 408 0002 7047     		BX      LR
+ 409              	@ 0 "" 2
+ 149:SYSTEM/sys/sys.c **** }
+ 410              		.loc 1 149 1 is_stmt 0 view .LVU106
+ 411              		.thumb
+ 412              		.syntax unified
+ 413 0004 7047     		bx	lr
+ 414              		.cfi_endproc
+ 415              	.LFE132:
+ 417              		.section	.text.MSR_MSP,"ax",%progbits
+ 418              		.align	1
+ 419              		.global	MSR_MSP
+ 420              		.syntax unified
+ 421              		.thumb
+ 422              		.thumb_func
+ 423              		.fpu fpv4-sp-d16
+ 425              	MSR_MSP:
+ 426              	.LVL24:
+ 427              	.LFB133:
+ 150:SYSTEM/sys/sys.c **** 
+ 151:SYSTEM/sys/sys.c **** void MSR_MSP(u32 addr) 
+ 152:SYSTEM/sys/sys.c **** {
+ 428              		.loc 1 152 1 is_stmt 1 view -0
+ 429              		.cfi_startproc
+ 430              		@ args = 0, pretend = 0, frame = 0
+ 431              		@ frame_needed = 0, uses_anonymous_args = 0
+ 432              		@ link register save eliminated.
+ 153:SYSTEM/sys/sys.c **** 	__ASM volatile("MSR MSP, r0"); 			//set Main Stack value
+ 433              		.loc 1 153 2 view .LVU108
+ 434              		.syntax unified
+ 435              	@ 153 "SYSTEM/sys/sys.c" 1
+ 436 0000 80F30888 		MSR MSP, r0
+ 437              	@ 0 "" 2
+ 154:SYSTEM/sys/sys.c **** 	__ASM volatile("BX r14");
+ 438              		.loc 1 154 2 view .LVU109
+ 439              	@ 154 "SYSTEM/sys/sys.c" 1
+ 440 0004 7047     		BX r14
+ 441              	@ 0 "" 2
+ 155:SYSTEM/sys/sys.c **** }
+ 442              		.loc 1 155 1 is_stmt 0 view .LVU110
+ 443              		.thumb
+ 444              		.syntax unified
+ 445 0006 7047     		bx	lr
+ 446              		.cfi_endproc
+ 447              	.LFE133:
+ 449              		.section	.text.function_goto,"ax",%progbits
+ 450              		.align	1
+ 451              		.global	function_goto
+ 452              		.syntax unified
+ 453              		.thumb
+ARM GAS  /tmp/ccgrpjmr.s 			page 12
+
+
+ 454              		.thumb_func
+ 455              		.fpu fpv4-sp-d16
+ 457              	function_goto:
+ 458              	.LVL25:
+ 459              	.LFB134:
+ 156:SYSTEM/sys/sys.c **** 
+ 157:SYSTEM/sys/sys.c **** 
+ 158:SYSTEM/sys/sys.c **** __INLINE void function_goto(int (*pfunction)())
+ 159:SYSTEM/sys/sys.c **** {
+ 460              		.loc 1 159 1 is_stmt 1 view -0
+ 461              		.cfi_startproc
+ 462              		@ args = 0, pretend = 0, frame = 0
+ 463              		@ frame_needed = 0, uses_anonymous_args = 0
+ 464              		@ link register save eliminated.
+ 160:SYSTEM/sys/sys.c ****     __ASM __IO 
+ 465              		.loc 1 160 5 view .LVU112
+ 466              		.syntax unified
+ 467              	@ 160 "SYSTEM/sys/sys.c" 1
+ 468 0000 0046     		mov r0,r0 
+ 469 0002 0047     		bx r0     
+ 470              		
+ 471              	@ 0 "" 2
+ 161:SYSTEM/sys/sys.c ****     (
+ 162:SYSTEM/sys/sys.c ****         "mov r0,%0 \n\t"
+ 163:SYSTEM/sys/sys.c ****         "bx r0     \n\t"
+ 164:SYSTEM/sys/sys.c ****         ::"r"(pfunction)
+ 165:SYSTEM/sys/sys.c ****     );
+ 166:SYSTEM/sys/sys.c **** }
+ 472              		.loc 1 166 1 is_stmt 0 view .LVU113
+ 473              		.thumb
+ 474              		.syntax unified
+ 475 0004 7047     		bx	lr
+ 476              		.cfi_endproc
+ 477              	.LFE134:
+ 479              		.text
+ 480              	.Letext0:
+ 481              		.file 2 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/machine/_default_types.h"
+ 482              		.file 3 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/sys/_stdint.h"
+ 483              		.file 4 "Libraries/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ARM GAS  /tmp/ccgrpjmr.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sys.c
+     /tmp/ccgrpjmr.s:18     .text.sys_gpio_af_set:0000000000000000 $t
+     /tmp/ccgrpjmr.s:26     .text.sys_gpio_af_set:0000000000000000 sys_gpio_af_set
+     /tmp/ccgrpjmr.s:117    .text.sys_gpio_set:0000000000000000 $t
+     /tmp/ccgrpjmr.s:124    .text.sys_gpio_set:0000000000000000 sys_gpio_set
+     /tmp/ccgrpjmr.s:250    .text.sys_gpio_pin_set:0000000000000000 $t
+     /tmp/ccgrpjmr.s:257    .text.sys_gpio_pin_set:0000000000000000 sys_gpio_pin_set
+     /tmp/ccgrpjmr.s:292    .text.sys_gpio_pin_get:0000000000000000 $t
+     /tmp/ccgrpjmr.s:299    .text.sys_gpio_pin_get:0000000000000000 sys_gpio_pin_get
+     /tmp/ccgrpjmr.s:329    .text.WFI_SET:0000000000000000 $t
+     /tmp/ccgrpjmr.s:336    .text.WFI_SET:0000000000000000 WFI_SET
+     /tmp/ccgrpjmr.s:356    .text.INTX_DISABLE:0000000000000000 $t
+     /tmp/ccgrpjmr.s:363    .text.INTX_DISABLE:0000000000000000 INTX_DISABLE
+     /tmp/ccgrpjmr.s:387    .text.INTX_ENABLE:0000000000000000 $t
+     /tmp/ccgrpjmr.s:394    .text.INTX_ENABLE:0000000000000000 INTX_ENABLE
+     /tmp/ccgrpjmr.s:418    .text.MSR_MSP:0000000000000000 $t
+     /tmp/ccgrpjmr.s:425    .text.MSR_MSP:0000000000000000 MSR_MSP
+     /tmp/ccgrpjmr.s:450    .text.function_goto:0000000000000000 $t
+     /tmp/ccgrpjmr.s:457    .text.function_goto:0000000000000000 function_goto
+
+NO UNDEFINED SYMBOLS

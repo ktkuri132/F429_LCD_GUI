@@ -1,0 +1,776 @@
+ARM GAS  /tmp/cc8kKdEU.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"GUILib.cpp"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Button_check,"ax",%progbits
+  18              		.align	1
+  19              		.global	Button_check
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	Button_check:
+  27              		.fnstart
+  28              	.LVL0:
+  29              	.LFB131:
+  30              		.file 1 "Lib/src/GUILib.cpp"
+   1:Lib/src/GUILib.cpp **** #include "lib.h"
+   2:Lib/src/GUILib.cpp **** #include "GUILib.h"
+   3:Lib/src/GUILib.cpp **** 
+   4:Lib/src/GUILib.cpp **** /* 1-按下状态  0-放开状态  */
+   5:Lib/src/GUILib.cpp ****         
+   6:Lib/src/GUILib.cpp **** uint8_t button_act[10];
+   7:Lib/src/GUILib.cpp **** 
+   8:Lib/src/GUILib.cpp **** 
+   9:Lib/src/GUILib.cpp **** /// @brief 创建按键
+  10:Lib/src/GUILib.cpp **** /// @param act_sign 信号槽
+  11:Lib/src/GUILib.cpp **** /// @param button_num 按键号 1-10
+  12:Lib/src/GUILib.cpp **** /// @param x 按键起始x坐标
+  13:Lib/src/GUILib.cpp **** /// @param y 按键起始y坐标
+  14:Lib/src/GUILib.cpp **** /// @param w 按键长度
+  15:Lib/src/GUILib.cpp **** /// @param h 按键宽度
+  16:Lib/src/GUILib.cpp **** /// @param string 按键标签
+  17:Lib/src/GUILib.cpp **** void Button_check(uint8_t *act_sign,uint8_t button_num,uint16_t x,uint16_t y,uint16_t w,uint16_t h,
+  18:Lib/src/GUILib.cpp **** {
+  31              		.loc 1 18 1 view -0
+  32              		.cfi_startproc
+  33              		@ args = 12, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		.loc 1 18 1 is_stmt 0 view .LVU1
+  36 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  37              		.save {r4, r5, r6, r7, r8, r9, lr}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 28
+  40              		.cfi_offset 4, -28
+ARM GAS  /tmp/cc8kKdEU.s 			page 2
+
+
+  41              		.cfi_offset 5, -24
+  42              		.cfi_offset 6, -20
+  43              		.cfi_offset 7, -16
+  44              		.cfi_offset 8, -12
+  45              		.cfi_offset 9, -8
+  46              		.cfi_offset 14, -4
+  47              		.pad #20
+  48 0004 85B0     		sub	sp, sp, #20
+  49              	.LCFI1:
+  50              		.cfi_def_cfa_offset 48
+  51 0006 8146     		mov	r9, r0
+  52 0008 8846     		mov	r8, r1
+  53 000a 1446     		mov	r4, r2
+  54 000c 1D46     		mov	r5, r3
+  55 000e BDF83060 		ldrh	r6, [sp, #48]
+  56 0012 BDF83470 		ldrh	r7, [sp, #52]
+  19:Lib/src/GUILib.cpp ****     Printf(x+11,y+11,240,32,32,1,string);
+  57              		.loc 1 19 5 is_stmt 1 view .LVU2
+  58              		.loc 1 19 11 is_stmt 0 view .LVU3
+  59 0016 03F10B01 		add	r1, r3, #11
+  60              	.LVL1:
+  61              		.loc 1 19 11 view .LVU4
+  62 001a 02F10B00 		add	r0, r2, #11
+  63              	.LVL2:
+  64              		.loc 1 19 11 view .LVU5
+  65 001e 0E9B     		ldr	r3, [sp, #56]
+  66              	.LVL3:
+  67              		.loc 1 19 11 view .LVU6
+  68 0020 0293     		str	r3, [sp, #8]
+  69 0022 0123     		movs	r3, #1
+  70 0024 0193     		str	r3, [sp, #4]
+  71 0026 2023     		movs	r3, #32
+  72 0028 0093     		str	r3, [sp]
+  73 002a F022     		movs	r2, #240
+  74              	.LVL4:
+  75              		.loc 1 19 11 view .LVU7
+  76 002c 89B2     		uxth	r1, r1
+  77 002e 80B2     		uxth	r0, r0
+  78 0030 FFF7FEFF 		bl	Printf
+  79              	.LVL5:
+  20:Lib/src/GUILib.cpp ****     static int a=0;
+  80              		.loc 1 20 5 is_stmt 1 view .LVU8
+  21:Lib/src/GUILib.cpp ****     if(!button_act[button_num])  /* 检查按键状态  */
+  81              		.loc 1 21 5 view .LVU9
+  82              		.loc 1 21 30 is_stmt 0 view .LVU10
+  83 0034 2F4B     		ldr	r3, .L6
+  84 0036 13F80830 		ldrb	r3, [r3, r8]	@ zero_extendqisi2
+  85              		.loc 1 21 5 view .LVU11
+  86 003a BBB9     		cbnz	r3, .L2
+  22:Lib/src/GUILib.cpp ****     {
+  23:Lib/src/GUILib.cpp ****         /* 处于放松状态  */
+  24:Lib/src/GUILib.cpp ****         if(tp_dev.x[0]>=x&&tp_dev.x[0]<=(x+w)&&tp_dev.y[0]>=y&&tp_dev.y[0]<=(y+h))
+  87              		.loc 1 24 9 is_stmt 1 view .LVU12
+  88              		.loc 1 24 22 is_stmt 0 view .LVU13
+  89 003c 2E4B     		ldr	r3, .L6+4
+  90 003e 9B89     		ldrh	r3, [r3, #12]
+  91              		.loc 1 24 9 view .LVU14
+ARM GAS  /tmp/cc8kKdEU.s 			page 3
+
+
+  92 0040 A342     		cmp	r3, r4
+  93 0042 54D3     		bcc	.L1
+  94              		.loc 1 24 43 discriminator 1 view .LVU15
+  95 0044 3444     		add	r4, r4, r6
+  96              		.loc 1 24 26 discriminator 1 view .LVU16
+  97 0046 A342     		cmp	r3, r4
+  98 0048 51DC     		bgt	.L1
+  99              		.loc 1 24 58 discriminator 2 view .LVU17
+ 100 004a 2B4B     		ldr	r3, .L6+4
+ 101 004c 1B8C     		ldrh	r3, [r3, #32]
+ 102              		.loc 1 24 46 discriminator 2 view .LVU18
+ 103 004e AB42     		cmp	r3, r5
+ 104 0050 4DD3     		bcc	.L1
+ 105              		.loc 1 24 79 discriminator 3 view .LVU19
+ 106 0052 3D44     		add	r5, r5, r7
+ 107              		.loc 1 24 62 discriminator 3 view .LVU20
+ 108 0054 AB42     		cmp	r3, r5
+ 109 0056 4ADC     		bgt	.L1
+  25:Lib/src/GUILib.cpp ****         {
+  26:Lib/src/GUILib.cpp ****             /* 按下  */
+  27:Lib/src/GUILib.cpp ****             *act_sign=button_num;    /* 发出槽信号  */
+ 110              		.loc 1 27 13 is_stmt 1 view .LVU21
+ 111              		.loc 1 27 22 is_stmt 0 view .LVU22
+ 112 0058 89F80080 		strb	r8, [r9]
+  28:Lib/src/GUILib.cpp **** 
+  29:Lib/src/GUILib.cpp ****             button_act[button_num]=1;     /* 切换状态  */
+ 113              		.loc 1 29 13 is_stmt 1 view .LVU23
+ 114              		.loc 1 29 35 is_stmt 0 view .LVU24
+ 115 005c 254B     		ldr	r3, .L6
+ 116 005e 0122     		movs	r2, #1
+ 117 0060 03F80820 		strb	r2, [r3, r8]
+  30:Lib/src/GUILib.cpp **** 
+  31:Lib/src/GUILib.cpp ****             button_response(act_sign);
+ 118              		.loc 1 31 13 is_stmt 1 view .LVU25
+ 119              		.loc 1 31 28 is_stmt 0 view .LVU26
+ 120 0064 4846     		mov	r0, r9
+ 121 0066 FFF7FEFF 		bl	button_response
+ 122              	.LVL6:
+ 123 006a 40E0     		b	.L1
+ 124              	.L2:
+  32:Lib/src/GUILib.cpp ****         }
+  33:Lib/src/GUILib.cpp ****     }    
+  34:Lib/src/GUILib.cpp ****     else
+  35:Lib/src/GUILib.cpp ****     {
+  36:Lib/src/GUILib.cpp ****         /* 仍然处于按下状态  */
+  37:Lib/src/GUILib.cpp ****                 /* 停止响应  等待松开  */
+  38:Lib/src/GUILib.cpp ****         if(tp_dev.x[0]>=x&&tp_dev.x[0]<=(x+w)&&tp_dev.y[0]>=y&&tp_dev.y[0]<=(y+h))      
+ 125              		.loc 1 38 9 is_stmt 1 view .LVU27
+ 126              		.loc 1 38 22 is_stmt 0 view .LVU28
+ 127 006c 224B     		ldr	r3, .L6+4
+ 128 006e 9B89     		ldrh	r3, [r3, #12]
+ 129              		.loc 1 38 9 view .LVU29
+ 130 0070 A342     		cmp	r3, r4
+ 131 0072 22D3     		bcc	.L4
+ 132              		.loc 1 38 43 discriminator 1 view .LVU30
+ 133 0074 A219     		adds	r2, r4, r6
+ 134              		.loc 1 38 26 discriminator 1 view .LVU31
+ARM GAS  /tmp/cc8kKdEU.s 			page 4
+
+
+ 135 0076 9342     		cmp	r3, r2
+ 136 0078 1FDC     		bgt	.L4
+ 137              		.loc 1 38 58 discriminator 2 view .LVU32
+ 138 007a 1F4B     		ldr	r3, .L6+4
+ 139 007c 1B8C     		ldrh	r3, [r3, #32]
+ 140              		.loc 1 38 46 discriminator 2 view .LVU33
+ 141 007e AB42     		cmp	r3, r5
+ 142 0080 1BD3     		bcc	.L4
+ 143              		.loc 1 38 79 discriminator 3 view .LVU34
+ 144 0082 EA19     		adds	r2, r5, r7
+ 145              		.loc 1 38 62 discriminator 3 view .LVU35
+ 146 0084 9342     		cmp	r3, r2
+ 147 0086 18DC     		bgt	.L4
+  39:Lib/src/GUILib.cpp ****         {
+  40:Lib/src/GUILib.cpp ****                             /* 手没松开 退出继续等待  */
+  41:Lib/src/GUILib.cpp ****             if(!a)
+ 148              		.loc 1 41 13 is_stmt 1 view .LVU36
+ 149              		.loc 1 41 16 is_stmt 0 view .LVU37
+ 150 0088 1C4B     		ldr	r3, .L6+8
+ 151 008a 1B68     		ldr	r3, [r3]
+ 152              		.loc 1 41 13 view .LVU38
+ 153 008c 002B     		cmp	r3, #0
+ 154 008e 2ED1     		bne	.L1
+  42:Lib/src/GUILib.cpp ****             {
+  43:Lib/src/GUILib.cpp ****                 LTDC_Fill(x+1,y+1,x+w-1,y+h-1,YELLOW);
+ 155              		.loc 1 43 17 is_stmt 1 view .LVU39
+ 156              		.loc 1 43 36 is_stmt 0 view .LVU40
+ 157 0090 A219     		adds	r2, r4, r6
+ 158 0092 92B2     		uxth	r2, r2
+ 159              		.loc 1 43 42 view .LVU41
+ 160 0094 EB19     		adds	r3, r5, r7
+ 161 0096 9BB2     		uxth	r3, r3
+ 162              		.loc 1 43 26 view .LVU42
+ 163 0098 013B     		subs	r3, r3, #1
+ 164 009a 013A     		subs	r2, r2, #1
+ 165 009c 691C     		adds	r1, r5, #1
+ 166 009e 601C     		adds	r0, r4, #1
+ 167 00a0 4FF6E074 		movw	r4, #65504
+ 168 00a4 0094     		str	r4, [sp]
+ 169 00a6 9BB2     		uxth	r3, r3
+ 170 00a8 92B2     		uxth	r2, r2
+ 171 00aa 89B2     		uxth	r1, r1
+ 172 00ac 80B2     		uxth	r0, r0
+ 173 00ae FFF7FEFF 		bl	LTDC_Fill
+ 174              	.LVL7:
+  44:Lib/src/GUILib.cpp ****                 a=1;
+ 175              		.loc 1 44 17 is_stmt 1 view .LVU43
+ 176              		.loc 1 44 18 is_stmt 0 view .LVU44
+ 177 00b2 124B     		ldr	r3, .L6+8
+ 178 00b4 0122     		movs	r2, #1
+ 179 00b6 1A60     		str	r2, [r3]
+ 180 00b8 19E0     		b	.L1
+ 181              	.L4:
+  45:Lib/src/GUILib.cpp ****             }
+  46:Lib/src/GUILib.cpp ****             /* 可拓展 长按--连点--功能  */
+  47:Lib/src/GUILib.cpp ****         }
+  48:Lib/src/GUILib.cpp ****         else                /* 若手松开 */
+ARM GAS  /tmp/cc8kKdEU.s 			page 5
+
+
+  49:Lib/src/GUILib.cpp ****         {
+  50:Lib/src/GUILib.cpp ****             button_act[button_num]=0;
+ 182              		.loc 1 50 13 is_stmt 1 view .LVU45
+ 183              		.loc 1 50 35 is_stmt 0 view .LVU46
+ 184 00ba 0023     		movs	r3, #0
+ 185 00bc 0D4A     		ldr	r2, .L6
+ 186 00be 02F80830 		strb	r3, [r2, r8]
+  51:Lib/src/GUILib.cpp ****             a=0;
+ 187              		.loc 1 51 13 is_stmt 1 view .LVU47
+ 188              		.loc 1 51 14 is_stmt 0 view .LVU48
+ 189 00c2 0E4A     		ldr	r2, .L6+8
+ 190 00c4 1360     		str	r3, [r2]
+  52:Lib/src/GUILib.cpp ****             *act_sign=-1;
+ 191              		.loc 1 52 13 is_stmt 1 view .LVU49
+ 192              		.loc 1 52 22 is_stmt 0 view .LVU50
+ 193 00c6 FF23     		movs	r3, #255
+ 194 00c8 89F80030 		strb	r3, [r9]
+  53:Lib/src/GUILib.cpp ****             LTDC_Fill(x+1,y+1,x+w-1,y+h-1,WHITE);
+ 195              		.loc 1 53 13 is_stmt 1 view .LVU51
+ 196              		.loc 1 53 32 is_stmt 0 view .LVU52
+ 197 00cc A219     		adds	r2, r4, r6
+ 198 00ce 92B2     		uxth	r2, r2
+ 199              		.loc 1 53 38 view .LVU53
+ 200 00d0 EB19     		adds	r3, r5, r7
+ 201 00d2 9BB2     		uxth	r3, r3
+ 202              		.loc 1 53 22 view .LVU54
+ 203 00d4 013B     		subs	r3, r3, #1
+ 204 00d6 013A     		subs	r2, r2, #1
+ 205 00d8 691C     		adds	r1, r5, #1
+ 206 00da 601C     		adds	r0, r4, #1
+ 207 00dc 4FF6FF74 		movw	r4, #65535
+ 208 00e0 0094     		str	r4, [sp]
+ 209 00e2 9BB2     		uxth	r3, r3
+ 210 00e4 92B2     		uxth	r2, r2
+ 211 00e6 89B2     		uxth	r1, r1
+ 212 00e8 80B2     		uxth	r0, r0
+ 213 00ea FFF7FEFF 		bl	LTDC_Fill
+ 214              	.LVL8:
+ 215              	.L1:
+  54:Lib/src/GUILib.cpp ****         }
+  55:Lib/src/GUILib.cpp ****     }
+  56:Lib/src/GUILib.cpp **** }
+ 216              		.loc 1 56 1 view .LVU55
+ 217 00ee 05B0     		add	sp, sp, #20
+ 218              	.LCFI2:
+ 219              		.cfi_def_cfa_offset 28
+ 220              		@ sp needed
+ 221 00f0 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 222              	.LVL9:
+ 223              	.L7:
+ 224              		.loc 1 56 1 view .LVU56
+ 225              		.align	2
+ 226              	.L6:
+ 227 00f4 00000000 		.word	.LANCHOR0
+ 228 00f8 00000000 		.word	tp_dev
+ 229 00fc 00000000 		.word	.LANCHOR1
+ 230              		.cfi_endproc
+ARM GAS  /tmp/cc8kKdEU.s 			page 6
+
+
+ 231              	.LFE131:
+ 232              		.fnend
+ 234              		.section	.text.obj_move,"ax",%progbits
+ 235              		.align	1
+ 236              		.global	obj_move
+ 237              		.syntax unified
+ 238              		.thumb
+ 239              		.thumb_func
+ 240              		.fpu fpv4-sp-d16
+ 242              	obj_move:
+ 243              		.fnstart
+ 244              	.LFB132:
+  57:Lib/src/GUILib.cpp **** 
+  58:Lib/src/GUILib.cpp **** 
+  59:Lib/src/GUILib.cpp **** void obj_move()
+  60:Lib/src/GUILib.cpp **** {
+ 245              		.loc 1 60 1 is_stmt 1 view -0
+ 246              		.cfi_startproc
+ 247              		@ args = 0, pretend = 0, frame = 0
+ 248              		@ frame_needed = 0, uses_anonymous_args = 0
+  61:Lib/src/GUILib.cpp ****     static uint16_t x_move_sit=0,y_move_sit=0;
+ 249              		.loc 1 61 5 view .LVU58
+  62:Lib/src/GUILib.cpp ****     while (y_move_sit<=650)
+ 250              		.loc 1 62 5 view .LVU59
+ 251              		.loc 1 62 22 view .LVU60
+ 252 0000 184B     		ldr	r3, .L19
+ 253 0002 1A88     		ldrh	r2, [r3]
+ 254 0004 40F28A23 		movw	r3, #650
+ 255 0008 9A42     		cmp	r2, r3
+ 256 000a 29D8     		bhi	.L17
+  60:Lib/src/GUILib.cpp ****     static uint16_t x_move_sit=0,y_move_sit=0;
+ 257              		.loc 1 60 1 is_stmt 0 view .LVU61
+ 258 000c 10B5     		push	{r4, lr}
+ 259              		.save {r4, lr}
+ 260              	.LCFI3:
+ 261              		.cfi_def_cfa_offset 8
+ 262              		.cfi_offset 4, -8
+ 263              		.cfi_offset 14, -4
+ 264 000e 13E0     		b	.L11
+ 265              	.L18:
+  63:Lib/src/GUILib.cpp ****     {
+  64:Lib/src/GUILib.cpp ****         while (x_move_sit<=1025)
+  65:Lib/src/GUILib.cpp ****         {
+  66:Lib/src/GUILib.cpp ****             tp_dev.scan(0);
+ 266              		.loc 1 66 13 is_stmt 1 view .LVU62
+ 267              		.loc 1 66 20 is_stmt 0 view .LVU63
+ 268 0010 154B     		ldr	r3, .L19+4
+ 269 0012 5B68     		ldr	r3, [r3, #4]
+ 270              		.loc 1 66 24 view .LVU64
+ 271 0014 0020     		movs	r0, #0
+ 272 0016 9847     		blx	r3
+ 273              	.LVL10:
+  67:Lib/src/GUILib.cpp ****             //delay_ms(2);
+  68:Lib/src/GUILib.cpp ****             LCD_DrawLine(0+x_move_sit,0+y_move_sit,0+x_move_sit,50+y_move_sit);
+ 274              		.loc 1 68 13 is_stmt 1 view .LVU65
+ 275              		.loc 1 68 25 is_stmt 0 view .LVU66
+ 276 0018 144C     		ldr	r4, .L19+8
+ARM GAS  /tmp/cc8kKdEU.s 			page 7
+
+
+ 277 001a 2088     		ldrh	r0, [r4]
+ 278 001c 114B     		ldr	r3, .L19
+ 279 001e 1988     		ldrh	r1, [r3]
+ 280 0020 01F13203 		add	r3, r1, #50
+ 281 0024 9BB2     		uxth	r3, r3
+ 282 0026 0246     		mov	r2, r0
+ 283 0028 FFF7FEFF 		bl	LCD_DrawLine
+ 284              	.LVL11:
+  69:Lib/src/GUILib.cpp ****             delay_ms(1);
+ 285              		.loc 1 69 13 is_stmt 1 view .LVU67
+ 286              		.loc 1 69 21 is_stmt 0 view .LVU68
+ 287 002c 0120     		movs	r0, #1
+ 288 002e FFF7FEFF 		bl	delay_ms
+ 289              	.LVL12:
+  70:Lib/src/GUILib.cpp ****             //LCD_Clear(WHITE);
+  71:Lib/src/GUILib.cpp ****             x_move_sit++;
+ 290              		.loc 1 71 13 is_stmt 1 view .LVU69
+ 291              		.loc 1 71 23 is_stmt 0 view .LVU70
+ 292 0032 2388     		ldrh	r3, [r4]
+ 293 0034 0133     		adds	r3, r3, #1
+ 294 0036 2380     		strh	r3, [r4]	@ movhi
+ 295              	.L11:
+  64:Lib/src/GUILib.cpp ****         {
+ 296              		.loc 1 64 9 is_stmt 1 view .LVU71
+  64:Lib/src/GUILib.cpp ****         {
+ 297              		.loc 1 64 26 view .LVU72
+ 298 0038 0C4B     		ldr	r3, .L19+8
+ 299 003a 1A88     		ldrh	r2, [r3]
+ 300 003c 40F20143 		movw	r3, #1025
+ 301 0040 9A42     		cmp	r2, r3
+ 302 0042 E5D9     		bls	.L18
+  72:Lib/src/GUILib.cpp ****         }
+  73:Lib/src/GUILib.cpp ****         x_move_sit=0;
+ 303              		.loc 1 73 9 view .LVU73
+ 304              		.loc 1 73 19 is_stmt 0 view .LVU74
+ 305 0044 094B     		ldr	r3, .L19+8
+ 306 0046 0022     		movs	r2, #0
+ 307 0048 1A80     		strh	r2, [r3]	@ movhi
+  74:Lib/src/GUILib.cpp ****         y_move_sit+=50;
+ 308              		.loc 1 74 9 is_stmt 1 view .LVU75
+ 309              		.loc 1 74 19 is_stmt 0 view .LVU76
+ 310 004a 064A     		ldr	r2, .L19
+ 311 004c 1388     		ldrh	r3, [r2]
+ 312 004e 3233     		adds	r3, r3, #50
+ 313 0050 1380     		strh	r3, [r2]	@ movhi
+  61:Lib/src/GUILib.cpp ****     while (y_move_sit<=650)
+ 314              		.loc 1 61 5 is_stmt 1 view .LVU77
+  62:Lib/src/GUILib.cpp ****     {
+ 315              		.loc 1 62 5 view .LVU78
+  62:Lib/src/GUILib.cpp ****     {
+ 316              		.loc 1 62 22 view .LVU79
+ 317 0052 044B     		ldr	r3, .L19
+ 318 0054 1A88     		ldrh	r2, [r3]
+ 319 0056 40F28A23 		movw	r3, #650
+ 320 005a 9A42     		cmp	r2, r3
+ 321 005c ECD9     		bls	.L11
+  75:Lib/src/GUILib.cpp ****     }
+ARM GAS  /tmp/cc8kKdEU.s 			page 8
+
+
+  76:Lib/src/GUILib.cpp ****     
+  77:Lib/src/GUILib.cpp **** }
+ 322              		.loc 1 77 1 is_stmt 0 view .LVU80
+ 323 005e 10BD     		pop	{r4, pc}
+ 324              	.L17:
+ 325              	.LCFI4:
+ 326              		.cfi_def_cfa_offset 0
+ 327              		.cfi_restore 4
+ 328              		.cfi_restore 14
+ 329 0060 7047     		bx	lr
+ 330              	.L20:
+ 331 0062 00BF     		.align	2
+ 332              	.L19:
+ 333 0064 00000000 		.word	.LANCHOR2
+ 334 0068 00000000 		.word	tp_dev
+ 335 006c 00000000 		.word	.LANCHOR3
+ 336              		.cfi_endproc
+ 337              	.LFE132:
+ 338              		.fnend
+ 340              		.section	.text._Z10witer_linev,"ax",%progbits
+ 341              		.align	1
+ 342              		.global	_Z10witer_linev
+ 343              		.syntax unified
+ 344              		.thumb
+ 345              		.thumb_func
+ 346              		.fpu fpv4-sp-d16
+ 348              	_Z10witer_linev:
+ 349              		.fnstart
+ 350              	.LFB133:
+  78:Lib/src/GUILib.cpp **** 
+  79:Lib/src/GUILib.cpp **** 
+  80:Lib/src/GUILib.cpp **** 
+  81:Lib/src/GUILib.cpp **** /* 画板  */
+  82:Lib/src/GUILib.cpp **** void witer_line(void)
+  83:Lib/src/GUILib.cpp **** {
+ 351              		.loc 1 83 1 is_stmt 1 view -0
+ 352              		.cfi_startproc
+ 353              		@ args = 0, pretend = 0, frame = 40
+ 354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 355 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 356              		.save {r4, r5, r6, r7, lr}
+ 357              	.LCFI5:
+ 358              		.cfi_def_cfa_offset 20
+ 359              		.cfi_offset 4, -20
+ 360              		.cfi_offset 5, -16
+ 361              		.cfi_offset 6, -12
+ 362              		.cfi_offset 7, -8
+ 363              		.cfi_offset 14, -4
+ 364              		.pad #44
+ 365 0002 8BB0     		sub	sp, sp, #44
+ 366              	.LCFI6:
+ 367              		.cfi_def_cfa_offset 64
+  84:Lib/src/GUILib.cpp ****     uint8_t t = 0;
+ 368              		.loc 1 84 5 view .LVU82
+ 369              	.LVL13:
+  85:Lib/src/GUILib.cpp ****     uint8_t i = 0;
+ 370              		.loc 1 85 5 view .LVU83
+ARM GAS  /tmp/cc8kKdEU.s 			page 9
+
+
+  86:Lib/src/GUILib.cpp ****     uint16_t lastpos[10][2];                                                                       
+ 371              		.loc 1 86 5 view .LVU84
+  87:Lib/src/GUILib.cpp ****     uint8_t maxp = 5;
+ 372              		.loc 1 87 5 view .LVU85
+  88:Lib/src/GUILib.cpp **** 
+  89:Lib/src/GUILib.cpp ****     if (lcddev.id == 0x1018)maxp = 10;
+ 373              		.loc 1 89 5 view .LVU86
+ 374              		.loc 1 89 16 is_stmt 0 view .LVU87
+ 375 0004 2E4B     		ldr	r3, .L32
+ 376 0006 9A88     		ldrh	r2, [r3, #4]
+ 377              		.loc 1 89 5 view .LVU88
+ 378 0008 41F21803 		movw	r3, #4120
+ 379 000c 9A42     		cmp	r2, r3
+ 380 000e 01D0     		beq	.L29
+  87:Lib/src/GUILib.cpp ****     uint8_t maxp = 5;
+ 381              		.loc 1 87 13 view .LVU89
+ 382 0010 0526     		movs	r6, #5
+ 383 0012 4FE0     		b	.L28
+ 384              	.L29:
+ 385              		.loc 1 89 34 view .LVU90
+ 386 0014 0A26     		movs	r6, #10
+ 387              	.LVL14:
+ 388              		.loc 1 89 34 view .LVU91
+ 389 0016 4DE0     		b	.L28
+ 390              	.LVL15:
+ 391              	.L31:
+  90:Lib/src/GUILib.cpp **** 
+  91:Lib/src/GUILib.cpp ****     while (1)
+  92:Lib/src/GUILib.cpp ****     {
+  93:Lib/src/GUILib.cpp ****         tp_dev.scan(0);
+  94:Lib/src/GUILib.cpp **** 
+  95:Lib/src/GUILib.cpp ****         for (t = 0; t < maxp; t++)
+  96:Lib/src/GUILib.cpp ****         {
+  97:Lib/src/GUILib.cpp ****             if ((tp_dev.sta) & (1 << t))
+  98:Lib/src/GUILib.cpp ****             {
+  99:Lib/src/GUILib.cpp ****                 if (tp_dev.x[t] < lcddev.width && tp_dev.y[t] < lcddev.height)                     
+ 100:Lib/src/GUILib.cpp ****                 {
+ 101:Lib/src/GUILib.cpp ****                     if (lastpos[t][0] == 0xFFFF)
+ 102:Lib/src/GUILib.cpp ****                     {
+ 103:Lib/src/GUILib.cpp ****                         lastpos[t][0] = tp_dev.x[t];
+ 392              		.loc 1 103 25 is_stmt 1 view .LVU92
+ 393              		.loc 1 103 39 is_stmt 0 view .LVU93
+ 394 0018 0AA9     		add	r1, sp, #40
+ 395 001a 01EB8401 		add	r1, r1, r4, lsl #2
+ 396 001e 21F8282C 		strh	r2, [r1, #-40]	@ movhi
+ 104:Lib/src/GUILib.cpp ****                         lastpos[t][1] = tp_dev.y[t];
+ 397              		.loc 1 104 25 is_stmt 1 view .LVU94
+ 398              		.loc 1 104 39 is_stmt 0 view .LVU95
+ 399 0022 21F8263C 		strh	r3, [r1, #-38]	@ movhi
+ 400 0026 2CE0     		b	.L26
+ 401              	.L24:
+ 105:Lib/src/GUILib.cpp ****                     }
+ 106:Lib/src/GUILib.cpp **** 
+ 107:Lib/src/GUILib.cpp ****                     LCD_DrawLine(lastpos[t][0], lastpos[t][1], tp_dev.x[t], tp_dev.y[t]); /* »­Ï
+ 108:Lib/src/GUILib.cpp ****                     lastpos[t][0] = tp_dev.x[t];
+ 109:Lib/src/GUILib.cpp ****                     lastpos[t][1] = tp_dev.y[t];
+ 110:Lib/src/GUILib.cpp ****                 }
+ARM GAS  /tmp/cc8kKdEU.s 			page 10
+
+
+ 111:Lib/src/GUILib.cpp ****             }
+ 112:Lib/src/GUILib.cpp ****             else 
+ 113:Lib/src/GUILib.cpp ****             {
+ 114:Lib/src/GUILib.cpp ****                 lastpos[t][0] = 0xFFFF;
+ 402              		.loc 1 114 17 is_stmt 1 view .LVU96
+ 403              		.loc 1 114 31 is_stmt 0 view .LVU97
+ 404 0028 4FF6FF72 		movw	r2, #65535
+ 405 002c 0AAB     		add	r3, sp, #40
+ 406 002e 03EB8403 		add	r3, r3, r4, lsl #2
+ 407 0032 23F8282C 		strh	r2, [r3, #-40]	@ movhi
+ 408              	.L25:
+  95:Lib/src/GUILib.cpp ****         {
+ 409              		.loc 1 95 9 is_stmt 1 discriminator 2 view .LVU98
+ 410 0036 0134     		adds	r4, r4, #1
+ 411              	.LVL16:
+  95:Lib/src/GUILib.cpp ****         {
+ 412              		.loc 1 95 9 is_stmt 0 discriminator 2 view .LVU99
+ 413 0038 E4B2     		uxtb	r4, r4
+ 414              	.LVL17:
+ 415              	.L27:
+  95:Lib/src/GUILib.cpp ****         {
+ 416              		.loc 1 95 23 is_stmt 1 discriminator 1 view .LVU100
+ 417 003a B442     		cmp	r4, r6
+ 418 003c 37D2     		bcs	.L23
+  97:Lib/src/GUILib.cpp ****             {
+ 419              		.loc 1 97 13 view .LVU101
+  97:Lib/src/GUILib.cpp ****             {
+ 420              		.loc 1 97 25 is_stmt 0 view .LVU102
+ 421 003e 214B     		ldr	r3, .L32+4
+ 422 0040 9B8E     		ldrh	r3, [r3, #52]
+  97:Lib/src/GUILib.cpp ****             {
+ 423              		.loc 1 97 38 view .LVU103
+ 424 0042 2546     		mov	r5, r4
+  97:Lib/src/GUILib.cpp ****             {
+ 425              		.loc 1 97 30 view .LVU104
+ 426 0044 2341     		asrs	r3, r3, r4
+  97:Lib/src/GUILib.cpp ****             {
+ 427              		.loc 1 97 13 view .LVU105
+ 428 0046 13F0010F 		tst	r3, #1
+ 429 004a EDD0     		beq	.L24
+  99:Lib/src/GUILib.cpp ****                 {
+ 430              		.loc 1 99 17 is_stmt 1 view .LVU106
+  99:Lib/src/GUILib.cpp ****                 {
+ 431              		.loc 1 99 31 is_stmt 0 view .LVU107
+ 432 004c 231D     		adds	r3, r4, #4
+ 433 004e 1D4A     		ldr	r2, .L32+4
+ 434 0050 02EB4303 		add	r3, r2, r3, lsl #1
+ 435 0054 9A88     		ldrh	r2, [r3, #4]
+  99:Lib/src/GUILib.cpp ****                 {
+ 436              		.loc 1 99 42 view .LVU108
+ 437 0056 1A4B     		ldr	r3, .L32
+ 438 0058 1B88     		ldrh	r3, [r3]
+  99:Lib/src/GUILib.cpp ****                 {
+ 439              		.loc 1 99 17 view .LVU109
+ 440 005a 9A42     		cmp	r2, r3
+ 441 005c EBD2     		bcs	.L25
+  99:Lib/src/GUILib.cpp ****                 {
+ARM GAS  /tmp/cc8kKdEU.s 			page 11
+
+
+ 442              		.loc 1 99 61 discriminator 1 view .LVU110
+ 443 005e 04F11003 		add	r3, r4, #16
+ 444 0062 1849     		ldr	r1, .L32+4
+ 445 0064 31F81330 		ldrh	r3, [r1, r3, lsl #1]
+  99:Lib/src/GUILib.cpp ****                 {
+ 446              		.loc 1 99 72 discriminator 1 view .LVU111
+ 447 0068 1549     		ldr	r1, .L32
+ 448 006a 4988     		ldrh	r1, [r1, #2]
+  99:Lib/src/GUILib.cpp ****                 {
+ 449              		.loc 1 99 48 discriminator 1 view .LVU112
+ 450 006c 8B42     		cmp	r3, r1
+ 451 006e E2D2     		bcs	.L25
+ 101:Lib/src/GUILib.cpp ****                     {
+ 452              		.loc 1 101 21 is_stmt 1 view .LVU113
+ 101:Lib/src/GUILib.cpp ****                     {
+ 453              		.loc 1 101 37 is_stmt 0 view .LVU114
+ 454 0070 0AA9     		add	r1, sp, #40
+ 455 0072 01EB8401 		add	r1, r1, r4, lsl #2
+ 456 0076 31F8280C 		ldrh	r0, [r1, #-40]
+ 101:Lib/src/GUILib.cpp ****                     {
+ 457              		.loc 1 101 21 view .LVU115
+ 458 007a 4FF6FF71 		movw	r1, #65535
+ 459 007e 8842     		cmp	r0, r1
+ 460 0080 CAD0     		beq	.L31
+ 461              	.L26:
+ 107:Lib/src/GUILib.cpp ****                     lastpos[t][0] = tp_dev.x[t];
+ 462              		.loc 1 107 21 is_stmt 1 view .LVU116
+ 107:Lib/src/GUILib.cpp ****                     lastpos[t][0] = tp_dev.x[t];
+ 463              		.loc 1 107 33 is_stmt 0 view .LVU117
+ 464 0082 0AA9     		add	r1, sp, #40
+ 465 0084 01EB8507 		add	r7, r1, r5, lsl #2
+ 466 0088 37F8261C 		ldrh	r1, [r7, #-38]
+ 467 008c 37F8280C 		ldrh	r0, [r7, #-40]
+ 468 0090 FFF7FEFF 		bl	LCD_DrawLine
+ 469              	.LVL18:
+ 108:Lib/src/GUILib.cpp ****                     lastpos[t][1] = tp_dev.y[t];
+ 470              		.loc 1 108 21 is_stmt 1 view .LVU118
+ 108:Lib/src/GUILib.cpp ****                     lastpos[t][1] = tp_dev.y[t];
+ 471              		.loc 1 108 47 is_stmt 0 view .LVU119
+ 472 0094 0B4A     		ldr	r2, .L32+4
+ 473 0096 2B1D     		adds	r3, r5, #4
+ 474 0098 02EB4303 		add	r3, r2, r3, lsl #1
+ 475 009c 9B88     		ldrh	r3, [r3, #4]
+ 108:Lib/src/GUILib.cpp ****                     lastpos[t][1] = tp_dev.y[t];
+ 476              		.loc 1 108 35 view .LVU120
+ 477 009e 27F8283C 		strh	r3, [r7, #-40]	@ movhi
+ 109:Lib/src/GUILib.cpp ****                 }
+ 478              		.loc 1 109 21 is_stmt 1 view .LVU121
+ 109:Lib/src/GUILib.cpp ****                 }
+ 479              		.loc 1 109 47 is_stmt 0 view .LVU122
+ 480 00a2 1035     		adds	r5, r5, #16
+ 481 00a4 32F81530 		ldrh	r3, [r2, r5, lsl #1]
+ 109:Lib/src/GUILib.cpp ****                 }
+ 482              		.loc 1 109 35 view .LVU123
+ 483 00a8 27F8263C 		strh	r3, [r7, #-38]	@ movhi
+ 484 00ac C3E7     		b	.L25
+ 485              	.L23:
+ARM GAS  /tmp/cc8kKdEU.s 			page 12
+
+
+ 115:Lib/src/GUILib.cpp ****             }
+ 116:Lib/src/GUILib.cpp ****         }
+ 117:Lib/src/GUILib.cpp **** 
+ 118:Lib/src/GUILib.cpp ****         delay_ms(5);
+ 486              		.loc 1 118 9 is_stmt 1 view .LVU124
+ 487              		.loc 1 118 17 is_stmt 0 view .LVU125
+ 488 00ae 0520     		movs	r0, #5
+ 489 00b0 FFF7FEFF 		bl	delay_ms
+ 490              	.LVL19:
+ 491              	.L28:
+  91:Lib/src/GUILib.cpp ****     {
+ 492              		.loc 1 91 5 is_stmt 1 view .LVU126
+  93:Lib/src/GUILib.cpp **** 
+ 493              		.loc 1 93 9 view .LVU127
+  93:Lib/src/GUILib.cpp **** 
+ 494              		.loc 1 93 16 is_stmt 0 view .LVU128
+ 495 00b4 034B     		ldr	r3, .L32+4
+ 496 00b6 5B68     		ldr	r3, [r3, #4]
+  93:Lib/src/GUILib.cpp **** 
+ 497              		.loc 1 93 20 view .LVU129
+ 498 00b8 0020     		movs	r0, #0
+ 499 00ba 9847     		blx	r3
+ 500              	.LVL20:
+  95:Lib/src/GUILib.cpp ****         {
+ 501              		.loc 1 95 16 view .LVU130
+ 502 00bc 0024     		movs	r4, #0
+ 503 00be BCE7     		b	.L27
+ 504              	.L33:
+ 505              		.align	2
+ 506              	.L32:
+ 507 00c0 00000000 		.word	lcddev
+ 508 00c4 00000000 		.word	tp_dev
+ 509              		.cfi_endproc
+ 510              	.LFE133:
+ 511              		.fnend
+ 513              		.global	button_act
+ 514              		.section	.bss._ZZ12Button_checkE1a,"aw",%nobits
+ 515              		.align	2
+ 516              		.set	.LANCHOR1,. + 0
+ 519              	_ZZ12Button_checkE1a:
+ 520 0000 00000000 		.space	4
+ 521              		.section	.bss._ZZ8obj_moveE10x_move_sit,"aw",%nobits
+ 522              		.align	1
+ 523              		.set	.LANCHOR3,. + 0
+ 526              	_ZZ8obj_moveE10x_move_sit:
+ 527 0000 0000     		.space	2
+ 528              		.section	.bss._ZZ8obj_moveE10y_move_sit,"aw",%nobits
+ 529              		.align	1
+ 530              		.set	.LANCHOR2,. + 0
+ 533              	_ZZ8obj_moveE10y_move_sit:
+ 534 0000 0000     		.space	2
+ 535              		.section	.bss.button_act,"aw",%nobits
+ 536              		.align	2
+ 537              		.set	.LANCHOR0,. + 0
+ 540              	button_act:
+ 541 0000 00000000 		.space	10
+ 541      00000000 
+ARM GAS  /tmp/cc8kKdEU.s 			page 13
+
+
+ 541      0000
+ 542              		.text
+ 543              	.Letext0:
+ 544              		.file 2 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/machine/_default_types.h"
+ 545              		.file 3 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/sys/_stdint.h"
+ 546              		.file 4 "Libraries/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 547              		.file 5 "/home/ktkuri/arm-gcc-tools/lib/gcc/arm-none-eabi/10.2.1/include/stddef.h"
+ 548              		.file 6 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/c++/10.2.1/cstdlib"
+ 549              		.file 7 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/c++/10.2.1/bits/std_abs.h"
+ 550              		.file 8 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/c++/10.2.1/arm-none-eabi/thumb/v7e-m+fp/
+ 551              		.file 9 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/stdlib.h"
+ 552              		.file 10 "/home/ktkuri/arm-gcc-tools/arm-none-eabi/include/c++/10.2.1/stdlib.h"
+ 553              		.file 11 "HADRWARE/LCD/lcd.h"
+ 554              		.file 12 "HADRWARE/TOUCH/touch.h"
+ 555              		.file 13 "SYSTEM/delay/delay.h"
+ 556              		.file 14 "Lib/inc/GUILib.h"
+ 557              		.file 15 "HADRWARE/LCD/ltdc.h"
+ 558              		.file 16 "<built-in>"
+ARM GAS  /tmp/cc8kKdEU.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 GUILib.cpp
+     /tmp/cc8kKdEU.s:18     .text.Button_check:0000000000000000 $t
+     /tmp/cc8kKdEU.s:26     .text.Button_check:0000000000000000 Button_check
+     /tmp/cc8kKdEU.s:227    .text.Button_check:00000000000000f4 $d
+     .ARM.exidx.text.Button_check:0000000000000000 $d
+     /tmp/cc8kKdEU.s:235    .text.obj_move:0000000000000000 $t
+     /tmp/cc8kKdEU.s:242    .text.obj_move:0000000000000000 obj_move
+     /tmp/cc8kKdEU.s:333    .text.obj_move:0000000000000064 $d
+         .ARM.exidx.text.obj_move:0000000000000000 $d
+     /tmp/cc8kKdEU.s:341    .text._Z10witer_linev:0000000000000000 $t
+     /tmp/cc8kKdEU.s:348    .text._Z10witer_linev:0000000000000000 _Z10witer_linev
+     /tmp/cc8kKdEU.s:507    .text._Z10witer_linev:00000000000000c0 $d
+  .ARM.exidx.text._Z10witer_linev:0000000000000000 $d
+     /tmp/cc8kKdEU.s:540    .bss.button_act:0000000000000000 button_act
+     /tmp/cc8kKdEU.s:515    .bss._ZZ12Button_checkE1a:0000000000000000 $d
+     /tmp/cc8kKdEU.s:519    .bss._ZZ12Button_checkE1a:0000000000000000 _ZZ12Button_checkE1a
+     /tmp/cc8kKdEU.s:522    .bss._ZZ8obj_moveE10x_move_sit:0000000000000000 $d
+     /tmp/cc8kKdEU.s:526    .bss._ZZ8obj_moveE10x_move_sit:0000000000000000 _ZZ8obj_moveE10x_move_sit
+     /tmp/cc8kKdEU.s:529    .bss._ZZ8obj_moveE10y_move_sit:0000000000000000 $d
+     /tmp/cc8kKdEU.s:533    .bss._ZZ8obj_moveE10y_move_sit:0000000000000000 _ZZ8obj_moveE10y_move_sit
+     /tmp/cc8kKdEU.s:536    .bss.button_act:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+Printf
+button_response
+LTDC_Fill
+tp_dev
+__aeabi_unwind_cpp_pr0
+LCD_DrawLine
+delay_ms
+lcddev

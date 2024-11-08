@@ -30,7 +30,7 @@ void button_response(uint8_t *act_sign)
     {
         case 0:
         {
-            a++;
+            a +=2;
             Printf(0,64,240,32,32,0,"a:%d",a); 
             printf("%d\r\n",a);
         }   
