@@ -10,9 +10,9 @@ int main()
 {
     BSP_Init();
     
+    // 使用 “按钮”必须在 外部中断的函数中调用
+
     
-
-
     while(1)
     {    
         //Printf(0,0,240,32,32,0,"x:%d,y:%d",tp_dev.x[0],tp_dev.y[0]);

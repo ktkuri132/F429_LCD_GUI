@@ -1,24 +1,28 @@
 {
-    // 使用 IntelliSense 了解相关属性。 
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "cwd": "${workspaceFolder}",
-            "executable": "./GCC/build/temp.elf",
-            "name": "Debug-F4",
+            "name": "Cortex Debug",
+            "cwd": "${workspaceRoot}",
+            "executable": "./GCC/build/temp.elf", //mcu程序可执行文件路径
             "request": "launch",
             "type": "cortex-debug",
-            "runToEntryPoint": "main",
-            "armToolchainPath": "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin",
-            "showDevDebugOutput": "vscode",
             "servertype": "openocd",
             "configFiles": [
-                "${workspaceFolder}/GCC/config/cmsis-dap.cfg",
-                "${workspaceFolder}/GCC/config/stm32f4x.cfg"
-            ]
-        }
+                "interface/cmsis-dap.cfg",//调试器配置文件 我用的是CMSIS-DAP所以选的这个配置文件,
+                                            // 绝对路径是/usr/share/openocd/scripts/interface
 
+                "target/stm32f1x.cfg" //对应MCU系列的配置文件，绝对路径/usr/share/openocd/scripts/target
+            ],
+            "gdbPath": "/home/ktkuri/arm-gcc-tools/bin/arm-none-eabi-gdb", //gdb-multiarch 默认路径，按照sudo apt install安装的应该改都是这个路径
+            "armToolchainPath": "/home/ktkuri/arm-gcc-tools/bin", //arm-none-eabi-gcc安装路径和gdb-multiarch同理
+            //"svdFile": "/home/wls/wls/linux_stm32f103_gcc_makefile/led/stm32f103x.svd",//看你具体的文件位置了
+            "preLaunchTask": "build"
+        }
     ]
 }
+
+
