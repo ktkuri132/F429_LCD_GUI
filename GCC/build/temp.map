@@ -4134,7 +4134,7 @@ LOAD /home/ktkuri/arm-gcc-tools/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+
  .debug_ranges  0x0000000000000790       0x20 ./GCC/build/GUILib.o
  .debug_ranges  0x00000000000007b0       0x20 ./GCC/build/startup_stm32f429_439xx.o
 
-.debug_line     0x0000000000000000     0x676a
+.debug_line     0x0000000000000000     0x6769
  .debug_line    0x0000000000000000      0x191 ./GCC/build/main.o
  .debug_line    0x0000000000000191      0x425 ./GCC/build/system_stm32f4xx.o
  .debug_line    0x00000000000005b6      0x2b3 ./GCC/build/misc.o
@@ -4155,8 +4155,8 @@ LOAD /home/ktkuri/arm-gcc-tools/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+
  .debug_line    0x0000000000005bae      0x2dd ./GCC/build/bank.o
  .debug_line    0x0000000000005e8b       0xd6 ./GCC/build/BSP.o
  .debug_line    0x0000000000005f61      0x20c ./GCC/build/exit.o
- .debug_line    0x000000000000616d      0x549 ./GCC/build/GUILib.o
- .debug_line    0x00000000000066b6       0xb4 ./GCC/build/startup_stm32f429_439xx.o
+ .debug_line    0x000000000000616d      0x548 ./GCC/build/GUILib.o
+ .debug_line    0x00000000000066b5       0xb4 ./GCC/build/startup_stm32f429_439xx.o
 
 .debug_str      0x0000000000000000     0x2adc
  .debug_str     0x0000000000000000      0x166 ./GCC/build/main.o
